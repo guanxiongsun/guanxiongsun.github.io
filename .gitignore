@@ -1,0 +1,4 @@
+config.toml
+content
+resources
+.hugo_build.lock

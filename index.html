@@ -1,0 +1,848 @@
+<!DOCTYPE HTML>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+  <title>Guanxiong Sun</title>
+  
+  <meta name="author" content="Guanxiong Sun">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+	<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌐</text></svg>">
+</head>
+
+<body>
+  <table style="width:100%;max-width:800px;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+    <tr style="padding:0px">
+      <td style="padding:0px">
+        <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+          <tr style="padding:0px">
+            <td style="padding:2.5%;width:63%;vertical-align:middle">
+              <p style="text-align:center">
+                <name>Guanxiong Sun</name>
+              </p>
+              <!-- <p>I am a senior staff research scientist at <a href="https://ai.google/research">Google Research</a>, where I work on computer vision and machine learning.
+              </p> -->
+              
+              <p>
+                I am a third-year PhD student at the school of <a href="https://www.qub.ac.uk/schools/eeecs/"> EEECS, Queen's University Belfast</a>, advised by Dr. Hua Yang and Prof. Neil Robertson. My research interests are in computer vision, specifically, object detection and video analysis.
+              </p>
+
+              <!-- <p>
+                At Google I've worked on <a href="https://www.google.com/glass/start/">Glass</a>,  <a href="https://ai.googleblog.com/2014/04/lens-blur-in-new-google-camera-app.html">Lens Blur</a>, <a href="https://ai.googleblog.com/2014/10/hdr-low-light-and-high-dynamic-range.html">HDR+</a>, <a href="https://blog.google/products/google-ar-vr/introducing-next-generation-jump/">Jump</a>, <a href="https://ai.googleblog.com/2017/10/portrait-mode-on-pixel-2-and-pixel-2-xl.html">Portrait Mode</a>, <a href="https://ai.googleblog.com/2020/12/portrait-light-enhancing-portrait.html">Portrait Light</a>, and <a href="https://www.matthewtancik.com/nerf">NeRF</a>. I did my PhD at <a href="http://www.eecs.berkeley.edu/">UC Berkeley</a>, where I was advised by <a href="http://www.cs.berkeley.edu/~malik/">Jitendra Malik</a> and funded by the <a href="http://www.nsfgrfp.org/">NSF GRFP</a>. I've received the <a href="https://www2.eecs.berkeley.edu/Students/Awards/15/">C.V. Ramamoorthy Distinguished Research Award</a> and the <a href="https://www.thecvf.com/?page_id=413#YRA">PAMI Young Researcher Award</a>.
+              </p> -->
+
+              <p>
+                I received my master and bachelor degrees from the department of Computer Science at Harbin Institute of Technology, one of the most famous universities in China.
+              </p>
+
+              <p style="text-align:center">
+                <!-- <a href="mailto:jonbarron@gmail.com">Email</a> &nbsp/&nbsp -->
+                <a href="mailto:gsun02@qub.ac.uk">Email</a> &nbsp/&nbsp
+                <a href="data/JonBarron-CV.pdf">CV</a> &nbsp/&nbsp
+                <a href="data/JonBarron-bio.txt">Bio</a> &nbsp/&nbsp
+                <a href="https://scholar.google.com/citations?hl=en&user=jktWnL8AAAAJ">Google Scholar</a> &nbsp/&nbsp
+                <a href="https://twitter.com/jon_barron">Twitter</a> &nbsp/&nbsp
+                <a href="https://github.com/jonbarron/">Github</a>
+              </p>
+            </td>
+            <td style="padding:2.5%;width:40%;max-width:40%">
+              <a href="images/GuanxiongSun.png"><img style="width:100%;max-width:100%" alt="profile photo" src="images/GuanxiongSun_circle.png" class="hoverZoomLink"></a>
+            </td>
+          </tr>
+        </tbody></table>
+        <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+            <tr>
+            <td style="padding:20px;width:100%;vertical-align:middle">
+              <heading>Research</heading>
+              <!-- <p>
+                I'm interested in computer vision, machine learning, optimization, and image processing. Much of my research is about inferring the physical world (shape, motion, color, light, etc) from images. Representative papers are <span class="highlight">highlighted</span>.
+              </p> -->
+            </td>
+          </tr>
+        </tbody></table>
+        <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+          <tr onmouseout="malle_stop()" onmouseover="malle_start()">
+            <td style="padding:20px;width:25%;vertical-align:middle">
+              <div class="one">
+                <div class="two" id='malle_image'>
+                  <img src='images/MalleConv_after.jpg' width="160"></div>
+                <img src='images/MalleConv_before.jpg' width="160">
+              </div>
+              <script type="text/javascript">
+                function malle_start() {
+                  document.getElementById('malle_image').style.opacity = "1";
+                }
+
+                function malle_stop() {
+                  document.getElementById('malle_image').style.opacity = "0";
+                }
+                malle_stop()
+              </script>
+            </td>
+            <td style="padding:20px;width:75%;vertical-align:middle">
+              <a href="projects/mamba/index.html">
+                <papertitle>Fast and High-quality Image Denoising via Malleable Convolutions</papertitle>
+              </a>
+              <br>
+              <a href="https://yifanjiang.net/">Yifan Jiang</a>,
+              <a href="https://bartwronski.com/">Bartlomiej Wronski</a>, 
+							<a href="https://bmild.github.io/">Ben Mildenhall</a>, <br>
+              <strong>Jonathan T. Barron</strong>,
+              <a href="https://spark.adobe.com/page/CAdrFMJ9QeI2y/">Zhangyang Wang</a>,
+              <a href="https://people.csail.mit.edu/tfxue/">Tianfan Xue</a>
+              <br>
+              <em>ECCV</em>, 2022
+              <br>
+              <a href="https://yifanjiang.net/MalleConv.html">project page</a>
+              /
+              <a href="https://arxiv.org/abs/2201.00392">arXiv</a>
+              <p></p>
+              <p>
+              We denoise images efficiently by predicting spatially-varying kernels at low resolution and using a fast fused op to jointly upsample and apply these kernels at full resolution.
+              </p>
+            </td>
+          </tr>
+					
+          <tr onmouseout="nerfsuper_stop()" onmouseover="nerfsuper_start()">
+            <td style="padding:20px;width:25%;vertical-align:middle">
+              <div class="one">
+                <div class="two" id='nerfsuper_image'><video  width=100% height=100% muted autoplay loop>
+                <source src="images/nerf_supervision.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+                </video></div>
+                <img src='images/nerf_supervision.jpg' width="160">
+              </div>
+              <script type="text/javascript">
+                function nerfsuper_start() {
+                  document.getElementById('nerfsuper_image').style.opacity = "1";
+                }
+
+                function nerfsuper_stop() {
+                  document.getElementById('nerfsuper_image').style.opacity = "0";
+                }
+                nerfsuper_stop()
+              </script>
+            </td>
+            <td style="padding:20px;width:75%;vertical-align:middle">
+							<a href="https://waymo.com/research/block-nerf/">
+                <papertitle>NeRF-Supervision: Learning Dense Object Descriptors from Neural Radiance Fields</papertitle>
+              </a>
+              <br>
+              <a href="https://yenchenlin.me/">Lin Yen-Chen</a>, 
+              <a href="http://www.peteflorence.com/">Pete Florence</a>, 
+              <strong>Jonathan T. Barron</strong>,  <br>
+              <a href="https://scholar.google.com/citations?user=_BPdgV0AAAAJ&hl=en">Tsung-Yi Lin</a>, 
+              <a href="https://meche.mit.edu/people/faculty/ALBERTOR@MIT.EDU">Alberto Rodriguez</a>,
+              <a href="http://web.mit.edu/phillipi/">Phillip Isola</a>
+              <br>
+              <em>ICRA</em>, 2022  
+              <br>
+							<a href="http://yenchenlin.me/nerf-supervision/">project page</a> / 
+							<a href="https://arxiv.org/abs/2203.01913">arXiv</a> / 
+							<a href="https://www.youtube.com/watch?v=_zN-wVwPH1s">video</a> /
+							<a href="https://github.com/yenchenlin/nerf-supervision-public">code</a> / 
+							<a href="https://colab.research.google.com/drive/13ISri5KD2XeEtsFs25hmZtKhxoDywB5y?usp=sharing">colab</a>				
+              <p></p>
+              <p>NeRF works better than RGB-D cameras or multi-view stereo when learning object descriptors.</p>
+            </td>
+          </tr>
+
+			    <tr onmouseout="refnerf_stop()" onmouseover="refnerf_start()"  bgcolor="#ffffd0">
+			      <td style="padding:20px;width:25%;vertical-align:middle">
+			        <div class="one">
+			          <div class="two" id='refnerf_image'><video  width=100% height=100% muted autoplay loop>
+			          <source src="images/refnerf.mp4" type="video/mp4">
+			          Your browser does not support the video tag.
+			          </video></div>
+			          <img src='images/refnerf.jpg' width="160">
+			        </div>
+			        <script type="text/javascript">
+			          function refnerf_start() {
+			            document.getElementById('refnerf_image').style.opacity = "1";
+			          }
+
+			          function refnerf_stop() {
+			            document.getElementById('refnerf_image').style.opacity = "0";
+			          }
+			          refnerf_stop()
+			        </script>
+			      </td>
+			            <td style="padding:20px;width:75%;vertical-align:middle">
+			          <a href="https://dorverbin.github.io/refnerf/index.html">
+			            <papertitle>Ref-NeRF: Structured View-Dependent Appearance for Neural Radiance Fields</papertitle>
+			          </a>
+			          <br>
+			          <a href="https://scholar.harvard.edu/dorverbin/home">Dor Verbin</a>,
+			          <a href="https://phogzone.com/">Peter Hedman</a>,
+			          <a href="https://bmild.github.io/">Ben Mildenhall</a>, <br>
+			          <a href="Todd Zickler">Todd Zickler</a>,
+			          <strong>Jonathan T. Barron</strong>,
+			          <a href="https://pratulsrinivasan.github.io/">Pratul Srinivasan</a>
+			          <br>
+			    <em>CVPR</em>, 2022 &nbsp <font color="red"><strong>(Oral Presentation, Best Student Paper Honorable Mention)</strong></font>
+			          <br>
+			          <a href="https://dorverbin.github.io/refnerf/index.html">project page</a>
+			    /
+			          <a href="https://arxiv.org/abs/2112.03907">arXiv</a>
+			    /
+			          <a href="https://youtu.be/qrdRH9irAlk">video</a>
+			          <p></p>
+			          <p>Explicitly modeling reflections in NeRF produces realistic shiny surfaces and accurate surface normals, and lets you edit materials.</p>
+			        </td>
+			      </tr>
+						
+          <tr onmouseout="mip360_stop()" onmouseover="mip360_start()"  bgcolor="#ffffd0">
+            <td style="padding:20px;width:25%;vertical-align:middle">
+              <div class="one">
+                <div class="two" id='mip360_image'><video  width=100% height=100% muted autoplay loop>
+                <source src="images/mip360_sat.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+                </video></div>
+                <img src='images/mip360_sat.jpg' width="160">
+              </div>
+              <script type="text/javascript">
+                function mip360_start() {
+                  document.getElementById('mip360_image').style.opacity = "1";
+                }
+
+                function mip360_stop() {
+                  document.getElementById('mip360_image').style.opacity = "0";
+                }
+                mip360_stop()
+              </script>
+            </td>
+            <td style="padding:20px;width:75%;vertical-align:middle">
+              <a href="http://jonbarron.info/mipnerf360">
+                <papertitle>Mip-NeRF 360: Unbounded Anti-Aliased Neural Radiance Fields</papertitle>
+              </a>
+              <br>
+              <strong>Jonathan T. Barron</strong>,
+              <a href="https://bmild.github.io/">Ben Mildenhall</a>,
+              <a href="https://scholar.harvard.edu/dorverbin/home">Dor Verbin</a>,
+              <a href="https://pratulsrinivasan.github.io/">Pratul Srinivasan</a>,
+              <a href="https://phogzone.com/">Peter Hedman</a>
+              <br>
+							<em>CVPR</em>, 2022 &nbsp <font color="red"><strong>(Oral Presentation)</strong></font>
+              <br>
+              <a href="http://jonbarron.info/mipnerf360">project page</a>
+              /
+              <a href="https://arxiv.org/abs/2111.12077">arXiv</a>
+              /
+              <a href="https://youtu.be/zBSH-k9GbV4">video</a>
+              <p></p>
+              <p>mip-NeRF can be extended to produce realistic results on unbounded scenes.</p>
+            </td>
+          </tr> 
+
+          <tr onmouseout="rawnerf_stop()" onmouseover="rawnerf_start()"  bgcolor="#ffffd0">
+            <td style="padding:20px;width:25%;vertical-align:middle">
+              <div class="one">
+                <div class="two" id='rawnerf_image'><video  width=100% height=100% muted autoplay loop>
+                <source src="images/rawnerf.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+                </video></div>
+                <img src='images/rawnerf.jpg' width="160">
+              </div>
+              <script type="text/javascript">
+                function rawnerf_start() {
+                  document.getElementById('rawnerf_image').style.opacity = "1";
+                }
+
+                function rawnerf_stop() {
+                  document.getElementById('rawnerf_image').style.opacity = "0";
+                }
+                rawnerf_stop()
+              </script>
+            </td>
+            <td style="padding:20px;width:75%;vertical-align:middle">
+              <a href="https://bmild.github.io/rawnerf/index.html">
+                <papertitle>NeRF in the Dark: High Dynamic Range View Synthesis from Noisy Raw Images</papertitle>
+              </a>
+              <br>
+              <a href="https://bmild.github.io/">Ben Mildenhall</a>,
+              <a href="https://phogzone.com/">Peter Hedman</a>,
+              <a href="http://www.ricardomartinbrualla.com/">Ricardo Martin-Brualla</a>, <br>
+              <a href="https://pratulsrinivasan.github.io/">Pratul Srinivasan</a>,
+              <strong>Jonathan T. Barron</strong>
+              <br>
+							<em>CVPR</em>, 2022 &nbsp <font color="red"><strong>(Oral Presentation)</strong></font>
+              <br>
+              <a href="https://bmild.github.io/rawnerf/index.html">project page</a>
+        /
+              <a href="https://arxiv.org/abs/2111.13679">arXiv</a>
+        /
+              <a href="https://www.youtube.com/watch?v=JtBS4KBcKVc">video</a>
+              <p></p>
+              <p>
+								Properly training NeRF on raw camera data enables HDR view synthesis and bokeh, and outperforms multi-image denoising.</p>
+            </td>
+          </tr> 
+					
+   
+          <tr onmouseout="regnerf_stop()" onmouseover="regnerf_start()">
+            <td style="padding:20px;width:25%;vertical-align:middle">
+              <div class="one">
+                <div class="two" id='regnerf_image'><video  width=100% height=100% muted autoplay loop>
+                <source src="images/regnerf_after.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+                </video></div>
+                <img src='images/regnerf_before.jpeg' width="160">
+              </div>
+              <script type="text/javascript">
+                function regnerf_start() {
+                  document.getElementById('regnerf_image').style.opacity = "1";
+                }
+
+                function regnerf_stop() {
+                  document.getElementById('regnerf_image').style.opacity = "0";
+                }
+                regnerf_stop()
+              </script>
+            </td>
+            <td style="padding:20px;width:75%;vertical-align:middle">
+              <a href="https://m-niemeyer.github.io/regnerf/index.html">
+                <papertitle>RegNeRF: Regularizing Neural Radiance Fields for View Synthesis from Sparse Inputs</papertitle>
+              </a>
+              <br>
+              <a href="https://m-niemeyer.github.io/">Michael Niemeyer</a>,
+              <strong>Jonathan T. Barron</strong>,
+              <a href="https://bmild.github.io/">Ben Mildenhall</a>, <br>
+              <a href="https://msmsajjadi.github.io/">Mehdi S. M. Sajjadi</a>, 
+              <a href="http://www.cvlibs.net/">Andreas Geiger</a>,
+              <a href="http://www2.informatik.uni-freiburg.de/~radwann/">Noha Radwan</a>
+              <br>
+        <em>CVPR</em>, 2022 &nbsp <font color="red"><strong>(Oral Presentation)</strong></font>
+              <br>
+              <a href="https://m-niemeyer.github.io/regnerf/index.html">project page</a>
+        /
+              <a href="https://arxiv.org/abs/2112.00724">arXiv</a>
+        /
+              <a href="https://www.youtube.com/watch?v=QyyyvA4-Kwc">video</a>
+              <p></p>
+              <p>Regularizing unseen views during optimization enables view synthesis from as few as 3 input images.</p>
+            </td>
+          </tr> 
+
+
+          <tr onmouseout="blocknerf_stop()" onmouseover="blocknerf_start()">
+            <td style="padding:20px;width:25%;vertical-align:middle">
+              <div class="one">
+                <div class="two" id='blocknerf_image'><video  width=100% height=100% muted autoplay loop>
+                <source src="images/blocknerf_after.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+                </video></div>
+                <img src='images/blocknerf_before.jpg' width="160">
+              </div>
+              <script type="text/javascript">
+                function blocknerf_start() {
+                  document.getElementById('blocknerf_image').style.opacity = "1";
+                }
+
+                function blocknerf_stop() {
+                  document.getElementById('blocknerf_image').style.opacity = "0";
+                }
+                blocknerf_stop()
+              </script>
+            </td>
+            <td style="padding:20px;width:75%;vertical-align:middle">
+							<a href="https://waymo.com/research/block-nerf/">
+                <papertitle>Block-NeRF: Scalable Large Scene Neural View Synthesis</papertitle>
+              </a>
+              <br>
+              <a href="http://matthewtancik.com/">Matthew Tancik</a>,
+              <a href="http://casser.io/">Vincent Casser</a>,
+              <a href="https://sites.google.com/site/skywalkeryxc/">Xinchen Yan</a>,
+              <a href="https://scholar.google.com/citations?user=5mJUkI4AAAAJ&hl=en">Sabeek Pradhan</a>, <br>
+              <a href="https://bmild.github.io/">Ben Mildenhall</a>,
+							<a href="https://pratulsrinivasan.github.io/">Pratul Srinivasan</a>,
+              <strong>Jonathan T. Barron</strong>,
+              <a href="https://www.henrikkretzschmar.com/">Henrik Kretzschmar</a>
+              <br>
+        <em>CVPR</em>, 2022 &nbsp <font color="red"><strong>(Oral Presentation)</strong></font>
+              <br>
+              <a href="https://waymo.com/research/block-nerf/">project page</a>
+        /
+              <a href="https://arxiv.org/abs/2202.05263">arXiv</a>
+        /
+              <a href="https://www.youtube.com/watch?v=6lGMCAzBzOQ">video</a>
+              <p></p>
+              <p>We can do city-scale reconstruction by training multiple NeRFs with millions of images.</p>
+            </td>
+          </tr>
+					
+
+          <tr onmouseout="loss_stop()" onmouseover="loss_start()" bgcolor="#ffffd0">
+            <td style="padding:20px;width:25%;vertical-align:middle">
+              <div class="one">
+                <div class="two" id='loss_image'><img src='images/loss_after.png'></div>
+                <img src='images/loss_before.png'>
+              </div>
+              <script type="text/javascript">
+                function loss_start() {
+                  document.getElementById('loss_image').style.opacity = "1";
+                }
+
+                function loss_stop() {
+                  document.getElementById('loss_image').style.opacity = "0";
+                }
+                loss_stop()
+              </script>
+            </td>
+            <td style="padding:20px;width:75%;vertical-align:middle">
+              <a href="https://drive.google.com/open?id=1xpZ0fL9h1y9RfcTyPgVkxUrF3VwdkBvq">
+                <papertitle>A General and Adaptive Robust Loss Function</papertitle>
+              </a>
+              <br>
+              <strong>Jonathan T. Barron</strong>
+              <br>
+              <em>CVPR</em>, 2019 &nbsp <font color="red"><strong>(Oral Presentation, Best Paper Award Finalist)</strong></font>
+              <br>
+              <a href="https://arxiv.org/abs/1701.03077">arxiv</a> /
+              <a href="https://drive.google.com/open?id=1HNveL7xSNh6Ss7sxLK8Mw2L1Fc-rRhL4">supplement</a> /
+              <a href="https://youtu.be/BmNKbnF69eY">video</a> /
+              <a href="https://www.youtube.com/watch?v=4IInDT_S0ow&t=37m22s">talk</a> / 
+              <a href="https://drive.google.com/file/d/1GzRYRIfLHvNLT_QwjHoBjHkBbs3Nbf0x/view?usp=sharing">slides</a> / 
+              code: <a href="https://github.com/google-research/google-research/tree/master/robust_loss">TF</a>, <a href="https://github.com/google-research/google-research/tree/master/robust_loss_jax">JAX</a>, <a href="https://github.com/jonbarron/robust_loss_pytorch">pytorch</a> /
+              <a href="data/BarronCVPR2019_reviews.txt">reviews</a> /
+              <a href="data/BarronCVPR2019.bib">bibtex</a>
+              <p></p>
+              <p>A single robust loss function is a superset of many other common robust loss functions, and allows training to automatically adapt the robustness of its own loss.</p>
+            </td>
+          </tr>
+
+
+        </tbody></table>
+
+				
+        <!-- <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20"><tbody>
+          <tr>
+            <td>
+              <heading>Misc</heading>
+            </td>
+          </tr>
+        </tbody></table>
+        
+        <table width="100%" align="center" border="0" cellpadding="20"><tbody>
+					
+          <tr>
+            <td style="padding:20px;width:25%;vertical-align:middle"><img src="images/cvf.jpg"></td>
+            <td width="75%" valign="center">
+              <a href="https://cvpr2022.thecvf.com/area-chairs">Area Chair, CVPR 2022</a>
+              <br>
+              <a href="http://cvpr2021.thecvf.com/area-chairs">Area Chair & Longuet-Higgins Award Committee Member, CVPR 2021</a>
+              <br>
+              <a href="http://cvpr2019.thecvf.com/area_chairs">Area Chair, CVPR 2019</a>
+              <br>
+              <a href="http://cvpr2018.thecvf.com/organizers/area_chairs">Area Chair, CVPR 2018</a>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:20px;width:25%;vertical-align:middle">
+              <img src="images/cs188.jpg" alt="cs188">
+            </td>
+            <td width="75%" valign="center">
+              <a href="http://inst.eecs.berkeley.edu/~cs188/sp11/announcements.html">Graduate Student Instructor, CS188 Spring 2011</a>
+              <br>
+              <a href="http://inst.eecs.berkeley.edu/~cs188/fa10/announcements.html">Graduate Student Instructor, CS188 Fall 2010</a>
+              <br>
+              <a href="http://aima.cs.berkeley.edu/">Figures, "Artificial Intelligence: A Modern Approach", 3rd Edition</a>
+            </td>
+          </tr>
+					
+
+          <tr>
+            <td align="center" style="padding:20px;width:25%;vertical-align:middle">
+							<heading>Basically <br> Blog Posts</heading>
+            </td>
+            <td width="75%" valign="middle">
+              <a href="https://arxiv.org/abs/2112.11687">Squareplus: A Softplus-Like Algebraic Rectifier</a>
+              <br>
+              <a href="https://arxiv.org/abs/2010.09714">A Convenient Generalization of Schlick's Bias and Gain Functions</a>
+              <br>
+              <a href="https://arxiv.org/abs/1704.07483">Continuously Differentiable Exponential Linear Units</a>
+            </td>
+          </tr>
+					
+					
+        </tbody></table>
+
+        <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+          <tr>
+            <td style="padding:0px">
+              <br>
+              <p style="text-align:right;font-size:small;">
+                Feel free to steal this website's <a href="https://github.com/jonbarron/jonbarron_website">source code</a>,
+                just add a link back to my website.
+                <strong>Do not</strong> scrape the HTML from the deployed instance of this website at http://jonbarron.info,
+                as it includes analytics tags that you do not want on your own website &mdash; use the github code instead.
+                If you'd like your new page linked to from here, submit a pull request adding yourself.
+		<a href="https://vjysd.github.io/">&#10025;</a>
+                <a href="https://www.amishmittal.com/">&#10025;</a>
+                <a href="https://rishabkhincha.github.io/">&#10025;</a>
+                <a href="https://yektademirci.com/">&#10025;</a>
+                <a href="https://yangyulin.github.io/">&#10025;</a>
+                <a href="https://www.cs.ubc.ca/~pbateni/">&#10025;</a>
+                <a href="https://aliosmanulusoy.github.io/">&#10025;</a>
+                <a href="https://cs.stanford.edu/~poole/">&#10025;</a>
+                <a href="http://www.cs.berkeley.edu/~akar/">&#10025;</a>
+                <a href="http://www.eecs.berkeley.edu/~biancolin">&#10025;</a>
+                <a href="http://www.rossgirshick.info/">&#10025;</a>
+                <a href="http://www.cs.cmu.edu/~igkioule/">&#10025;</a>
+                <a href="http://kelvinxu.github.io/">&#10025;</a>
+                <a href="http://imagine.enpc.fr/~groueixt/">&#10025;</a>
+                <a href="https://people.eecs.berkeley.edu/~cbfinn/">&#10025;</a>
+                <a href="http://disi.unitn.it/~nabi/">&#10025;</a>
+                <a href="http://changyeobshin.com/">&#10025;</a>
+                <a href="https://mbanani.github.io/">&#10025;</a>
+                <a href="https://aseembits93.github.io">&#10025;</a>
+                <a href="http://fuwei.us/">&#10025;</a>
+                <a href="http://www-bcf.usc.edu/~iacopoma/">&#10025;</a>
+                <a href="https://lorisbaz.github.io/">&#10025;</a>
+                <a href="https://dplarson.info/">&#10025;</a>
+                <a href="http://chapiro.net/">&#10025;</a>
+                <a href="https://people.eecs.berkeley.edu/~vitchyr/">&#10025;</a>
+                <a href="https://people.eecs.berkeley.edu/~kellman/">&#10025;</a>
+                <a href="http://www0.cs.ucl.ac.uk/staff/C.Godard/">&#10025;</a>
+                <a href="http://www.cs.toronto.edu/~byang/">&#10025;</a>
+                <a href="http://people.kyb.tuebingen.mpg.de/harmeling/">&#10025;</a>
+                <a href="https://prakashmurali.bitbucket.io/">&#10025;</a>
+                <a href="http://www.cs.bham.ac.uk/~exa371/">&#10025;</a>
+                <a href="http://prosello.com/">&#10025;</a>
+                <a href="http://www.ee.ucr.edu/~nmithun/">&#10025;</a>
+                <a href="https://rmullapudi.bitbucket.io/">&#10025;</a>
+                <a href="http://www.briangauch.com/">&#10025;</a>
+                <a href="https://people.eecs.berkeley.edu/~coline/">&#10025;</a>
+                <a href="https://www.andrew.cmu.edu/user/sjayasur/website.html">&#10025;</a>
+                <a href="http://www.eecs.berkeley.edu/~rakelly/">&#10025;</a>
+                <a href="https://gkioxari.github.io/">&#10025;</a>
+                <a href="http://ai.stanford.edu/~hsong/">&#10025;</a>
+                <a href="http://www.ee.ucr.edu/~mbappy/">&#10025;</a>
+                <a href="http://adithyamurali.com/">&#10025;</a>
+                <a href="https://people.eecs.berkeley.edu/~khoury/">&#10025;</a>
+                <a href="https://prashanthtk.github.io/">&#10025;</a>
+                <a href="http://tomhenighan.com/">&#10025;</a>
+                <a href="http://mbchang.github.io/">&#10025;</a>
+                <a href="https://people.eecs.berkeley.edu/~haarnoja/">&#10025;</a>
+                <a href="http://web.stanford.edu/~sfort1/">&#10025;</a>
+                <a href="http://www.arkin.xyz/">&#10025;</a>
+                <a href="http://i-am-karan-singh.github.io/">&#10025;</a>
+                <a href="https://pxlong.github.io/">&#10025;</a>
+                <a href="https://dheeraj2444.github.io/">&#10025;</a>
+                <a href="https://fabienbaradel.github.io/">&#10025;</a>
+                <a href="https://ankitdhall.github.io/">&#10025;</a>
+                <a href="http://nafiz.ml/">&#10025;</a>
+                <a href="http://www.cs.cmu.edu/~aayushb">&#10025;</a>
+                <a href="http://bjornstenger.github.io/">&#10025;</a>
+                <a href="http://users.eecs.northwestern.edu/~mif365/">&#10025;</a>
+                <a href="https://www.macs.hw.ac.uk/~ic14/">&#10025;</a>
+                <a href="https://ai.stanford.edu/~kaidicao/">&#10025;</a>
+                <a href="http://hengfan.byethost7.com/">&#10025;</a>
+                <a href="https://reyhaneaskari.github.io/">&#10025;</a>
+                <a href="https://tianheyu927.github.io/">&#10025;</a>
+                <a href="http://people.csail.mit.edu/janner/">&#10025;</a>
+                <a href="http://www.sjoerdvansteenkiste.com/">&#10025;</a>
+                <a href="http://joaoloula.github.io/">&#10025;</a>
+                <a href="https://bhairavmehta95.github.io/">&#10025;</a>
+                <a href="https://palmieri.github.io/">&#10025;</a>
+                <a href="https://psuriana.github.io/">&#10025;</a>
+                <a href="http://yushi2.web.engr.illinois.edu/">&#10025;</a>
+                <a href="http://ruthcfong.github.io/">&#10025;</a>
+                <a href="https://shraman-rc.github.io/">&#10025;</a>
+                <a href="http://rahulgarg.com/">&#10025;</a>
+                <a href="http://www.cs.cmu.edu/~inigam/">&#10025;</a>
+                <a href="http://djstrouse.com/">&#10025;</a>
+                <a href="https://lekhamohan.github.io/">&#10025;</a>
+                <a href="https://avijit9.github.io/">&#10025;</a>
+                <a href="http://www.seas.ucla.edu/~sahba/">&#10025;</a>
+                <a href="https://pages.jh.edu/~falambe1/">&#10025;</a>
+                <a href="http://www.dcc.fc.up.pt/~vitor.cerqueira/">&#10025;</a>
+                <a href="https://bmild.github.io/">&#10025;</a>
+                <a href="https://web.eecs.umich.edu/~subh/">&#10025;</a>
+                <a href="http://www.cs.utexas.edu/~pgoyal/">&#10025;</a>
+                <a href="http://www.eecs.wsu.edu/~fchowdhu/">&#10025;</a>
+                <a href="https://aarzchan.github.io/">&#10025;</a>
+                <a href="https://www.seas.upenn.edu/~oleh/">&#10025;</a>
+                <a href="http://shamak.github.io/">&#10025;</a>
+                <a href="http://jianfeng.us/">&#10025;</a>
+                <a href="https://pulkitkumar95.github.io/">&#10025;</a>
+                <a href="https://epiception.github.io/">&#10025;</a>
+                <a href="https://weimengpu.github.io/">&#10025;</a>
+                <a href="http://users.ices.utexas.edu/~faraz/">&#10025;</a>
+                <a href="https://vitorgodeiro.github.io/">&#10025;</a>
+                <a href="http://cgm.technion.ac.il/people/Roey/">&#10025;</a>
+                <a href="https://mancinimassimiliano.github.io/">&#10025;</a>
+                <a href="https://roshanjrajan.me/">&#10025;</a>
+                <a href="http://irc.cs.sdu.edu.cn/~qingnan/">&#10025;</a>
+                <a href="http://individual.utoronto.ca/yuenj/">&#10025;</a>
+                <a href="https://akhileshgotmare.github.io/">&#10025;</a>
+                <a href="http://vllab.ucmerced.edu/nakul/">&#10025;</a>
+                <a href="https://hasibzunair.github.io/">&#10025;</a>
+                <a href="http://dalezhou.com/">&#10025;</a>
+                <a href="https://abhoi.github.io/">&#10025;</a>
+                <a href="https://www.cse.unr.edu/~jyi/">&#10025;</a>
+                <a href="http://www.liuzhaolun.com/">&#10025;</a>
+                <a href="https://abhisheknaik.me/">&#10025;</a>
+                <a href="https://cfernandezlab.github.io/">&#10025;</a>
+                <a href="https://aasharma90.github.io/">&#10025;</a>
+                <a href="https://kdizon.github.io/">&#10025;</a>
+                <a href="https://www.cse.wustl.edu/~zhihao.xia/">&#10025;</a>
+                <a href="http://mmozes.net/">&#10025;</a>
+                <a href="https://kpertsch.github.io/">&#10025;</a>
+                <a href="http://xiatianpei.com/">&#10025;</a>
+                <a href="https://nsrishankar.github.io/">&#10025;</a>
+                <a href="http://xujuefei.com/">&#10025;</a>
+                <a href="https://www.cs.rochester.edu/u/lchen63/">&#10025;</a>
+                <a href="http://deyachatterjee.github.io/">&#10025;</a>
+                <a href="http://hossein1387.github.io/index.html">&#10025;</a>
+                <a href="https://zx007zls.github.io/">&#10025;</a>
+                <a href="http://people.eecs.berkeley.edu/~nol/">&#10025;</a>
+                <a href="http://www.cs.princeton.edu/~jw60/">&#10025;</a>
+                <a href="https://cseweb.ucsd.edu/~owen/">&#10025;</a>
+                <a href="https://subhajitchaudhury.github.io/">&#10025;</a>
+                <a href="https://sandarshp.github.io/">&#10025;</a>
+                <a href="https://medhini.github.io/">&#10025;</a>
+                <a href="http://cindyxinyiwang.github.io/">&#10025;</a>
+                <a href="https://lasirenashann.github.io/">&#10025;</a>
+                <a href="http://ambuj.se/">&#10025;</a>
+                <a href="http://kylehsu.me/">&#10025;</a>
+                <a href="https://ujjwal95.github.io/">&#10025;</a>
+                <a href="https://aditya5558.github.io/">&#10025;</a>
+                <a href="http://www.majumderb.com/">&#10025;</a>
+                <a href="http://ylqiao.net/">&#10025;</a>
+                <a href="https://xiaochunliu.github.io/">&#10025;</a>
+                <a href="https://dhawgupta.github.io/">&#10025;</a>
+                <a href="http://cliu.info/">&#10025;</a>
+                <a href="https://taochenshh.github.io/">&#10025;</a>
+                <a href="http://www-scf.usc.edu/~ayushj/">&#10025;</a>
+                <a href="https://zexuehe.github.io/">&#10025;</a>
+                <a href="https://ofkar.github.io/">&#10025;</a>
+                <a href="https://amir-arsalan.github.io/">&#10025;</a>
+                <a href="https://vinamrabenara.github.io/">&#10025;</a>
+                <a href="https://likojack.bitbucket.io/">&#10025;</a>
+                <a href="http://www-personal.umich.edu/~zeyu/">&#10025;</a>
+                <a href="https://utkarshojha.github.io/">&#10025;</a>
+                <a href="https://fahmidmorshed.github.io/">&#10025;</a>
+                <a href="https://www.cs.ubc.ca/~setarehc/">&#10025;</a>
+                <a href="http://viveksolanki.com/">&#10025;</a>
+                <a href="http://webdiis.unizar.es/~alcolea/">&#10025;</a>
+                <a href="http://www.songyaojiang.com/">&#10025;</a>
+                <a href="https://www.csee.umbc.edu/~bhp1/">&#10025;</a>
+                <a href="http://acl.mit.edu/people">&#10025;</a>
+                <a href="https://vignanv.com/">&#10025;</a>
+                <a href="https://liuyicun.me/">&#10025;</a>
+                <a href="https://heyuanmingong.github.io/">&#10025;</a>
+                <a href="https://abhishekaich27.github.io/">&#10025;</a>
+                <a href="https://www.cs.ubc.ca/~saeidnp/">&#10025;</a>
+                <a href="https://uuujf.github.io/">&#10025;</a>
+                <a href="https://csjcai.github.io/">&#10025;</a>
+                <a href="https://iphyer.github.io/Mingren_Website/">&#10025;</a>
+                <a href="https://binzhubz.github.io/">&#10025;</a>
+                <a href="https://steinar.dev/">&#10025;</a>
+                <a href="https://tnq177.github.io/">&#10025;</a>
+                <a href="https://jonathan-schwarz.github.io/">&#10025;</a>
+                <a href="http://www.ronnieclark.co.uk/">&#10025;</a>
+                <a href="http://www.aparnadhinakaran.com/">&#10025;</a>
+                <a href="https://zjysteven.github.io/">&#10025;</a>
+                <a href="http://aakash30jan.github.io/">&#10025;</a>
+                <a href="https://people.eecs.berkeley.edu/~shelhamer/">&#10025;</a>
+                <a href="https://junaidcs032.github.io/">&#10025;</a>
+                <a href="https://liangxuy.github.io/">&#10025;</a>
+                <a href="http://www.public.asu.edu/~ssarka18/">&#10025;</a>
+                <a href="https://www.cs.toronto.edu/~jennachoi/">&#10025;</a>
+                <a href="https://amankhullar.github.io/">&#10025;</a>
+                <a href="https://vijayvee.github.io/">&#10025;</a>
+                <a href="https://anmolgoel.dev/">&#10025;</a>
+                <a href="https://chanh.ee/">&#10025;</a>
+                <a href="https://jefflai108.github.io/">&#10025;</a>
+                <a href="https://pvskand.github.io/">&#10025;</a>
+                <a href="https://ariostgx.github.io/website/">&#10025;</a>
+                <a href="https://www.cs.utexas.edu/~shreyd/">&#10025;</a>
+                <a href="https://www.cedrick.ai/">&#10025;</a>
+                <a href="https://onlytailei.github.io/">&#10025;</a>
+                <a href="https://people.cs.vt.edu/liminyang/">&#10025;</a>
+                <a href="https://alexander-kirillov.github.io/">&#10025;</a>
+                <a href="https://sites.cs.ucsb.edu/~yanju/">&#10025;</a>
+                <a href="https://www.cct.lsu.edu/~cliu/">&#10025;</a>
+                <a href="https://sid2697.github.io/">&#10025;</a>
+                <a href="https://brendonjeromebutler.com/">&#10025;</a>
+                <a href="https://bthananjeyan.github.io/">&#10025;</a>
+                <a href="https://leonidk.com/">&#10025;</a>
+                <a href="http://bopeng.space/">&#10025;</a>
+                <a href="https://gautamigolani.github.io/">&#10025;</a>
+                <a href="https://rohitrango.github.io/">&#10025;</a>
+                <a href="https://prithv1.github.io/">&#10025;</a>
+                <a href="https://www.idiap.ch/~tpereira/">&#10025;</a>
+                <a href="https://felipefelixarias.github.io/">&#10025;</a>
+                <a href="https://sophieschau.github.io/">&#10025;</a>
+                <a href="https://wensun.github.io/">&#10025;</a>
+                <a href="http://cs.umanitoba.ca/~kumarkm/">&#10025;</a>
+                <a href="https://sourav-roni.github.io/">&#10025;</a>
+                <a href="https://parskatt.github.io/">&#10025;</a>
+                <a href="https://rauldiaz.github.io/">&#10025;</a>
+                <a href="https://uzeful.github.io/">&#10025;</a>
+                <a href="https://roeiherz.github.io/">&#10025;</a>
+                <a href="http://relh.net/">&#10025;</a>
+                <a href="https://ars-ashuha.ru/">&#10025;</a>
+                <a href="https://prieuredesion.github.io/">&#10025;</a>
+                <a href="https://tsujuifu.github.io/">&#10025;</a>
+                <a href="https://pranoy-k.github.io/website/">&#10025;</a>
+                <a href="https://xiaoleiz.github.io/">&#10025;</a>
+                <a href="https://users.ece.cmu.edu/~bahn/">&#10025;</a>
+                <a href="http://eracah.github.io/">&#10025;</a>
+                <a href="https://adityakusupati.github.io/">&#10025;</a>
+                <a href="https://agadetsky.github.io/">&#10025;</a>
+                <a href="https://coh1211.github.io/">&#10025;</a>
+                <a href="https://people.eecs.berkeley.edu/~kevinlin/">&#10025;</a>
+                <a href="https://bucherb.github.io/">&#10025;</a>
+                <a href="https://naman-ntc.github.io/">&#10025;</a>
+                <a href="https://nicolay-r.github.io/">&#10025;</a>
+                <a href="https://sakshambassi.github.io/">&#10025;</a>
+                <a href="https://maheshmohanmr.github.io/publications/">&#10025;</a>
+                <a href="http://byang.org/">&#10025;</a>
+                <a href="https://sylqiu.github.io/">&#10025;</a>
+                <a href="https://www.cc.gatech.edu/~sfoley30/">&#10025;</a>
+                <a href="https://crockwell.github.io/">&#10025;</a>
+                <a href="https://kritikalcoder.github.io/">&#10025;</a>
+                <a href="https://isrugeek.github.io/">&#10025;</a>
+                <a href="https://wei-ying.net/">&#10025;</a>
+                <a href="http://people.csail.mit.edu/liuyingcheng/">&#10025;</a>
+                <a href="https://itsreddy.github.io/">&#10025;</a>
+                <a href="https://aditimavalankar.github.io">&#10025;</a>
+                <a href="https://www.cs.ubc.ca/~zhenanf/">&#10025;</a>
+                <a href="https://trinkle23897.github.io/cv/">&#10025;</a>
+                <a href="https://tgangwani.github.io/">&#10025;</a>
+                <a href="https://hannahlawrence.github.io/">&#10025;</a>
+                <a href="http://bingxu.tech/">&#10025;</a>
+                <a href="http://apjacob.me/">&#10025;</a>
+                <a href="https://www.ee.iitb.ac.in/student/~krishnasubramani/">&#10025;</a>
+                <a href="https://gowthamkuntumalla.github.io/">&#10025;</a>
+                <a href="https://dkkim93.github.io/">&#10025;</a>
+                <a href="https://chaitanyamalaviya.github.io/">&#10025;</a>
+                <a href="https://daochenw.github.io/">&#10025;</a>
+                <a href="https://acvictor.github.io/">&#10025;</a>
+                <a href="https://tarund1996.github.io/">&#10025;</a>
+                <a href="http://www-personal.umich.edu/~belz/">&#10025;</a>
+                <a href="http://lauredelisle.com/">&#10025;</a>
+                <a href="https://tsly123.github.io/">&#10025;</a>
+                <a href="https://vanditg.github.io/">&#10025;</a>
+                <a href="https://nhoma.github.io/">&#10025;</a>
+                <a href="http://www.pedro.opinheiro.com/">&#10025;</a>
+                <a href="https://suvan.sh/">&#10025;</a>
+                <a href="https://www.diptanu.com/">&#10025;</a>
+                <a href="https://yimengli46.github.io/">&#10025;</a>
+                <a href="https://gauravparmar.com/">&#10025;</a>
+                <a href="https://cchoquette.github.io/">&#10025;</a>
+                <a href="https://psyche-mia.github.io/">&#10025;</a>
+                <a href="https://mvp18.github.io/">&#10025;</a>
+                <a href="https://markfzp.github.io/">&#10025;</a>
+                <a href="https://theultramarine19.github.io/">&#10025;</a>
+                <a href="https://sairajk.github.io/">&#10025;</a>
+                <a href="https://paritoshparmar.github.io/">&#10025;</a>
+                <a href="https://purvak-l.github.io/">&#10025;</a>
+                <a href="https://davideabati.info/">&#10025;</a>
+                <a href="https://ethanperez.net/">&#10025;</a>
+                <a href="http://mdai.me/">&#10025;</a>
+                <a href="https://nitish-nagesh.github.io/">&#10025;</a>
+                <a href="https://duroz.github.io/">&#10025;</a>
+                <a href="http://people.uncw.edu/dogang/">&#10025;</a>
+                <a href="http://hal9000.space">&#10025;</a>
+                <a href="http://web.stanford.edu/~yjiang05/">&#10025;</a>
+                <a href="https://pratulsrinivasan.github.io/">&#10025;</a>
+                <a href="http://linuxdeveloper.io">&#10025;</a>
+                <a href="http://umiacs.umd.edu/~kdbrant">&#10025;</a>
+                <a href="https://adityassrana.github.io/blog/about">&#10025;</a>
+                <a href="https://mpalrocks.github.io/">&#10025;</a>
+                <a href="https://victor7246.github.io/">&#10025;</a>
+                <a href="https://www.haozhu-wang.com/">&#10025;</a>
+                <a href="https://rajatjaiswal.me/">&#10025;</a>
+                <a href="https://senya-ashukha.github.io/">&#10025;</a>
+                <a href="https://qiminchen.github.io/">&#10025;</a>
+                <a href="https://mark12ding.github.io/">&#10025;</a>
+                <a href="https://zsb87.github.io/">&#10025;</a>
+                <a href="https://yashbhalgat.github.io/">&#10025;</a>
+                <a href="https://r0cketr1kky.github.io/">&#10025;</a>
+                <a href="https://jaydeepborkar.github.io/">&#10025;</a>
+                <a href="https://lidq92.github.io/">&#10025;</a>
+                <a href="https://statho.github.io/">&#10025;</a>
+                <a href="https://ankit-kaul.github.io/">&#10025;</a>
+                <a href="https://jlidard.github.io/">&#10025;</a>
+                <a href="http://harshpanwar.me/">&#10025;</a>
+                <a href="https://c0ldstudy.github.io/about/">&#10025;</a>
+                <a href="https://pro-vider.github.io/personal-website/">&#10025;</a>
+                <a href="http://avinashpaliwal.com/">&#10025;</a>
+                <a href="https://soham-official.github.io/portfolio/">&#10025;</a>
+                <a href="https://cdmdc.github.io/">&#10025;</a>
+                <a href="http://www.wisdom.weizmann.ac.il/~/assafsho/">&#10025;</a>
+                <a href="https://yotamnitzan.github.io/">&#10025;</a>
+                <a href="https://www.zijianwang.me/">&#10025;</a>
+                <a href="https://people.rit.edu/hv8322/">&#10025;</a>
+                <a href="https://ilyac.info/">&#10025;</a>
+                <a href="https://tamarott.github.io/">&#10025;</a>
+                <a href="https://www.cmlab.csie.ntu.edu.tw/~yulunliu/">&#10025;</a>
+                <a href="https://stanford.edu/~amywang1/">&#10025;</a>
+                <a href="https://g1910.github.io/">&#10025;</a>
+                <a href="http://ozzie00.github.io/">&#10025;</a>
+                <a href="http://xiomarag.github.io">&#10025;</a>
+                <a href="http://plalsanjay.github.io">&#10025;</a>
+                <a href="https://vr25.github.io/">&#10025;</a>
+                <a href="https://vishal-keshav.github.io">&#10025;</a>
+                <a href="https://zhihualiued.github.io">&#10025;</a>
+                <a href="https://lczong.github.io/">&#10025;</a>
+                <a href="https://timkimd.github.io/">&#10025;</a>
+		            <a href="https://hyekangjoo.github.io/">&#10025;</a>
+		            <a href="https://nivha.github.io/">&#10025;</a>
+		            <a href="https://litun5315.github.io/">&#10025;</a>
+		            <a href="https://pursuerchen.github.io/">&#10025;</a>
+		            <a href="https://shubhamdongriyal.github.io/Homepage/">&#10025;</a>
+		            <a href="https://digantamisra98.github.io/">&#10025;</a>
+		            <a href="https://zhunzhong.com/">&#10025;</a>
+		            <a href="https://web.mit.edu/bauza/www/">&#10025;</a>
+		            <a href="https://shjung13.github.io">&#10025;</a>
+		            <a href="https://analogicalnexus.github.io">&#10025;</a>
+		            <a href="http://yjzheng.com">&#10025;</a>
+		            <a href="http://kiranramnath007.github.io">&#10025;</a>
+		      	    <a href="https://fdlandi.github.io/">&#10025;</a>
+		      	    <a href="https://sherrycattt.github.io/">&#10025;</a>
+		            <a href="http://petersen.ai">&#10025;</a>
+		            <a href="https://habibslim.github.io/">&#10025;</a>
+                <a href="https://rsk97.github.io/">&#10025;</a>
+		            <a href="https://leoshine.github.io/">&#10025;</a>
+                <a href="https://pierbeneventano.github.io/">&#10025;</a>
+                <a href="https://tonmoay.de/">&#10025;</a>
+                <a href="https://hsjang.com/">&#10025;</a>
+                <a href="http://alexanderli.com/">&#10025;</a>		      
+		<a href="https://gabeur.github.io/">&#10025;</a>
+		<a href="https://asaran.github.io/">&#10025;</a>
+		<a href="https://stevejayh.github.io/">&#10025;</a>
+	      	<a href="https://atfortes.github.io/">&#10025;</a>
+	        <a href="https://alexj94.github.io/">&#10025;</a>
+		<a href="https://jiaxiaosong1002.github.io/">&#10025;</a>
+		<a href="https://imethanlee.github.io/">&#10025;</a>
+		<a href="https://mirmix.github.io/">&#10025;</a>
+		<a href="http://jiayisu.com/">&#10025;</a>
+                <br>
+                Also, consider using <a href="https://leonidk.com/">Leonid Keselman</a>'s <a href="https://github.com/leonidk/new_website">Jekyll fork</a> of this page.
+              </p>
+            </td>
+          </tr>
+        </tbody></table> -->
+ 
+ 
+ 
+        <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+          <tr>
+            <td style="padding:0px">
+              <br>
+              <p style="text-align:right;font-size:small;">
+              Source code credit to <a href="https://jonbarron.info/" target="_blank">Dr. Jon Barron</a></p>
+            </td>
+          </tr>
+        </tbody></table>
+ 
+      </td>
+    </tr>
+  </table>
+
+</body>
+
+</html>
