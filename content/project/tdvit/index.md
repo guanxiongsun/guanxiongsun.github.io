@@ -4,7 +4,12 @@ external_link: project/tdvit/tdvit.html
 
 date: "2022-07-20"
 
-summary: Guanxiong Sun, Yang Hua, Guosheng Hu, Neil Robertson <br> in ECCV 2022
+summary: "***Guanxiong Sun***, 
+[Yang Hua](https://scholar.google.com/citations?user=N0tFi8MAAAAJ&hl=en), 
+[Guosheng Hu](https://www.linkedin.com/in/guosheng-hu-6801b333), 
+[Neil Robertson](https://www.linkedin.com/in/nmrobertson)<br> 
+In *ECCV*, 2022<br>
+*A transformer backbone designed for dense video tasks, e.g., video object detection, video instance segmentation.*"
 tags:
 - Video Object Detection
 
@@ -12,7 +17,7 @@ links:
 - icon: file-pdf
   icon_pack: fas
   name: Paper
-  url: https://ojs.aaai.org/index.php/AAAI/article/view/16365
+  # url: https://ojs.aaai.org/index.php/AAAI/article/view/16365
 - icon: file-powerpoint
   icon_pack: fas
   name: Project page
