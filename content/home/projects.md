@@ -9,8 +9,10 @@ headless: true
 # Order that this section appears on the page.
 weight: 20
 
-title: Projects
+title: Publications && Projects
 subtitle: ''
+
+sort_by: 'Date'
 
 content:
   # Page type to display. E.g. project.
@@ -31,19 +33,21 @@ content:
     tag: Video Object Detection
   - name: Medical Image Processing
     tag: Medical Image Processing
-  - name: Other
-    tag: Demo
+  - name: Others
+    tag: Others
 
 design:
   # Choose how many columns the section has. Valid values: '1' or '2'.
   columns: '1'
+  rows: '5'
 
   # Toggle between the various page layout types.
   #   1 = List
   #   2 = Compact
   #   3 = Card
   #   5 = Showcase
-  view: 5
+  # view: 5
+  view: community/myshowcase
 
   # For Showcase view, flip alternate rows?
   flip_alt_rows: false

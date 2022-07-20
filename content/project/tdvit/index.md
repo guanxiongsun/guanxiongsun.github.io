@@ -1,9 +1,10 @@
 ---
-title: 'MAMBA: Multi-level Aggregation via Memory Bank for Video Object Detection'
+title: 'TDViT: Temporal Dilated Video Transformer for Dense Video Tasks'
+external_link: project/tdvit/tdvit.html
 
-date: "2021-07-20T00:00:00Z"
+date: "2022-07-21T00:00:00Z"
 
-summary: Guanxiong Sun, Yang Hua, Guosheng Hu, Neil Robertson <br> in AAAI 2021
+summary: Guanxiong Sun, Yang Hua, Guosheng Hu, Neil Robertson <br> in ECCV 2022
 tags:
 - Video Object Detection
 
@@ -15,7 +16,7 @@ links:
 - icon: file-powerpoint
   icon_pack: fas
   name: Project page
-  url: project/mamba/mamba.html
+  url: project/tdvit/tdvit.html
 url_code: ""
 url_slides: ""
 url_video: ""
