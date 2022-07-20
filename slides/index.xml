@@ -19,7 +19,7 @@
 &lt;li>Speaker notes: &lt;code>S&lt;/code>&lt;/li>
 &lt;li>Fullscreen: &lt;code>F&lt;/code>&lt;/li>
 &lt;li>Zoom: &lt;code>Alt + Click&lt;/code>&lt;/li>
-&lt;li>&lt;a href="https://revealjs.com/pdf-export/" target="_blank" rel="noopener">PDF Export&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://github.com/hakimel/reveal.js#pdf-export" target="_blank" rel="noopener">PDF Export&lt;/a>: &lt;code>E&lt;/code>&lt;/li>
 &lt;/ul>
 &lt;hr>
 &lt;h2 id="code-highlighting">Code Highlighting&lt;/h2>
@@ -61,10 +61,9 @@ Three
 &lt;h2 id="speaker-notes">Speaker Notes&lt;/h2>
 &lt;p>Add speaker notes to your presentation&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-markdown" data-lang="markdown">&lt;span class="line">&lt;span class="cl">{{% speaker_note %}}
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">-&lt;/span> Only the speaker can read these notes
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">-&lt;/span> Press &lt;span class="sb">`S`&lt;/span> key to view
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> {{% /speaker_note %}}
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">{{% /speaker_note %}}
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Press the &lt;code>S&lt;/code> key to view the speaker notes!&lt;/p>
 &lt;aside class="notes">
 &lt;ul>
