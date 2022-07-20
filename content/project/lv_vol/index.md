@@ -1,8 +1,7 @@
 ---
-title: 'MAMBA: Multi-level Aggregation via Memory Bank for Video Object Detection'
-external_link: project/mamba/mamba.html
+title: 'volume'
 
-date: "2021-07-20T00:00:00Z"
+date: "2017-07-20T00:00:00Z"
 
 summary: Guanxiong Sun, Yang Hua, Guosheng Hu, Neil Robertson <br> in AAAI 2021
 tags:

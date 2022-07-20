@@ -1,6 +1,5 @@
 ---
 title: 'lvseg'
-external_link: project/mamba/mamba.html
 
 date: "2017-07-20T00:00:00Z"
 

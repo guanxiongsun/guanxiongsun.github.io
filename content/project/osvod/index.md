@@ -2,9 +2,9 @@
 title: 'Efficient One-stage Video Object Detection by Exploiting Temporal Consistency'
 external_link: project/osvod/osvod.html
 
-date: "2022-07-20T00:00:00Z"
+date: "2022-07-19"
 
-summary: Guanxiong Sun, Yang Hua, Guosheng Hu, Neil Robertson <br> in AAAI 2021
+summary: Guanxiong Sun, Yang Hua, Guosheng Hu, Neil Robertson <br> in ECCV 2022
 tags:
 - Video Object Detection
 

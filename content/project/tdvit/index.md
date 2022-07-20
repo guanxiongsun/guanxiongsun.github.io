@@ -2,7 +2,7 @@
 title: 'TDViT: Temporal Dilated Video Transformer for Dense Video Tasks'
 external_link: project/tdvit/tdvit.html
 
-date: "2022-07-21T00:00:00Z"
+date: "2022-07-20"
 
 summary: Guanxiong Sun, Yang Hua, Guosheng Hu, Neil Robertson <br> in ECCV 2022
 tags:
