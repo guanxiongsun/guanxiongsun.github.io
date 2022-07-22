@@ -139,7 +139,7 @@
 	<br>
 	<center>
 		<span style="font-size:36px">
-			<font color="red">MAMBA</font>: <font color="red">M</font>ulti-level <font color="red">A</font>ggregation via <font color="red">M</font>emory <font color="red">BA</font>nk for Video Object Detection</span>
+			<font color="red">TDViT</font>: <font color="red">T</font>emporal <font color="red">D</font>ilated <font color="red">Vi</font>deo <font color="red">T</font>ransformer for Dense Video Tasks</span>
 		<table align=center width=600px>
 			<table align=center width=800px>
 				<tr>
@@ -170,12 +170,12 @@
 				<tr>
 					<td align=center width=120px>
 						<center>
-							<span style="font-size:24px"><a href="https://ojs.aaai.org/index.php/AAAI/article/view/16365">[Paper]</a></span>
+							<span style="font-size:24px"><a href="">[Paper]</a></span>
 						</center>
 					</td>
 					<td align=center width=120px>
 						<center>
-							<span style="font-size:24px"><a href='https://github.com/richzhang/webpage-template'>[GitHub]</a></span><br>
+							<span style="font-size:24px"><a href="https://github.com/guanxiongsun/TDViT">[GitHub]</a></span><br>
 						</center>
 					</td>
 				</tr>
@@ -208,23 +208,15 @@
 		<center><h1>Abstract</h1></center>
 		<tr>
 			<td>
-				SOTA video object detection methods maintain a memory structure, either a sliding window or a memory queue, to enhance the current frame using attention mechanisms. However, these memory structures are not efficient or sufficient because of two implied operations: (1) <font color="orange">concatenation</font>, leading to a heavy computational cost; (2) <font color="orange">frame-wise updating</font>, preventing from capturing long-term temporal correlations. Correspondingly, we propose a memory bank structure that contains two novel operations: (1) <font color="blue">lightweight sampling</font>; (2) <font color="blue">fine-grained feature-wise updating</font>. Using the memory bank, our method can utilize knowledge from the whole video more effectively and efficiently. To better enhance features from complementary levels, i.e., features and proposals, we introduce a multi-level aggregation network using memory banks. Our method achieves superior performance on the ImageNet VID dataset.
+				Deep video models, for example, 3D CNNs or video transformers, have achieved promising performance on sparse video tasks, i.e., predicting one result per video. However, challenges arise when adapting existing deep video models to dense video tasks, i.e., predicting one result per frame. Specifically, these models are expensive for deployment, less effective when handling redundant frames and difficult to capture long-range temporal correlations. To overcome these issues, we propose a Temporal Dilated Video Transformer (TDViT) that consists of carefully-designed temporal dilated transformer blocks (TDTB). TDTB can efficiently extract spatiotemporal representations and effectively alleviate the negative effect of temporal redundancy. Furthermore, by using hierarchical TDTBs, our approach obtains an exponentially expanded temporal receptive field and therefore can model long-range dynamics. Extensive experiments are conducted on two different dense video benchmarks, i.e., ImageNet VID for video object detection and YouTube VIS for video instance segmentation. Excellent experimental results demonstrate the superior efficiency, effectiveness, and compatibility of our method.
 			</td>
 		</tr>
 		<table align=center width=850px>
 			<tr>
 				<td width=260px>
 					<center>
-						<img class="round" style="width:700px" src="./data/mamba_before.gif"/>
+						<img class="round" style="width:700px" src="./data/featured.png"/>
 						<figcaption>Fig.1 Sliding window memory structure in existing video object detection methods.</figcaption>
-					</center>
-				</td>
-			</tr>
-			<tr>
-				<td width=260px>
-					<center>
-						<img class="round" style="width:700px" src="./data/mamba_after.gif"/>
-						<figcaption>Fig.2 The proposed memory bank structure in our method.</figcaption>
 					</center>
 				</td>
 			</tr>
@@ -233,22 +225,6 @@
 
 	</table>
 	<br>
-
-	<!-- <hr>
-	<center><h1>Talk</h1></center>
-	<p align="center">
-		<iframe width="660" height="395" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen align="center"></iframe>
-	</p>
-
-	<table align=center width=800px>
-		<br>
-		<tr>
-			<center>
-				<span style="font-size:28px"><a href=''>[Slides]</a>
-				</span>
-			</center>
-		</tr>
-	</table> -->
 
 	<hr>
 
@@ -292,8 +268,8 @@
 		<tr>
 			<td><a href="https://ojs.aaai.org/index.php/AAAI/article/view/16365/16172"><img class="layered-paper-big" style="height:175px" src="./data/paper.png"/></a></td>
 			<td><span style="font-size:14pt">Guanxiong Sun, Yang Hua, Guosheng Hu, Neil Robertson.<br>
-				<b>MAMBA: Multi-level Aggregation via Memory Bank for Video Object Detection.</b><br>
-				In Proceedings of the AAAI Conference on Artificial Intelligence (AAAI), 2021.<br>
+				<b>TDViT: Temporal Dilated Video Transformer for Dense Video Tasks.</b><br>
+				In Proceedings of the European Conference on Computer Vision (ECCV), 2022.<br>
 				<!-- (hosted on <a href="">ArXiv</a>)<br> -->
 				<!-- (<a href="./data/camera-ready.pdf">camera ready</a>)<br> -->
 				<span style="font-size:4pt"><a href=""><br></a>
