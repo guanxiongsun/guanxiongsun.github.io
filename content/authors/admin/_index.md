@@ -73,7 +73,7 @@ highlight_name: true
 
 I am a PhD student in the school of EEECS at Queen's University Belfast, advised by Dr. Hua Yang and Prof. Neil Robertson. My research interests are in computer vision, specifically, object detection and video analysis.
 
-I received my master and bachelor degrees from the department of Computer Science at Harbin Institute of Technology, one of the most famous universities in China.
+I received my master and bachelor degrees from the department of Computer Science at Harbin Institute of Technology, China.
 
 
 {{< icon name="download" pack="fas" >}} Download my {{< staticref "uploads/demo_resume.pdf" "newtab" >}}resumé{{< /staticref >}}.
