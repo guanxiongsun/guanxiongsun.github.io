@@ -1,6 +1,151 @@
 <script src="https://www.google.com/jsapi" type="text/javascript"></script> 
 <script type="text/javascript">google.load("jquery", "1.3.2");</script>
 
+<!-- Lyket sidebar https://lyket.dev/docs/html -->
+<script src="https://unpkg.com/@lyket/widget@latest/dist/lyket.js?apiKey=pt_67c11820519102027fac360044664f"></script>
+<!-- Go to www.addthis.com/dashboard to customize your tools -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-62dbe772e71548bc"></script>
+
+<style type="text/css">
+	body {
+		font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+		font-weight:300;
+		font-size:18px;
+		margin-left: auto;
+		margin-right: auto;
+		width: 1100px;
+	}
+	
+	h1 {
+		font-size:32px;
+		font-weight:300;
+	}
+	
+	.disclaimerbox {
+		background-color: #eee;		
+		border: 1px solid #eeeeee;
+		border-radius: 10px ;
+		-moz-border-radius: 10px ;
+		-webkit-border-radius: 10px ;
+		padding: 20px;
+	}
+
+	video.header-vid {
+		height: 140px;
+		border: 1px solid black;
+		border-radius: 10px ;
+		-moz-border-radius: 10px ;
+		-webkit-border-radius: 10px ;
+	}
+	
+	img.header-img {
+		height: 140px;
+		border: 1px solid black;
+		border-radius: 10px ;
+		-moz-border-radius: 10px ;
+		-webkit-border-radius: 10px ;
+	}
+	
+	img.rounded {
+		border: 1px solid #eeeeee;
+		border-radius: 10px ;
+		-moz-border-radius: 10px ;
+		-webkit-border-radius: 10px ;
+	}
+	
+	a:link,a:visited
+	{
+		color: #1367a7;
+		text-decoration: none;
+	}
+	a:hover {
+		color: #208799;
+	}
+	
+	td.dl-link {
+		height: 160px;
+		text-align: center;
+		font-size: 22px;
+	}
+	
+	.layered-paper-big { /* modified from: http://css-tricks.com/snippets/css/layered-paper/ */
+		box-shadow:
+		0px 0px 1px 1px rgba(0,0,0,0.35), /* The top layer shadow */
+		5px 5px 0 0px #fff, /* The second layer */
+		5px 5px 1px 1px rgba(0,0,0,0.35), /* The second layer shadow */
+		10px 10px 0 0px #fff, /* The third layer */
+		10px 10px 1px 1px rgba(0,0,0,0.35), /* The third layer shadow */
+		15px 15px 0 0px #fff, /* The fourth layer */
+		15px 15px 1px 1px rgba(0,0,0,0.35), /* The fourth layer shadow */
+		20px 20px 0 0px #fff, /* The fifth layer */
+		20px 20px 1px 1px rgba(0,0,0,0.35), /* The fifth layer shadow */
+		25px 25px 0 0px #fff, /* The fifth layer */
+		25px 25px 1px 1px rgba(0,0,0,0.35); /* The fifth layer shadow */
+		margin-left: 10px;
+		margin-right: 45px;
+	}
+
+	.paper-big { /* modified from: http://css-tricks.com/snippets/css/layered-paper/ */
+		box-shadow:
+		0px 0px 1px 1px rgba(0,0,0,0.35); /* The top layer shadow */
+
+		margin-left: 10px;
+		margin-right: 45px;
+	}
+
+
+	.layered-paper { /* modified from: http://css-tricks.com/snippets/css/layered-paper/ */
+		box-shadow:
+		0px 0px 1px 1px rgba(0,0,0,0.35), /* The top layer shadow */
+		5px 5px 0 0px #fff, /* The second layer */
+		5px 5px 1px 1px rgba(0,0,0,0.35), /* The second layer shadow */
+		10px 10px 0 0px #fff, /* The third layer */
+		10px 10px 1px 1px rgba(0,0,0,0.35); /* The third layer shadow */
+		margin-top: 5px;
+		margin-left: 10px;
+		margin-right: 30px;
+		margin-bottom: 5px;
+	}
+	
+	.vert-cent {
+		position: relative;
+		top: 50%;
+		transform: translateY(-50%);
+	}
+	
+	hr
+	{
+		border: 0;
+		height: 1px;
+		background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+	}
+</style>
+
+<style>
+	.sticky-container {
+	/*background-color: #333;*/
+	padding: 0px;
+	margin: 0px;
+	position: fixed;
+	right: -80px;
+	top: 35%;
+	width: 200px;
+	bottom: auto;
+	}
+</style>
+
+<div class="sticky-container">
+<ul class="sticky">
+	<div style="font-size: 25px"
+	data-lyket-type="like"
+	data-lyket-id="osvod"
+	data-lyket-namespace="project"
+	data-lyket-template="chevron"
+	data-lyket-color-background="rgba(255, 224, 138, 0.4)"
+	></div>
+</ul>
+</div>
+
 <style type="text/css">
 	body {
 		font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
@@ -118,8 +263,8 @@
 
 <html>
 <head>
-	<title>MAMBA</title>
-	<meta property="og:image" content="Path to my teaser.png"/> <!-- Facebook automatically scrapes this. Go to https://developers.facebook.com/tools/debug/ if you update and want to force Facebook to rescrape. -->
+	<title>EOVOD</title>
+	<meta property="og:image" content="Path to my teaser.gif"/> <!-- Facebook automatically scrapes this. Go to https://developers.facebook.com/tools/debug/ if you update and want to force Facebook to rescrape. -->
 	<meta property="og:title" content="Creative and Descriptive Paper Title." />
 	<meta property="og:description" content="Paper description." />
 
@@ -139,7 +284,7 @@
 	<br>
 	<center>
 		<span style="font-size:36px">
-			<font color="red">MAMBA</font>: <font color="red">M</font>ulti-level <font color="red">A</font>ggregation via <font color="red">M</font>emory <font color="red">BA</font>nk for Video Object Detection</span>
+			<font color="red">E</font>fficient <font color="red">O</font>ne-stage <font color="red">V</font>ideo <font color="red">O</font>bject <font color="red">D</font>etection by <br> Exploiting Temporal Consistency</span>
 		<table align=center width=600px>
 			<table align=center width=800px>
 				<tr>
@@ -175,7 +320,7 @@
 					</td>
 					<td align=center width=120px>
 						<center>
-							<span style="font-size:24px"><a href='https://github.com/richzhang/webpage-template'>[GitHub]</a></span><br>
+							<span style="font-size:24px"><a href='https://github.com/guanxiongsun/EOVOD'>[GitHub]</a></span><br>
 						</center>
 					</td>
 				</tr>
@@ -188,7 +333,7 @@
 			<tr>
 				<td width=260px>
 					<center>
-						<img class="round" style="width:600px" src="./data/teaser.png"/>
+						<img class="round" style="width:600px" src="./featured.gif"/>
 					</center>
 				</td>
 			</tr>
@@ -208,92 +353,41 @@
 		<center><h1>Abstract</h1></center>
 		<tr>
 			<td>
-				SOTA video object detection methods maintain a memory structure, either a sliding window or a memory queue, to enhance the current frame using attention mechanisms. However, these memory structures are not efficient or sufficient because of two implied operations: (1) <font color="orange">concatenation</font>, leading to a heavy computational cost; (2) <font color="orange">frame-wise updating</font>, preventing from capturing long-term temporal correlations. Correspondingly, we propose a memory bank structure that contains two novel operations: (1) <font color="blue">lightweight sampling</font>; (2) <font color="blue">fine-grained feature-wise updating</font>. Using the memory bank, our method can utilize knowledge from the whole video more effectively and efficiently. To better enhance features from complementary levels, i.e., features and proposals, we introduce a multi-level aggregation network using memory banks. Our method achieves superior performance on the ImageNet VID dataset.
+				Recently, one-stage detectors have achieved competitive accuracy and faster speed compared with traditional two-stage detectors on image data. However, in the field of video object detection (VOD), most existing VOD methods are still based on two-stage detectors. Moreover, directly adapting existing VOD methods to one-stage detectors introduces unaffordable computational costs. In this paper, we first analyse the computational bottlenecks of using one-stage detectors for VOD. Based on the analysis, we present a simple yet efficient framework to address the computational bottlenecks and achieve efficient one-stage VOD by exploiting the temporal consistency in video frames. Specifically, our method consists of a location prior network to filter out background regions and a size prior network to skip unnecessary computations on low-level feature maps for specific frames. We test our method on various modern one-stage detectors and conduct extensive experiments on the ImageNet VID dataset. Excellent experimental results demonstrate the superior effectiveness, efficiency, and compatibility of our method. 
 			</td>
 		</tr>
-		<table align=center width=850px>
-			<tr>
-				<td width=260px>
-					<center>
-						<img class="round" style="width:700px" src="./data/mamba_before.gif"/>
-						<figcaption>Fig.1 Sliding window memory structure in existing video object detection methods.</figcaption>
-					</center>
-				</td>
-			</tr>
-			<tr>
-				<td width=260px>
-					<center>
-						<img class="round" style="width:700px" src="./data/mamba_after.gif"/>
-						<figcaption>Fig.2 The proposed memory bank structure in our method.</figcaption>
-					</center>
-				</td>
-			</tr>
-		</table>
-
 
 	</table>
-	<br>
 
-	<!-- <hr>
-	<center><h1>Talk</h1></center>
-	<p align="center">
-		<iframe width="660" height="395" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen align="center"></iframe>
-	</p>
-
-	<table align=center width=800px>
-		<br>
+	<table align=center width=850px>
 		<tr>
-			<center>
-				<span style="font-size:28px"><a href=''>[Slides]</a>
-				</span>
-			</center>
-		</tr>
-	</table> -->
-
-	<hr>
-
-	<center><h1>Method</h1></center>
-
-	<table align=center width=420px>
-		<center>
-			<tr>
-				<td>
-				</td>
-			</tr>
-		</center>
-	</table>
-	<table align=center width=900px>
-		<tr>
+			<td>
 				<center>
-					<td><img class="round" style="width:900px" src="./data/method.png"/></td>
+					<img class="round" style="width:700px" src="./data/spn.jpg"/>
+					<figcaption>Fig.1 (a) shows the process of directly conducting attention-based feature aggrega- tion, where the purple rounded rectangle denotes the attention module. In (a), the input of the attention module is all pixels on the current frame and reference frames. (b) shows the pipeline of using location prior network for feature aggregation, where the red bounding box denotes the propagated bounding boxes from the previous frame.</figcaption>
 				</center>
+				<br>
+			</td>
+		</tr>
+		<br>
+		<tr>
+			<td>
+				<center>
+					<img class="round" style="width:600px" src="./data/lpn.jpg"/>
+					<figcaption>Fig.2 (a) shows a normal detection process on multi-level feature maps where all levels of feature maps are passed to detection heads. (b) shows the detection process guided by the size prior network. The pink box denotes the feature level which the bounding boxes of the previous frame are generated from. In the current frame, computations on feature levels not in the pink box are skipped, denoted with the transparent boxes and dotted lines.</figcaption>
+				</center>
+			</td>
 		</tr>
 	</table>
-	<!-- <table align=center width=850px>
-		<center>
-			<tr>
-				<td>
-					Short description if wanted
-				</td>
-			</tr>
-		</center>
-	</table> -->
-	<!-- <table align=center width=800px>
-		<br>
-		<tr><center>
-			<span style="font-size:28px">&nbsp;<a href='https://github.com/richzhang/webpage-template'>[GitHub]</a>
-			</center>
-		</span>
-	</table> -->
 	<br>
 	<hr>
 	<table align=center width=1000px>
 		<center><h1>Paper and Supplementary Material</h1></center>
 		<tr>
-			<td><a href="https://ojs.aaai.org/index.php/AAAI/article/view/16365/16172"><img class="layered-paper-big" style="height:175px" src="./data/paper.png"/></a></td>
+			<td><a href="fake_paper_url"><img class="layered-paper-big" style="height:175px" src="./data/paper.jpg"/></a></td>
 			<td><span style="font-size:14pt">Guanxiong Sun, Yang Hua, Guosheng Hu, Neil Robertson.<br>
-				<b>MAMBA: Multi-level Aggregation via Memory Bank for Video Object Detection.</b><br>
-				In Proceedings of the AAAI Conference on Artificial Intelligence (AAAI), 2021.<br>
+				<b>Efficient One-stage Video Object Detection by Exploiting Temporal Consistency.</b><br>
+				In Proceedings of the European Conference on Computer Vision (ECCV), 2022.<br>
 				<!-- (hosted on <a href="">ArXiv</a>)<br> -->
 				<!-- (<a href="./data/camera-ready.pdf">camera ready</a>)<br> -->
 				<span style="font-size:4pt"><a href=""><br></a>
@@ -306,7 +400,8 @@
 	<table align=center width=600px>
 		<tr>
 			<td><span style="font-size:14pt"><center>
-				<a href="./data/bibtex.txt">[Bibtex]</a>
+				<!-- <a href="./data/bibtex.txt">[Bibtex]</a> -->
+				<a href="">[fake_bib]</a>
 			</center></td>
 		</tr>
 	</table>
