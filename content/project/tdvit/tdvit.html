@@ -1,6 +1,36 @@
 <script src="https://www.google.com/jsapi" type="text/javascript"></script> 
 <script type="text/javascript">google.load("jquery", "1.3.2");</script>
 
+<!-- Lyket sidebar https://lyket.dev/docs/html -->
+<script src="https://unpkg.com/@lyket/widget@latest/dist/lyket.js?apiKey=pt_67c11820519102027fac360044664f"></script>
+<!-- Go to www.addthis.com/dashboard to customize your tools -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-62dbe772e71548bc"></script>
+
+<style>
+	.sticky-container {
+	/*background-color: #333;*/
+	padding: 0px;
+	margin: 0px;
+	position: fixed;
+	right: -80px;
+	top: 35%;
+	width: 200px;
+	bottom: auto;
+	}
+</style>
+
+<div class="sticky-container">
+<ul class="sticky">
+	<div style="font-size: 25px"
+	data-lyket-type="like"
+	data-lyket-id="tdvit"
+	data-lyket-namespace="project"
+	data-lyket-template="chevron"
+	data-lyket-color-background="rgba(255, 224, 138, 0.4)"
+	></div>
+</ul>
+</div>
+
 <style type="text/css">
 	body {
 		font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
@@ -119,9 +149,9 @@
 <html>
 <head>
 	<title>TDViT</title>
-	<meta property="og:image" content="Path to my teaser.png"/> <!-- Facebook automatically scrapes this. Go to https://developers.facebook.com/tools/debug/ if you update and want to force Facebook to rescrape. -->
-	<meta property="og:title" content="Creative and Descriptive Paper Title." />
-	<meta property="og:description" content="Paper description." />
+	<meta property="og:image" content="feature"/> <!-- Facebook automatically scrapes this. Go to https://developers.facebook.com/tools/debug/ if you update and want to force Facebook to rescrape. -->
+	<meta property="og:title" content="TDViT: Temporal Dilated Video Transformer for Dense Video Tasks" />
+	<meta property="og:description" content="A transformer backbone designed for dense video tasks, e.g., video object detection, video instance segmentation." />
 
 	<!-- Get from Google Analytics -->
 	<!-- Global site tag (gtag.js) - Google Analytics -->
@@ -170,7 +200,7 @@
 				<tr>
 					<td align=center width=120px>
 						<center>
-							<span style="font-size:24px"><a href="">[Paper]</a></span>
+							<span style="font-size:24px"><a href="fake_paper_url">[Paper]</a></span>
 						</center>
 					</td>
 					<td align=center width=120px>
@@ -193,13 +223,6 @@
 				</td>
 			</tr>
 		</table>
-		<!-- <table align=center width=850px>
-			<tr>
-				<td>
-					This was a template originally made for <a href="http://richzhang.github.io/colorization/">Colorful Image Colorization</a>. The code can be found in this <a href="https://github.com/richzhang/webpage-template">repository</a>.
-				</td>
-			</tr>
-		</table> -->
 	</center>
 
 	<hr>
@@ -266,7 +289,7 @@
 	<table align=center width=1000px>
 		<center><h1>Paper and Supplementary Material</h1></center>
 		<tr>
-			<td><a href="https://ojs.aaai.org/index.php/AAAI/article/view/16365/16172"><img class="layered-paper-big" style="height:175px" src="./data/paper.jpg"/></a></td>
+			<td><a href="fake_paper_url"><img class="layered-paper-big" style="height:175px" src="./data/paper.jpg"/></a></td>
 			<td><span style="font-size:14pt">Guanxiong Sun, Yang Hua, Guosheng Hu, Neil Robertson.<br>
 				<b>TDViT: Temporal Dilated Video Transformer for Dense Video Tasks.</b><br>
 				In Proceedings of the European Conference on Computer Vision (ECCV), 2022.<br>
@@ -282,7 +305,7 @@
 	<table align=center width=600px>
 		<tr>
 			<td><span style="font-size:14pt"><center>
-				<a href="./data/bibtex.txt">[Bibtex]</a>
+				<a href="fake_bib">[fake_bib]</a>
 			</center></td>
 		</tr>
 	</table>
