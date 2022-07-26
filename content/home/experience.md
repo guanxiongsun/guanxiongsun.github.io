@@ -57,7 +57,9 @@ experience:
     location: Beijing, China
     date_start: '2018-10-01'
     date_end: '2019-02-01'
-    description: Taught electronic engineering and researched semiconductor physics.
+    description: |2-
+      * Data 
+      * Video classification
 
   - title: Research Intern
     company: Baidu
