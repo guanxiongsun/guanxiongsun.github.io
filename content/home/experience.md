@@ -44,11 +44,9 @@ experience:
     date_start: '2019-04-01'
     date_end: ''
     description: |2-
-        Responsibilities include:
-        
-        * Analysing
-        * Modelling
-        * Deploying
+        * Uncertainty for real-world face detection
+        * Liveness detection: training and deployment
+        * Weekly && monthly knowledge sharing meetings
 
   - title: Research Intern
     company: Sensetime
@@ -58,8 +56,9 @@ experience:
     date_start: '2018-10-01'
     date_end: '2019-02-01'
     description: |2-
-      * Data 
-      * Video classification
+      * Video classification on mobile devices
+      * Data management: collection, annotation, automation, analysis
+      * Model deployment and iteration
 
   - title: Research Intern
     company: Baidu
@@ -68,8 +67,9 @@ experience:
     location: Beijing, China
     date_start: '2017-06-01'
     date_end: '2019-09-01'
-    description: Taught electronic engineering and researched semiconductor physics.
-
+    description: |2-
+      * Human pose estimation
+      * Model compression: knowledge distillation and pruning
 design:
   columns: '2'
 ---
