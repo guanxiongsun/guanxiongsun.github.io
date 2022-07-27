@@ -44,7 +44,7 @@ experience:
     date_start: '2019-04-01'
     date_end: ''
     description: |2-
-        * Uncertainty for real-world face detection
+        * Uncertainty learning in real-world face detection
         * Liveness detection: training and deployment
         * Weekly && monthly knowledge sharing meetings
 
