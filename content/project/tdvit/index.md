@@ -20,8 +20,8 @@ links:
   # url: https://ojs.aaai.org/index.php/AAAI/article/view/16365
 - icon: file-powerpoint
   icon_pack: fas
-  name: Project page
-  url: project/tdvit/tdvit.html
+  name: Slides
+  url: https://docs.google.com/presentation/d/e/2PACX-1vR2KGWIsEuQTPglB9FgugW8e_OZHPbvkgZGVGqncRizO2YJ2R8NohEG_nLAdkTBHQ/pub?start=false&loop=false&delayms=3000
 url_code: ""
 url_slides: ""
 url_video: ""

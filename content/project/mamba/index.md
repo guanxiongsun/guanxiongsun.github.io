@@ -20,8 +20,9 @@ links:
   url: https://ojs.aaai.org/index.php/AAAI/article/view/16365
 - icon: file-powerpoint
   icon_pack: fas
-  name: Project page
-  url: project/mamba/mamba.html
+  name: Slides
+  url: https://docs.google.com/presentation/d/e/2PACX-1vS2u9aWhD3P2qCRoQ0oCMjO6Pz5ncwff9S8oQyhDsRvEjCotvKb6ffgFIoAFIP0wQ/pub?start=false&loop=false&delayms=3000
+
 url_code: ""
 url_slides: ""
 url_video: ""

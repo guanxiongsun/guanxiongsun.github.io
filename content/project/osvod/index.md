@@ -20,8 +20,8 @@ links:
   # url: https://ojs.aaai.org/index.php/AAAI/article/view/16365
 - icon: file-powerpoint
   icon_pack: fas
-  name: Project page
-  url: project/osvod/osvod.html
+  name: Slides
+  url: https://docs.google.com/presentation/d/e/2PACX-1vRFKveZAUvAawzc985TUERJCuLpxC7GdHec5ZSHt9Tz2kNXdEMJqHzPpJVQ622Kuw/pub?start=false&loop=false&delayms=3000
 url_code: ""
 url_slides: ""
 url_video: ""
