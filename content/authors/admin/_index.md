@@ -76,4 +76,4 @@ I am a PhD student in the school of EEECS at Queen's University Belfast, advised
 I received my master and bachelor degrees from the department of Computer Science at Harbin Institute of Technology, China.
 
 
-{{< icon name="download" pack="fas" >}} Download my {{< staticref "uploads/demo_resume.pdf" "newtab" >}}resumé{{< /staticref >}}.
+{{< icon name="download" pack="fas" >}} Download my {{< staticref "https://drive.google.com/file/d/1LKRKGKmDi5439dLPs75K3A7FS3c3uSi6/view?usp=sharing" "newtab" >}}resumé{{< /staticref >}}.
