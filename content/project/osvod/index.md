@@ -17,7 +17,7 @@ links:
 - icon: file-pdf
   icon_pack: fas
   name: Paper
-  # url: https://ojs.aaai.org/index.php/AAAI/article/view/16365
+  url: https://drive.google.com/file/d/1EICY-_RXe6QWJRXjXHBykPXS5JIFiM-S/view?usp=sharing
 - icon: file-powerpoint
   icon_pack: fas
   name: Slides
