@@ -6,8 +6,8 @@ design:
   columns: '1'
 ---
 
-{{< sidebar >}}
+<!-- {{< sidebar >}} -->
 
 {{< counter >}}
 
-{{< share >}}
+<!-- {{< share >}} -->
