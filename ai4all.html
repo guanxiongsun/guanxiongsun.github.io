@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI4ALL | AI Consultancy & Research</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .gradient-text {
+            background: -webkit-linear-gradient(45deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .section-fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .section-fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-200 antialiased">
+
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-gray-900/80 backdrop-blur-sm border-b border-gray-700/50">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-xl font-bold tracking-tight text-white">
+                <span class="gradient-text">AI4ALL</span>
+            </a>
+            <nav class="hidden md:flex space-x-8 items-center">
+                <a href="#services" class="text-gray-300 hover:text-blue-400 transition-colors duration-300">Services</a>
+                <a href="#projects" class="text-gray-300 hover:text-blue-400 transition-colors duration-300">Projects</a>
+                <a href="#about" class="text-gray-300 hover:text-blue-400 transition-colors duration-300">About</a>
+                <a href="#contact" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-300">Contact</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden text-gray-300 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden px-6 pt-2 pb-4 border-t border-gray-700/50">
+            <a href="#services" class="block py-2 text-gray-300 hover:text-blue-400">Services</a>
+            <a href="#projects" class="block py-2 text-gray-300 hover:text-blue-400">Projects</a>
+            <a href="#about" class="block py-2 text-gray-300 hover:text-blue-400">About</a>
+            <a href="#contact" class="block mt-2 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg text-center">Contact</a>
+        </div>
+    </header>
+
+    <main class="pt-20">
+        <!-- Hero Section -->
+        <section id="home" class="relative py-24 md:py-32 bg-gray-900 text-center overflow-hidden">
+             <div class="absolute inset-0 bg-grid-gray-700/10 bg-grid-16 [mask-image:linear-gradient(to_bottom,white_0%,transparent_100%)]"></div>
+            <div class="container mx-auto px-6 relative">
+                <h1 class="text-4xl md:text-6xl font-extrabold text-white leading-tight mb-4">
+                    Building the Future with
+                    <span class="gradient-text">Intelligent Vision</span>
+                </h1>
+                <p class="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto mb-8">
+                    Expert consultancy and research in computer vision, multimodal LLMs, and human-centric AI. From edge devices to world models, let's turn complex challenges into impactful solutions.
+                </p>
+                <a href="#contact" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg text-lg transition-transform transform hover:scale-105 duration-300 inline-block">
+                    Let's Collaborate
+                </a>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="py-20 bg-gray-800/50 section-fade-in">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white">My Expertise</h2>
+                    <p class="text-gray-400 mt-2">Specialized services to bring your AI vision to life.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Service Card 1 -->
+                    <div class="bg-gray-800 p-8 rounded-xl border border-gray-700/50 shadow-lg hover:shadow-blue-500/10 hover:border-blue-500/50 transition-all duration-300 transform hover:-translate-y-1">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-full bg-blue-600/20 text-blue-400 mb-4">
+                            <i data-lucide="camera"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-white mb-2">Edge Computer Vision</h3>
+                        <p class="text-gray-400">Design and deployment of efficient object detection and image classification models on edge devices like smartphones and embedded systems.</p>
+                    </div>
+                    <!-- Service Card 2 -->
+                    <div class="bg-gray-800 p-8 rounded-xl border border-gray-700/50 shadow-lg hover:shadow-purple-500/10 hover:border-purple-500/50 transition-all duration-300 transform hover:-translate-y-1">
+                         <div class="flex items-center justify-center h-12 w-12 rounded-full bg-purple-600/20 text-purple-400 mb-4">
+                            <i data-lucide="brain-circuit"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-white mb-2">Advanced AI Research</h3>
+                        <p class="text-gray-400">Exploring the frontiers of AI, including video understanding, multimodal 3D LLMs, and visual reasoning world models for next-generation applications.</p>
+                    </div>
+                    <!-- Service Card 3 -->
+                    <div class="bg-gray-800 p-8 rounded-xl border border-gray-700/50 shadow-lg hover:shadow-green-500/10 hover:border-green-500/50 transition-all duration-300 transform hover:-translate-y-1">
+                         <div class="flex items-center justify-center h-12 w-12 rounded-full bg-green-600/20 text-green-400 mb-4">
+                            <i data-lucide="heart-handshake"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-white mb-2">Human-Centric AI</h3>
+                        <p class="text-gray-400">Developing meaningful AI solutions such as pathology assistants, accessibility tools for the visually impaired, and in-home monitoring for patient care.</p>
+                    </div>
+                    <!-- Service Card 4 -->
+                    <div class="bg-gray-800 p-8 rounded-xl border border-gray-700/50 shadow-lg hover:shadow-orange-500/10 hover:border-orange-500/50 transition-all duration-300 transform hover:-translate-y-1">
+                         <div class="flex items-center justify-center h-12 w-12 rounded-full bg-orange-600/20 text-orange-400 mb-4">
+                            <i data-lucide="swords"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-white mb-2">AI for Sports Analytics</h3>
+                        <p class="text-gray-400">Applying AI to analyze performance for both professional athletes and amateurs, providing data-driven insights to enhance training and strategy.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="py-20 bg-gray-900 section-fade-in">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white">Featured Projects</h2>
+                    <p class="text-gray-400 mt-2">A selection of projects demonstrating practical application of AI.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Project Card 1 -->
+                    <div class="bg-gray-800 rounded-lg overflow-hidden group">
+                        <img src="https://placehold.co/600x400/1f2937/9ca3af?text=Museum+Accessibility" alt="Museum Accessibility for Blind People" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold text-white mb-2">Museum Accessibility for the Blind</h3>
+                            <p class="text-gray-400">Developed a 3D-aware, audio-visual museum guide to enhance the experience for visually impaired visitors, a key project in human-centric AI.</p>
+                        </div>
+                    </div>
+                    <!-- Project Card 2 -->
+                    <div class="bg-gray-800 rounded-lg overflow-hidden group">
+                        <img src="https://placehold.co/600x400/1f2937/9ca3af?text=Sports+Analysis" alt="Holistic Analysis of Tennis Serve" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold text-white mb-2">Holistic Tennis Serve Analysis</h3>
+                            <p class="text-gray-400">An advanced sports analytics project leveraging video understanding to provide a comprehensive breakdown of tennis serve mechanics and performance.</p>
+                        </div>
+                    </div>
+                    <!-- Project Card 3 -->
+                    <div class="bg-gray-800 rounded-lg overflow-hidden group">
+                        <img src="https://placehold.co/600x400/1f2937/9ca3af?text=Surgical+AI" alt="Robotic Surgical Scene Segmentation" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold text-white mb-2">Surgical Scene Segmentation</h3>
+                            <p class="text-gray-400">Created Stru-Net, a structure-aware network designed for precise scene segmentation in robotic surgery, enhancing surgical AI capabilities.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-20 bg-gray-800/50 section-fade-in">
+            <div class="container mx-auto px-6">
+                <div class="flex flex-col md:flex-row items-center gap-12">
+                    <div class="md:w-1/2">
+                        <!-- <img src="https://placehold.co/500x500/3b82f6/ffffff?text=GS" alt="Guanxiong Sun" class="rounded-full w-64 h-64 mx-auto md:mx-0 object-cover shadow-2xl shadow-blue-500/20"> -->
+                        <img src="images/profile25.png" alt="Guanxiong Sun" class="rounded-full w-64 h-164 mx-auto md:mx-0 object-cover shadow-2xl shadow-blue-500/20">
+                    </div>
+                    <div class="md:w-1/2 text-center md:text-left">
+                        <h2 class="text-3xl font-bold text-white mb-4">About Me</h2>
+                        <p class="text-gray-400 mb-4 leading-relaxed">
+                            I earned my Ph.D. in computer vision from Queen's University Belfast, focusing on video understanding and analysis. My primary research involves modeling temporal dynamics, aligning visual and text embeddings in MLLMs, and efficiently processing long-form video content.
+                        </p>
+                        <p class="text-gray-400 leading-relaxed">
+                           My academic journey, including a Master's in medical image processing from Harbin Institute of Technology, has shaped my core philosophy: to build human-centric AI. I am dedicated to developing technology that makes a tangible, positive impact, from improving accessibility to enhancing surgical precision and athletic performance.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-20 bg-gray-900 section-fade-in">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Ready to Innovate?</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto mb-8">
+                    Have a project in mind, a research question to explore, or just want to discuss the future of AI? I'd love to hear from you.
+                </p>
+                <a href="mailto:sungx.cs@gmail.com" class="inline-block bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-lg text-lg transition-transform transform hover:scale-105 duration-300">
+                    Get in Touch
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800/50 border-t border-gray-700/50">
+        <div class="container mx-auto px-6 py-6 text-center text-gray-400">
+            <p>&copy; 2025 AI4ALL | AI Consultancy & Research. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Lucide Icons
+        lucide.createIcons();
+
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Close mobile menu when a link is clicked
+        document.querySelectorAll('#mobile-menu a, a[href^="#"]').forEach(link => {
+            link.addEventListener('click', () => {
+                // Check if it's a mobile menu link before hiding
+                if (!link.closest('nav.hidden')) {
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Section Fade-in on Scroll
+        const sections = document.querySelectorAll('.section-fade-in');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
+
