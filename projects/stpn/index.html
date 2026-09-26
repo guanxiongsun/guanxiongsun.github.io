@@ -138,12 +138,12 @@
     <div class="plate__mat ab__stage">
       <img class="ab__img" data-ab-item="a" src="/assets/img/projects/stpn/stpn-a.webp"
            srcset="/assets/img/projects/stpn/stpn-a-640.webp 640w, /assets/img/projects/stpn/stpn-a.webp 1000w"
-           sizes="(min-width: 840px) 34rem, calc(100vw - 32px)"
+           sizes="(min-width: 600px) 36rem, calc(100vw - 32px)"
            width="1000" height="934" decoding="async"
            alt="Panel (a), current pipeline: support frames and the blurred current frame each pass through a backbone, then tangled connections feed three separate integration modules, A for detection, B for segmentation and C for tracking.">
       <img class="ab__img" data-ab-item="b" src="/assets/img/projects/stpn/stpn-b.webp"
            srcset="/assets/img/projects/stpn/stpn-b-640.webp 640w, /assets/img/projects/stpn/stpn-b.webp 896w"
-           sizes="(min-width: 840px) 34rem, calc(100vw - 32px)"
+           sizes="(min-width: 600px) 36rem, calc(100vw - 32px)"
            width="896" height="934" fetchpriority="high" decoding="async"
            alt="Panel (b), STPN: a DVP predictor turns the support frames into video prompts, which join the current frame at the input of one shared backbone feeding detection, segmentation and tracking heads.">
     </div>
@@ -170,7 +170,7 @@
   <!-- ===== § THE PROBLEM ===== -->
   <section class="article__section" id="problem" aria-labelledby="problem-title">
     <h2 id="problem-title">The problem</h2>
-    <p>Video frames rarely stay clean. The object moves fast and blurs, the camera loses focus, something passes in front, or an animal turns into a pose the detector has never seen. A network that looks at one frame at a time loses exactly the evidence it needs, and the fox in Fig. 1 is a typical case: sharp in a neighbouring frame, a smear in the current one.</p>
+    <p>Video frames rarely stay clean. The object moves fast and blurs, the camera loses focus, something passes in front, or the animal turns into an unusual pose. A network that looks at one frame at a time loses exactly the evidence it needs, and the fox in Fig. 1 is a typical case: sharp in a neighbouring frame, a smear in the current one.</p>
     <p>The usual remedy is to borrow from neighbouring frames. Methods such as SELSA, MEGA and TransVOD run every frame through the backbone and then fuse the features in a transformer-based integration module. That works, but the modules are heavy and complex, and each one is built for one task: a module designed for detection does not carry over to instance segmentation or tracking (Fig. 1a).<sup class="sn-ref">1</sup></p>
     <aside class="sidenote"><sup>1</sup> The paper evaluates three tasks: video object detection (VOD, on ImageNet VID), video instance segmentation (VIS, on YouTube-VIS) and visual object tracking (VOT, on GOT-10k).</aside>
     <p>STPN asks a different question. Instead of repairing features after the backbone, can we change what goes into it, so that one standard backbone produces robust features for every video task?</p>
@@ -243,10 +243,10 @@
           <div class="hotspots__frame">
             <img src="/assets/img/projects/stpn/stpn-b.webp" srcset="/assets/img/projects/stpn/stpn-b-640.webp 640w, /assets/img/projects/stpn/stpn-b.webp 896w" sizes="(min-width: 1200px) 42rem, (min-width: 1024px) 60vw, calc(100vw - 32px)" width="896" height="934" loading="lazy" decoding="async" alt="STPN pipeline: support frames feed a DVP predictor, whose video prompts join the motion-blurred current frame at the input of one backbone; the backbone’s output branches to VOD, VIS and VOT.">
             <button class="hotspot" type="button" style="--x:25%;--y:70%" aria-describedby="hs-stpn-1">1</button>
-            <button class="hotspot" type="button" style="--x:25%;--y:45%" aria-describedby="hs-stpn-2">2</button>
+            <button class="hotspot" type="button" style="--x:25%;--y:37%" aria-describedby="hs-stpn-2">2</button>
             <button class="hotspot" type="button" style="--x:67%;--y:54%" aria-describedby="hs-stpn-3">3</button>
-            <button class="hotspot" type="button" style="--x:69%;--y:43%" aria-describedby="hs-stpn-4">4</button>
-            <button class="hotspot" type="button" style="--x:69%;--y:13%" aria-describedby="hs-stpn-5">5</button>
+            <button class="hotspot" type="button" style="--x:69%;--y:38%" aria-describedby="hs-stpn-4">4</button>
+            <button class="hotspot" type="button" style="--x:69%;--y:26.5%" aria-describedby="hs-stpn-5">5</button>
           </div>
         </div>
       </div>
@@ -377,7 +377,8 @@
     <p>STPN is maintained in <a href="https://github.com/guanxiongsun/vfe.pytorch">vfe.pytorch</a>, a plain-PyTorch rewrite that also holds MAMBA; the original ICCV code is at <a href="https://github.com/guanxiongsun/STPN">guanxiongsun/STPN</a>. To evaluate the released checkpoint (<code>CHECKPOINT</code> is the <a href="https://huggingface.co/guanxiongsun/vfe.pytorch/tree/main/work_dirs/stpn_swint_adam_9x">stpn_swint_adam_9x model</a>; data setup is in the README):</p>
     <div class="code-wrap">
       <pre class="code" id="quickstart"><code>uv venv --python 3.12 &amp;&amp; uv sync
-python -m vfe.cli.test configs/vid/stpn/stpn_swint_adam_9x.py CHECKPOINT --work-dir WORK_DIR</code></pre>
+python -m vfe.cli.test configs/vid/stpn/stpn_swint_adam_9x.py \
+    CHECKPOINT --work-dir WORK_DIR</code></pre>
       <button class="btn-icon code-copy" type="button" aria-label="Copy commands" data-copy-msg="Commands copied"><svg class="icon copy-btn__copy" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#copy"/></svg><svg class="icon copy-btn__done" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#check"/></svg></button>
     </div>
   </section>
@@ -389,8 +390,7 @@ python -m vfe.cli.test configs/vid/stpn/stpn_swint_adam_9x.py CHECKPOINT --work-
       <div class="code-wrap">
         <pre class="code"><code>@inproceedings{sun2023stpn,
   title     = {Spatio-temporal Prompting Network for Robust Video Feature Extraction},
-  author    = {Sun, Guanxiong and Wang, Chi and Zhang, Zhaoyu and Deng, Jiankang
-               and Zafeiriou, Stefanos and Hua, Yang},
+  author    = {Sun, Guanxiong and Wang, Chi and Zhang, Zhaoyu and Deng, Jiankang and Zafeiriou, Stefanos and Hua, Yang},
   booktitle = {ICCV},
   year      = {2023}
 }</code></pre>

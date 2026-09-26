@@ -171,7 +171,7 @@
   <section class="article__section" id="idea" aria-labelledby="idea-title">
     <h2 id="idea-title">The idea</h2>
     <p>MAMBA changes both operations: <b>read a small random sample</b> of the memory, and <b>write feature by feature</b>, replacing single features at random instead of whole frames. The toy below runs both memories side by side on the same 96-frame video. Watch the <b>coverage strips</b>: they show which frames of the video each memory still holds.</p>
-    <p>Press Play or drag the frame slider. The queue’s coverage stays a tight cluster at the playhead; MAMBA’s spreads across the whole video, including frames it has not reached yet, because its memory was seeded from reference frames spread over the video. Then change how many keys MAMBA reads: the cost of a read follows that number, not the size of the memory.</p>
+    <p>Press Play, step, or drag the frame slider. The queue’s coverage stays a tight cluster at the playhead; MAMBA’s spreads across the whole video. It even holds frames the video has not reached yet (the hollow ticks), because its memory was seeded from reference frames spread over the whole video. Drag to the last frame to see what each memory has kept. Then change how many keys MAMBA reads: the cost of a read follows that number, not the size of the memory.</p>
 
     <section class="explorable wide" id="demo" aria-labelledby="demo-title">
       <header class="explorable__head">
@@ -181,21 +181,21 @@
         <button class="btn-icon" type="button" data-action="reset" aria-label="Reset demo"><svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#rotate-ccw"/></svg></button>
       </header>
       <div class="explorable__stage">
-        <svg class="ex-svg" data-stage viewBox="0 0 960 400" role="img" aria-labelledby="demo-title" aria-describedby="demo-desc"></svg>
-        <ul class="ex-legend mm-legend" aria-hidden="true">
-          <li><svg viewBox="0 0 14 14" focusable="false"><rect class="ex-memory" x="1" y="1" width="12" height="12" rx="2"/></svg>Stored feature (darker = newer)</li>
-          <li><svg viewBox="0 0 14 14" focusable="false"><rect class="ex-memory" x="1" y="1" width="12" height="12" rx="2"/><rect class="mm-s__seed" style="display:inline" x="3.5" y="3.5" width="7" height="7" rx="1"/></svg>Seed from a reference frame</li>
-          <li><svg viewBox="0 0 14 14" focusable="false"><rect class="ex-ring" x="2" y="2" width="10" height="10" rx="2"/></svg>Read this frame (key set)</li>
-          <li><svg viewBox="0 0 14 14" focusable="false"><circle class="mm-ref" cx="7" cy="7" r="3"/></svg>Reference frame, not yet reached</li>
-          <li><svg viewBox="0 0 14 14" focusable="false"><rect class="ex-memory" x="2" y="1" width="4" height="12" rx=".75"/><rect class="mm-tick" style="transform:none" x="8" y="10" width="4" height="3" rx=".75"/></svg>Coverage: frame held / not held</li>
-        </ul>
-      </div>
-      <div class="explorable__controls">
         <fieldset class="seg mm-view" hidden>
-          <legend class="visually-hidden">Memory shown</legend>
+          <legend class="visually-hidden">Memory shown in the diagram</legend>
           <label class="seg__opt"><input type="radio" name="mm-view" value="0"><span>Queue</span></label>
           <label class="seg__opt"><input type="radio" name="mm-view" value="1" checked><span>MAMBA</span></label>
         </fieldset>
+        <svg class="ex-svg" data-stage viewBox="0 0 960 400" role="img" aria-labelledby="demo-title" aria-describedby="demo-desc"></svg>
+        <ul class="ex-legend mm-legend" aria-hidden="true">
+          <li><svg viewBox="0 0 14 14" focusable="false"><rect class="ex-memory" x="1" y="1" width="12" height="12" rx="2"/></svg>Stored feature (faded = older)</li>
+          <li><svg viewBox="0 0 14 14" focusable="false"><rect class="ex-memory" x="1" y="1" width="12" height="12" rx="2"/><rect class="mm-lg-seed" x="3.5" y="3.5" width="7" height="7" rx="1"/></svg>Seed from a reference frame</li>
+          <li><svg viewBox="0 0 14 14" focusable="false"><rect class="ex-ring" x="2" y="2" width="10" height="10" rx="2"/></svg>Read by this frame (key set)</li>
+          <li><svg viewBox="0 0 14 14" focusable="false"><circle class="mm-ref" cx="7" cy="7" r="3"/></svg>Reference frame (seeds the bank)</li>
+          <li><svg viewBox="0 0 22 14" class="mm-lg-wide" focusable="false"><rect class="ex-memory" x="1" y="1" width="4" height="12" rx=".75"/><rect class="mm-lg-ahead" x="9" y="1.5" width="4" height="11" rx=".75"/><rect class="mm-lg-off" x="17" y="10" width="4" height="3" rx=".75"/></svg>Frames held: stored · only as a seed, not yet reached · not held</li>
+        </ul>
+      </div>
+      <div class="explorable__controls">
         <button class="btn btn--ghost btn--sm play-btn" type="button" data-action="play">
           <svg class="icon play-btn__play" width="15" height="15" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#play"/></svg>
           <svg class="icon play-btn__pause" width="15" height="15" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#pause"/></svg>
@@ -221,7 +221,7 @@
       </dl>
       <p class="explorable__desc" id="demo-desc" aria-live="polite"></p>
       <div class="explorable__fallback">
-        <p class="callout__text">This demo needs JavaScript. Its starting state, frame 40 of a 96-frame video with 48 memory slots each: the frame-wise queue holds frames 29 to 40 and reads all 48 of its features; MAMBA’s bank holds features from FALLBACK frames spanning 0 to 95 and reads 8 of them. The animation in Fig. 1 shows the same mechanism.</p>
+        <p class="callout__text">This interactive toy needs JavaScript. Its starting state: frame 40 of a 96-frame video, with 48 memory slots on each side. The frame-wise queue holds frames 29 to 40, one whole frame per column, and reads all 48 of its features. MAMBA’s bank holds single features from 45 different frames spanning 0 to 95, because it was seeded from 14 reference frames spread over the whole video and replaces one random feature at a time; it reads a random 8 of them. Fig. 1 animates the same mechanism.</p>
       </div>
     </section>
     <aside class="callout callout--schematic">
@@ -351,7 +351,8 @@
     <p>The reference implementation and the released checkpoint live in <a href="https://github.com/guanxiongsun/vfe.pytorch">vfe.pytorch</a>, which also holds STPN. Version 2.0 is a rewrite in plain PyTorch, with nothing from mmcv or mmdet at runtime. After downloading ImageNet VID from the <a href="https://huggingface.co/datasets/guanxiongsun/imagenetvid/tree/main">Hugging Face mirror</a> and arranging it as the README describes, this evaluates the released model on one GPU:</p>
     <div class="code-wrap">
       <pre class="code" id="quickstart"><code>uv venv --python 3.12 &amp;&amp; uv sync
-python -m vfe.cli.test configs/vid/mamba/mamba_r101_dc5_6x.py CHECKPOINT --work-dir WORK_DIR</code></pre>
+python -m vfe.cli.test configs/vid/mamba/mamba_r101_dc5_6x.py \
+    CHECKPOINT --work-dir WORK_DIR</code></pre>
       <button class="btn-icon code-copy" type="button" aria-label="Copy commands" data-copy-msg="Commands copied"><svg class="icon copy-btn__copy" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#copy"/></svg><svg class="icon copy-btn__done" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#check"/></svg></button>
     </div>
   </section>

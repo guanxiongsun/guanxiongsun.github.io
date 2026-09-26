@@ -38,6 +38,7 @@
 .mm-s__seed { display: none; fill: var(--surface); stroke: var(--data-noise); stroke-width: 1.5; }
 .mm-s.is-seed .mm-s__seed { display: inline; }
 .mm-s__lab { font: 500 10px var(--font-mono); fill: var(--ink); }
+.mm-sm .mm-s__lab { font-size: 9px; letter-spacing: -.02em; }
 .mm-s[data-l="0"]:not(.is-seed) .mm-s__lab { fill: var(--surface); }
 .mm-s__ring { fill: none; stroke: var(--data-focus); stroke-width: 2; opacity: 0; }
 .mm-s.is-key .mm-s__ring { opacity: 1; }
@@ -46,13 +47,13 @@
 .mm-off { display: none; }
 
 /* Key-set connectors and the current frame under each panel. */
-.mm-links line { stroke: var(--data-focus); stroke-width: 1; opacity: .5; }
+.mm-links line { stroke: var(--data-focus); stroke-width: 1.25; opacity: .6; }
 .mm-links { opacity: 0; }
 .mm-links.is-in { opacity: 1; transition: opacity 200ms 120ms; }
 .mm-q { fill: var(--surface); stroke: var(--data-focus); stroke-width: 1.25; }
 .mm-q.is-on { fill: var(--data-focus); }
 
-/* Coverage strips: tall filled = held; tall hollow + ring above = a seed from a frame not yet
+/* Coverage strips: tall filled = held; tall hollow = held only as a seed from a frame not yet
    reached; short = not held. */
 .mm-tick { fill: var(--rule-strong); transform-box: fill-box; transform-origin: 50% 100%; transform: scaleY(.22); transition: transform 250ms var(--ease-out), fill 200ms; }
 .mm-tick.is-on { fill: var(--data-memory); transform: none; }
@@ -69,3 +70,12 @@
   .mm-s.is-seed .mm-s__lab { fill: CanvasText; }
   .mm-s__ring, .mm-links line, .mm-q, .mm-f--now rect { stroke: Highlight; }
 }
+
+/* Legend swatches (static copies of the SVG marks). */
+.mm-legend .mm-lg-seed { fill: var(--surface); stroke: var(--data-noise); stroke-width: 1.5; }
+.mm-legend .mm-lg-ahead { fill: var(--surface); stroke: var(--data-noise); stroke-width: 1; }
+.mm-legend .mm-lg-off { fill: var(--rule-strong); }
+.mm-legend svg.mm-lg-wide { width: 22px; }
+
+/* Narrow screens show one memory at a time; the switch sits right above the diagram. */
+.mm-view { justify-self: start; margin-bottom: 12px; }
