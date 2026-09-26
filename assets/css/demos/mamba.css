@@ -1,0 +1,71 @@
+/* mamba.css: page-only styles for /projects/mamba/ and its explorable (mamba-memory.js).
+   Colours come from tokens.css only; the .ex-* vocabulary is in article.css. */
+
+/* Title sidenote: beside the head at ≥1200 (it follows the header in the markup). */
+.article-head__title .sn-ref { font-size: .28em; vertical-align: top; line-height: 1; margin-left: 4px; }
+@media (min-width: 1200px) {
+  .article > .sidenote.mm-titlenote { grid-row: 1; align-self: center; }
+}
+
+/* The hero is the paper's 669 px animation: keep it near its own size. */
+.mm-hero .plate__mat { display: grid; justify-items: center; }
+.mm-hero video { width: 100%; max-width: 880px; height: auto; }
+
+/* ---------- Explorable ---------- */
+#demo:not(.is-ready) :is(.explorable__stage, .ex-legend) { display: none; }
+#demo .explorable__stage { min-height: 0; }
+#demo .ex-svg { overflow: hidden; }
+
+/* Filmstrip: past frames faint, the current frame outlined in focus, future frames hollow. */
+.mm-f rect { fill: var(--ink-3); opacity: .3; }
+.mm-f path { fill: none; stroke: var(--surface); stroke-width: 1; }
+.mm-f--next rect { fill: none; stroke: var(--rule-strong); opacity: 1; }
+.mm-f--next path { stroke: var(--rule-strong); }
+.mm-f--now rect { fill: var(--surface); stroke: var(--data-focus); stroke-width: 1.5; opacity: 1; }
+.mm-f--now path { stroke: var(--data-focus); }
+.mm-ref { fill: var(--surface); stroke: var(--data-noise); stroke-width: 1.25; }
+.mm-move { transition: transform 250ms var(--ease-out); }
+
+/* Memory slots. data-l = recency step (0 newest … 3 oldest). Text colour flips with the fill
+   so labels keep ≥ 4.5:1 in both themes. */
+.mm-s__bg { fill: var(--surface); stroke: var(--rule-strong); stroke-dasharray: 3 2; }
+.mm-s.is-full .mm-s__bg { stroke: none; }
+.mm-s__fill { fill: var(--data-memory); opacity: 0; transition: opacity 200ms; }
+.mm-s.is-full[data-l="0"] .mm-s__fill { opacity: 1; }
+.mm-s.is-full[data-l="1"] .mm-s__fill { opacity: .66; }
+.mm-s.is-full[data-l="2"] .mm-s__fill { opacity: .55; }
+.mm-s.is-full[data-l="3"] .mm-s__fill { opacity: .45; }
+.mm-s__seed { display: none; fill: var(--surface); stroke: var(--data-noise); stroke-width: 1.5; }
+.mm-s.is-seed .mm-s__seed { display: inline; }
+.mm-s__lab { font: 500 10px var(--font-mono); fill: var(--ink); }
+.mm-s[data-l="0"]:not(.is-seed) .mm-s__lab { fill: var(--surface); }
+.mm-s__ring { fill: none; stroke: var(--data-focus); stroke-width: 2; opacity: 0; }
+.mm-s.is-key .mm-s__ring { opacity: 1; }
+.mm-s.is-new .mm-s__fill { animation: ex-flash 300ms var(--ease-out); }
+.mm-slide { transition: transform 250ms var(--ease-out); }
+.mm-off { display: none; }
+
+/* Key-set connectors and the current frame under each panel. */
+.mm-links line { stroke: var(--data-focus); stroke-width: 1; opacity: .5; }
+.mm-links { opacity: 0; }
+.mm-links.is-in { opacity: 1; transition: opacity 200ms 120ms; }
+.mm-q { fill: var(--surface); stroke: var(--data-focus); stroke-width: 1.25; }
+.mm-q.is-on { fill: var(--data-focus); }
+
+/* Coverage strips: tall filled = held; tall hollow + ring above = a seed from a frame not yet
+   reached; short = not held. */
+.mm-tick { fill: var(--rule-strong); transform-box: fill-box; transform-origin: 50% 100%; transform: scaleY(.22); transition: transform 250ms var(--ease-out), fill 200ms; }
+.mm-tick.is-on { fill: var(--data-memory); transform: none; }
+.mm-tick.is-ahead { fill: var(--surface); stroke: var(--data-noise); stroke-width: 1; transform: none; }
+
+/* Readout: one line per memory. */
+.mm-ro { display: flex; align-items: baseline; gap: 8px; white-space: nowrap; }
+.mm-ro small { min-width: 3.4rem; font: 500 11px/1 var(--font-mono); letter-spacing: .04em; text-transform: uppercase; }
+.mm-legend svg { overflow: visible; }
+
+@media (forced-colors: active) {
+  .mm-s__fill, .mm-tick.is-on, .mm-q.is-on, .mm-f--past rect { fill: CanvasText; }
+  .mm-s__lab { fill: Canvas; }
+  .mm-s.is-seed .mm-s__lab { fill: CanvasText; }
+  .mm-s__ring, .mm-links line, .mm-q, .mm-f--now rect { stroke: Highlight; }
+}

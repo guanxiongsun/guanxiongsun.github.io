@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Theme boot: runs before any stylesheet so a saved theme never flashes. Keep it first. -->
+  <script>try{const t=localStorage.getItem('theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){};document.documentElement.classList.add('js')</script>
+  <title>MAMBA: Multi-level Aggregation via Memory Bank for Video Object Detection · Guanxiong Sun</title>
+  <meta name="description" content="MAMBA (AAAI 2021): a memory bank for video object detection that reads a small sampled key set and updates feature by feature, so it remembers the whole video.">
+  <meta name="author" content="Guanxiong Sun">
+  <link rel="canonical" href="https://guanxiongsun.github.io/projects/mamba/">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#FAF8F4" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#121110" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <link rel="preload" href="/assets/fonts/newsreader-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <!-- Cache-bust: bump ?v=YYYYMMDD on every CSS/JS link at release (and in demo-module imports). -->
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=20260926">
+  <link rel="stylesheet" href="/assets/css/site.css?v=20260926">
+  <link rel="stylesheet" href="/assets/css/article.css?v=20260926">
+  <link rel="stylesheet" href="/assets/css/demos/mamba.css?v=20260926">
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Guanxiong Sun">
+  <meta property="og:url" content="https://guanxiongsun.github.io/projects/mamba/">
+  <meta property="og:title" content="MAMBA: Multi-level Aggregation via Memory Bank for Video Object Detection">
+  <meta property="og:description" content="A memory bank for video object detection that reads a small sampled key set and updates feature by feature, so it remembers the whole video. AAAI 2021.">
+  <meta property="og:image" content="https://guanxiongsun.github.io/assets/og/mamba.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="MAMBA, AAAI 2021: the memory-bank animation from the paper.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="MAMBA: Multi-level Aggregation via Memory Bank for Video Object Detection">
+  <meta name="twitter:description" content="A memory bank for video object detection that reads a small sampled key set and updates feature by feature, so it remembers the whole video. AAAI 2021.">
+  <meta name="twitter:image" content="https://guanxiongsun.github.io/assets/og/mamba.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "headline": "MAMBA: Multi-level Aggregation via Memory Bank for Video Object Detection",
+    "name": "MAMBA",
+    "url": "https://guanxiongsun.github.io/projects/mamba/",
+    "image": "https://guanxiongsun.github.io/assets/og/mamba.png",
+    "author": [
+      { "@type": "Person", "name": "Guanxiong Sun", "url": "https://guanxiongsun.github.io/" },
+      { "@type": "Person", "name": "Yang Hua" },
+      { "@type": "Person", "name": "Guosheng Hu", "url": "https://huguosheng.github.io/" },
+      { "@type": "Person", "name": "Neil Robertson" }
+    ],
+    "datePublished": "2021",
+    "isPartOf": { "@type": "CreativeWork", "name": "Proceedings of the AAAI Conference on Artificial Intelligence, Vol. 35 (AAAI 2021)" },
+    "sameAs": ["https://arxiv.org/abs/2401.09923", "https://ojs.aaai.org/index.php/AAAI/article/view/16365"]
+  }
+  </script>
+
+  <script type="module" src="/assets/js/site.js?v=20260926"></script>
+  <script type="module" src="/assets/js/article.js?v=20260926"></script>
+  <script type="module" src="/assets/js/charts.js?v=20260926"></script>
+  <script type="module" src="/assets/js/demos/mamba-memory.js?v=20260926"></script>
+</head>
+
+<body>
+<a class="skip-link" href="#content">Skip to content</a>
+
+<!-- ===== SITE HEADER (shared by every page; on project pages nav links point to /#work etc.) ===== -->
+<header class="site-header" data-header>
+  <div class="site-header__inner wrap">
+    <a class="wordmark" href="/">
+      <svg class="logomark" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false">
+        <rect class="logomark__cell" x="1.625" y="1.625" width="4.75" height="4.75" rx="1"/>
+        <rect class="logomark__cell logomark__cell--on" x="9" y="1" width="6" height="6" rx="1"/>
+        <rect class="logomark__cell" x="1.625" y="9.625" width="4.75" height="4.75" rx="1"/>
+        <rect class="logomark__cell" x="9.625" y="9.625" width="4.75" height="4.75" rx="1"/>
+      </svg>
+      <span class="wordmark__name">Guanxiong Sun</span>
+    </a>
+
+    <nav class="site-nav" aria-label="Primary">
+      <ul class="site-nav__list" id="site-menu" data-menu-panel>
+        <li><a class="site-nav__link" href="/#work" aria-current="true">Work</a></li>
+        <li><a class="site-nav__link" href="/#vision">Vision</a></li>
+        <li><a class="site-nav__link" href="/#collaborate">Collaborate</a></li>
+        <li><a class="site-nav__link" href="/#publications">Publications</a></li>
+        <li><a class="site-nav__link" href="/#news">News</a></li>
+      </ul>
+    </nav>
+
+    <div class="site-header__tools">
+      <button class="btn-icon theme-toggle" type="button" data-theme-toggle aria-label="Theme: Auto (follows system). Switch to light">
+        <svg class="icon theme-toggle__icon theme-toggle__icon--auto" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#contrast"/></svg>
+        <svg class="icon theme-toggle__icon theme-toggle__icon--light" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#sun"/></svg>
+        <svg class="icon theme-toggle__icon theme-toggle__icon--dark" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#moon"/></svg>
+      </button>
+      <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="site-menu">
+        <svg class="icon menu-toggle__open" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#menu"/></svg>
+        <svg class="icon menu-toggle__close" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#x"/></svg>
+        <span>Menu</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="content">
+<article class="article" aria-labelledby="article-title">
+
+  <!-- ===== ARTICLE HEAD ===== -->
+  <header class="article-head" id="top">
+    <a class="link-quiet article-head__back" href="/#work"><svg class="icon" width="14" height="14" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-left"/></svg>All work</a>
+    <p class="kicker article-head__kicker">AAAI 2021 · Video object detection</p>
+    <h1 class="article-head__title" id="article-title">MAMBA<sup class="sn-ref">1</sup></h1>
+    <p class="article-head__subtitle">Multi-level Aggregation via Memory Bank for Video Object Detection</p>
+    <p class="article-head__authors"><b class="me">Guanxiong Sun</b>, <a href="https://scholar.google.com/citations?user=N0tFi8MAAAAJ&amp;hl=en">Yang Hua</a>, <a href="https://huguosheng.github.io/">Guosheng Hu</a>, <a href="https://www.linkedin.com/in/nmrobertson/?originalSubdomain=uk">Neil Robertson</a></p>
+    <p class="article-head__affil" data-todo="owner: affiliations exactly as printed in the AAAI 2021 paper, with superscripts on the author line">Affiliations as printed in the paper</p>
+    <ul class="article-head__links">
+      <li><a class="btn btn--ghost btn--sm" href="https://ojs.aaai.org/index.php/AAAI/article/view/16365"><svg class="icon" width="15" height="15" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#file-text"/></svg>Paper</a></li>
+      <li><a class="btn btn--ghost btn--sm" href="https://arxiv.org/abs/2401.09923"><svg class="icon" width="15" height="15" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#file"/></svg>arXiv</a></li>
+      <li><a class="btn btn--ghost btn--sm" href="https://github.com/guanxiongsun/vfe.pytorch"><svg class="icon" width="15" height="15" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#code-xml"/></svg>Code</a></li>
+      <li><a class="btn btn--ghost btn--sm" href="https://huggingface.co/guanxiongsun/vfe.pytorch/tree/main/work_dirs/mamba_r101_dc5_6x"><svg class="icon" width="15" height="15" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#box"/></svg>Models</a></li>
+      <li><a class="btn btn--ghost btn--sm" href="https://huggingface.co/datasets/guanxiongsun/imagenetvid/tree/main"><svg class="icon" width="15" height="15" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#database"/></svg>Data</a></li>
+      <li><a class="btn btn--ghost btn--sm" href="#cite"><svg class="icon" width="15" height="15" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-down"/></svg>BibTeX</a></li>
+    </ul>
+  </header>
+  <aside class="sidenote mm-titlenote"><sup>1</sup> Not the Mamba state-space model (Gu &amp; Dao, 2023). This MAMBA came first, in 2021.</aside>
+
+  <!-- ===== HERO: the paper's method animation (silent loop, pausable) ===== -->
+  <figure class="plate plate--video article-hero mm-hero wide">
+    <div class="plate__head"><span class="plate__num">Fig. 1</span><span class="badge badge--paper">From the paper</span></div>
+    <div class="plate__mat">
+      <video muted loop playsinline controls preload="none" poster="/assets/img/mamba-still.webp" width="669" height="291" data-autoplay aria-label="Animation: MAMBA's memory bank as the video advances">
+        <source src="/assets/video/mamba.webm" type="video/webm">
+        <source src="/assets/video/mamba.mp4" type="video/mp4">
+      </video>
+      <button class="vid-toggle" type="button" data-vid-toggle data-vid-name="MAMBA memory bank" aria-label="Play animation: MAMBA memory bank">
+        <svg class="icon vid-toggle__play" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#play"/></svg>
+        <svg class="icon vid-toggle__pause" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#pause"/></svg>
+      </button>
+    </div>
+    <figcaption class="plate__cap">MAMBA’s memory bank as the video advances: each read samples a small key set from the bank, and single features, not whole frames, are replaced as new frames arrive. <span class="plate__src">Source: method animation by the paper’s authors.</span></figcaption>
+  </figure>
+
+  <div class="tldr">
+    <p class="kicker">In one paragraph</p>
+    <p>Video detectors enhance each frame with features from other frames, but sliding windows and memory queues attend to everything they store and evict whole frames at a time. MAMBA’s memory bank samples a light-weight key set for each read and updates memory feature by feature, so it keeps knowledge from the whole video at a fraction of the cost. It aggregates pixel-level and instance-level features through one generalized enhancement operation (GEO).</p>
+  </div>
+
+  <nav class="toc" aria-label="Contents" data-toc>
+    <details class="toc__box">
+      <summary class="toc__summary">Contents</summary>
+      <ol class="toc__list"></ol>
+    </details>
+  </nav>
+
+  <!-- ===== § THE PROBLEM ===== -->
+  <section class="article__section" id="problem" aria-labelledby="problem-title">
+    <h2 id="problem-title">The problem</h2>
+    <p>A detector that looks at one frame at a time struggles exactly where video is hardest: motion blur, occlusion, objects caught in a rare pose. State-of-the-art video detectors therefore enhance the current frame with features from other frames, using attention over a memory. That memory is either a sliding window of nearby frames or a memory queue of recent ones.</p>
+    <p>Both structures carry two implied operations, and the paper argues that neither is efficient or sufficient:</p>
+    <ol>
+      <li><b>Concatenating all features in memory for enhancement.</b> The current frame attends to everything stored, so the cost of every read grows with the memory.</li>
+      <li><b>Frame-wise updating.</b> When a new frame arrives, every feature of the oldest frame is deleted at once, so the memory only ever holds a short, recent slice of the video.</li>
+    </ol>
+    <p>Redundancy makes both worse. Adjacent frames are near-duplicates, so a key set that uses everything is large but not very informative: most of it repeats what the previous frame already said. And because whole frames are evicted, what the rest of the video could have told the detector is gone by the time a hard frame needs it.</p>
+  </section>
+
+  <!-- ===== § THE IDEA: explorable (#demo) ===== -->
+  <section class="article__section" id="idea" aria-labelledby="idea-title">
+    <h2 id="idea-title">The idea</h2>
+    <p>MAMBA changes both operations: <b>read a small random sample</b> of the memory, and <b>write feature by feature</b>, replacing single features at random instead of whole frames. The toy below runs both memories side by side on the same 96-frame video. Watch the <b>coverage strips</b>: they show which frames of the video each memory still holds.</p>
+    <p>Press Play or drag the frame slider. The queue’s coverage stays a tight cluster at the playhead; MAMBA’s spreads across the whole video, including frames it has not reached yet, because its memory was seeded from reference frames spread over the video. Then change how many keys MAMBA reads: the cost of a read follows that number, not the size of the memory.</p>
+
+    <section class="explorable wide" id="demo" aria-labelledby="demo-title">
+      <header class="explorable__head">
+        <span class="explorable__num">Fig. 2</span>
+        <span class="badge badge--schematic">Schematic</span>
+        <h3 class="explorable__title" id="demo-title">Queue vs. memory bank</h3>
+        <button class="btn-icon" type="button" data-action="reset" aria-label="Reset demo"><svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#rotate-ccw"/></svg></button>
+      </header>
+      <div class="explorable__stage">
+        <svg class="ex-svg" data-stage viewBox="0 0 960 400" role="img" aria-labelledby="demo-title" aria-describedby="demo-desc"></svg>
+        <ul class="ex-legend mm-legend" aria-hidden="true">
+          <li><svg viewBox="0 0 14 14" focusable="false"><rect class="ex-memory" x="1" y="1" width="12" height="12" rx="2"/></svg>Stored feature (darker = newer)</li>
+          <li><svg viewBox="0 0 14 14" focusable="false"><rect class="ex-memory" x="1" y="1" width="12" height="12" rx="2"/><rect class="mm-s__seed" style="display:inline" x="3.5" y="3.5" width="7" height="7" rx="1"/></svg>Seed from a reference frame</li>
+          <li><svg viewBox="0 0 14 14" focusable="false"><rect class="ex-ring" x="2" y="2" width="10" height="10" rx="2"/></svg>Read this frame (key set)</li>
+          <li><svg viewBox="0 0 14 14" focusable="false"><circle class="mm-ref" cx="7" cy="7" r="3"/></svg>Reference frame, not yet reached</li>
+          <li><svg viewBox="0 0 14 14" focusable="false"><rect class="ex-memory" x="2" y="1" width="4" height="12" rx=".75"/><rect class="mm-tick" style="transform:none" x="8" y="10" width="4" height="3" rx=".75"/></svg>Coverage: frame held / not held</li>
+        </ul>
+      </div>
+      <div class="explorable__controls">
+        <fieldset class="seg mm-view" hidden>
+          <legend class="visually-hidden">Memory shown</legend>
+          <label class="seg__opt"><input type="radio" name="mm-view" value="0"><span>Queue</span></label>
+          <label class="seg__opt"><input type="radio" name="mm-view" value="1" checked><span>MAMBA</span></label>
+        </fieldset>
+        <button class="btn btn--ghost btn--sm play-btn" type="button" data-action="play">
+          <svg class="icon play-btn__play" width="15" height="15" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#play"/></svg>
+          <svg class="icon play-btn__pause" width="15" height="15" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#pause"/></svg>
+          <span class="play-btn__label">Play</span>
+        </button>
+        <button class="btn btn--ghost btn--sm" type="button" data-action="step"><svg class="icon" width="15" height="15" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#step-forward"/></svg>Step</button>
+        <button class="btn btn--ghost btn--sm" type="button" data-action="shuffle"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m18 14 4 4-4 4"/><path d="m18 2 4 4-4 4"/><path d="M2 18h1.97a4 4 0 0 0 3.3-1.7l5.46-8.6a4 4 0 0 1 3.3-1.7H22"/><path d="M2 6h1.97a4 4 0 0 1 3.3 1.7l.43.68"/><path d="M22 18h-5.97a4 4 0 0 1-3.3-1.7l-.43-.68"/></svg>Reshuffle</button>
+        <div class="ctrl">
+          <label class="ctrl__label" for="mm-t">Frame</label>
+          <input class="range" id="mm-t" type="range" min="0" max="95" value="40">
+          <output class="ctrl__out" for="mm-t">40</output>
+        </div>
+        <div class="ctrl">
+          <label class="ctrl__label" for="mm-k">Keys MAMBA reads (K)</label>
+          <input class="range" id="mm-k" type="range" min="2" max="24" value="8">
+          <output class="ctrl__out" for="mm-k">8</output>
+        </div>
+      </div>
+      <dl class="explorable__readout" aria-hidden="true">
+        <div><dt>Features read this frame</dt><dd data-out="read">–</dd></div>
+        <div><dt>Frames represented</dt><dd data-out="frames">–</dd></div>
+        <div><dt>Span in memory</dt><dd data-out="span">–</dd></div>
+      </dl>
+      <p class="explorable__desc" id="demo-desc" aria-live="polite"></p>
+      <div class="explorable__fallback">
+        <p class="callout__text">This demo needs JavaScript. Its starting state, frame 40 of a 96-frame video with 48 memory slots each: the frame-wise queue holds frames 29 to 40 and reads all 48 of its features; MAMBA’s bank holds features from FALLBACK frames spanning 0 to 95 and reads 8 of them. The animation in Fig. 1 shows the same mechanism.</p>
+      </div>
+    </section>
+    <aside class="callout callout--schematic">
+      <p class="kicker">How to read this</p>
+      <p class="callout__text">A toy with 48 slots and 4 features per frame; sizes are illustrative, the rules are not. They mirror vfe.pytorch’s <code>MemoryBank</code>: reads return everything while fewer than K features are stored and a random K-subset after that; once full, writes keep a random subset of the old features and append the new one. The released configuration holds up to 20,000 RoI features, samples 2,000 for each read, writes each frame’s top-75 enhanced RoI features, and attends with 16 heads over 1,024-d features. At real scale a frame’s 300 proposals therefore attend to 300 × 2,000 = 0.6 M key pairs instead of 300 × 20,000 = 6 M, which is 10× fewer. The toy keeps two of those ratios: MAMBA writes 1 of a frame’s 4 features (75 of 300), and the default K = 8 reads a sixth of the bank (the released model reads a tenth). The memory is seeded from 14 frames spread over the whole video, and in the released evaluation frames after the first are processed in shuffled order; the toy plays them in order for readability. Numbers here are counts in the toy, not results.</p>
+    </aside>
+  </section>
+
+  <!-- ===== § HOW IT WORKS ===== -->
+  <section class="article__section" id="how" aria-labelledby="how-title">
+    <h2 id="how-title">How it works</h2>
+    <p>MAMBA keeps a memory bank for each video and touches it in exactly two ways, both visible in the paper’s animation (Fig. 3).</p>
+
+    <figure class="hotspots wide" data-hotspots>
+      <div class="hotspots__figure plate">
+        <div class="plate__head"><span class="plate__num">Fig. 3</span><span class="badge badge--paper">From the paper</span></div>
+        <div class="plate__mat">
+          <div class="hotspots__frame">
+            <img src="/assets/img/mamba-still.webp" width="669" height="291" loading="lazy" decoding="async" alt="A row of 2×2 feature groups inside a blue memory band, some cells replaced; a Sampling box above it feeds a small stack of sampled features to the current frame on the right.">
+            <button class="hotspot" type="button" style="--x:33.7%;--y:61%" aria-describedby="hs-mamba-1">1</button>
+            <button class="hotspot" type="button" style="--x:41.5%;--y:36.5%" aria-describedby="hs-mamba-2">2</button>
+            <button class="hotspot" type="button" style="--x:44%;--y:12%" aria-describedby="hs-mamba-3">3</button>
+            <button class="hotspot" type="button" style="--x:66%;--y:81%" aria-describedby="hs-mamba-4">4</button>
+            <button class="hotspot" type="button" style="--x:5%;--y:68%" aria-describedby="hs-mamba-5">5</button>
+          </div>
+        </div>
+      </div>
+      <ol class="hotspots__list">
+        <li id="hs-mamba-1"><b>Memory bank.</b> Features are stored individually, drawn as 2×2 slot groups; some slots have already been replaced.</li>
+        <li id="hs-mamba-2"><b>Sampling.</b> Each read draws a small random key set instead of concatenating everything.</li>
+        <li id="hs-mamba-3"><b>Key set.</b> The sampled features the current frame attends to.</li>
+        <li id="hs-mamba-4"><b>Current frame.</b> Enhanced by attending to the key set.</li>
+        <li id="hs-mamba-5"><b>Feature-wise update.</b> New features replace individual old ones, so knowledge from the whole video survives.</li>
+      </ol>
+      <figcaption class="plate__cap">A frame from the paper’s method animation (Fig. 1). <span class="plate__src">Source: MAMBA method animation, by the paper’s authors.</span></figcaption>
+    </figure>
+
+    <p><b>Read: light-weight key-set construction.</b> The current frame does not attend to the whole bank. It draws a random key set and attends only to that, so the cost of a read is set by the key-set size, not by how much the bank holds. <b>Write: fine-grained, feature-wise updating.</b> After a frame has been enhanced, its best features go back into the bank; once the bank is full, random individual features make room for them. The bank therefore becomes a thinned-out sample of the whole video rather than a copy of its last few frames.</p>
+    <p>At test time the memory is primed from the first frame of each video, which receives 14 reference frames spread evenly over the whole video; their features seed the bank. Every later frame reads a sampled key set and writes back its top-75 enhanced RoI features. The memory resets for each video.</p>
+    <p><b>GEO.</b> A detector’s features live at two levels: pixel-level feature maps and instance-level proposals. MAMBA keeps memory at both and enhances both with one generalized enhancement operation (GEO), which aggregates multi-level features in a unified way: features of the current frame attend to a sampled key set, and what they gather is added back to them.</p>
+    <aside class="callout callout--note">
+      <p class="kicker">Implementation note</p>
+      <p class="callout__text">vfe.pytorch implements the instance-level (RoI) memory: two aggregators, one after each shared FC of the box head, each with 16 attention heads over 1,024-d features.</p>
+    </aside>
+    <aside class="callout callout--key">
+      <p class="kicker">Key idea</p>
+      <p class="callout__text">Read a sample, write a feature.</p>
+    </aside>
+  </section>
+
+  <!-- ===== § RESULTS ===== -->
+  <section class="article__section" id="results" aria-labelledby="results-title">
+    <h2 id="results-title">Results</h2>
+    <p>The numbers come from two places, and each carries its source: the paper (mAP and speed with ResNet-101) and the vfe.pytorch README (AP50 of the released model, which uses the instance-level memory).</p>
+
+    <dl class="stats">
+      <div class="stat"><dt class="stat__label">at 12.6 FPS, ResNet-101</dt><dd class="stat__fig"><span class="stat__value">83.7</span><span class="stat__unit">mAP</span></dd></div>
+      <div class="stat"><dt class="stat__label">at 9.1 FPS, ResNet-101</dt><dd class="stat__fig"><span class="stat__value">84.6</span><span class="stat__unit">mAP</span></dd></div>
+      <div class="stat"><dt class="stat__label">released model, ImageNet VID val</dt><dd class="stat__fig"><span class="stat__value">83.8</span><span class="stat__unit">AP50</span></dd></div>
+    </dl>
+    <p class="stats__src">Source: paper abstract (mAP and FPS, ResNet-101, ImageNet VID); vfe.pytorch README (AP50 of the released checkpoint).</p>
+
+    <figure class="chart">
+      <div class="plate__head"><span class="plate__num">Fig. 4</span><span class="badge badge--paper">From the paper</span></div>
+      <table data-chart="dot" data-min="75" data-max="86" data-unit="AP50" data-highlight="MAMBA">
+        <caption>ImageNet VID val, AP50 (ResNet-101)</caption>
+        <thead><tr><th scope="col">Method</th><th scope="col">AP50</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Faster R-CNN</th><td>76.7</td></tr>
+          <tr><th scope="row">SELSA</th><td>81.5</td></tr>
+          <tr><th scope="row">MEGA</th><td>82.9</td></tr>
+          <tr><th scope="row">MAMBA</th><td>83.8</td></tr>
+        </tbody>
+      </table>
+      <p class="chart__src">Source: vfe.pytorch README (baselines as reported by their authors; Faster R-CNN is the single-frame baseline).</p>
+    </figure>
+
+    <figure class="chart">
+      <div class="plate__head"><span class="plate__num">Fig. 5</span><span class="badge badge--paper">From the paper</span></div>
+      <table data-chart="bars" data-max="14" data-unit="AP50" data-highlight="MAMBA">
+        <caption>Gain over the single-frame baseline, by object speed (AP50)</caption>
+        <thead><tr><th scope="col">Speed</th><th scope="col">MEGA</th><th scope="col">MAMBA</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Slow</th><td>+4.5</td><td>+4.6</td></tr>
+          <tr><th scope="row">Medium</th><td>+7.5</td><td>+9.7</td></tr>
+          <tr><th scope="row">Fast</th><td>+10.4</td><td>+13.0</td></tr>
+        </tbody>
+      </table>
+      <p class="chart__note">Memory helps most when objects move fast.</p>
+      <p class="chart__src">Computed from the vfe.pytorch README, AP by speed (slow / medium / fast): Faster R-CNN 84.9 / 74.1 / 52.3, MEGA 89.4 / 81.6 / 62.7, MAMBA 89.5 / 83.8 / 65.3. Gain = method − Faster R-CNN; for fast objects, 62.7 − 52.3 = 10.4 and 65.3 − 52.3 = 13.0.</p>
+    </figure>
+
+    <div class="table-wrap" role="region" aria-labelledby="repro-cap" tabindex="0">
+      <table class="data-table">
+        <caption id="repro-cap">Reproducibility, ImageNet VID val AP50 (MAMBA)</caption>
+        <thead><tr><th scope="col">Run</th><th scope="col">AP50</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Released checkpoint, evaluated with vfe.pytorch 2.0</th><td>83.80</td></tr>
+          <tr><th scope="row">Trained from scratch with vfe.pytorch 2.0</th><td>84.06</td></tr>
+          <tr><th scope="row">Originally published</th><td>83.82</td></tr>
+        </tbody>
+      </table>
+      <p class="data-table__note">Source: vfe.pytorch README. Measured on 4× <span class="lnum">GH200</span>. Reading the config literally (batch 8 throughout) scores 83.16; 84.06 follows the published model’s own schedule.</p>
+    </div>
+  </section>
+
+  <!-- ===== § WHERE IT LED ===== -->
+  <section class="article__section" id="led" aria-labelledby="led-title">
+    <h2 id="led-title">Where it led</h2>
+    <ol class="thread">
+      <li class="thread__node" aria-current="page"><span class="thread__year">2021</span><span class="thread__name">MAMBA</span><span class="thread__note">sampled reads, feature-wise writes</span></li>
+      <li class="thread__node"><a href="/#pub-tdvit"><span class="thread__year">2022</span><span class="thread__name">TDViT</span></a><span class="thread__note">hierarchical memory structure</span></li>
+      <li class="thread__node"><a href="/projects/stpn/"><span class="thread__year">2023</span><span class="thread__name">STPN</span></a><span class="thread__note">prompts instead of integration modules</span></li>
+      <li class="thread__node thread__node--future"><a href="/#memvla"><span class="thread__year">In progress</span><span class="thread__name">MemVLA</span></a><span class="thread__note">memory for vision-language-action models</span></li>
+    </ol>
+    <p>MAMBA started a line of work on what a video model should remember and how cheaply it can read it back. TDViT organised memory hierarchically, and STPN moved from separate integration modules to video prompts for one shared backbone. MemVLA, my current project, asks the same question of vision-language-action policies.</p>
+    <aside class="callout callout--question">
+      <p class="kicker">Open question</p>
+      <p class="callout__q">When an agent’s own actions decide what it sees next, which features should it keep? Random replacement worked for passive video; embodied memory needs a policy.</p>
+      <a class="link-arrow" href="/#collaborate">Pick up this thread<svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-right"/></svg></a>
+    </aside>
+  </section>
+
+  <!-- ===== § CODE ===== -->
+  <section class="article__section" id="code" aria-labelledby="code-title">
+    <h2 id="code-title">Code</h2>
+    <p>The reference implementation and the released checkpoint live in <a href="https://github.com/guanxiongsun/vfe.pytorch">vfe.pytorch</a>, which also holds STPN. Version 2.0 is a rewrite in plain PyTorch, with nothing from mmcv or mmdet at runtime. After downloading ImageNet VID from the <a href="https://huggingface.co/datasets/guanxiongsun/imagenetvid/tree/main">Hugging Face mirror</a> and arranging it as the README describes, this evaluates the released model on one GPU:</p>
+    <div class="code-wrap">
+      <pre class="code" id="quickstart"><code>uv venv --python 3.12 &amp;&amp; uv sync
+python -m vfe.cli.test configs/vid/mamba/mamba_r101_dc5_6x.py CHECKPOINT --work-dir WORK_DIR</code></pre>
+      <button class="btn-icon code-copy" type="button" aria-label="Copy commands" data-copy-msg="Commands copied"><svg class="icon copy-btn__copy" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#copy"/></svg><svg class="icon copy-btn__done" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#check"/></svg></button>
+    </div>
+  </section>
+
+  <!-- ===== § CITE ===== -->
+  <section class="article__section" id="cite" aria-labelledby="cite-title">
+    <h2 id="cite-title">Cite</h2>
+    <div class="cite">
+      <div class="code-wrap">
+        <pre class="code"><code>@inproceedings{sun2021mamba,
+  title     = {MAMBA: Multi-level Aggregation via Memory Bank for Video Object Detection},
+  author    = {Sun, Guanxiong and Hua, Yang and Hu, Guosheng and Robertson, Neil},
+  booktitle = {AAAI},
+  year      = {2021}
+}</code></pre>
+        <button class="btn-icon code-copy" type="button" aria-label="Copy BibTeX" data-copy-msg="BibTeX copied"><svg class="icon copy-btn__copy" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#copy"/></svg><svg class="icon copy-btn__done" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#check"/></svg></button>
+      </div>
+      <p class="cite__plain"><span id="cite-text">Guanxiong Sun, Yang Hua, Guosheng Hu, Neil Robertson. MAMBA: Multi-level Aggregation via Memory Bank for Video Object Detection. AAAI 2021.</span>
+        <button class="btn-icon" type="button" data-copy="#cite-text" data-copy-msg="Citation copied" aria-label="Copy citation"><svg class="icon copy-btn__copy" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#copy"/></svg><svg class="icon copy-btn__done" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#check"/></svg></button></p>
+    </div>
+  </section>
+
+  <!-- ===== PREV / NEXT (cyclic: MAMBA → STPN → NSA → MAMBA) ===== -->
+  <nav class="pagenav wide" aria-label="More projects">
+    <a class="pagenav__card" href="/projects/neural-sign-actors/" rel="prev">
+      <span class="plate__mat"><img src="/assets/img/neural_sign_actor-640.webp" width="640" height="309" loading="lazy" decoding="async" alt=""></span>
+      <span><span class="pagenav__dir">← Previous</span><span class="pagenav__title">Neural Sign Actors</span><span class="pagenav__note">Text to 3D signing avatars</span></span>
+    </a>
+    <a class="pagenav__card pagenav__card--next" href="/projects/stpn/" rel="next">
+      <span class="plate__mat"><img src="/assets/img/stpn-640.webp" width="640" height="309" loading="lazy" decoding="async" alt=""></span>
+      <span><span class="pagenav__dir">Next →</span><span class="pagenav__title">STPN</span><span class="pagenav__note">Video prompts for one robust backbone</span></span>
+    </a>
+  </nav>
+
+</article>
+</main>
+
+<!-- ===== SITE FOOTER (identical on every page) ===== -->
+<footer class="site-footer">
+  <div class="wrap site-footer__grid">
+    <div class="site-footer__id">
+      <svg class="logomark" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false">
+        <rect class="logomark__cell" x="1.625" y="1.625" width="4.75" height="4.75" rx="1"/>
+        <rect class="logomark__cell logomark__cell--on" x="9" y="1" width="6" height="6" rx="1"/>
+        <rect class="logomark__cell" x="1.625" y="9.625" width="4.75" height="4.75" rx="1"/>
+        <rect class="logomark__cell" x="9.625" y="9.625" width="4.75" height="4.75" rx="1"/>
+      </svg>
+      <p>Guanxiong Sun · Queen’s University Belfast</p>
+    </div>
+    <ul class="site-footer__links">
+      <li><a href="mailto:sungx.cs@gmail.com" aria-label="Email"><svg class="icon" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#mail"/></svg></a></li>
+      <li><a href="https://scholar.google.com/citations?user=vLk3IzoAAAAJ" aria-label="Google Scholar"><svg class="icon" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#scholar"/></svg></a></li>
+      <li><a href="https://github.com/guanxiongsun" aria-label="GitHub"><svg class="icon" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#github"/></svg></a></li>
+      <li><a href="https://huggingface.co/guanxiongsun" aria-label="Hugging Face"><svg class="icon" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#huggingface"/></svg></a></li>
+      <li><a href="https://www.linkedin.com/in/guanxiongsun/" aria-label="LinkedIn"><svg class="icon" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#linkedin"/></svg></a></li>
+    </ul>
+    <div class="site-footer__meta">
+      <p>Updated <time datetime="2026-09">September 2026</time> · <a class="link-quiet" href="#top">Back to top<svg class="icon" width="14" height="14" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-up"/></svg></a></p>
+      <p class="site-footer__colophon">Set in Newsreader, Inter and JetBrains Mono. Hand-built HTML, no frameworks. Earlier versions adapted Jon Barron’s and Wufei Ma’s pages.</p>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

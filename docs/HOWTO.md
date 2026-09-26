@@ -25,6 +25,10 @@ stops a second copy, but the exports would come from a different instance).
 | Project-page layout (article grid, TOC, sidenotes, demos, charts) | `assets/css/article.css` |
 | Behaviour (theme, menu, videos, lightbox, copy, filters, A/B toggle, YouTube) | `assets/js/site.js` |
 | The homepage throughline figure | `assets/js/throughline.js` |
+| Project pages: TOC, hotspots, frame stepper, demo helpers | `assets/js/article.js` |
+| Charts drawn from tables (project pages) | `assets/js/charts.js` |
+| One interactive demo per project page | `assets/js/demos/<name>.js` |
+| Copy-to-start project page | `projects/_template/` (noindex; see "Add a project page") |
 | Icons | `assets/icons/sprite.svg`, used as `<svg class="icon"><use href="/assets/icons/sprite.svg#github"/></svg>` |
 | Fonts + licences | `assets/fonts/`, `assets/fonts/LICENSES/` |
 | Images, videos | `assets/img/`, `assets/video/` (originals stay in `images/`) |
@@ -145,17 +149,63 @@ Never name anyone as a collaborator before they agree publicly.
 
 ### Add a project page
 
-1. Copy `projects/_template/` to `projects/<slug>/`.
+1. Copy `projects/_template/` to `projects/<slug>/` and **delete `example-demo.js`** from the copy
+   (it is the template's placeholder demo; real demos live in `assets/js/demos/<name>.js`).
 2. Remove `<meta name="robots" content="noindex">`.
-3. Fill every `<!-- FILL -->` block; delete sections you don't need.
-4. On the matching `.pub` card: set `data-href="/projects/<slug>/"`, add `data-flagship`,
+3. Fill every block marked `<!-- FILL -->`; remove every `class="todo"` and `.todo-note` marker
+   (they draw pink dashed outlines, visible everywhere, so a half-filled page is obvious).
+   Unconfirmed facts still go in `data-todo` (hidden in production).
+4. Replace or delete the **EXAMPLE** components (hero, stepper, hotspots, charts, tables). Their
+   numbers are real and sourced, so nothing false can leak, but they belong to other projects.
+5. In `<head>`: title "SHORT: Full title · Guanxiong Sun", description, canonical, `og:*`,
+   `twitter:*`, and the JSON-LD `ScholarlyArticle`. Swap the demo `<script>` for yours.
+6. On the matching `.pub` card: set `data-href="/projects/<slug>/"`, add `data-flagship`,
    and add `<a class="tag tag--accent" href="/projects/<slug>/">Project page</a>` to its meta line
    plus a `Project` pill. (Badges are reserved for Schematic / From the paper / Real output / In progress.)
-5. For flagship work, add a feature spread (`<article class="feature">`) in Selected work.
-6. Update the prev/next cards on the other project pages.
-7. Add the URL to `sitemap.xml`.
-8. Make its social card: first add an entry for `<slug>` to `OG_CARDS` in `tools/make_assets.py`
-   (kicker, headline, title, footer, figure), then run `python3 tools/make_assets.py og <slug>`.
+7. For flagship work, add a feature spread (`<article class="feature">`) in Selected work.
+8. Update the prev/next cards (`nav.pagenav`) on the other project pages (cyclic order).
+9. Add the URL to `sitemap.xml`.
+10. Make its social card: add an entry for `<slug>` to `OG_CARDS` in `tools/make_assets.py`
+    (kicker, headline, title, footer, figure), then run `python3 tools/make_assets.py og <slug>`.
+
+The table of contents builds itself from the section headings. Each section is
+`<section class="article__section" id="…"><h2>…</h2>…</section>`; use `data-toc-label` on the
+`h2` for a shorter TOC entry.
+
+### Project page components (markup lives in `projects/_template/index.html`)
+
+| Want | Markup | Notes |
+|---|---|---|
+| Break out of the text column | add `wide` (66rem) or `full` to a direct child of `.article` / `.article__section` | text is 42rem |
+| Sidenote | `<p>…<sup class="sn-ref">1</sup></p><aside class="sidenote"><sup>1</sup> …</aside>` | the aside must follow its paragraph directly |
+| Numbered hotspots on a figure | `figure.hotspots[data-hotspots]`; `button.hotspot` with `style="--x:37%;--y:60%"` and `aria-describedby` = the `id` of its `li` in `ol.hotspots__list` | positions are % of the image; check them in the browser |
+| Frame stepper | `figure.stepper[data-stepper][data-label="Frame"]`; `<rect data-step="k" …>` inside `svg.stepper__overlay` (viewBox = image pixels) | controls are generated; `?debug` outlines the rects; `data-autoplay` only plays in view and never under reduced motion |
+| Chart | `figure.chart > table[data-chart="dot / bars / dots-multi"]` with `<caption>` + `thead` + `tbody` (first cell of each row = label) | see "Charts" below |
+| Plain data table | `div.table-wrap[role=region][tabindex=0][aria-labelledby] > table.data-table` | scrolls sideways on phones |
+| Demo | `section.explorable#demo` + `aside.callout.callout--schematic` right after it | see "Demos" below |
+| Where it led | `ol.thread > li.thread__node` (current: `aria-current="page"`; future: `thread__node--future`) | then `aside.callout.callout--question` |
+| Credit (paper led by others) | `aside.callout.callout--credit` directly under the head | name the lead authors |
+
+**Charts** (`assets/js/charts.js`). The table is the source of truth and stays one click away
+("Show as table"); without JavaScript it simply shows. Attributes on the `<table>`:
+`data-min`, `data-max` (axis range; bars always start at 0), `data-unit`,
+`data-highlight="Name"` (the row or column that is "ours"), `data-memory="Name"` (painted in the
+memory colour, e.g. MAMBA when it is the comparison), `data-lower-better` (adds "↓ lower is better";
+the best value per column is then the minimum). `bars` with several value columns draws grouped
+bars; add `data-panels` for one small panel per column instead (per-panel axis max from
+`<th data-max="80">`). Cells may carry `data-value` if the visible text is not a plain number.
+Put `<p class="chart__src">Source: …</p>` (and optionally `p.chart__note`) after the table.
+
+**Demos** (`assets/js/demos/<name>.js`, one per page). Import the helpers from
+`/assets/js/article.js?v=…` with the same `?v=` as the page: `mulberry32` (seeded random),
+`onNear` (lazy start), `createPlayer` (play loop that only runs in view, pauses when another
+video or demo starts, never autoplays under reduced motion), `createAnnouncer` (throttled
+screen-reader description), `syncPlayButton`, `bindRange`, `reducedMotion`, `onReducedMotion`.
+Draw the SVG with the `.ex-*` classes in `article.css` (colours follow meaning: focus = ours or
+being read, memory = stored, noise = seeds/references, context = baselines), fill the
+`[data-out]` readouts and the description, then add `.is-ready` to the `.explorable`: until
+then only `.explorable__fallback` shows. `projects/_template/example-demo.js` is a complete,
+small example.
 
 ### Add a silent research loop (video)
 
