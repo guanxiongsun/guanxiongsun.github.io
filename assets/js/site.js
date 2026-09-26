@@ -18,6 +18,10 @@
      a.yt[data-yt]                  YouTube facade (iframe only after click)
      [data-todo]                    hidden in production; html.dev shows + lists them
 
+   Importing: this module runs its inits on import. Other modules should not import it
+   (a different ?v= query makes a second module instance); a guard below stops a second
+   instance from initialising twice anyway.
+
    Media coordination: anything that plays (videos here, demos in /assets/js/demos)
    dispatches  document.dispatchEvent(new CustomEvent('media:play', {detail: element}))
    when it starts, and pauses itself when it hears media:play from another element.
@@ -28,15 +32,19 @@ const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
 const reduceMotionMQ = matchMedia('(prefers-reduced-motion: reduce)');
 export const prefersReducedMotion = () => reduceMotionMQ.matches;
 
-/* A single polite live region for short announcements ("Copied", filter counts elsewhere). */
+/* A single polite live region for short announcements ("Copied", filter counts elsewhere).
+   It is created at startup (initLive): screen readers often ignore a region that is
+   inserted and filled in the same moment. */
 let liveRegion;
+function initLive() {
+  if (liveRegion) return;
+  liveRegion = document.createElement('p');
+  liveRegion.className = 'visually-hidden';
+  liveRegion.setAttribute('aria-live', 'polite');
+  document.body.append(liveRegion);
+}
 export function announce(msg) {
-  if (!liveRegion) {
-    liveRegion = document.createElement('p');
-    liveRegion.className = 'visually-hidden';
-    liveRegion.setAttribute('aria-live', 'polite');
-    document.body.append(liveRegion);
-  }
+  initLive();
   liveRegion.textContent = '';
   setTimeout(() => { liveRegion.textContent = msg; }, 30);
 }
@@ -113,8 +121,28 @@ function initMenu() {
     panel.classList.toggle('is-open', open);
     if (!open && returnFocus) btn.focus();
   };
-  btn.addEventListener('click', () => setOpen(btn.getAttribute('aria-expanded') !== 'true'));
+  const isOpen = () => btn.getAttribute('aria-expanded') === 'true';
+  btn.addEventListener('click', () => setOpen(!isOpen()));
   panel.addEventListener('click', (e) => { if (e.target.closest('a')) setOpen(false); });
+  // Focus order: the panel precedes the button in the DOM (desktop layout), so while it is
+  // open, Tab from the button enters the panel and Shift+Tab from its first link returns.
+  const links = () => $$('a', panel);
+  btn.addEventListener('keydown', (e) => {
+    if (e.key === 'Tab' && !e.shiftKey && isOpen() && links().length) { e.preventDefault(); links()[0].focus(); }
+  });
+  panel.addEventListener('keydown', (e) => {
+    if (e.key !== 'Tab') return;
+    const ls = links();
+    if (e.shiftKey && e.target === ls[0]) { e.preventDefault(); btn.focus(); }
+    // Tab past the last link closes the panel and continues with the header tools (theme toggle).
+    else if (!e.shiftKey && e.target === ls.at(-1)) {
+      e.preventDefault(); setOpen(false);
+      (btn.parentElement.querySelector('button, a') || btn).focus();
+    }
+  });
+  // Close once focus leaves the header, so the panel never covers the focused element.
+  const header = btn.closest('header') || panel.parentElement;
+  header.addEventListener('focusout', (e) => { if (isOpen() && e.relatedTarget && !header.contains(e.relatedTarget)) setOpen(false); });
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && panel.classList.contains('is-open')) setOpen(false, true);
   });
@@ -170,18 +198,19 @@ function initVideos() {
   videos.forEach((v) => {
     const plate = v.closest('.plate--video');
     const btn = plate.querySelector('[data-vid-toggle]');
+    const name = btn?.dataset.vidName ? `: ${btn.dataset.vidName}` : ''; // distinct names in a controls list
     v.controls = false;          // markup ships `controls` for no-JS visitors
     v.removeAttribute('autoplay');
     plate.dataset.state = 'paused';
     const sync = () => {
       const playing = !v.paused && !v.ended;
       plate.dataset.state = playing ? 'playing' : 'paused';
-      if (btn) btn.setAttribute('aria-label', playing ? 'Pause animation' : 'Play animation');
+      if (btn) btn.setAttribute('aria-label', (playing ? 'Pause animation' : 'Play animation') + name);
     };
     v.addEventListener('play', () => { sync(); document.dispatchEvent(new CustomEvent('media:play', { detail: v })); });
     v.addEventListener('pause', sync);
     btn?.addEventListener('click', () => {
-      if (v.paused) { delete v.dataset.userPaused; v.play().catch(() => {}); }
+      if (v.paused) { delete v.dataset.userPaused; v.play().catch((err) => { console.warn('video:', err); sync(); }); }
       else { v.dataset.userPaused = ''; v.pause(); }
     });
   });
@@ -373,13 +402,27 @@ function initYouTube() {
   });
 }
 
-/* Make horizontally scrollable code blocks keyboard-reachable (WCAG 2.1.1). */
+/* Make horizontally scrollable code blocks keyboard-reachable (WCAG 2.1.1). Code inside a
+   closed <details> measures 0 wide, so re-check whenever a details element opens. */
 function initScrollables() {
-  $$('pre.code').forEach((pre) => { if (pre.scrollWidth > pre.clientWidth + 1) pre.tabIndex = 0; });
+  const check = (root) => $$('pre.code', root).forEach((pre) => {
+    if (pre.scrollWidth > pre.clientWidth + 1) pre.tabIndex = 0; else pre.removeAttribute('tabindex');
+  });
+  check(document);
+  document.addEventListener('toggle', (e) => { if (e.target.open) check(e.target); }, true);
 }
 
-/* Run every init independently so one failure never blocks the rest. */
-[initDevMode, initTheme, initHeader, initMenu, initScrollspy, initReveal, initVideos,
- initLightbox, initCopy, initPubFilters, initAB, initYouTube, initScrollables].forEach((fn) => {
-  try { fn(); } catch (err) { console.error(`site.js ${fn.name}:`, err); }
-});
+/* Print: lazy images below the fold would print as empty mats, so load them first. */
+function initPrint() {
+  addEventListener('beforeprint', () => $$('img[loading="lazy"]').forEach((img) => { img.loading = 'eager'; }));
+}
+
+/* Run every init independently so one failure never blocks the rest. The data-site-init
+   guard stops a second module instance (e.g. imported with another ?v=) from binding twice. */
+if (!('siteInit' in document.documentElement.dataset)) {
+  document.documentElement.dataset.siteInit = '';
+  [initLive, initDevMode, initTheme, initHeader, initMenu, initScrollspy, initReveal, initVideos,
+   initLightbox, initCopy, initPubFilters, initAB, initYouTube, initScrollables, initPrint].forEach((fn) => {
+    try { fn(); } catch (err) { console.error(`site.js ${fn.name}:`, err); }
+  });
+}

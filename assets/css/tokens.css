@@ -19,12 +19,16 @@
   src: url("/assets/fonts/newsreader-latin-opsz-normal.woff2") format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
+/* Italic: a static instance (wght 400, opsz 24) cut from newsreader-latin-opsz-italic.woff2
+   with fontTools' instancer: 24 KB instead of 143 KB, since the hero deck's <em> loads it on
+   first view. Italic is only ever set at 400. The variable file stays in the repo for
+   tools/make_assets.py (OG cards). OFL-1.1, no Reserved Font Name. */
 @font-face {
   font-family: "Newsreader";
   font-style: italic;
-  font-weight: 200 800;
+  font-weight: 400;
   font-display: swap;
-  src: url("/assets/fonts/newsreader-latin-opsz-italic.woff2") format("woff2");
+  src: url("/assets/fonts/newsreader-latin-italic-400.woff2") format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 @font-face {
@@ -65,6 +69,10 @@
   --code-bg: #F2EEE6;
   --header-bg: rgb(250 248 244 / .86);
   --scrim: rgb(26 24 20 / .72); /* round overlay buttons on media (zoom, play) */
+  --on-scrim: #FFFFFF;          /* icons on --scrim */
+  --backdrop: rgb(18 17 16 / .86); /* lightbox backdrop (dark in both themes) */
+  --on-backdrop: #F2EEE6;       /* lightbox caption text */
+  --photo-filter: none;         /* photos (portrait): dimmed slightly in dark mode */
 
   /* Data and demo colours: colour follows meaning, never rank. */
   --data-focus: #B23A17;     /* "ours", key set being read, prompts, current frame */
@@ -154,6 +162,7 @@
     --shadow-plate-hover: 0 22px 44px -20px rgb(0 0 0 / .95);
     --shadow-pop: 0 0 0 1px #2F2B26, 0 20px 48px -12px rgb(0 0 0 / .75);
     --plate-border: transparent;
+    --photo-filter: brightness(.9);
   }
 }
 :root[data-theme="dark"] {
@@ -169,6 +178,7 @@
   --shadow-plate-hover: 0 22px 44px -20px rgb(0 0 0 / .95);
   --shadow-pop: 0 0 0 1px #2F2B26, 0 20px 48px -12px rgb(0 0 0 / .75);
   --plate-border: transparent;
+  --photo-filter: brightness(.9);
 }
 :root[data-theme="light"] { color-scheme: light; }
 
@@ -176,4 +186,21 @@
 @media (prefers-contrast: more) {
   /* Selectors repeat the theme selectors so this block wins in both themes. */
   :root, :root:not([data-theme="light"]), :root[data-theme] { --rule: var(--rule-strong); --header-bg: var(--paper); }
+}
+
+/* Print: always the light palette, whatever the screen theme. Listed after the dark
+   blocks and with the same specificity, so it wins by source order. */
+@media print {
+  :root, :root:not([data-theme="light"]), :root[data-theme] {
+    color-scheme: light;
+    --paper: #FFFFFF; --paper-2: #FFFFFF; --surface: #FFFFFF; --mat: #FFFFFF;
+    --ink: #000000; --ink-2: #333333; --ink-3: #555555;
+    --rule: #CCCCCC; --rule-strong: #999999; --control-border: #777777;
+    --accent: #8E2C10; --accent-strong: #8E2C10; --accent-wash: #FFFFFF; --on-accent: #FFFFFF;
+    --code-bg: #FFFFFF; --header-bg: #FFFFFF;
+    --data-focus: #B23A17; --data-memory: #2A5EA8; --data-noise: #8A6A12; --data-context: #555555;
+    --badge-schematic: #8A6A12; --badge-paper: #2A5EA8; --badge-real: #2F6B3A;
+    --shadow-plate: none; --shadow-plate-hover: none; --shadow-pop: none;
+    --plate-border: #CCCCCC; --photo-filter: none;
+  }
 }

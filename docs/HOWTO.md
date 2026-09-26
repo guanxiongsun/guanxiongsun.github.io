@@ -9,8 +9,10 @@ python3 -m http.server 8765      # from the repo root, then open http://localhos
 
 On `localhost` the site runs in **dev mode**: every unverified item (`data-todo`) is
 shown with a pink dashed outline and a label, and the browser console lists them all.
-Add `?dev=0` to the URL to see exactly what visitors see; add `?dev` on the live site
-to see the todo list there.
+Add `?dev=0` to the URL to see exactly what visitors see. Everything in this repository
+is public, including `data-todo` notes, so keep them neutral (no unannounced plans).
+Do not `import` `/assets/js/site.js` from another module: it initialises on load (a guard
+stops a second copy, but the exports would come from a different instance).
 
 ---
 
@@ -86,10 +88,10 @@ Paste at the top of the first `<ol class="news">` and move the sixth item down i
   data-lane="perceive" data-tags="video" data-first-author data-venue="CVPR 2026"
   data-note="One sentence for the throughline popover."
   data-href="#pub-KEY" data-thumb="/assets/img/KEY-640.webp">
-  <button class="plate plate--thumb plate__zoom" type="button" data-full="/assets/img/KEY.webp" data-caption="What the figure shows (paper Fig. 1)." aria-label="Enlarge figure: short name">
+  <a class="plate plate--thumb plate__zoom" href="/assets/img/KEY.webp" data-full="/assets/img/KEY.webp" data-caption="What the figure shows (paper Fig. 1)."><span class="visually-hidden">Enlarge figure: </span>
     <span class="plate__mat"><img src="/assets/img/KEY-640.webp" srcset="/assets/img/KEY-640.webp 640w, /assets/img/KEY-1280.webp 1280w" sizes="(min-width: 1024px) 280px, (min-width: 600px) 220px, calc(100vw - 32px)" width="640" height="HEIGHT" loading="lazy" decoding="async" alt="Describe what the figure shows."></span>
     <span class="plate__zoom-icon" aria-hidden="true"><svg class="icon" width="14" height="14" focusable="false"><use href="/assets/icons/sprite.svg#maximize-2"/></svg></span>
-  </button>
+  </a>
   <div class="pub__body">
     <p class="pub__meta"><span class="venue">CVPR 2026</span></p>
     <h4 class="pub__title"><a href="PAPER-URL">Full Paper Title</a></h4>
@@ -98,7 +100,7 @@ Paste at the top of the first `<ol class="news">` and move the sixth item down i
     <div class="pub__links">
       <a class="pill" href="PDF-URL">PDF</a>
       <a class="pill" href="CODE-URL">Code</a>
-      <details class="bib"><summary class="pill">BibTeX</summary><div class="code-wrap"><pre class="code"><code>@inproceedings{...}</code></pre><button class="btn-icon code-copy" type="button" aria-label="Copy BibTeX"><svg class="icon copy-btn__copy" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#copy"/></svg><svg class="icon copy-btn__done" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#check"/></svg></button></div></details>
+      <details class="bib"><summary class="pill">BibTeX</summary><div class="code-wrap"><pre class="code"><code>@inproceedings{...}</code></pre><button class="btn-icon code-copy" type="button" aria-label="Copy BibTeX for SHORT NAME"><svg class="icon copy-btn__copy" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#copy"/></svg><svg class="icon copy-btn__done" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#check"/></svg></button></div></details>
     </div>
   </div>
 </article>
@@ -147,11 +149,13 @@ Never name anyone as a collaborator before they agree publicly.
 2. Remove `<meta name="robots" content="noindex">`.
 3. Fill every `<!-- FILL -->` block; delete sections you don't need.
 4. On the matching `.pub` card: set `data-href="/projects/<slug>/"`, add `data-flagship`,
-   and add a `Project page` badge and a `Project` pill.
+   and add `<a class="tag tag--accent" href="/projects/<slug>/">Project page</a>` to its meta line
+   plus a `Project` pill. (Badges are reserved for Schematic / From the paper / Real output / In progress.)
 5. For flagship work, add a feature spread (`<article class="feature">`) in Selected work.
 6. Update the prev/next cards on the other project pages.
 7. Add the URL to `sitemap.xml`.
-8. Make its social card: `python3 tools/make_assets.py og <slug>`.
+8. Make its social card: first add an entry for `<slug>` to `OG_CARDS` in `tools/make_assets.py`
+   (kicker, headline, title, footer, figure), then run `python3 tools/make_assets.py og <slug>`.
 
 ### Add a silent research loop (video)
 
@@ -206,8 +210,12 @@ Search the HTML for `data-todo` (or open the site on localhost) for the full lis
 - CV PDF at `/cv.pdf` (then remove `data-todo` from the CV link in the hero).
 - Month of the vfe.pytorch 2.0 release; the date you joined Queen's as a Lecturer.
 - Recruiting line ("Students & visitors"), office street address, earlier positions.
-- HIT supervisor line (Prof. Kuanquan Wang).
-- MemVLA arXiv link once public; robot-setup photo for the Physical AI card, if approved.
+- HIT supervisor line (Prof. Kuanquan Wang) and the HIT degree years (2016, 2018).
+- MemVLA arXiv link once public; an image for the Physical AI card, if any.
+- BibTeX: the TACTFL entry is hidden until the official BMVC 2025 entry is pasted. The other
+  six non-README entries (ICML'25, CVPR'25, ACM MM'24, WACV'24, both ECCV'22) were assembled
+  from the official repo READMEs and publisher pages, not exported from DBLP: check them
+  against DBLP once and replace any that differ.
 
 ## 5. Analytics
 

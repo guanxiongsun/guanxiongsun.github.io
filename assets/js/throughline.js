@@ -45,6 +45,7 @@ function init() {
   const kicker = (n) => n.open ? 'Next · Act' : `${n.meta} · ${cap(n.lane)}`;
 
   let svg, pop, active, cur = all[0], drawn = false, ptype = '', lastW = 0, mode, rt, hideT;
+  let io, settle; // entrance observer for the current SVG; settle() skips the entrance (focus arrived first)
 
   // ---- Desktop: SVG ----
   function drawSvg(W) {
@@ -97,7 +98,14 @@ function init() {
       el('circle', { class: 'tl__ring', r: n.open ? 14 : 11 }, glyph);
       el('circle', { class: 'tl__dot', r: { pub: 5, flag: 6.5, future: 6, open: 9 }[type] }, glyph);
       if (n.open) el('path', { class: 'tl__plus', d: 'M-4 0H4M0-4V4' }, glyph);
-      el('text', { class: 'tl__label', x: pair ? (k ? -6 : 6) : 0, y: -14, 'text-anchor': pair ? (k ? 'start' : 'end') : 'middle' }, a).textContent = n.short;
+      // Default label spot. In the Act lane the thread arrives from the upper left, so the first
+      // in-progress node (Physical AI) and the open node label below; MemVLA labels above, centred,
+      // clear of the Next column's border. declutter() starts from n.ly.
+      const below = n.open || (n.future && pair && k === 0);
+      const centred = n.open || (n.future && pair && k === 1);
+      n.ly = below ? 27 : -14;
+      el('text', { class: 'tl__label', x: pair && !centred ? (k ? -6 : 6) : 0, y: n.ly,
+        'text-anchor': centred ? 'middle' : pair ? (k ? 'start' : 'end') : 'middle' }, a).textContent = n.short;
     });
     box.append(svg);
     declutter();
@@ -108,9 +116,12 @@ function init() {
     const dist = pubs.map((n, i) => { solid.setAttribute('d', path(pubs.slice(0, i + 1))); return i ? solid.getTotalLength() : 0; });
     const L = dist.at(-1) || 1;
     svg.classList.add('is-pending');
-    const io = new IntersectionObserver((es) => {
+    // Keyboard focus can reach a node before the figure scrolls into view: show it at once.
+    settle = () => { io.disconnect(); drawn = true; svg.classList.remove('is-pending'); settle = null; };
+    io = new IntersectionObserver((es) => {
       if (!es[0].isIntersecting) return;
       io.disconnect();
+      settle = null;
       if (drawn) return;
       drawn = true;
       svg.classList.remove('is-pending');
@@ -128,16 +139,18 @@ function init() {
     io.observe(svg);
   }
 
-  // Always-on labels that would overlap an earlier one on the same line drop below their node.
+  // An always-on label that would overlap an earlier one (same lane, same side of the line)
+  // flips to the other side of its node.
   function declutter() {
     const seen = [];
     all.forEach((n) => {
       if (!n.el || n.el.classList.contains('tl__node--quiet')) return;
       const t = n.el.querySelector('.tl__label');
-      t.setAttribute('y', -14);
+      let ly = n.ly ?? -14;
+      t.setAttribute('y', ly);
       const b = t.getBBox(), l = n.x + b.x, r = l + b.width;
-      if (seen.some((o) => o.y === n.y && o.l < r + 4 && l < o.r + 4)) t.setAttribute('y', 27);
-      else seen.push({ y: n.y, l, r });
+      if (seen.some((o) => o.y === n.y && o.ly === ly && o.l < r + 4 && l < o.r + 4)) t.setAttribute('y', ly = ly < 0 ? 27 : -14);
+      seen.push({ y: n.y, ly, l, r });
     });
   }
 
@@ -173,7 +186,6 @@ function init() {
   pop.innerHTML = '<span class="plate plate--thumb tl-pop__plate"><span class="plate__mat"><img alt="" width="640" height="320" decoding="async"></span></span>' +
     '<p class="kicker tl-pop__kicker"></p><p class="tl-pop__title" id="tl-pop-title"></p><p class="tl-pop__note"></p><a class="link-arrow link-arrow--sm tl-pop__cta"></a><span class="tl-pop__arrow" aria-hidden="true"></span>';
   const q = (s) => pop.querySelector(s);
-  box.append(pop);
 
   function show(n, touch) {
     clearTimeout(hideT);
@@ -222,18 +234,27 @@ function init() {
 
   box.addEventListener('pointerdown', (e) => { ptype = e.pointerType; });
   box.addEventListener('pointerover', (e) => { const n = nodeOf(e.target); if (n && e.pointerType !== 'touch') show(n); });
+  // Hiding waits a moment so the pointer can cross the gap onto the popover (it is hoverable).
+  const hideSoon = () => {
+    clearTimeout(hideT);
+    hideT = setTimeout(() => { const f = nodeOf(document.activeElement); f?.el.matches(':focus-visible') ? show(f) : hide(); }, 160);
+  };
   box.addEventListener('pointerout', (e) => {
     const n = nodeOf(e.target);
     if (!n || e.pointerType === 'touch' || n.el.contains(e.relatedTarget)) return;
-    hideT = setTimeout(() => { const f = nodeOf(document.activeElement); f?.el.matches(':focus-visible') ? show(f) : hide(); }, 80);
+    hideSoon();
   });
-  box.addEventListener('focusin', (e) => { const n = nodeOf(e.target); if (n) { rove(n); if (ptype !== 'touch') show(n); } });
+  pop.addEventListener('pointerenter', () => clearTimeout(hideT));
+  pop.addEventListener('pointerleave', (e) => { if (e.pointerType !== 'touch') hideSoon(); });
+  box.addEventListener('focusin', (e) => { const n = nodeOf(e.target); if (n) { settle?.(); rove(n); if (ptype !== 'touch') show(n); } });
   box.addEventListener('focusout', (e) => { if (!box.contains(e.relatedTarget)) hide(); });
   box.addEventListener('click', (e) => {
     const n = nodeOf(e.target);
     if (n && ptype === 'touch' && active !== n) { e.preventDefault(); show(n, true); } else if (n || e.target.closest('.tl-pop__cta')) hide();
   });
   document.addEventListener('pointerdown', (e) => { if (!box.contains(e.target)) hide(); });
+  // Esc dismisses the popover wherever focus is (e.g. a mouse hover with focus elsewhere).
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && active) hide(); });
   // Keys: ←/→ chronological, ↑/↓ nearest node in the adjacent lane, Home/End, Esc closes. Enter follows the link natively.
   box.addEventListener('keydown', (e) => {
     ptype = '';
@@ -263,10 +284,12 @@ function init() {
     const had = box.contains(document.activeElement) && nodeOf(document.activeElement);
     lastW = w; mode = m;
     hide();
+    io?.disconnect(); io = settle = null;
     box.querySelector('.tl, .tl-rail')?.remove();
     all.forEach((n) => { n.el = null; });
     svg = null;
     if (m) drawSvg(w); else drawRail();
+    box.append(pop); // after the figure, so Tab order is node → popover CTA → onwards
     box.dataset.ready = '';
     if (had && had.el) had.el.focus({ preventScroll: true });
   }

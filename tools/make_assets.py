@@ -28,7 +28,7 @@ only need the sources to re-crop. To regenerate:
 
     mkdir -p tools/sources/nsa
     for f in Teaser.png Method_SignLanguage.png MainFigure.png nsa_cvpr2024_poster.png; do
-      curl -fL -o "tools/sources/nsa/$f" "https://neural-sign-actors.github.io/static/images/$f"
+      curl -fL -o "tools/sources/nsa/$f" "https://raw.githubusercontent.com/baltatzisv/neural-sign-actors/main/static/images/$f"
     done
     python3 tools/make_assets.py project            # or: --nsa-dir /somewhere/else
 
