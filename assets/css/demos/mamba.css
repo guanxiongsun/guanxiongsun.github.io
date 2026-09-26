@@ -7,9 +7,17 @@
   .article > .sidenote.mm-titlenote { grid-row: 1; align-self: center; }
 }
 
-/* The hero is the paper's 669 px animation: keep it near its own size. */
+/* The hero is the authors' 669 px animation: keep it near its own size (≤ 1.1×) so labels stay crisp. */
 .mm-hero .plate__mat { display: grid; justify-items: center; }
-.mm-hero video { width: 100%; max-width: 880px; height: auto; }
+.mm-hero video { width: 100%; max-width: 740px; height: auto; }
+
+/* Fig. 3 enlarge button sits at the right of the figure head. */
+.mm-zoom { margin-left: auto; }
+
+/* Instructions that only make sense with the live toy; the static picture is for no-JS readers. */
+html:not(.js) .mm-js, html.js .mm-fb-img { display: none; }
+.mm-fb-img { display: block; margin-bottom: 12px; }
+.mm-fb-img img { display: block; width: 100%; height: auto; }
 
 /* ---------- Explorable ---------- */
 #demo:not(.is-ready) :is(.explorable__stage, .ex-legend) { display: none; }

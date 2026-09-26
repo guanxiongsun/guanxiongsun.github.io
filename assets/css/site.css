@@ -412,7 +412,7 @@ html:not(.js) .ab__control { display: none; }
 .copy-btn__done { display: none; }
 .is-copied .copy-btn__copy { display: none; }
 .is-copied .copy-btn__done { display: inline-block; color: var(--badge-real); }
-html:not(.js) :is(.code-copy, .copy-btn) { display: none; }
+html:not(.js) :is(.code-copy, .copy-btn, [data-copy]) { display: none; } /* wired by site.js */
 
 .callout { margin: 32px 0; padding: 16px 20px; border-radius: var(--r-sm); font-size: var(--fs-cap); }
 .callout > .kicker:first-child { display: block; margin-bottom: 6px; }

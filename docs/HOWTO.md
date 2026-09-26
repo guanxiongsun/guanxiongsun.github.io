@@ -39,7 +39,9 @@ Rules that keep the site easy to edit:
 - **Behaviour attaches through `data-*` attributes**; you never need to touch the JS to add content.
 - **Every section must read fine with JavaScript off.**
 - **Cache-busting:** CSS and JS links end in `?v=20260926`. When you change a CSS or JS file,
-  bump that date in every HTML file that links it (search and replace `?v=20260926`).
+  bump that date everywhere at once: search and replace `?v=20260926` across **all `.html` and
+  `.js` files** (the demo modules in `assets/js/demos/` and `projects/_template/example-demo.js`
+  import `article.js?v=…`, and that string must match the page's own `<script>` tag).
 
 Comment fences in `index.html` mark the places you will edit most:
 
@@ -72,12 +74,19 @@ Comment fences in `index.html` mark the places you will edit most:
 
 ### Add a news item
 
-Paste at the top of the first `<ol class="news">` and move the sixth item down into
-`<details class="news__more">`:
+In `index.html`, find `<!-- NEWS: add newest at top -->`. Paste the new line at the top of
+`<ol class="news">`, then move the list's last item (the sixth) to the top of the list inside
+`<details class="news__more">`, so five stay visible:
 
 ```html
 <li class="news__item"><time datetime="2026-10">Oct 2026</time><p><b>Something</b> happened.</p></li>
 ```
+
+- `datetime` is `YYYY-MM` (or `YYYY` when the month is unknown; then wrap the missing month in
+  `<span data-todo="news month">Mon </span>` until you know it).
+- Link the thing the news is about: a paper card (`href="#pub-KEY"`), a project page
+  (`/projects/<slug>/`) or an external page. Papers led by someone else name them
+  ("Zhaoyu Zhang’s <a …>Title</a> (I’m a co-author)").
 
 ### Add a publication
 
@@ -128,26 +137,44 @@ What the attributes do:
 The throughline, filter counts and "Showing N of M" update automatically.
 For a paper led by someone else, leave out `data-first-author`, and link their names.
 
+4. If the card has `data-thread`, also add one line to the no-JavaScript fallback list of the
+   throughline (`<ol class="throughline__fallback">` near the top of `index.html`), in date order:
+
+   ```html
+   <li data-lane="generate"><span class="tf__year">2026</span> <a href="#pub-KEY">Short label</a> <span class="tf__meta">CVPR 2026 · Generate</span></li>
+   ```
+
+5. Preview on localhost: the new dot appears on the throughline, the filter chips count it,
+   and dev mode lists any `data-todo` you left.
+
 ### Add an in-progress item to the throughline
 
 Add a card in the Vision section with
 `data-thread data-status="in-progress" data-lane="act" data-date="YYYY-MM"` (plus `data-key`,
 `data-short`, `data-note`, `data-href`). It is drawn dashed, in the accent colour. Claim no results.
 
-### A collaboration becomes public
+### A collaboration becomes public ("connected")
 
-On its row in `<ol class="problems">`:
+Only once the partner has agreed, in public, to be named. In `index.html`, find
+`<!-- PROBLEM: set data-state="connected" when public -->` and the row in `<ol class="problems">`:
 
-```html
-<li class="problem" data-state="connected">
-  …
-  <p class="problem__partner">Now with <a href="https://…">Name, Institution</a></p>
-```
+1. Change `data-state="open"` to `data-state="connected"` on its `<li class="problem">`.
+2. Inside its `<div class="problem__body">`, directly after the description paragraph, add:
 
-The numeral turns cinnabar and a CONNECTED pill appears. Add a News line at the same time.
+   ```html
+   <p class="problem__partner">Now with <a href="https://…">Name, Institution</a></p>
+   ```
+
+3. Keep the "Discuss this" link (others may still want to join) or delete it if the problem is closed.
+4. Add a News item the same day ("Started working with … on …").
+
+The numeral turns cinnabar and a CONNECTED pill appears; nothing else needs editing.
 Never name anyone as a collaborator before they agree publicly.
 
 ### Add a project page
+
+The three live pages (`projects/mamba/`, `projects/stpn/`, `projects/neural-sign-actors/`) are
+the best worked examples; the template carries the same structure with every block marked.
 
 1. Copy `projects/_template/` to `projects/<slug>/` and **delete `example-demo.js`** from the copy
    (it is the template's placeholder demo; real demos live in `assets/js/demos/<name>.js`).
@@ -162,23 +189,34 @@ Never name anyone as a collaborator before they agree publicly.
 6. On the matching `.pub` card: set `data-href="/projects/<slug>/"`, add `data-flagship`,
    and add `<a class="tag tag--accent" href="/projects/<slug>/">Project page</a>` to its meta line
    plus a `Project` pill. (Badges are reserved for Schematic / From the paper / Real output / In progress.)
-7. For flagship work, add a feature spread (`<article class="feature">`) in Selected work.
-8. Update the prev/next cards (`nav.pagenav`) on the other project pages (cyclic order).
-9. Add the URL to `sitemap.xml`.
-10. Make its social card: add an entry for `<slug>` to `OG_CARDS` in `tools/make_assets.py`
-    (kicker, headline, title, footer, figure), then run `python3 tools/make_assets.py og <slug>`.
+7. For flagship work, add a feature spread (`<article class="feature">`) in Selected work, with
+   "Explore the project" → `/projects/<slug>/` and, if the page has a demo, "Try the interactive"
+   → `/projects/<slug>/#demo`. Point the paper's line in `ol.throughline__fallback` at the page too.
+8. Update the prev/next cards (`nav.pagenav`) so the order stays one cycle. Today it is
+   MAMBA → STPN → Neural Sign Actors → MAMBA; to insert a page, change the "Next" card of the page
+   before it and the "Previous" card of the page after it.
+9. If the work continues a thread, add a node to the "Where it led" list (`ol.thread`) on the
+   related pages.
+10. Add the URL to `sitemap.xml` (and bump `<lastmod>` on pages you changed).
+11. Make its social card: add an entry for `<slug>` to `OG_CARDS` in `tools/make_assets.py`
+    (kicker, headline, title, footer, figure), then run `python3 tools/make_assets.py og <slug>`;
+    point `og:image` / `twitter:image` at `/assets/og/<slug>.png`.
+12. Check it on localhost at 390px and 1440px, light and dark, with `?dev=0`, and once with
+    JavaScript switched off (the page must still read: fallback images, static TOC, tables).
 
-The table of contents builds itself from the section headings. Each section is
-`<section class="article__section" id="…"><h2>…</h2>…</section>`; use `data-toc-label` on the
-`h2` for a shorter TOC entry.
+**Contents list.** Write the TOC links by hand, one per section, as in the template: that list is
+what readers without JavaScript get. (If the list is left empty, `article.js` fills it from the
+section headings, but only when JavaScript runs.) Each section is
+`<section class="article__section" id="…"><h2>…</h2>…</section>`; `data-toc-label` on the `h2`
+gives a shorter entry when the list is generated.
 
 ### Project page components (markup lives in `projects/_template/index.html`)
 
 | Want | Markup | Notes |
 |---|---|---|
 | Break out of the text column | add `wide` (66rem) or `full` to a direct child of `.article` / `.article__section` | text is 42rem |
-| Sidenote | `<p>…<sup class="sn-ref">1</sup></p><aside class="sidenote"><sup>1</sup> …</aside>` | the aside must follow its paragraph directly |
-| Numbered hotspots on a figure | `figure.hotspots[data-hotspots]`; `button.hotspot` with `style="--x:37%;--y:60%"` and `aria-describedby` = the `id` of its `li` in `ol.hotspots__list` | positions are % of the image; check them in the browser |
+| Sidenote | `<p>…<sup class="sn-ref">1</sup></p><aside class="sidenote"><sup>1</sup> …</aside>` | the aside must follow its paragraph directly. At ≥1200px it shares the paragraph's row, so keep it no taller than the paragraph (≈ 40 words) or it opens a gap below |
+| Numbered hotspots on a figure | `figure.hotspots[data-hotspots]`; `button.hotspot` with `style="--x:37%;--y:60%"` and `aria-describedby` = the `id` of its `li` in `ol.hotspots__list` | positions are % of the image; check them in the browser. The whole figure is one Tab stop; arrow keys move between hotspots. For a spoken name, add `aria-labelledby="<button id> <id of the li's <b> label>"` (see the NSA page) |
 | Frame stepper | `figure.stepper[data-stepper][data-label="Frame"]`; `<rect data-step="k" …>` inside `svg.stepper__overlay` (viewBox = image pixels) | controls are generated; `?debug` outlines the rects; `data-autoplay` only plays in view and never under reduced motion |
 | Chart | `figure.chart > table[data-chart="dot / bars / dots-multi"]` with `<caption>` + `thead` + `tbody` (first cell of each row = label) | see "Charts" below |
 | Plain data table | `div.table-wrap[role=region][tabindex=0][aria-labelledby] > table.data-table` | scrolls sideways on phones |
@@ -188,7 +226,9 @@ The table of contents builds itself from the section headings. Each section is
 
 **Charts** (`assets/js/charts.js`). The table is the source of truth and stays one click away
 ("Show as table"); without JavaScript it simply shows. Attributes on the `<table>`:
-`data-min`, `data-max` (axis range; bars always start at 0), `data-unit`,
+`data-min`, `data-max` (axis range; bars always start at 0; both are rounded outwards to a whole
+tick step, so the axis may start a little lower or end a little higher), `data-unit` (printed after
+the last tick),
 `data-highlight="Name"` (the row or column that is "ours"), `data-memory="Name"` (painted in the
 memory colour, e.g. MAMBA when it is the comparison), `data-lower-better` (adds "↓ lower is better";
 the best value per column is then the minimum). `bars` with several value columns draws grouped
@@ -198,14 +238,30 @@ Put `<p class="chart__src">Source: …</p>` (and optionally `p.chart__note`) aft
 
 **Demos** (`assets/js/demos/<name>.js`, one per page). Import the helpers from
 `/assets/js/article.js?v=…` with the same `?v=` as the page: `mulberry32` (seeded random),
-`onNear` (lazy start), `createPlayer` (play loop that only runs in view, pauses when another
-video or demo starts, never autoplays under reduced motion), `createAnnouncer` (throttled
-screen-reader description), `syncPlayButton`, `bindRange`, `reducedMotion`, `onReducedMotion`.
+`createPlayer` (play loop that runs while the demo is in view, keeps going after a Play press
+until the demo has left the screen, pauses when another video or demo starts, never autoplays
+under reduced motion), `createAnnouncer` (throttled screen-reader description), `syncPlayButton`,
+`bindRange`, `reducedMotion`, `onReducedMotion`, `onNear`.
 Draw the SVG with the `.ex-*` classes in `article.css` (colours follow meaning: focus = ours or
 being read, memory = stored, noise = seeds/references, context = baselines), fill the
 `[data-out]` readouts and the description, then add `.is-ready` to the `.explorable`: until
 then only `.explorable__fallback` shows. `projects/_template/example-demo.js` is a complete,
-small example.
+small example. Rules the three live demos follow:
+
+- **Call `init()` when the module loads**, not behind `onNear()`. The controls stay hidden until
+  `.is-ready`, so a lazy start lets keyboard users Tab straight past the demo. (Declare top-level
+  `const`s before the `init()` call.)
+- **Start paused, in an informative state**, and pair the demo with a "How to read this"
+  callout (`aside.callout.callout--schematic`) that says what is illustrative.
+- **Budget:** about 12 KB per demo module, measured **gzipped** (`gzip -9c file.js | wc -c`), which
+  is how GitHub Pages serves it. The live ones are 2.4–6.9 KB gzipped (5.8–17.7 KB raw).
+- **SVG focus:** Chrome does not reliably draw a CSS outline on SVG `<g>`/`<rect>` controls. Draw
+  your own ring with `rect.ex-focusring.ex-focusring--halo` + `rect.ex-focusring` (same geometry,
+  moved by the module); `article.css` shows it only while the stage has keyboard focus.
+- **Nested `<svg>`:** `site.css` gives every `svg` `height: auto`, which collapses a nested `<svg>`
+  used as an image crop. Crop with a `clipPath` on an `<image>` instead (as `stpn-prompts.js` does).
+- **Controls row:** `.explorable__controls` spaces buttons and `.ctrl` sliders with one gap, so a
+  slider that wraps to its own line stays aligned; do not add margins to `.ctrl`.
 
 ### Add a silent research loop (video)
 
@@ -240,6 +296,8 @@ Markup (the site pauses it off-screen, respects reduced motion, and adds the pla
 
 Any button with `data-copy="#some-id"` copies the text of that element and announces
 `data-copy-msg` (default "Copied"). BibTeX blocks use `.code-copy` inside `.code-wrap`.
+All of them are hidden when JavaScript is off (they could not work), so the text must be
+readable on its own.
 
 ### A YouTube talk without loading YouTube up front
 
@@ -257,11 +315,18 @@ Any button with `data-copy="#some-id"` copies the text of that element and annou
 
 Search the HTML for `data-todo` (or open the site on localhost) for the full list. The main ones:
 
-- CV PDF at `/cv.pdf` (then remove `data-todo` from the CV link in the hero).
+- CV PDF at `/cv.pdf` (then remove `data-todo` from the CV link in the hero). Until then the
+  local link checker reports `/cv.pdf` as missing; visitors never see the link.
 - Month of the vfe.pytorch 2.0 release; the date you joined Queen's as a Lecturer.
 - Recruiting line ("Students & visitors"), office street address, earlier positions.
 - HIT supervisor line (Prof. Kuanquan Wang) and the HIT degree years (2016, 2018).
 - MemVLA arXiv link once public; an image for the Physical AI card, if any.
+- Project pages (all from the paper PDFs; never estimate):
+  - MAMBA and STPN: author affiliations with superscripts, exactly as printed.
+  - STPN: YouTube-VIS 2019 (STPN + MinVIS) and GOT-10k (STPN + MixFormer) numbers and baselines.
+  - Neural Sign Actors: your one-sentence contribution; whether the Fig. 1 avatars are model
+    output or the 3D fit; the units of the fitting error and of MPVPE / MPJPE; which two
+    Saunders et al. papers are (i) and (ii); the exact user-study means.
 - BibTeX: the TACTFL entry is hidden until the official BMVC 2025 entry is pasted. The other
   six non-README entries (ICML'25, CVPR'25, ACM MM'24, WACV'24, both ECCV'22) were assembled
   from the official repo READMEs and publisher pages, not exported from DBLP: check them

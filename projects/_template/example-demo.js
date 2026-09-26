@@ -2,14 +2,16 @@
    how a demo module uses the article.js helpers. Copy the pattern into
    /assets/js/demos/<name>.js, then delete this file from your project folder.
 
-   Pattern: lazy-init near the viewport (onNear) → draw an informative, paused initial state →
+   Pattern: init eagerly at module load (NOT behind onNear: the controls stay hidden until
+   .is-ready, so a lazy init would let keyboard users Tab straight past them) → draw an
+   informative, paused initial state →
    Play/Step/Reset/range drive a pure step() on seeded state (mulberry32) → render() updates the
    SVG, the aria-hidden readout and the throttled description → add .is-ready. */
-import { mulberry32, onNear, createPlayer, createAnnouncer, syncPlayButton, bindRange, reducedMotion } from '/assets/js/article.js?v=20260926';
+import { mulberry32, createPlayer, createAnnouncer, syncPlayButton, bindRange, reducedMotion } from '/assets/js/article.js?v=20260926';
 
 const T = 24, CAP = 8, SEED = 20260926;
 const root = document.getElementById('demo');
-if (root) onNear(root, init);
+if (root) init(); // eager: see the header
 
 function init() {
   const svg = root.querySelector('[data-stage]');

@@ -11,7 +11,8 @@
                         sticky left-margin rail and fades while a .wide/.full block passes under it.
      [data-hotspots]    hotspot figure: each button.hotspot names its list item with aria-describedby.
                         Hover/focus highlights the pair; click/tap pins it (and scrolls the item into
-                        view); arrow keys / Home / End move between hotspots; Esc clears.
+                        view); the figure is one tab stop (roving tabindex): arrow keys / Home / End
+                        move between hotspots; Esc clears.
      [data-stepper]     frame stepper: rect[data-step="k"] inside svg.stepper__overlay are the holes
                         for step k. Builds the dimming masks and the controls (1…N, All, prev/next,
                         play). data-label="Frame", data-start="all"|k, data-interval=ms (900),
@@ -23,11 +24,15 @@
      reducedMotion()                   → true when the visitor prefers reduced motion (live)
      onReducedMotion(fn)               → fn(matches) on every change; returns an unsubscribe fn
      onNear(el, fn, margin = '300px')  → run fn() once when el comes within margin of the viewport
+                                         (or when focus enters el). Demo modules should NOT
+                                         gate init() on it: see docs/HOWTO.md "Explorables".
      createPlayer(root, opts)          → playback loop, one-at-a-time across the page:
          opts: { interval = 500 (ms, number or () => number), tick() (return false to stop),
                  onChange(playing), autoplay = false }
          player.play(user = true) / .pause(user = true) / .toggle() / .playing (wanted state)
-         Runs only while root is ≥50% visible and the tab is visible; resumes when back.
+         Runs only while root is in view (≥50% visible, or as much of it as fits in 90% of the
+         viewport) and the tab is visible; resumes when back. After a user play it keeps
+         running while any part of root is on screen, and stops once root has fully left.
          Starting dispatches document 'media:play' {detail: root}; any other 'media:play'
          (site.js video plates, the YouTube facade, other demos) pauses it. autoplay never
          happens under reduced motion or after the user paused; a reduced-motion switch pauses.
@@ -65,14 +70,15 @@ export function onReducedMotion(fn) {
 
 export function onNear(el, fn, rootMargin = '300px') {
   if (!('IntersectionObserver' in window)) { fn(); return; }
-  const io = new IntersectionObserver((es) => {
-    if (es.some((e) => e.isIntersecting)) { io.disconnect(); fn(); }
-  }, { rootMargin });
+  let done = false;
+  const run = () => { if (done) return; done = true; io.disconnect(); el.removeEventListener('focusin', run); fn(); };
+  const io = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) run(); }, { rootMargin });
   io.observe(el);
+  el.addEventListener('focusin', run); // keyboard (or find-in-page) arrival also counts
 }
 
 export function createPlayer(root, { interval = 500, tick = () => true, onChange = () => {}, autoplay = false } = {}) {
-  let want = false, userPaused = false, visible = false, timer = 0, running = false;
+  let want = false, userPaused = false, userStarted = false, visible = false, ratio = 0, timer = 0, running = false;
   const ms = () => (typeof interval === 'function' ? interval() : interval);
   const canRun = () => want && visible && !document.hidden;
   const stop = () => { clearTimeout(timer); timer = 0; running = false; };
@@ -99,14 +105,24 @@ export function createPlayer(root, { interval = 500, tick = () => true, onChange
   document.addEventListener('media:play', (e) => { if (e.detail !== root && want) setWant(false); });
   document.addEventListener('visibilitychange', sync);
   rmMQ.addEventListener('change', (e) => { if (e.matches && want) setWant(false); });
+  // "In view" = at least half visible, or as much as fits (a root taller than 2x the viewport
+  // can never reach 50%). A user-started player keeps running while any part is on screen and
+  // stops once the root has left the viewport completely.
+  const seen = () => ratio > 0 && ratio >= Math.min(0.5, (0.9 * innerHeight) / (root.getBoundingClientRect().height || 1));
+  const update = () => { visible = seen() || (userStarted && ratio > 0); sync(); maybeAutoplay(); };
   if ('IntersectionObserver' in window) {
-    new IntersectionObserver(([en]) => { visible = en.isIntersecting; sync(); maybeAutoplay(); }, { threshold: 0.5 }).observe(root);
+    const steps = [0, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5];
+    new IntersectionObserver(([en]) => {
+      ratio = en.isIntersecting ? en.intersectionRatio : 0;
+      if (!ratio) userStarted = false;
+      update();
+    }, { threshold: steps }).observe(root);
   } else visible = true;
 
   return {
     get playing() { return want; },
     play(user = true) {
-      if (user) { userPaused = false; if (!visible) visible = true; } // a click proves it is on screen
+      if (user) { userPaused = false; userStarted = true; if (!visible) visible = true; } // a click proves it is on screen
       setWant(true);
     },
     pause(user = true) { if (user) userPaused = true; setWant(false); },
@@ -212,11 +228,19 @@ function initHotspots() {
     const spots = $$('.hotspot', fig);
     const pairs = spots.map((b) => ({ b, li: document.getElementById((b.getAttribute('aria-describedby') || '').split(/\s+/)[0]) }));
     let pinned = null;
+    // Roving tabindex: the figure is one tab stop; arrows / Home / End move within it.
+    const rove = (b) => spots.forEach((x) => { x.tabIndex = x === b ? 0 : -1; });
+    rove(spots[0]);
+    const frame = fig.querySelector('.hotspots__frame');
+    if (frame && spots.length > 1 && !frame.hasAttribute('role')) {
+      frame.setAttribute('role', 'group');
+      frame.setAttribute('aria-label', `${spots.length} numbered hotspots; arrow keys move between them`);
+    }
     const show = (p) => pairs.forEach((q) => { const on = q === p || q === pinned; q.b.classList.toggle('is-active', on); q.li?.classList.toggle('is-active', on); });
     pairs.forEach((p) => {
       p.b.addEventListener('mouseenter', () => show(p));
       p.b.addEventListener('mouseleave', () => show(null));
-      p.b.addEventListener('focus', () => show(p));
+      p.b.addEventListener('focus', () => { rove(p.b); show(p); });
       p.b.addEventListener('blur', () => show(null));
       p.b.addEventListener('click', () => {
         pinned = pinned === p ? null : p;

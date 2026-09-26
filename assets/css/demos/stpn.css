@@ -2,21 +2,26 @@
    Colours come from tokens.css only; the .ex-* vocabulary is in article.css. */
 
 /* Hero: the paper's two near-square panels. A 66rem-wide square would fill two screens, so at
-   ≥1024 the plate sits beside its label column (number, badge, toggle, caption); below that it
-   stacks at a readable size. */
-.stpn-hero > * { max-width: 36rem; }
+   ≥1024 the plate sits beside its label column (number, badge, toggle, caption), top-aligned;
+   below that it stacks at a readable size, centred. Without JS both panels simply stack. */
+.stpn-hero { max-width: 36rem; margin-inline: auto; }
 .stpn-hero .ab__control { display: flex; width: fit-content; }
+.st-zoom { margin-left: auto; }
+.stpn-hero .st-zoom:not(.is-active), html:not(.js) .st-zoom { display: none; } /* one per A/B panel */
 @media (min-width: 1024px) {
-  .stpn-hero { display: grid; grid-template-columns: minmax(0, 36rem) minmax(0, 1fr); grid-template-rows: 1fr auto auto auto 1fr; column-gap: 40px; }
-  .stpn-hero > .plate__mat { grid-column: 1; grid-row: 1 / -1; }
-  .stpn-hero > :not(.plate__mat) { grid-column: 2; }
-  .stpn-hero > .plate__head { grid-row: 2; }
-  .stpn-hero > .ab__control { grid-row: 3; margin: 16px 0 0; }
-  .stpn-hero > .plate__cap { grid-row: 4; margin-top: 16px; }
+  .js .stpn-hero { display: grid; max-width: none; grid-template-columns: minmax(0, 36rem) minmax(0, 1fr); grid-template-rows: auto auto auto 1fr; column-gap: 40px; }
+  .js .stpn-hero > .plate__mat { grid-column: 1; grid-row: 1 / -1; }
+  .js .stpn-hero > :not(.plate__mat) { grid-column: 2; }
+  .js .stpn-hero > .plate__head { grid-row: 1; margin-top: 0; }
+  .js .stpn-hero > .ab__control { grid-row: 2; margin: 16px 0 0; }
+  .js .stpn-hero > .plate__cap { grid-row: 3; margin-top: 16px; }
+  .js .stpn-hero .st-zoom { margin-left: 12px; }
 }
 
 /* ---------- Explorable ---------- */
 #demo:not(.is-ready) :is(.explorable__stage, .ex-legend) { display: none; }
+/* Below an 820px stage the tall layout is used; cap it so its text never outgrows the body copy. */
+#demo .st-m { max-width: 420px; margin-inline: auto; }
 #demo .explorable__stage { min-height: 0; }
 #demo .ex-svg { overflow: hidden; }
 #demo .st-m .ex-text { font-size: 13px; }
@@ -44,9 +49,15 @@
 .st-h0 { stroke: var(--data-focus); }
 .st-h1 { stroke: var(--badge-real); }
 .st-h2 { stroke: var(--data-memory); }
-:is(.st-head, .st-mod) { opacity: .5; transition: opacity var(--dur-2); }
-:is(.st-head, .st-mod).is-on { opacity: 1; }
+/* Inactive heads/modules: only the border fades; labels keep full text contrast. */
+:is(.st-head, .st-mod) rect { transition: stroke-opacity var(--dur-2); }
+:is(.st-head, .st-mod):not(.is-on) rect { stroke-opacity: .4; }
+:is(.st-head, .st-mod):not(.is-on) .ex-text--strong { font-weight: 400; }
 :is(.st-head, .st-mod).is-on rect { stroke-width: 2.5; }
+/* Prompts switched off: the DVP path fades, but its text stays readable. */
+#demo .st-dvp.ex-dim { opacity: 1; }
+#demo .st-dvp.ex-dim :is(rect, path) { opacity: .35; }
+#demo .st-dvp.ex-dim text { fill: var(--ink-3); }
 .st-mod rect { stroke-dasharray: none; }
 
 /* Probe: hit areas, the selected patch, and schematic attention lines. */
@@ -55,7 +66,11 @@
 .st-hit { fill: transparent; stroke: none; }
 .st-tile:hover .st-hit { fill: var(--surface); fill-opacity: .18; }
 .st-ring { fill: none; stroke: var(--data-focus); stroke-width: 2.5; }
-[data-grid]:has(:focus-visible) ~ [data-probe] .st-ring { stroke: var(--accent); stroke-width: 3.5; }
+/* Keyboard focus: a separate ink ring (with a surface halo) outside the orange selection ring. */
+.st-focus, .st-fh { display: none; fill: none; }
+[data-grid]:has(:focus-visible) ~ [data-probe] :is(.st-focus, .st-fh) { display: inline; }
+.st-fh { stroke: var(--surface); stroke-width: 5; }
+.st-focus { stroke: var(--ink); stroke-width: 2; }
 .st-halo { fill: none; stroke: var(--surface); stroke-width: 4.5; stroke-linecap: round; opacity: .85; }
 .st-att { fill: none; stroke: var(--data-focus); stroke-width: 2.5; stroke-linecap: round; }
 .st-nb { fill: none; stroke: var(--ink); stroke-width: 1.25; }
@@ -71,9 +86,18 @@
   .st-pg.st-out { transform: none; }
 }
 @media (forced-colors: active) {
-  .st-p, .st-q, .st-nbdot { fill: CanvasText; }
-  .st-att, .st-nb, .st-lead, .st-sup, .st-ring, .st-frame, :is(.st-h0, .st-h1, .st-h2) { stroke: CanvasText; }
-  .st-cut, .st-halo { stroke: Canvas; }
+  .st-p, .st-nbdot, #demo marker path, .st-legend rect { fill: CanvasText; }
+  .st-q, .st-kbg { fill: Canvas; stroke: CanvasText; }
+  .st-kbg { stroke: none; }
+  .st-att, .st-nb, .st-lead, .st-sup, .st-ring, .st-frame, .st-focus, :is(.st-h0, .st-h1, .st-h2) { stroke: CanvasText; }
+  .st-sup { stroke-dasharray: 4 3; }
+  .st-focus { stroke: Highlight; }
+  .st-cut, .st-halo, .st-fh { stroke: Canvas; }
+}
+
+/* Fig. 3 hotspots on phones: move 2 and 4 off the figure's own labels (--xs/--ys per button). */
+@media (max-width: 599.98px) {
+  .st-hs .hotspot { left: var(--xs, var(--x)); top: var(--ys, var(--y)); }
 }
 
 /* "See the paper" line for the multi-task results. */
@@ -84,4 +108,6 @@
 @media (max-width: 599.98px) {
   #demo .seg__opt .st-long { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 }
+.st-kbg { fill: var(--surface); stroke: none; }
 .st-knock { paint-order: stroke; stroke: var(--surface); stroke-width: 5px; stroke-linejoin: round; }
+#demo .explorable__fallback img { max-width: 28rem; margin-inline: auto; }

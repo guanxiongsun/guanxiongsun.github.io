@@ -136,13 +136,15 @@
   html.js .toc__box { pointer-events: auto; }
   html.js .toc__box {
     position: sticky; top: calc(var(--header-h) + 32px); border: 0; border-radius: 0;
-    transition: opacity var(--dur-2) var(--ease-out), visibility var(--dur-2);
+    transition: opacity var(--dur-2) var(--ease-out);
   }
   html.js .toc__summary { min-height: 0; padding: 0 0 12px; cursor: default; pointer-events: none; color: var(--ink-3); }
   html.js .toc__summary::after { content: none; }
   html.js .toc__list { padding: 0; border-left: 1px solid var(--rule); }
   html.js .toc__list a { padding: 5px 0 5px 12px; }
-  html.js .toc.is-covered .toc__box { opacity: 0; visibility: hidden; }
+  /* Fade only (no visibility:hidden), so the links stay in the tab order; focus brings it back. */
+  html.js .toc.is-covered .toc__box { opacity: 0; pointer-events: none; }
+  html.js .toc.is-covered:focus-within .toc__box { opacity: 1; pointer-events: auto; }
 }
 
 /* Sidenote: <aside class="sidenote"><sup>1</sup> …</aside>, placed right after its paragraph
@@ -201,7 +203,7 @@
 .chart__svg text { font: 400 13px var(--font-sans); fill: var(--ink-2); font-variant-numeric: lining-nums tabular-nums; }
 .chart__svg .ch-lab--focus { font-weight: 600; fill: var(--ink); }
 .chart__svg .ch-tick { font: 500 11px var(--font-mono); fill: var(--ink-3); }
-.chart__svg .ch-val { font-size: 12px; }
+.chart__svg .ch-val { font-size: 12px; paint-order: stroke; stroke: var(--chart-bg, var(--paper)); stroke-width: 4px; stroke-linejoin: round; }
 .chart__svg .ch-val--focus { font-weight: 600; fill: var(--ink); }
 .chart__svg .ch-dl { font-size: 11.5px; fill: var(--ink-2); }
 .ch-grid { stroke: var(--rule); stroke-width: 1; shape-rendering: crispEdges; }
@@ -318,8 +320,7 @@ html:not(.js) .stepper__controls { display: none; }
 @media (min-width: 840px) { .explorable__stage { min-height: 340px; } }
 .explorable__stage > svg { display: block; width: 100%; height: auto; }
 .explorable__stage :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-.explorable__controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 16px; }
-.explorable__controls .ctrl { margin-left: 8px; }
+.explorable__controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; margin-top: 16px; }
 .explorable__readout {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: 12px 20px;
   margin: 16px 0 0; padding-top: 14px; border-top: 1px solid var(--rule);
@@ -361,7 +362,6 @@ html:not(.js) .stepper__controls { display: none; }
 .range:focus-visible::-moz-range-thumb { outline: 2px solid var(--accent); outline-offset: 3px; }
 @media (max-width: 599.98px) {
   .ctrl { grid-template-columns: auto minmax(0, 1fr) auto; width: 100%; }
-  .explorable__controls .ctrl { margin-left: 0; }
 }
 
 /* Tabs (ARIA tabs pattern; the module handles arrow keys):
@@ -429,6 +429,13 @@ figure > .speech { margin-bottom: 18px; }
 @keyframes ex-flash { from { fill: var(--data-focus); } }
 .ex-pulse { animation: ex-pulse 400ms var(--ease-out); }
 @keyframes ex-pulse { 50% { stroke: var(--data-focus); stroke-width: 3; } }
+/* SVG focus ring. Chrome does not reliably paint a CSS outline on SVG <g>/<rect> controls, so a
+   demo draws its own ring around the focused mark: <rect class="ex-focusring ex-focusring--halo">
+   then <rect class="ex-focusring"> (same geometry, positioned by the module). Shown only while
+   something in the stage has keyboard focus; keep it separate from any selection ring. */
+.ex-focusring { display: none; fill: none; stroke: var(--ink); stroke-width: 2; pointer-events: none; }
+.ex-focusring--halo { stroke: var(--surface); stroke-width: 6; }
+.explorable__stage:has(:focus-visible) .ex-focusring { display: inline; }
 .ex-legend { list-style: none; display: flex; flex-wrap: wrap; gap: 4px 18px; margin-top: 12px; font: 400 13px/1.4 var(--font-sans); color: var(--ink-2); }
 .ex-legend li { display: inline-flex; align-items: center; gap: 7px; }
 .ex-legend svg { width: 14px; height: 14px; flex: none; }
@@ -451,8 +458,9 @@ figure > .speech { margin-bottom: 18px; }
 .thread__node > a { display: block; color: inherit; text-decoration: none; }
 .thread__year { display: block; font: 500 var(--fs-xs)/1.4 var(--font-mono); letter-spacing: var(--track-kicker); text-transform: uppercase; color: var(--ink-3); }
 .thread__name { display: block; margin-top: 2px; font: 600 1.0625rem/1.25 var(--font-serif); color: var(--ink); }
-.thread__node > a:hover .thread__name { color: var(--accent); text-decoration: underline 1px; text-underline-offset: .18em; }
-.thread__node[aria-current] .thread__name, .thread__node--future .thread__name { color: var(--accent); }
+.thread__node > a:is(:hover, :focus-visible) .thread__name { color: var(--accent); text-decoration: underline 1px; text-underline-offset: .18em; }
+.thread__node[aria-current] .thread__name { color: var(--accent); }
+.thread__node--future .thread__name { color: var(--ink-2); }
 .thread__note { display: block; margin-top: 4px; max-width: 22ch; }
 @media (max-width: 599.98px) {
   .thread { grid-auto-flow: row; gap: 0; }
@@ -515,10 +523,27 @@ figure > .speech { margin-bottom: 18px; }
   .stepper__dim { fill: Canvas; }
   .chart__svg :is(.ch-focus, .ch-memory, .ch-context) { fill: CanvasText; }
   .chart__svg .ch-hollow { stroke: CanvasText; fill: Canvas; }
+  /* Bars: context series drawn hollow so two series still differ by more than colour. */
+  .chart__svg path.ch-context { fill: Canvas; stroke: CanvasText; stroke-width: 1.5; }
   .chart__svg text { fill: CanvasText; }
+  .chart__svg .ch-val { stroke: Canvas; }
+  /* Legend swatches are backgrounds, which forced colours would drop: keep the shapes. */
+  .chart__sw { forced-color-adjust: none; background: CanvasText; }
+  .chart__sw--hollow { background: Canvas; border-color: CanvasText; }
+  .chart__sw--bar.chart__sw--context { background: Canvas; border: 1.5px solid CanvasText; }
   .ex-svg :is(.ex-line, .ex-box, .ex-ring) { stroke: CanvasText; }
+  .ex-focusring { stroke: Highlight; }
+  .ex-focusring--halo { stroke: Canvas; }
   .thread__node::before, .thread__node::after { forced-color-adjust: none; background: CanvasText; }
-  .range::-webkit-slider-runnable-track { background: CanvasText; }
+  /* Range: keep the track fill and the thumb visible (both are author-drawn). */
+  .range { forced-color-adjust: none; }
+  .range::-webkit-slider-runnable-track { background: linear-gradient(to right, Highlight var(--val), GrayText var(--val)); }
+  .range::-moz-range-track { background: GrayText; }
+  .range::-moz-range-progress { background: Highlight; }
+  .range::-webkit-slider-thumb { background: CanvasText; box-shadow: 0 0 0 2px Canvas; }
+  .range::-moz-range-thumb { background: CanvasText; box-shadow: 0 0 0 2px Canvas; }
+  .range:focus-visible::-webkit-slider-thumb { outline-color: Highlight; }
+  .range:focus-visible::-moz-range-thumb { outline-color: Highlight; }
 }
 @media print {
   .toc, .explorable, .explorable + .callout, .stepper__controls, .pagenav, .article-head__links, .chart__table > summary { display: none !important; }

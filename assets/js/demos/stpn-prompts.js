@@ -2,9 +2,10 @@
    Real pixels (crops of the paper's Fig. 1) cut into an 8×5 grid of patch tokens. STPN prepends
    5 prompt tokens predicted from the support frames; the prior pipeline fuses support features
    after the backbone, in a module built for one task. The grid is a radiogroup (the probe):
-   pick a patch to draw illustrative attention lines. Layouts: 960×420, or 360×640 below 560px.
-   Styles: /assets/css/demos/stpn.css (.st-*) plus the .ex-* vocabulary in article.css. */
-import { onNear, createAnnouncer, reducedMotion } from '/assets/js/article.js?v=20260926';
+   pick a patch to draw illustrative attention lines. Layouts: 960×420 when the stage is ≥820px
+   wide (text stays ≥9px), else 360×640 (capped in CSS). Built eagerly so its controls are in the
+   tab order. Styles: /assets/css/demos/stpn.css (.st-*) plus .ex-* in article.css. */
+import { createAnnouncer, reducedMotion } from '/assets/js/article.js?v=20260926';
 
 const IMG = '/assets/img/projects/stpn/stpn-', TASK = ['VOD', 'VIS', 'VOT'], WHAT = ['detection', 'segmentation', 'tracking'];
 const DEF = { mode: 'stpn', task: 0, on: true, pin: 21 }; // row 3, column 6: the fox's head
@@ -15,7 +16,6 @@ const L = {
   m: { W: 360, H: 640, g: [18, 134, 41.5, 2], sup: [240, 38, 90, 55, 8], box: [18, 20, 196, 68], st: [364, 18, 108, 16, 8], bb: [18, 404, 330, 62] },
 };
 const root = document.getElementById('demo');
-if (root) onNear(root, init);
 
 const T = (x, y, s, c = '', a) => `<text class="ex-text ${c}" x="${x}" y="${y}"${a ? ` text-anchor="${a}"` : ''}>${s}</text>`;
 const R = (x, y, w, h, c, r = 3) => `<rect class="${c}" x="${x}" y="${y}" width="${w}" height="${h}" rx="${r}"/>`;
@@ -23,7 +23,7 @@ const P = (d, c, m) => `<path class="${c}" d="${d}"${m ? ` marker-end="url(#st-$
 const V = (k, s, c = '') => `<g class="ex-anim ${c}" data-v="${k}">${s}</g>`; // shown only in state k
 const img = (f, x, y, w, h, a = '') => `<image href="${IMG + f}.webp" x="${x}" y="${y}" width="${w}" height="${h}" preserveAspectRatio="none"${a}/>`;
 const mk = (id, c) => `<marker id="st-${id}" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path class="${c}" d="M0 .5 7.5 4 0 7.5z"/></marker>`;
-const name = (i) => `patch ${(i >> 3) + 1}, ${i % 8 + 1}`;
+const name = (i) => `patch ${(i >> 3) + 1}, ${i % 8 + 1}`, cap = (t) => t[0].toUpperCase() + t.slice(1);
 
 function init() {
   const svg = root.querySelector('[data-stage]');
@@ -78,7 +78,7 @@ function init() {
 
     // backbone: one standard Swin-T, stage depths 2 / 2 / 6 / 2 (released config)
     const u = (bw - 48) / 12, h2 = m ? 22 : 24;
-    s += R(bx, by, bw, bh, 'ex-box st-bb') + T(bx + 12, by + 21, 'Backbone · Swin-T', 'ex-text--title') + T(bx + bw - 12, by + 21, m ? 'unmodified' : 'standard, unmodified', 'ex-text--mono', 'end');
+    s += R(bx, by, bw, bh, 'ex-box st-bb') + T(bx + 12, by + 21, '', 'ex-text--title').replace('<text', '<text data-bb="0"') + T(bx + bw - 12, by + 21, '', 'ex-text--mono', 'end').replace('<text', '<text data-bb="1"');
     let x = bx + 12;
     [2, 2, 6, 2].forEach((d, j) => {
       s += R(x, by + 32, d * u, h2, 'ex-panel', 2) + T(x + d * u / 2, by + 32 + h2 / 2 + 4, '×' + d, 'ex-text--strong', 'middle')
@@ -88,10 +88,9 @@ function init() {
 
     // integration modules (prior) and task heads: task hues on borders only, always labelled
     const box = (c, i, cx, cy, w, a, b) => `<g class="${c}" data-t="${i}">${R(cx - w / 2, cy - 17, w, 34, `ex-box st-h${i}`)}${T(cx, cy - 2, a, 'ex-text--strong', 'middle')}${T(cx, cy + 11, b, 'ex-text--mono', 'middle')}</g>`;
-    let hd = '', md = '', ls = '', lp = '', sp;
+    let hd = '', md = '', ls = '', lp = '', gh = '', sp;
     if (m) {
       const cy = [509, 569];
-      s += V('stpn', R(18, 492, 330, 34, 'ex-box ex-box--dashed st-ghost') + T(183, 513, 'no task-specific module', 'ex-text--mono st-knock', 'middle'));
       sp = P(`M${vx} ${vy + 50}H8V482H300`, 'st-sup');
       [70, 183, 296].forEach((cx, i) => {
         hd += box('st-head', i, cx, cy[1], 100, TASK[i], WHAT[i]);
@@ -100,6 +99,7 @@ function init() {
         lp += P(`M${cx} ${by + bh}V${cy[0] - 19}`, 'ex-line', 'a') + P(`M${cx} ${cy[0] + 17}V${cy[1] - 19}`, 'ex-line', 'a');
         sp += P(`M${cx + 30} 482V${cy[0] - 19}`, 'st-sup', 's');
       });
+      gh = V('stpn', R(18, 492, 330, 34, 'ex-box ex-box--dashed st-ghost') + R(102, 502, 162, 16, 'st-kbg', 0) + T(183, 513, 'no task-specific module', 'ex-text--mono st-knock', 'middle'));
       s += `<text class="ex-text ex-text--strong" x="18" y="614" data-cap="0"></text><text class="ex-text ex-text--muted" x="18" y="632" data-cap="1"></text>`;
     } else {
       const cy = [256, 316, 376];
@@ -120,11 +120,11 @@ function init() {
         + T(560, 18, 'PROBE', 'ex-text--mono') + img('current', 0, 0, 896, 560, ' clip-path="url(#st-zc)" data-zoom') + R(560, 28, 112, 112, 'st-frame', 2)
         + [48, 66, 94, 112, 128].map((y, j) => T(688, y, '', ['ex-text--title', 'ex-text--mono', 'ex-text--strong', 'ex-text--muted', 'ex-text--muted'][j]).replace('<text', `<text data-i="${j}"`)).join('');
     }
-    s += V('stpn', ls) + V('prior', lp + sp + md) + hd + '</g>';
+    s += V('stpn', ls) + gh + V('prior', lp + sp + md) + hd + '</g>';
 
     // the probe: a radiogroup of 40 patches (roving tabindex), then its overlay
     s += `<g role="radiogroup" aria-label="Probe: choose a patch of the current frame; arrow keys move" data-grid>`;
-    for (let i = 0; i < 40; i++) s += `<g class="st-tile" role="radio" data-i="${i}" aria-label="${name(i)[0].toUpperCase() + name(i).slice(1)}">${R(G.tx(i), G.ty(i), tw, tw, 'st-hit', 1)}</g>`;
+    for (let i = 0; i < 40; i++) s += `<g class="st-tile" role="radio" data-i="${i}" aria-label="Row ${(i >> 3) + 1}, column ${i % 8 + 1}">${R(G.tx(i), G.ty(i), tw, tw, 'st-hit', 1)}</g>`;
     s += '</g><g class="st-probe" aria-hidden="true" data-probe></g>';
     svg.setAttribute('viewBox', `0 0 ${G.W} ${G.H}`);
     svg.classList.toggle('st-m', m);
@@ -145,10 +145,10 @@ function init() {
     });
   }
 
-  function pick(i) { if (S.pin !== i || hover !== null) { S.pin = i; hover = null; update(); } }
+  function pick(i) { if (S.pin !== i || hover !== null) { S.pin = i; hover = null; update(false, true); } }
 
-  // three in-frame neighbours (the first three that exist: right, below, left, above, diagonals)
-  const nb = (i) => [[0, 1], [1, 0], [0, -1], [-1, 0], [-1, -1], [-1, 1], [1, -1]].map(([a, b]) => [(i >> 3) + a, i % 8 + b])
+  // three in-frame neighbours drawn (the first three that exist: right, below, left, above, diagonals)
+  const nb = (i) => [[0, 1], [1, 0], [0, -1], [-1, 0], [-1, -1], [-1, 1], [1, -1], [1, 1]].map(([a, b]) => [(i >> 3) + a, i % 8 + b])
     .filter(([r, c]) => r >= 0 && r < 5 && c >= 0 && c < 8).slice(0, 3).map(([r, c]) => r * 8 + c);
 
   function draw() { // the probe overlay and inspector (cheap; runs on hover)
@@ -165,43 +165,56 @@ function init() {
       s += i < n ? `<path class="st-halo" d="M${ax} ${ty - 2}Q${(ax + px) / 2} ${ty - h} ${px} ${ty - 2}"/><path class="st-att" d="M${ax} ${ty - 2}Q${(ax + px) / 2} ${ty - h} ${px} ${ty - 2}"/>` : line(px, ty - 1, 'st-att');
     }
     s += `<rect class="st-ring" x="${G.tx(i) - 2.5}" y="${G.ty(i) - 2.5}" width="${tw + 5}" height="${tw + 5}" rx="3"/>`;
+    const f = (o, c) => `<rect class="${c}" x="${G.tx(S.pin) - o}" y="${G.ty(S.pin) - o}" width="${tw + 2 * o}" height="${tw + 2 * o}" rx="4"/>`;
+    s += f(5.5, 'st-fh') + f(5.5, 'st-focus'); // keyboard focus: an ink ring outside the selection
     if (i < n) s += `<rect class="ex-ring" x="${ax - 8}" y="${ty - 2}" width="16" height="16" rx="3"/>`;
     $('[data-probe]').innerHTML = s;
-    const nm = name(i), N = nm[0].toUpperCase() + nm.slice(1), reads = on ? 'reads 5 prompts + 3 neighbours' : 'reads its 3 neighbours only';
+    const N = cap(name(i)), reads = on ? 'reads 5 prompts + its window' : 'reads its window only';
     const note = pr ? ['Temporal information arrives', 'only after the backbone.'] : on ? ['The prompts carry what the', 'sharp support frames saw.'] : ['Without prompts it sees', 'the blurred frame alone.'];
     const txt = [N, `token ${on ? i + 6 : i + 1} of ${on ? 45 : 40}`, reads, ...note];
     svg.querySelectorAll('text[data-i]').forEach((t) => { t.textContent = txt[t.dataset.i]; });
     const z = $('[data-zoom]');
     if (z) { z.setAttribute('x', 560 - (i % 8) * 112); z.setAttribute('y', 28 - (i >> 3) * 112); }
-    const cap = svg.querySelectorAll('[data-cap]');
-    if (cap.length) { cap[0].textContent = `${N} ${reads}.`; cap[1].textContent = note.join(' '); }
+    const cp = svg.querySelectorAll('[data-cap]');
+    if (cp.length) { cp[0].textContent = `${N} ${reads}.`; cp[1].textContent = note.join(' '); }
   }
 
-  function update(pulse) {
-    const pr = S.mode === 'prior', on = !pr && S.on, v = { stpn: !pr, prior: pr, on };
+  function update(pulse, probeOnly) {
+    const pr = S.mode === 'prior', on = !pr && S.on, v = { stpn: !pr, prior: pr, on }, m = k === 'm';
     svg.querySelectorAll('[data-v]').forEach((g) => g.classList.toggle('ex-hidden', !v[g.dataset.v]));
     svg.querySelectorAll('.st-dvp').forEach((g) => g.classList.toggle('ex-dim', !pr && !S.on));
     const p = $('[data-p]');
     p.classList.toggle('ex-hidden', pr); p.classList.toggle('st-out', !pr && !S.on);
     svg.querySelectorAll('[data-t]').forEach((g) => g.classList.toggle('is-on', +g.dataset.t === S.task));
     tiles.forEach((t, i) => { t.setAttribute('aria-checked', String(i === S.pin)); t.tabIndex = i === S.pin ? 0 : -1; });
-    sw.setAttribute('aria-checked', String(S.on)); sw.setAttribute('aria-disabled', String(pr));
+    sw.setAttribute('aria-checked', String(on)); sw.setAttribute('aria-disabled', String(pr)); // no prompts in the prior pipeline
+    const bb = svg.querySelectorAll('[data-bb]'); // Swin-T is the released VOD detector's backbone
+    bb[0].textContent = !pr && !S.task ? 'Backbone · Swin-T' : 'Backbone';
+    bb[1].textContent = pr ? 'one per frame' : m ? 'no new layers' : !S.task ? 'released VOD model, no new layers' : 'the task’s own, no new layers';
     radios.forEach((r) => { r.checked = r.name === 'stpn-mode' ? r.value === S.mode : +r.value === S.task; });
     if (pulse && !pr && !reducedMotion()) {
       svg.querySelectorAll('.st-bb, .st-p').forEach((el) => { el.classList.remove('ex-pulse'); void el.getBoundingClientRect(); el.classList.add('ex-pulse'); });
     }
     draw();
     const t = TASK[S.task], w = WHAT[S.task], nm = name(S.pin);
+    const probe = `The probe, ${nm}, ${on ? 'reads the 5 prompts and every patch in its window' : 'reads only patches in its window'}.`;
+    if (probeOnly) { say(probe); return; }
     out('tokens', on ? '45 <small>5 + 40</small>' : '40');
     out('modules', pr ? '3 <small>A, B, C</small>' : '0');
     out('where', pr ? 'after the backbone' : on ? 'at the input' : 'nowhere <small>one frame</small>');
     say(pr
-      ? `Prior pipeline, ${t} (${w}). The support frames go through their own backbone, and integration module ${'ABC'[S.task]}, built for ${w} only, fuses them after the backbone. 40 tokens enter the backbone; ${nm} reads only in-frame neighbours.`
-      : on ? `STPN, ${t} (${w}). 45 tokens enter one unmodified Swin-T: 5 prompts predicted from the support frames, then the 40 patches of the blurred current frame. The probe, ${nm}, reads the 5 prompts and 3 neighbours. Changing the task changes only the head.`
-        : `Prompts off: 40 tokens, the blurred current frame alone, as in a single-frame model. The probe, ${nm}, reads only its 3 neighbours.`);
+      ? `Prior pipeline, ${t} (${w}). The support frames go through their own backbone, and integration module ${'ABC'[S.task]}, built for ${w} only, fuses them after the backbone. 40 tokens enter the backbone. ${probe}`
+      : on ? `STPN, ${t} (${w}). 45 tokens enter a standard backbone with no new layers: 5 prompts predicted from the support frames, then the 40 patches of the blurred current frame. ${probe} Each task is its own trained model and framework; the prompting design is the same.`
+        : `Prompts off: 40 tokens, the blurred current frame alone, as in a single-frame model. ${probe}`);
   }
 
-  const layout = () => { const nk = svg.parentElement.clientWidth < 560 ? 'm' : 'd'; if (nk !== k) { k = nk; build(); update(); } };
+  const layout = () => {
+    const nk = svg.parentElement.clientWidth < 820 ? 'm' : 'd';
+    if (nk === k) return;
+    const had = svg.contains(document.activeElement); // keep keyboard focus across a rebuild
+    k = nk; build(); update();
+    if (had) tiles[S.pin].focus({ preventScroll: true });
+  };
   radios.forEach((r) => r.addEventListener('change', () => {
     if (!r.checked) return;
     if (r.name === 'stpn-mode') { S.mode = r.value; update(); } else { S.task = +r.value; update(true); }
@@ -212,3 +225,5 @@ function init() {
   layout();
   root.classList.add('is-ready');
 }
+
+if (root) init(); // after the helpers above are initialised

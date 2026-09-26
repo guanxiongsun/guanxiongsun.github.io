@@ -1,8 +1,8 @@
 // NSA Fig. 3: real strips; sentence data on the tabs; CSS draws frame --i and the Average view.
-import { createPlayer, createAnnouncer, syncPlayButton, bindRange, onNear } from '/assets/js/article.js?v=20260926';
+import { createPlayer, createAnnouncer, syncPlayButton, bindRange } from '/assets/js/article.js?v=20260926';
 
 const root = document.getElementById('demo');
-if (root) onNear(root, init);
+if (root) init(); // eagerly, so the controls are in the tab order from the start
 
 function init() {
   const $ = (s) => root.querySelector(s), $$ = (s) => [...root.querySelectorAll(s)];
@@ -21,23 +21,31 @@ function init() {
   const phone = matchMedia('(max-width: 599.98px)');
   const src = (s, r) => `/assets/img/projects/nsa/cmp-s${s}-${r}.webp`;
   const out = (k, v) => { $(`[data-out=${k}]`).innerHTML = v; };
-  const desc = createAnnouncer($('#demo-desc'));
-  const syncRange = bindRange(range, $('.ctrl__out'));
-  let s = 1, f = 2, avg = false, base = true, token = 0;
+  // #demo-desc is the visible caption (every change); #demo-live speaks, throttled while playing.
+  const cap = $('#demo-desc'), live = createAnnouncer($('#demo-live')), outEl = $('.ctrl__out');
+  const syncRange = bindRange(range, outEl);
+  const look = () => { const t = tabs[s - 1]; return t.dataset.look + (base && t.dataset.lookBase ? ` ${t.dataset.lookBase}` : ''); };
+  const text = () => (avg
+    ? `Average of the four frames: reference signer${base ? ', Stoll et al.' : ''} and Neural Sign Actors. Move the Frame slider to return to single frames.`
+    : `Frame ${f} of 4: reference signer${base ? ', Stoll et al.' : ''} and Neural Sign Actors.`);
+  let s = 1, f = 2, avg = false, base = true, token = 0, ready = false;
 
   const render = (lead = '') => {
     grid.style.setProperty('--i', f - 1);
     grid.dataset.view = root.dataset.view = avg ? 'avg' : 'frames';
     grid.classList.toggle('no-base', !base);
     range.value = f; syncRange();
+    if (avg) { outEl.value = '–'; range.setAttribute('aria-valuetext', 'All frames averaged; move to pick a frame'); }
+    else range.removeAttribute('aria-valuetext');
     radios.forEach((r) => { r.checked = (r.value === 'avg') === avg; });
     sw.setAttribute('aria-checked', base);
     $$('[data-f]').forEach((t) => t.classList.toggle('is-on', !avg && +t.dataset.f === f));
     tabs.forEach((t, j) => { const on = j === s - 1; t.setAttribute('aria-selected', on); t.tabIndex = on ? 0 : -1; });
     out('s', `${s} <small>of 4</small>`);
     out('f', avg ? 'All 4 <small>averaged</small>' : `${f} <small>of 4</small>`);
-    out('w', tabs[s - 1].dataset.say.split(/\s+/).length);
-    desc.say(`${lead}${avg ? 'Average of the four frames' : `Frame ${f} of 4`}: reference signer${base ? ', Stoll et al.' : ''} and Neural Sign Actors.`, { playing: player.playing });
+    $('.nsa-look').innerHTML = look();
+    cap.textContent = text();
+    if (ready) live.say(lead + text(), { playing: player.playing });
   };
 
   const pick = (j, focus) => {
@@ -45,7 +53,6 @@ function init() {
     s = j + 1; f = +t.dataset.frame;
     $('[role=tabpanel]').setAttribute('aria-labelledby', t.id);
     $('.nsa-say').textContent = `“${t.dataset.say}”`;
-    $('.nsa-look').innerHTML = t.dataset.look;
     grid.classList.add('is-busy');
     Promise.all(views.map(([, r]) => { const im = new Image(); im.src = src(s, r); return im.decode().catch(() => {}); }))
       .then(() => {
@@ -54,14 +61,15 @@ function init() {
         grid.classList.remove('is-busy');
       });
     if (focus) t.focus();
-    render(`Sentence ${s} of 4. ${$('.nsa-look').textContent} `);
+    const tmp = document.createElement('p'); tmp.innerHTML = look();
+    render(`Sentence ${s} of 4. ${tmp.textContent} `);
   };
 
   const go = (k) => { player.pause(); avg = false; f = ((k + 3) % 4) + 1; render(); };
   const player = createPlayer(root, {
     interval: 800,
     tick: () => { f = (f % 4) + 1; render(); },
-    onChange: (p) => syncPlayButton(playBtn, p),
+    onChange: (p) => { syncPlayButton(playBtn, p); if (!p) live.say(text(), { force: true }); },
   });
 
   on(playBtn, 'click', () => {
@@ -102,5 +110,6 @@ function init() {
 
   syncPlayButton(playBtn, false);
   render();
+  ready = true;
   root.classList.add('is-ready');
 }

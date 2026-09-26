@@ -131,7 +131,7 @@
 
   <aside class="callout callout--credit">
     <p class="kicker">Credit</p>
-    <p class="callout__text">This project was led by Vasileios Baltatzis and Rolandos Alexandros Potamias at Imperial College London. My contribution: <span data-todo="owner: one sentence">…</span></p>
+    <p class="callout__text">This project was led by Vasileios Baltatzis and Rolandos Alexandros Potamias at Imperial College London.<span data-todo="owner: one sentence"> My contribution: …</span></p>
     <p><a class="link-arrow link-arrow--sm" href="https://baltatzisv.github.io/neural-sign-actors/">Official project page<svg class="icon" width="14" height="14" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-up-right"/></svg></a></p>
   </aside>
 
@@ -143,13 +143,13 @@
       <div class="stepper__frame">
         <img src="/assets/img/projects/nsa/teaser-1200.webp" srcset="/assets/img/projects/nsa/teaser-1200.webp 1200w, /assets/img/projects/nsa/teaser-2400.webp 2400w" sizes="(min-width: 1200px) 66rem, calc(100vw - 32px)" width="2400" height="579" fetchpriority="high" decoding="async" alt="Seven video frames of a How2Sign signer on a green screen signing the sentence above, each with the matching 3D SMPL-X avatar pose below it.">
         <svg class="stepper__overlay" viewBox="0 0 3789 914" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-          <rect data-step="1" x="52" y="2" width="526" height="528"/><rect data-step="1" x="248" y="346" width="452" height="512"/>
-          <rect data-step="2" x="578" y="2" width="526" height="528"/><rect data-step="2" x="772" y="346" width="420" height="512"/>
-          <rect data-step="3" x="1105" y="2" width="526" height="528"/><rect data-step="3" x="1280" y="346" width="452" height="512"/>
-          <rect data-step="4" x="1631" y="2" width="526" height="528"/><rect data-step="4" x="1808" y="346" width="400" height="512"/>
-          <rect data-step="5" x="2157" y="2" width="526" height="528"/><rect data-step="5" x="2328" y="346" width="408" height="512"/>
-          <rect data-step="6" x="2684" y="2" width="526" height="528"/><rect data-step="6" x="2860" y="346" width="384" height="512"/>
-          <rect data-step="7" x="3210" y="2" width="526" height="528"/><rect data-step="7" x="3388" y="346" width="372" height="512"/>
+          <rect data-step="1" x="52" y="2" width="526" height="528"/><rect data-step="1" x="248" y="530" width="452" height="328"/>
+          <rect data-step="2" x="578" y="2" width="526" height="528"/><rect data-step="2" x="772" y="530" width="420" height="328"/>
+          <rect data-step="3" x="1105" y="2" width="526" height="528"/><rect data-step="3" x="1280" y="530" width="452" height="328"/>
+          <rect data-step="4" x="1631" y="2" width="526" height="528"/><rect data-step="4" x="1808" y="530" width="400" height="328"/>
+          <rect data-step="5" x="2157" y="2" width="526" height="528"/><rect data-step="5" x="2328" y="530" width="408" height="328"/>
+          <rect data-step="6" x="2684" y="2" width="526" height="528"/><rect data-step="6" x="2860" y="530" width="384" height="328"/>
+          <rect data-step="7" x="3210" y="2" width="526" height="528"/><rect data-step="7" x="3388" y="530" width="372" height="328"/>
         </svg>
       </div>
     </div>
@@ -159,13 +159,22 @@
 
   <div class="tldr">
     <p class="kicker">In one paragraph</p>
-    <p>Sign language production needs expressive hands, bodies and faces, not 2D keypoints or glosses. Neural Sign Actors builds what the authors describe as the first large-scale 3D sign-language dataset, by reconstructing How2Sign with SMPL-X through a fitting pipeline constrained by pose priors. It then trains a text-conditioned diffusion model whose denoiser is an anatomically informed graph network on the SMPL-X skeleton. It generates 3D signing avatars directly from text, and fluent ASL signers judged the results in a user study.</p>
+    <p>Sign language production needs expressive hands, bodies and faces, not 2D keypoints or glosses. Neural Sign Actors builds what the authors describe as the first large-scale 3D dataset of American Sign Language, by reconstructing How2Sign with SMPL-X through a fitting pipeline constrained by pose priors. It then trains a text-conditioned diffusion model whose denoiser is an anatomically informed graph network on the SMPL-X skeleton. It generates 3D signing avatars directly from text, and fluent ASL signers judged the results in a user study.</p>
   </div>
 
   <nav class="toc" aria-label="Contents" data-toc>
     <details class="toc__box">
       <summary class="toc__summary">Contents</summary>
-      <ol class="toc__list"></ol>
+      <ol class="toc__list">
+        <li><a href="#problem">The problem</a></li>
+        <li><a href="#data">3D How2Sign</a></li>
+        <li><a href="#idea">Sentence explorer</a></li>
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#results">Results</a></li>
+        <li><a href="#talk">Talk and poster</a></li>
+        <li><a href="#led">Where it led</a></li>
+        <li><a href="#cite">Cite</a></li>
+      </ol>
     </details>
   </nav>
 
@@ -174,7 +183,7 @@
     <h2 id="problem-title">The problem</h2>
     <p>Sign languages are the main way of communicating for more than 70 million Deaf and Hard of Hearing people. Deep learning has moved sign language <em>recognition</em> and <em>translation</em> forward quickly. <em>Production</em>, turning text into signing, is harder: the output has to look natural and carry exact meaning, through the shape, orientation, position and motion of the hands, and through the arms and the face.</p>
     <p>Most production methods generate 2D skeletons, and their output is limited in how expressive the hands and body can be. The obvious fix, generating a full 3D body with articulated fingers and a face, had no data to learn from: there was no large-scale dataset pairing text with 3D signing avatars.<sup class="sn-ref">1</sup></p>
-    <aside class="sidenote"><sup>1</sup> The avatars on this page use SMPL-X (Pavlakos et al., CVPR 2019), a parametric 3D body model with articulated hands and an expressive face.</aside>
+    <aside class="sidenote"><sup>1</sup> The avatars on this page use <a href="https://smpl-x.is.tue.mpg.de/">SMPL-X</a> (Pavlakos et al., CVPR 2019), a parametric 3D body model with articulated hands and an expressive face.</aside>
     <p class="nsa-src">Figures and challenges as stated on the CVPR 2024 poster.</p>
   </section>
 
@@ -214,7 +223,7 @@
   <section class="article__section" id="idea" aria-labelledby="idea-title">
     <h2 id="idea-title" data-toc-label="Sentence explorer">Text in, signing out</h2>
     <p>With 3D data in hand, the model learns to generate signing straight from a sentence, with no glosses in between. Fig. 3 puts the paper’s qualitative comparison under your hands: four sentences, each with the How2Sign signer for reference and two avatars generated from the transcript, one by an earlier method (Stoll et al.) and one by Neural Sign Actors.</p>
-    <p>Step through the frames and watch the hands. Then switch to <b>Average</b>: it lays the four frames over each other, so a pose that barely changes stays sharp and a hand that moves leaves a trail of ghosts.</p>
+    <p>Step through the frames and watch the hands. Then switch to <b>Average</b>: it lays the four frames over each other, so a pose that barely changes stays sharp and a hand that moves leaves a trail of ghosts. The frames are not aligned to each other, so some of the blur is the body swaying.</p>
 
     <section class="explorable wide nsa" id="demo" aria-labelledby="demo-title">
       <header class="explorable__head">
@@ -227,16 +236,20 @@
       <div class="tabs nsa-tabs" role="tablist" aria-label="Sentence">
         <button class="tab" type="button" role="tab" id="nsa-t1" aria-controls="nsa-panel" aria-selected="true" data-frame="2"
           data-say="Another technique is you can braid the hair on first and then start wrapping cause some people have really short hair and we can create the look with adding the hair end."
-          data-look="&lt;b&gt;Look at frame 2.&lt;/b&gt; The signer lifts a hand to the side of the head, and so does the Neural Sign Actors avatar. The Stoll et al. avatar keeps its hands in front of its body in all four frames."><span class="nsa-tab__n">1</span><span class="nsa-tab__t">Another technique is you can braid…</span></button>
+          data-look="&lt;b&gt;Look at frame 2.&lt;/b&gt; The signer lifts a hand to the side of the head, and so does the Neural Sign Actors avatar."
+          data-look-base="The Stoll et al. avatar keeps its hands in front of its body in all four frames."><span class="nsa-tab__n">1</span><span class="nsa-tab__t">Another technique is you can braid…</span></button>
         <button class="tab" type="button" role="tab" id="nsa-t2" aria-controls="nsa-panel" aria-selected="false" tabindex="-1" data-frame="1"
           data-say="I really like that."
-          data-look="&lt;b&gt;A short sentence.&lt;/b&gt; The signer holds one hand near the chin throughout. Both avatars bring a hand up towards the face: compare the finger shapes."><span class="nsa-tab__n">2</span><span class="nsa-tab__t">I really like that.</span></button>
+          data-look="&lt;b&gt;A short sentence.&lt;/b&gt; The signer holds one hand near the chin throughout. The Neural Sign Actors avatar brings a hand up towards the face."
+          data-look-base="So does the Stoll et al. avatar: compare the finger shapes."><span class="nsa-tab__n">2</span><span class="nsa-tab__t">I really like that.</span></button>
         <button class="tab" type="button" role="tab" id="nsa-t3" aria-controls="nsa-panel" aria-selected="false" tabindex="-1" data-frame="1"
           data-say="I think we’ve probably solved our problems."
-          data-look="&lt;b&gt;Look at frame 1.&lt;/b&gt; The signer points a finger at the side of the head; the Neural Sign Actors avatar raises a pointing finger beside its head. The Stoll et al. avatar keeps its hands at its chest in every frame."><span class="nsa-tab__n">3</span><span class="nsa-tab__t">I think we’ve probably solved our…</span></button>
+          data-look="&lt;b&gt;Look at frame 1.&lt;/b&gt; The signer points a finger at the side of the head; the Neural Sign Actors avatar raises a pointing finger beside its head."
+          data-look-base="The Stoll et al. avatar keeps its hands at its chest in every frame."><span class="nsa-tab__n">3</span><span class="nsa-tab__t">I think we’ve probably solved our…</span></button>
         <button class="tab" type="button" role="tab" id="nsa-t4" aria-controls="nsa-panel" aria-selected="false" tabindex="-1" data-frame="1"
           data-say="Now, the front squat develops your teardrop."
-          data-look="&lt;b&gt;Look at frames 1 and 2.&lt;/b&gt; The signer’s hand is up at the chin; the Neural Sign Actors avatar also brings a hand to its chin there. The Stoll et al. avatar does so only in frame 3."><span class="nsa-tab__n">4</span><span class="nsa-tab__t">Now, the front squat develops your…</span></button>
+          data-look="&lt;b&gt;Look at frames 1 and 2.&lt;/b&gt; The signer’s hand is up at the chin; the Neural Sign Actors avatar brings a hand to its chin in frame 1 and keeps it near the neck in frame 2."
+          data-look-base="The Stoll et al. avatar brings a hand to its chin only in frame 3."><span class="nsa-tab__n">4</span><span class="nsa-tab__t">Now, the front squat develops your…</span></button>
       </div>
 
       <div class="explorable__stage nsa-stage" id="nsa-panel" role="tabpanel" aria-labelledby="nsa-t1" aria-describedby="demo-desc" data-stage>
@@ -280,16 +293,16 @@
       <dl class="explorable__readout" aria-hidden="true">
         <div><dt>Sentence</dt><dd data-out="s">1 <small>of 4</small></dd></div>
         <div><dt>Frame</dt><dd data-out="f">2 <small>of 4</small></dd></div>
-        <div><dt>Words in the sentence</dt><dd data-out="w">32</dd></div>
       </dl>
-      <p class="explorable__desc" id="demo-desc" aria-live="polite"></p>
+      <p class="explorable__desc" id="demo-desc">Frame 2 of 4: reference signer, Stoll et al. and Neural Sign Actors.</p>
+      <p class="visually-hidden" id="demo-live" aria-live="polite"></p>
       <div class="explorable__fallback">
         <p class="callout__text">Showing sentence 1 of 4. With JavaScript on, you can switch sentences, step through the frames and average them. All four sentences are in the paper’s qualitative figure on the <a href="https://baltatzisv.github.io/neural-sign-actors/">official project page</a>.</p>
       </div>
     </section>
     <aside class="callout callout--schematic">
       <p class="kicker">How to read this</p>
-      <p class="callout__text">Frames are taken from the paper’s qualitative comparison: the top row is the reference signer from How2Sign; the other rows are generated from the text alone. Four frames are sampled from each sequence; they are not aligned word by word. The four sentences and frames were chosen by the authors. <b>Average</b> is computed in your browser (each frame at equal weight); it is a way of looking at the frames, not a model output. The “Look at” notes are our reading of these frames.</p>
+      <p class="callout__text">Frames are taken from the paper’s qualitative comparison: the top row is the reference signer from How2Sign; the other rows are generated from the text alone. Four frames are sampled from each sequence; they are not aligned word by word. The four sentences and frames were chosen by the authors. <b>Average</b> is computed in your browser (each frame at equal weight, overlaid as cropped, without alignment, so body sway also blurs); it is a way of looking at the frames, not a model output. The “Look at” notes are our reading of these frames.</p>
     </aside>
     <p class="nsa-src">Source: paper qualitative comparison (official project page), cropped into one strip per row.</p>
   </section>
@@ -299,36 +312,36 @@
     <h2 id="how-title">How it works</h2>
     <p>Neural Sign Actors is a diffusion model over whole signing sequences. A sequence <i>p</i><sub>1:F</sub> holds, for every frame, the SMPL-X joint rotations <i>θ</i> and the facial expression parameters <i>ψ</i>. Training adds noise to it step by step; the network learns to predict that noise, so at test time it can start from pure noise and denoise its way to a new sequence, conditioned on the sentence.</p>
 
-    <figure class="hotspots wide" data-hotspots>
+    <figure class="hotspots wide nsa-hot" data-hotspots>
       <div class="hotspots__figure plate">
         <div class="plate__head"><span class="plate__num">Fig. 4</span><span class="badge badge--paper">From the paper</span></div>
         <div class="plate__mat">
           <div class="hotspots__frame">
-            <img src="/assets/img/projects/nsa/method-1200.webp" srcset="/assets/img/projects/nsa/method-1200.webp 1200w, /assets/img/projects/nsa/method-2400.webp 2400w" sizes="(min-width: 1200px) 44rem, calc(100vw - 32px)" width="1200" height="378" loading="lazy" decoding="async" alt="Method diagram: forward diffusion adds noise to the ground-truth sign; reverse diffusion uses the denoiser, which combines a CLIP text encoding with a graph-network pose encoder and an expression encoder, then an auto-regressive RNN and a regression head that output the generated pose and expression.">
-            <button class="hotspot" type="button" style="--x:7%;--y:56%" aria-describedby="hs-nsa-1">1</button>
-            <button class="hotspot" type="button" style="--x:27%;--y:56%" aria-describedby="hs-nsa-2">2</button>
-            <button class="hotspot" type="button" style="--x:49%;--y:56%" aria-describedby="hs-nsa-3">3</button>
-            <button class="hotspot" type="button" style="--x:62%;--y:40%" aria-describedby="hs-nsa-4">4</button>
-            <button class="hotspot" type="button" style="--x:62%;--y:74%" aria-describedby="hs-nsa-5">5</button>
-            <button class="hotspot" type="button" style="--x:72.5%;--y:58%" aria-describedby="hs-nsa-6">6</button>
-            <button class="hotspot" type="button" style="--x:85%;--y:60%" aria-describedby="hs-nsa-7">7</button>
+            <a class="nsa-zoom" href="/assets/img/projects/nsa/method-2400.webp" data-full="/assets/img/projects/nsa/method-2400.webp" data-caption="Neural Sign Actors method figure: forward and reverse diffusion, and the denoiser ε_θ(·) (paper, official project page)."><span class="visually-hidden">Enlarge figure: </span><img src="/assets/img/projects/nsa/method-1200.webp" srcset="/assets/img/projects/nsa/method-1200.webp 1200w, /assets/img/projects/nsa/method-2400.webp 2400w" sizes="(min-width: 1200px) 66rem, calc(100vw - 32px)" width="1200" height="378" loading="lazy" decoding="async" alt="Method diagram: forward diffusion adds noise to the ground-truth sign; reverse diffusion uses the denoiser, which combines a CLIP text encoding with a graph-network pose encoder and an expression encoder, then an auto-regressive RNN and a regression head that output the generated pose and expression."><span class="plate__zoom-icon" aria-hidden="true"><svg class="icon" width="14" height="14" focusable="false"><use href="/assets/icons/sprite.svg#maximize-2"/></svg></span></a>
+            <button class="hotspot" type="button" id="hs-nsa-b1" style="--x:5%;--y:35.5%" aria-labelledby="hs-nsa-b1 hs-nsa-1-l" aria-describedby="hs-nsa-1">1</button>
+            <button class="hotspot" type="button" id="hs-nsa-b2" style="--x:29.6%;--y:35.5%" aria-labelledby="hs-nsa-b2 hs-nsa-2-l" aria-describedby="hs-nsa-2">2</button>
+            <button class="hotspot" type="button" id="hs-nsa-b3" style="--x:51%;--y:49%" aria-labelledby="hs-nsa-b3 hs-nsa-3-l" aria-describedby="hs-nsa-3">3</button>
+            <button class="hotspot" type="button" id="hs-nsa-b4" style="--x:61%;--y:54%" aria-labelledby="hs-nsa-b4 hs-nsa-4-l" aria-describedby="hs-nsa-4">4</button>
+            <button class="hotspot" type="button" id="hs-nsa-b5" style="--x:68%;--y:81%" aria-labelledby="hs-nsa-b5 hs-nsa-5-l" aria-describedby="hs-nsa-5">5</button>
+            <button class="hotspot" type="button" id="hs-nsa-b6" style="--x:73.2%;--y:43%" aria-labelledby="hs-nsa-b6 hs-nsa-6-l" aria-describedby="hs-nsa-6">6</button>
+            <button class="hotspot" type="button" id="hs-nsa-b7" style="--x:85.4%;--y:70.5%" aria-labelledby="hs-nsa-b7 hs-nsa-7-l" aria-describedby="hs-nsa-7">7</button>
           </div>
         </div>
       </div>
       <ol class="hotspots__list">
-        <li id="hs-nsa-1"><b>Forward diffusion.</b> Noise is added to the ground-truth pose sequence <i>p</i><sub>1:F</sub>.</li>
-        <li id="hs-nsa-2"><b>Reverse diffusion <i>ε</i><sub>θ</sub>.</b> The denoiser predicts the noise at each step.</li>
-        <li id="hs-nsa-3"><b>CLIP text encoder.</b> The transcript conditions every denoising step.</li>
-        <li id="hs-nsa-4"><b>Pose embedding + GNN pose encoder.</b> Per-joint embeddings, then a graph network on the SMPL-X skeleton (anatomically informed).</li>
-        <li id="hs-nsa-5"><b>Expression embedding + MLP encoder.</b> Facial expression parameters <i>ψ</i>.</li>
-        <li id="hs-nsa-6"><b>Auto-regressive RNN.</b> Runs over frames 1…F.</li>
-        <li id="hs-nsa-7"><b>Regression head.</b> Outputs pose <i>θ̂</i> and expression <i>ψ̂</i>.</li>
+        <li id="hs-nsa-1"><b id="hs-nsa-1-l">Forward diffusion.</b> Noise is added to the ground-truth pose sequence <i>p</i><sub>1:F</sub>.</li>
+        <li id="hs-nsa-2"><b id="hs-nsa-2-l">Reverse diffusion <i>ε</i><sub>θ</sub>.</b> The denoiser predicts the noise at each step.</li>
+        <li id="hs-nsa-3"><b id="hs-nsa-3-l">CLIP text encoder.</b> The transcript conditions every denoising step.</li>
+        <li id="hs-nsa-4"><b id="hs-nsa-4-l">Pose embedding + GNN pose encoder.</b> Per-joint embeddings, then a graph network on the SMPL-X skeleton (anatomically informed).</li>
+        <li id="hs-nsa-5"><b id="hs-nsa-5-l">Expression embedding + MLP encoder.</b> Facial expression parameters <i>ψ</i>.</li>
+        <li id="hs-nsa-6"><b id="hs-nsa-6-l">Auto-regressive RNN.</b> Runs over frames 1…F.</li>
+        <li id="hs-nsa-7"><b id="hs-nsa-7-l">Regression head.</b> Outputs pose <i class="nsa-hat">θ</i> and expression <i class="nsa-hat">ψ</i>.</li>
       </ol>
-      <figcaption class="plate__cap">The denoiser <i>ε</i><sub>θ</sub>(·) inside the reverse diffusion. Green blocks are learned; grey blocks (the forward process and CLIP) are not. <span class="plate__src">Source: paper method figure, official project page.</span></figcaption>
+      <figcaption class="plate__cap">The denoiser <i>ε</i><sub>θ</sub>(·) inside the reverse diffusion. Green blocks are learned; grey blocks (the forward process and CLIP) are not. Select the diagram to enlarge it. <span class="plate__src">Source: paper method figure, official project page.</span></figcaption>
     </figure>
 
-    <p>Inside the denoiser (Fig. 4), the noisy joint rotations get a learned per-joint pose embedding and go through a graph neural network defined on the SMPL-X skeleton, so each joint is encoded together with the joints it is attached to. The facial expressions take a parallel path through their own embedding and an MLP. The transcript is encoded by CLIP and conditions both encoders.</p>
-    <p>The per-frame features <i>x</i><sub>1</sub>…<i>x</i><sub>F</sub> then pass through an auto-regressive RNN, which carries information across frames, and an MLP regression head turns them back into pose <i>θ̂</i><sub>1:F</sub> and expression <i>ψ̂</i><sub>1:F</sub>. Training minimises the usual noise-prediction loss, <span class="nsa-math">𝓛<sub>t</sub> = ‖<i>ε</i><sub>t</sub> − <i>ε</i><sub>θ</sub>(<i>p</i><sup>t</sup><sub>1:F</sub>, t, <i>w</i><sub>1:F</sub>)‖<sub>2</sub></span>. At inference the model starts from <i>z</i><sub>T</sub> ∼ 𝒩(0, I) and runs the reverse process to produce a new signing sequence for any sentence.</p>
+    <p>Inside the denoiser (Fig. 4), the noisy joint rotations get a learned per-joint pose embedding and go through a graph neural network defined on the SMPL-X skeleton, so messages pass along the skeleton and a finger joint is encoded together with the wrist and arm it hangs from. The facial expressions take a parallel path through their own embedding and an MLP. The transcript is encoded by CLIP, and the CLIP encoding conditions the model.</p>
+    <p>The per-frame features <i>x</i><sub>1</sub>…<i>x</i><sub>F</sub> then pass through an auto-regressive RNN, which carries information across frames, and an MLP regression head turns them back into pose <i class="nsa-hat">θ</i><sub>1:F</sub> and expression <i class="nsa-hat">ψ</i><sub>1:F</sub>. Training minimises the usual noise-prediction loss, <span class="nsa-math">𝓛<sub>t</sub> = ‖<i>ε</i><sub>t</sub> − <i>ε</i><sub>θ</sub>(<i>p</i><span class="nsa-ss"><sup>t</sup><sub>1:F</sub></span>, t, <i>w</i><sub>1:F</sub>)‖<sub>2</sub></span>. At inference the model starts from <i>z</i><sub>T</sub> ∼ 𝒩(0, I) and runs the reverse process to produce a new signing sequence for any sentence.</p>
     <aside class="callout callout--key">
       <p class="kicker">Key idea</p>
       <p class="callout__text">The denoiser works on the skeleton graph, so finger predictions are conditioned through the bones on the wrist and arm.</p>
@@ -360,7 +373,7 @@
           <tr><th scope="row">Neural Sign Actors</th><td>31.47</td><td>35.87</td><td>1.56</td><td>7.83</td></tr>
         </tbody>
       </table>
-      <p class="chart__note">Saunders et al. (i) and (ii) are two baselines by the same authors, in the poster’s order. <span data-todo="owner: which two Saunders et al. papers are (i) and (ii)? Take the citations from the paper.">…</span></p>
+      <p class="chart__note">Saunders et al. (i) and (ii) are two baselines with the same first author, in the poster’s order. <span data-todo="owner: which two Saunders et al. papers are (i) and (ii)? Take the citations from the paper.">…</span></p>
       <p class="chart__src">Source: CVPR 2024 poster, SLP Evaluation table (“Proposed” in the original).</p>
     </figure>
 
@@ -369,7 +382,7 @@
     <figure class="plate nsa-study">
       <div class="plate__head"><span class="plate__num">Fig. 6</span><span class="badge badge--paper">From the paper</span></div>
       <div class="plate__mat"><img src="/assets/img/projects/nsa/user-study.webp" width="496" height="346" loading="lazy" decoding="async" alt="User study panel: 15 ASL-fluent subjects rated the alignment between generations and text transcripts. Horizontal bars with error bars on a 0 to 10 alignment score for Stoll et al., Proposed, 3D Fitting and Video."></div>
-      <figcaption class="plate__cap">Alignment score between each generation and its transcript, rated by 15 ASL-fluent participants. <span data-todo="owner: exact means (Video, 3D fitting, Proposed, Stoll et al.) from the paper">…</span> <span class="plate__src">Source: CVPR 2024 poster, User Study panel (not re-plotted).</span></figcaption>
+      <figcaption class="plate__cap">Alignment score between each clip (video, 3D fit or generation) and its transcript, rated by 15 ASL-fluent participants. <span data-todo="owner: exact means (Video, 3D fitting, Proposed, Stoll et al.) from the paper">…</span> <span class="plate__src">Source: CVPR 2024 poster, User Study panel (not re-plotted).</span></figcaption>
     </figure>
   </section>
 
@@ -384,7 +397,7 @@
           <span class="yt__play" aria-hidden="true"><svg class="icon" width="26" height="26" focusable="false"><use href="/assets/icons/sprite.svg#play"/></svg></span>
           <span class="yt__label">Watch the CVPR 2024 presentation (YouTube)</span>
         </a>
-        <figcaption class="plate__cap">CVPR 2024 presentation. Nothing loads from YouTube until you press play. <a class="link-arrow link-arrow--sm" href="https://www.youtube.com/watch?v=u89bnprj46Q">Open on YouTube<svg class="icon" width="14" height="14" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-up-right"/></svg></a> <span class="plate__src">Source: official project page.</span></figcaption>
+        <figcaption class="plate__cap">CVPR 2024 presentation. Nothing loads from YouTube until you press play. <a class="link-arrow link-arrow--sm" href="https://www.youtube.com/watch?v=u89bnprj46Q">Open on YouTube<svg class="icon" width="14" height="14" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-up-right"/></svg></a> <span class="plate__src">Source: official project page. Thumbnail: crop of paper Fig. 1.</span></figcaption>
       </figure>
       <figure class="plate">
         <div class="plate__head"><span class="plate__num">Fig. 8</span><span class="badge badge--paper">From the paper</span></div>
@@ -402,7 +415,7 @@
     <h2 id="led-title">Where it led</h2>
     <ol class="thread">
       <li class="thread__node" aria-current="page"><span class="thread__year">2024</span><span class="thread__name">Neural Sign Actors</span><span class="thread__note">text to 3D signing motion</span></li>
-      <li class="thread__node"><a href="/#pub-icml25"><span class="thread__year">2025</span><span class="thread__name">Limited-data diffusion</span></a><span class="thread__note">diffusion models when data is scarce</span></li>
+      <li class="thread__node"><a href="/#pub-icml25"><span class="thread__year">2025</span><span class="thread__name">Limited-data diffusion</span></a><span class="thread__note">diffusion when data is scarce, led by Zhaoyu Zhang</span></li>
       <li class="thread__node thread__node--future"><a href="/#physical-ai"><span class="thread__year">In progress</span><span class="thread__name">Physical AI</span></a><span class="thread__note">human motion as a prior for robot motion</span></li>
     </ol>
     <p>Signing avatars are a demanding case of a general problem: generating human motion from language, with the hands and timing right. Robots that learn from people face the same problem from the other side, which is where I want to take it next.</p>

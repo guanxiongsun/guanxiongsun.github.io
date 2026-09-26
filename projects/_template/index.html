@@ -171,11 +171,21 @@
     <p>The problem in one sentence. The idea in one sentence. What it achieves, with no number that lacks a source on this page. At most seventy words.</p>
   </div>
 
-  <!-- ===== TOC: filled from the section h2s by article.js (or list the links by hand). ===== -->
+  <!-- ===== TOC: list one link per section by hand so it also works without JS (article.js
+       fills an EMPTY list from the section h2s, but only when JS runs). Keep it in step with
+       the section ids below. ===== -->
   <nav class="toc" aria-label="Contents" data-toc>
     <details class="toc__box">
       <summary class="toc__summary">Contents</summary>
-      <ol class="toc__list"></ol>
+      <ol class="toc__list">
+        <li><a href="#problem">The problem</a></li>
+        <li><a href="#idea">The idea</a></li>
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#results">Results</a></li>
+        <li><a href="#led">Where it led</a></li>
+        <li><a href="#code">Code</a></li>
+        <li><a href="#cite">Cite</a></li>
+      </ol>
     </details>
   </nav>
 
