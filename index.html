@@ -1,474 +1,1141 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title>Guanxiong Sun</title>
-  <meta name="author" content="Guanxiong Sun">
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- <link rel="shortcut icon" href="images/favicon/favicon.ico" type="image/x-icon"> -->
-  <link rel="stylesheet" type="text/css" href="css/style.css">
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-158881522-2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <!-- Theme boot: runs before any stylesheet so a saved theme never flashes. Keep it first. -->
+  <script>try{const t=localStorage.getItem('theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){};document.documentElement.classList.add('js')</script>
+  <title>Guanxiong Sun: Computer Vision &amp; Machine Learning, Queen's University Belfast</title>
+  <meta name="description" content="Lecturer at Queen's University Belfast. Memory for machines that see and act: video perception, generative models, 3D human motion, and memory for vision-language-action models.">
+  <meta name="author" content="Guanxiong Sun">
+  <link rel="canonical" href="https://guanxiongsun.github.io/">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#FAF8F4" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#121110" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
-  gtag('config', 'UA-158881522-2');
-</script>
+  <!-- Fonts: only the two faces used above the fold are preloaded. -->
+  <link rel="preload" href="/assets/fonts/newsreader-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <!-- Cache-bust: bump ?v=YYYYMMDD on every CSS/JS link at release. -->
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=20260926">
+  <link rel="stylesheet" href="/assets/css/site.css?v=20260926">
+
+  <!-- Social cards -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Guanxiong Sun">
+  <meta property="og:url" content="https://guanxiongsun.github.io/">
+  <meta property="og:title" content="Guanxiong Sun: Computer Vision &amp; Machine Learning">
+  <meta property="og:description" content="Lecturer at Queen's University Belfast. Memory for machines that see and act: video perception, generative models, 3D human motion, and memory for vision-language-action models.">
+  <meta property="og:image" content="https://guanxiongsun.github.io/assets/og/home.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Guanxiong Sun, Queen's University Belfast: memory for machines that see and act.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Guanxiong Sun: Computer Vision &amp; Machine Learning">
+  <meta name="twitter:description" content="Memory for machines that see and act: video perception, generative models, 3D human motion, and memory for vision-language-action models.">
+  <meta name="twitter:image" content="https://guanxiongsun.github.io/assets/og/home.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Guanxiong Sun",
+    "jobTitle": "Lecturer",
+    "url": "https://guanxiongsun.github.io/",
+    "image": "https://guanxiongsun.github.io/assets/img/profile25.webp",
+    "email": "mailto:sungx.cs@gmail.com",
+    "affiliation": { "@type": "CollegeOrUniversity", "name": "Queen's University Belfast", "url": "https://www.qub.ac.uk/" },
+    "worksFor": { "@type": "CollegeOrUniversity", "name": "Queen's University Belfast", "url": "https://www.qub.ac.uk/" },
+    "alumniOf": [
+      { "@type": "CollegeOrUniversity", "name": "Queen's University Belfast" },
+      { "@type": "CollegeOrUniversity", "name": "Harbin Institute of Technology" }
+    ],
+    "knowsAbout": ["Computer vision", "Machine learning", "Video object detection", "Generative models", "Vision-language-action models"],
+    "sameAs": [
+      "https://scholar.google.com/citations?user=vLk3IzoAAAAJ",
+      "https://github.com/guanxiongsun",
+      "https://huggingface.co/guanxiongsun",
+      "https://www.linkedin.com/in/guanxiongsun/"
+    ]
+  }
+  </script>
+
+  <!-- Scripts are modules, so they are deferred automatically. -->
+  <script type="module" src="/assets/js/site.js?v=20260926"></script>
+  <script type="module" src="/assets/js/throughline.js?v=20260926"></script>
 </head>
 
 <body>
-<table class="homepage" style="max-width:1000px; padding-top: 20px; padding-bottom: 10px;">
-  <tbody>
-    <tr style="padding:0px">
-      <td style="padding:0px">
-        <table class="homepage">
-          <tr style="padding:0px">
-            <td style="padding:2.5%;width:63%;vertical-align:middle">
-              <p style="text-align:center">
-                <name>Guanxiong Sun</name>
-              </p>
-            </td>
-          </tr>
-        </table>
+<a class="skip-link" href="#content">Skip to content</a>
 
-        <!-- Intro Section Begin -->
-        <table class="homepage"><tbody>
-            <tr style="padding:0px">
-              <td style="padding:2.5%;width:70%;vertical-align:middle">
-                <p>
-                  I am currently a <a href="https://www.qub.ac.uk/schools/eeecs/Connect/Staff/BusinessCard/?name=g.sun"> Lecturer at Queen's University Belfast</a>. 
-                  My research focus on the broad intersections of Computer Vision and Machine Learning. My research goal is to build intelligent systems that can perceive, reason, and interact with the dynamic environment. My work regularly appears in top-tier venues such as CVPR, ICCV, ECCV, ICML, and AAAI.
-                </p>
+<!-- ===== SITE HEADER (shared by every page; on project pages nav links point to /#work etc.) ===== -->
+<header class="site-header" data-header>
+  <div class="site-header__inner wrap">
+    <a class="wordmark" href="/">
+      <svg class="logomark" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false">
+        <rect class="logomark__cell" x="1.625" y="1.625" width="4.75" height="4.75" rx="1"/>
+        <rect class="logomark__cell logomark__cell--on" x="9" y="1" width="6" height="6" rx="1"/>
+        <rect class="logomark__cell" x="1.625" y="9.625" width="4.75" height="4.75" rx="1"/>
+        <rect class="logomark__cell" x="9.625" y="9.625" width="4.75" height="4.75" rx="1"/>
+      </svg>
+      <span class="wordmark__name">Guanxiong Sun</span>
+    </a>
 
-                <p>
-                  Previously, I obtained my PhD at <a href="https://www.qub.ac.uk/">Queen's University Belfast</a>, advised by <a href="https://scholar.google.com/citations?user=N0tFi8MAAAAJ&hl=en"> Dr. Yang Hua</a>, <a href="https://scholar.google.com/citations?user=Re6xr7YAAAAJ&hl=en"> Prof. Hui Wang</a>, and <a href="https://www.linkedin.com/in/nmrobertson/?originalSubdomain=uk"> Prof. Neil Robertson</a>. My doctoral research focused on video object detection, segmentation, and tracking.
-                </p>
-                <!-- <p>
-                  I obtained my B.S. and M.S. degrees from <a href="https://www.hit.edu.cn/">Harbin Institute of Technology</a> in 2016 and 2018. I worked on medical image processing during my M.S. degree, advised by <a href="https://scholar.google.com/citations?user=FMb0GfYAAAAJ&hl=zh-CN">Prof. Kuanquan Wang</a>.
-                </p> -->
-                <p style="text-align:center">
-                  <a href="mailto:sungx.cs@gmail.com">Email</a> &nbsp/&nbsp
-                  <a href="https://scholar.google.com/citations?user=vLk3IzoAAAAJ&hl=en&oi=ao">Google Scholar </a> &nbsp/&nbsp
-                  <a href="https://www.linkedin.com/in/guanxiongsun/?originalSubdomain=uk">LinkedIn</a>
-                </p>
-              </td>
-              <td style="padding:2.5%;width:30%;max-width:30%">
-                <a href="images/profile25.png"><img style="width:80%;max-width:90%;border-radius:50%;margin-left:auto;margin-right:auto;display:block;" alt="profile photo" src="images/profile25.png"></a>
-              </td>
-            </tr>
-        </tbody></table>
-        <!-- Intro Section End -->
+    <nav class="site-nav" aria-label="Primary">
+      <ul class="site-nav__list" id="site-menu" data-menu-panel>
+        <li><a class="site-nav__link" href="#work">Work</a></li>
+        <li><a class="site-nav__link" href="#vision">Vision</a></li>
+        <li><a class="site-nav__link" href="#collaborate">Collaborate</a></li>
+        <li><a class="site-nav__link" href="#publications">Publications</a></li>
+        <li><a class="site-nav__link" href="#news">News</a></li>
+      </ul>
+    </nav>
 
-        <!-- <table class="homepage"><tbody>
-          <tr>
-            <td style="padding:20px;width:100%;vertical-align:middle">
-              <heading>News</heading>
-              <p></p>
-              <li><b>Feb&nbsp; 2024</b> &nbsp; One paper accepted to TMM.</li>
-              <li><b>Jan&nbsp;&nbsp; 2024</b> &nbsp; One paper accepted to ICLR 2024 as spotlight (5%).</li>
-              <li><b>Sep&nbsp; 2023</b> &nbsp; One paper accepted to NeurIPS 2023.</li>
-              <li><b>Sep&nbsp; 2023</b> &nbsp; Codebase for neural mesh models released <a href="https://github.com/wufeim/NeMo">here</a>.</li>
-              <li><b>Jul&nbsp;&nbsp; 2023</b> &nbsp; One paper accepted to ICCV 2023.</li>
-              <li><b>Jun&nbsp; 2023</b> &nbsp; ICCV 2023 <a href="http://www.ood-cv.org/challenge.html">OOD-CV challenge</a> released.</li>
-              <li><b>Apr 2023</b> &nbsp; Program committee of CVPR 2023 Workshop - <a href="https://generative-vision.github.io/workshop-CVPR-23/">Generative Models for Computer Vision</a>.</li>
-              <li><b>Mar 2023</b> &nbsp; I will co-organize the <a href="http://www.ood-cv.org">OOD Generalization in Computer Vision Workshop</a> at ICCV 2023.</li>
-              <li><b>Mar 2023</b> &nbsp; One paper accepted to CVPR 2023 as highlight.</li>
-              <p></p>
-            </td>
-          </tr>
-        </tbody></table> -->
+    <div class="site-header__tools">
+      <button class="btn-icon theme-toggle" type="button" data-theme-toggle aria-label="Theme: Auto (follows system). Switch to light">
+        <svg class="icon theme-toggle__icon theme-toggle__icon--auto" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#contrast"/></svg>
+        <svg class="icon theme-toggle__icon theme-toggle__icon--light" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#sun"/></svg>
+        <svg class="icon theme-toggle__icon theme-toggle__icon--dark" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#moon"/></svg>
+      </button>
+      <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="site-menu">
+        <svg class="icon menu-toggle__open" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#menu"/></svg>
+        <svg class="icon menu-toggle__close" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#x"/></svg>
+        <span>Menu</span>
+      </button>
+    </div>
+  </div>
+</header>
 
-        <table class="homepage"><tbody>
-          <tr>
-            <td style="padding-left:20px">
-              <heading>Publications</heading>
-            </td>
-          </tr>
+<main id="content">
 
+<!-- ===== HERO ("Cover") ===== -->
+<section class="hero wrap" id="top" aria-labelledby="hero-title">
+  <div class="hero__grid">
+    <figure class="plate plate--portrait hero__portrait">
+      <div class="plate__mat">
+        <img src="/assets/img/profile-480.webp"
+             srcset="/assets/img/profile-480.webp 480w, /assets/img/profile-960.webp 889w"
+             sizes="(min-width: 840px) 300px, 160px"
+             width="889" height="990" fetchpriority="high" decoding="async"
+             alt="Portrait of Guanxiong Sun">
+      </div>
+    </figure>
 
-          <tr>
-            <td class="entry-img">
-              <img src="images/icml.png" width="390">
-            </td>
-            <td class="entry-content">
-              <a href="https://icml.cc/virtual/2025/poster/45514">
-              <papertitle>Training Diffusion-based Generative Models with Limited Data</papertitle>
-              </a>
-              <br>
-              Zhaoyu Zhang, Yang Hua, <strong>Guanxiong Sun</strong>, Hui Wang, Seán McLoone 
-              <br>
-              <em>ICML</em>, 2025
-              <br>
-              <a href="https://openreview.net/pdf?id=NDH7AzljFD">PDF</a>
-              /
-              <a href="https://icml.cc/media/PosterPDFs/ICML%202025/45514.png?t=1751545355.7902794">Poster</a>
-              
-            </td>
-          </tr>
+    <div class="hero__text">
+      <p class="kicker hero__overline">Lecturer · <a href="https://www.qub.ac.uk/schools/eeecs/Connect/Staff/BusinessCard/?name=g.sun">Queen's University Belfast</a></p>
+      <h1 class="hero__title" id="hero-title">Guanxiong Sun</h1>
+      <p class="hero__deck">I build <em>memory</em> for machines that see, and next, for machines that act.</p>
+      <span class="hero__rule" aria-hidden="true"></span>
+      <p class="hero__bio">
+        I'm a <a href="https://www.qub.ac.uk/schools/eeecs/Connect/Staff/BusinessCard/?name=g.sun">Lecturer at Queen's University Belfast</a>, working where computer vision meets machine learning.
+        My work covers video object detection, spatio-temporal representation learning, data-efficient generative models and 3D human motion, and has appeared at CVPR, ICCV, ECCV, ICML and AAAI.
+        I did my PhD at <a href="https://www.qub.ac.uk/">Queen's</a> with <a href="https://scholar.google.com/citations?user=N0tFi8MAAAAJ&amp;hl=en">Dr. Yang Hua</a>, <a href="https://scholar.google.com/citations?user=Re6xr7YAAAAJ&amp;hl=en">Prof. Hui Wang</a> and <a href="https://www.linkedin.com/in/nmrobertson/?originalSubdomain=uk">Prof. Neil Robertson</a>.
+      </p>
 
+      <ul class="link-row" aria-label="Contact and profiles">
+        <li><a href="mailto:sungx.cs@gmail.com"><svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#mail"/></svg>Email</a></li>
+        <li><a href="https://scholar.google.com/citations?user=vLk3IzoAAAAJ"><svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#scholar"/></svg>Google Scholar</a></li>
+        <li><a href="https://github.com/guanxiongsun"><svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#github"/></svg>GitHub</a></li>
+        <li><a href="https://huggingface.co/guanxiongsun"><svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#huggingface"/></svg>Hugging Face</a></li>
+        <li><a href="https://www.linkedin.com/in/guanxiongsun/"><svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#linkedin"/></svg>LinkedIn</a></li>
+        <li data-todo="add /cv.pdf"><a href="/cv.pdf"><svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#file-text"/></svg>CV</a></li>
+      </ul>
 
-          <tr>
-            <td class="entry-img">
-              <img src="images/cvpr25.png" width="390">
-            </td>
-            <td class="entry-content">
-              <a href="https://openaccess.thecvf.com/content/CVPR2025/html/Zhang_Improving_the_Training_of_Data-Efficient_GANs_via_Quality_Aware_Dynamic_CVPR_2025_paper.html">
-              <papertitle>Improving the Training of Data-Efficient GANs via Quality Aware Dynamic Discriminator Rejection Sampling</papertitle>
-              </a>
-              <br>
-              Zhaoyu Zhang, Yang Hua, <strong>Guanxiong Sun</strong>, Hui Wang, Seán McLoone 
-              <br>
-              <em>CVPR</em>, 2025
-              <br>
-              <a href="https://openaccess.thecvf.com/content/CVPR2025/papers/Zhang_Improving_the_Training_of_Data-Efficient_GANs_via_Quality_Aware_Dynamic_CVPR_2025_paper.pdf">PDF</a>
-              
-            </td>
-          </tr>
+      <div class="hero__ctas">
+        <a class="btn" href="#collaborate">Collaborate with me</a>
+        <a class="link-arrow" href="#vision">Read the vision<svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-right"/></svg></a>
+      </div>
+
+      <!-- NOW: edit me -->
+      <p class="now">
+        <a class="now__link" href="#memvla"><span class="now__label"><span class="now__dot" aria-hidden="true"></span>Now</span> <span class="now__text">Building MemVLA (working title): memory for vision-language-action&nbsp;models.<svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-right"/></svg></span></a>
+      </p>
+    </div>
+  </div>
+
+  <p class="venue-strip"><span class="venue-strip__label">Published at</span> <span>AAAI · ECCV · ICCV · CVPR · WACV · ACM MM · ICML · BMVC</span></p>
+</section>
 
 
-          <tr>
-            <td class="entry-img">
-              <img src="images/tactfl.png" width="390">
-            </td>
-            <td class="entry-content">
-              <a href="https://dl.acm.org/doi/10.1145/3664647.3681509">
-              <papertitle>TACTFL: Temporal Contrastive Training for Multi-modal Federated Learning with Similarity-guided Model Aggregation</papertitle>
-              </a>
-              <br>
-              <strong>Guanxiong Sun</strong>, Majid Mirmehdi, Zahraa S. Abdallah, Raul Santos-Rodriguez, Ian James Craddock, Telmo M Silva Filho 
-              <br>
-              <em>BMVC(oral)</em>, 2025
-              <br>
-              <a href="https://bmva-archive.org.uk/bmvc/2025/assets/papers/Paper_69/paper.pdf">PDF</a>
-              /
-              <a href="https://bmva-archive.org.uk/bmvc/2025/assets/papers/Paper_69/poster.pdf">Poster</a>
-            </td>
-          </tr>
+<!-- ===== 01 THROUGHLINE =====
+     The figure is drawn by /assets/js/throughline.js from every [data-thread] element on this page
+     (the 10 .pub cards plus the 2 vision cards). The list inside .throughline is the no-JS fallback;
+     throughline.js sets data-ready on .throughline once it has rendered, which hides the fallback. -->
+<section class="section" id="throughline" aria-labelledby="throughline-title">
+  <div class="wrap">
+    <header class="section-head reveal">
+      <p class="kicker section-head__kicker">01 — Throughline</p>
+      <h2 class="section-head__title" id="throughline-title">One question, asked five ways: what should a machine remember?</h2>
+      <p class="section-head__deck">Each dot is a paper. The thread runs from memory banks for video detection, through generative models of images and human motion, to what I'm working on now: memory for agents that act in the physical world.</p>
+    </header>
+
+    <div class="throughline" id="throughline-figure" data-throughline data-open-label="Your project?" data-open-href="#collaborate" data-open-note="The next node is open. Four problems in memory for perception and action, looking for collaborators.">
+      <ol class="throughline__fallback" aria-label="Papers in chronological order">
+        <li data-lane="perceive"><span class="tf__year">2021</span> <a href="/projects/mamba/">MAMBA</a> <span class="tf__meta">AAAI 2021 · Perceive</span></li>
+        <li data-lane="perceive"><span class="tf__year">2022</span> <a href="#pub-eovod">EOVOD</a> <span class="tf__meta">ECCV 2022 · Perceive</span></li>
+        <li data-lane="perceive"><span class="tf__year">2022</span> <a href="#pub-tdvit">TDViT</a> <span class="tf__meta">ECCV 2022 · Perceive</span></li>
+        <li data-lane="perceive"><span class="tf__year">2023</span> <a href="/projects/stpn/">STPN</a> <span class="tf__meta">ICCV 2023 · Perceive</span></li>
+        <li data-lane="generate"><span class="tf__year">2024</span> <a href="#pub-anda">Negative augmentation</a> <span class="tf__meta">WACV 2024 · Generate</span></li>
+        <li data-lane="generate"><span class="tf__year">2024</span> <a href="/projects/neural-sign-actors/">Neural Sign Actors</a> <span class="tf__meta">CVPR 2024 · Generate</span></li>
+        <li data-lane="generate"><span class="tf__year">2024</span> <a href="#pub-dani">Noise injection</a> <span class="tf__meta">ACM MM 2024 · Generate</span></li>
+        <li data-lane="generate"><span class="tf__year">2025</span> <a href="#pub-qaddrs">Rejection sampling</a> <span class="tf__meta">CVPR 2025 · Generate</span></li>
+        <li data-lane="generate"><span class="tf__year">2025</span> <a href="#pub-icml25">Limited-data diffusion</a> <span class="tf__meta">ICML 2025 · Generate</span></li>
+        <li data-lane="learn"><span class="tf__year">2025</span> <a href="#pub-tactfl">TACTFL</a> <span class="tf__meta">BMVC 2025 · Learn</span></li>
+        <li data-lane="act" data-status="in-progress"><span class="tf__year">2026</span> <a href="#physical-ai">Physical AI</a> <span class="tf__meta">In progress · Act</span></li>
+        <li data-lane="act" data-status="in-progress"><span class="tf__year">2026</span> <a href="#memvla">MemVLA (working title)</a> <span class="tf__meta">In progress · Act</span></li>
+        <li data-lane="act" data-status="open"><span class="tf__year">Next</span> <a href="#collaborate">Your project?</a> <span class="tf__meta">See open problems</span></li>
+      </ol>
+    </div>
+
+    <ul class="throughline__legend" aria-label="Lanes">
+      <li class="lane" data-lane="perceive"><p class="kicker lane__name">Perceive</p><p class="lane__text">Memory banks, temporal transformers and prompts that make video features accurate, robust and fast.</p></li>
+      <li class="lane" data-lane="generate"><p class="kicker lane__name">Generate</p><p class="lane__text">Generative models that learn from little data, and diffusion models of human motion.</p></li>
+      <li class="lane" data-lane="learn"><p class="kicker lane__name">Learn</p><p class="lane__text">Learning from multimodal, distributed data without centralising it.</p></li>
+      <li class="lane" data-lane="act"><p class="kicker lane__name">Act</p><p class="lane__text">Memory for embodied agents and vision-language-action models. In progress.</p></li>
+    </ul>
+  </div>
+</section>
 
 
+<!-- ===== 02 SELECTED WORK: three feature spreads, then "also notable" and open source ===== -->
+<section class="section" id="work" aria-labelledby="work-title">
+  <div class="wrap">
+    <header class="section-head reveal">
+      <p class="kicker section-head__kicker">02 — Selected work</p>
+      <h2 class="section-head__title" id="work-title">Three projects, opened up.</h2>
+      <p class="section-head__deck">Interactive explainers, real results and code for the work I'm asked about most.</p>
+    </header>
 
-          <tr>
-            <td class="entry-img">
-              <img src="images/mm24.png" width="390">
-            </td>
-            <td class="entry-content">
-              <a href="https://dl.acm.org/doi/10.1145/3664647.3681509">
-              <papertitle>Improving the Training of the GANs with Limited Data via Dual Adaptive Noise Injection</papertitle>
-              </a>
-              <br>
-              Zhaoyu Zhang, Yang Hua, <strong>Guanxiong Sun</strong>, Hui Wang, Seán F. McLoone
-              <br>
-              <em>ACM MM</em>, 2024
-              <br>
-              <a href="https://dl.acm.org/doi/10.1145/3664647.3681509">PDF</a>
-            </td>
-          </tr>
+    <!-- Plate I: MAMBA -->
+    <article class="feature" aria-labelledby="feature-mamba">
+      <figure class="plate plate--video feature__plate reveal">
+        <div class="plate__head"><span class="plate__num">Plate I</span><span class="badge badge--paper">From the paper</span></div>
+        <div class="plate__mat">
+          <video muted loop playsinline controls preload="none" poster="/assets/img/mamba-still.webp" width="669" height="291" data-autoplay aria-label="Animation: MAMBA's memory bank as the video advances">
+            <source src="/assets/video/mamba.webm" type="video/webm">
+            <source src="/assets/video/mamba.mp4" type="video/mp4">
+          </video>
+          <button class="vid-toggle" type="button" data-vid-toggle aria-label="Play animation">
+            <svg class="icon vid-toggle__play" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#play"/></svg>
+            <svg class="icon vid-toggle__pause" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#pause"/></svg>
+          </button>
+        </div>
+        <figcaption class="plate__cap">MAMBA's memory bank as the video advances: features are sampled for each read and replaced one by one. <span class="plate__src">Animation from the paper.</span></figcaption>
+      </figure>
 
-          <tr>
-            <td class="entry-img">
-              <img src="images/neural_sign_actor.png" width="390">
-            </td>
-            <td class="entry-content">
-              <a href="https://arxiv.org/abs/2312.02702">
-              <papertitle>Neural Sign Actors: A diffusion model for 3D sign language production from text</papertitle>
-              </a>
-              <br>
-              <a href="https://scholar.google.com/citations?user=J6BbEBQAAAAJ&hl=en">Vasileios Baltatzis</a>, <a href="https://rolpotamias.github.io/">Rolandos Alexandros Potamias</a>, <a href="https://scholar.google.com/citations?user=KkAjki8AAAAJ&hl=en">Evangelos Ververas</a>, <strong> Guanxiong Sun</strong>, <a href="https://jiankangdeng.github.io/">Jiankang Deng</a>, <a href="https://scholar.google.com/citations?user=QKOH5iYAAAAJ&hl=en">Stefanos Zafeiriou</a>
-              <br>
-              <em>CVPR</em>, 2024
-              <br>
-              <a href="https://arxiv.org/abs/2312.02702">arXiv</a>
-            </td>
-          </tr>
+      <div class="feature__text">
+        <p class="kicker feature__kicker">Plate I · AAAI 2021 · Video object detection</p>
+        <h3 class="feature__title" id="feature-mamba">MAMBA</h3>
+        <p class="feature__subtitle">Multi-level aggregation via memory bank</p>
+        <p class="feature__deck">Video detectors improve the current frame by attending to other frames. Sliding windows and queues attend to everything they store and forget whole frames at once. MAMBA keeps a memory bank that is updated feature by feature, so it can hold knowledge from the entire video, and it reads the bank through a small sampled key set to stay fast.</p>
+        <p class="feature__aside">Not the 2023 state-space model: this MAMBA dates from 2021.</p>
+        <dl class="stats">
+          <div class="stat"><dt class="stat__label">ImageNet VID val, ResNet-101</dt><dd class="stat__fig"><span class="stat__value">83.8</span><span class="stat__unit">AP50</span></dd></div>
+          <div class="stat"><dt class="stat__label">at 83.7 mAP, ResNet-101</dt><dd class="stat__fig"><span class="stat__value">12.6</span><span class="stat__unit">FPS</span></dd></div>
+          <div class="stat"><dt class="stat__label">released checkpoints re-evaluated with vfe.pytorch 2.0</dt><dd class="stat__fig"><span class="stat__value">±0.02</span><span class="stat__unit">AP50</span></dd></div>
+        </dl>
+        <p class="stats__src">Source: vfe.pytorch README (AP50, reproduction); paper abstract (FPS).</p>
+        <div class="feature__links">
+          <a class="link-arrow" href="/projects/mamba/">Explore the project<svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-right"/></svg></a>
+          <a class="link-arrow" href="/projects/mamba/#demo">Try the interactive<svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-right"/></svg></a>
+          <span class="feature__pills">
+            <a class="pill" href="https://ojs.aaai.org/index.php/AAAI/article/view/16365"><svg class="icon" width="14" height="14" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#file-text"/></svg>Paper</a>
+            <a class="pill" href="https://github.com/guanxiongsun/vfe.pytorch"><svg class="icon" width="14" height="14" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#code-xml"/></svg>Code</a>
+          </span>
+        </div>
+      </div>
+    </article>
 
-          <tr>
-            <td class="entry-img">
-              <img src="images/anda.png" width="400">
-            </td>
-            <td class="entry-content">
-              <a href="https://openaccess.thecvf.com/content/WACV2024/html/Zhang_Improving_the_Leaking_of_Augmentations_in_Data-Efficient_GANs_via_Adaptive_WACV_2024_paper.html">
-              <papertitle>Improving the Leaking of Augmentations in Data-Efficient GANs via Adaptive Negative Data Augmentation</papertitle>
-              </a>
-              <br>
-              <a href="https://pure.qub.ac.uk/en/persons/zhaoyu-zhang">Zhangyu Zhang</a>, <a href="https://scholar.google.com/citations?user=N0tFi8MAAAAJ&hl=en"> Yang Hua</a>, <strong>Guanxiong Sun</strong>, <a href="https://scholar.google.com/citations?user=Re6xr7YAAAAJ&hl=en"> Hui Wang</a>, <a href="https://scholar.google.com/citations?user=lNHnKBAAAAAJ&hl=en">Seán McLoone</a>
-              <br>
-              <em>WACV</em>, 2024 
-              <!-- <span style="color: red">(Spotlight, 5%)</span> -->
-              <br>
-              <a href="https://openaccess.thecvf.com/content/WACV2024/papers/Zhang_Improving_the_Leaking_of_Augmentations_in_Data-Efficient_GANs_via_Adaptive_WACV_2024_paper.pdf">PDF</a>
-            </td>
-          </tr>
+    <!-- Plate II: STPN (figure A/B toggle: data-ab) -->
+    <article class="feature feature--flip" aria-labelledby="feature-stpn">
+      <figure class="plate ab feature__plate reveal" data-ab>
+        <div class="plate__head"><span class="plate__num">Plate II</span><span class="badge badge--paper">From the paper</span></div>
+        <fieldset class="seg ab__control">
+          <legend class="visually-hidden">Show panel of the STPN figure</legend>
+          <label class="seg__opt"><input type="radio" name="stpn-ab" value="a"><span>(a) Current pipeline</span></label>
+          <label class="seg__opt"><input type="radio" name="stpn-ab" value="b" checked><span>(b) STPN</span></label>
+        </fieldset>
+        <div class="plate__mat ab__stage">
+          <img class="ab__img" data-ab-item="a" src="/assets/img/projects/stpn/stpn-a.webp"
+               srcset="/assets/img/projects/stpn/stpn-a-640.webp 640w, /assets/img/projects/stpn/stpn-a.webp 1000w"
+               sizes="(min-width: 1200px) 640px, (min-width: 1024px) 55vw, calc(100vw - 48px)"
+               width="1000" height="934" loading="lazy" decoding="async"
+               alt="Panel (a), current pipeline: support frames and the blurred current frame each pass through a backbone, then tangled connections feed three separate integration modules, A for detection, B for segmentation and C for tracking.">
+          <img class="ab__img" data-ab-item="b" src="/assets/img/projects/stpn/stpn-b.webp"
+               srcset="/assets/img/projects/stpn/stpn-b-640.webp 640w, /assets/img/projects/stpn/stpn-b.webp 896w"
+               sizes="(min-width: 1200px) 640px, (min-width: 1024px) 55vw, calc(100vw - 48px)"
+               width="896" height="934" loading="lazy" decoding="async"
+               alt="Panel (b), STPN: a DVP predictor turns the support frames into video prompts, which join the current frame at the input of one shared backbone feeding detection, segmentation and tracking heads.">
+        </div>
+        <figcaption class="plate__cap">
+          <span class="ab__cap" data-ab-item="a"><b>(a)</b> Prior pipelines: a backbone per frame plus a separate integration module for each task (A: detection, B: segmentation, C: tracking).</span>
+          <span class="ab__cap" data-ab-item="b"><b>(b)</b> STPN: a DVP predictor turns support frames into video prompts for a single backbone shared by all tasks.</span>
+          <span class="plate__src">Paper Fig. 1.</span>
+        </figcaption>
+      </figure>
 
-          <tr>
-            <td class="entry-img">
-              <img src="images/stpn.png" width="400">
-            </td>
-            <td class="entry-content">
-              <a href="https://arxiv.org/abs/2402.02574">
-              <papertitle>Spatio-temporal Prompting Network for Robust Video Feature Extraction</papertitle>
-              </a>
-              <br>
-              <strong>Guanxiong Sun</strong>, <a href="https://www.linkedin.com/in/chi-wang-33104647">Chi Wang</a>, <a href="https://pure.qub.ac.uk/en/persons/zhaoyu-zhang">Zhangyu Zhang</a>, <a href="https://jiankangdeng.github.io/">Jiankang Deng</a>, <a href="https://scholar.google.com/citations?user=QKOH5iYAAAAJ&hl=en">Stefanos Zafeiriou</a>, <a href="https://scholar.google.com/citations?user=N0tFi8MAAAAJ&hl=en"> Yang Hua</a>
-              <br>
-              <em>ICCV</em>, 2023
-              <br>
-              <a href="https://arxiv.org/abs/2402.02574">arXiv</a>
-              /
-              <a href="https://github.com/guanxiongsun/vfe.pytorch">Code</a>
-            </td>
-          </tr>
+      <div class="feature__text">
+        <p class="kicker feature__kicker">Plate II · ICCV 2023 · Video understanding</p>
+        <h3 class="feature__title" id="feature-stpn">STPN</h3>
+        <p class="feature__subtitle">Spatio-temporal prompting network</p>
+        <p class="feature__deck">Blur, defocus and occlusion degrade single frames. Instead of bolting a heavy, task-specific integration module onto the backbone, STPN predicts a handful of video prompts from neighbouring frames and prepends them to the current frame's patch embeddings. One backbone then serves detection, instance segmentation and tracking.</p>
+        <dl class="stats">
+          <div class="stat"><dt class="stat__label">ImageNet VID val, Swin-T</dt><dd class="stat__fig"><span class="stat__value">85.2</span><span class="stat__unit">AP50</span></dd></div>
+          <div class="stat"><dt class="stat__label">task-specific modules (VOD · VIS · VOT)</dt><dd class="stat__fig"><span class="stat__value">3&thinsp;→&thinsp;0</span></dd></div>
+          <div class="stat"><dt class="stat__label">prompt tokens (released config)</dt><dd class="stat__fig"><span class="stat__value">5</span></dd></div>
+        </dl>
+        <p class="stats__src">Source: vfe.pytorch README and released config; paper Fig. 1.</p>
+        <div class="feature__links">
+          <a class="link-arrow" href="/projects/stpn/">Explore the project<svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-right"/></svg></a>
+          <a class="link-arrow" href="/projects/stpn/#demo">Try the interactive<svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-right"/></svg></a>
+          <span class="feature__pills">
+            <a class="pill" href="https://openaccess.thecvf.com/content/ICCV2023/html/Sun_Spatio-temporal_Prompting_Network_for_Robust_Video_Feature_Extraction_ICCV_2023_paper.html"><svg class="icon" width="14" height="14" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#file-text"/></svg>Paper</a>
+            <a class="pill" href="https://github.com/guanxiongsun/vfe.pytorch"><svg class="icon" width="14" height="14" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#code-xml"/></svg>Code</a>
+          </span>
+        </div>
+      </div>
+    </article>
 
-          <tr>
-            <td class="entry-img">
-              <img src="images/eovod.gif" width="400">
-            </td>
-            <td class="entry-content">
-              <a href="https://arxiv.org/abs/2402.09241">
-              <papertitle>Efficient One-stage Video Object Detection by Exploiting Temporal Consistency</papertitle>
-              </a>
-              <br>
-              <strong>Guanxiong Sun</strong>, <a href="https://scholar.google.com/citations?user=N0tFi8MAAAAJ&hl=en"> Yang Hua</a>, <a href="https://huguosheng.github.io/">Guosheng Hu</a>, <a href="https://www.linkedin.com/in/nmrobertson/?originalSubdomain=uk"> Neil Robertson</a>
-              <br>
-              <em>ECCV</em>, 2022
-              <br>
-              <a href="https://arxiv.org/abs/2402.09241">arXiv</a>
-              /
-              <a href="https://github.com/guanxiongsun/vfe.pytorch">Code</a>
-            </td>
-          </tr>
+    <!-- Plate III: Neural Sign Actors (led by collaborators at Imperial; always credit) -->
+    <article class="feature" aria-labelledby="feature-nsa">
+      <figure class="plate feature__plate reveal">
+        <div class="plate__head"><span class="plate__num">Plate III</span><span class="badge badge--paper">From the paper</span></div>
+        <button class="plate__zoom" type="button" data-full="/assets/img/neural_sign_actor.webp" data-caption="Neural Sign Actors: reference signer (top) and 3D SMPL-X avatar (bottom). Paper Fig. 1." aria-label="Enlarge figure: Neural Sign Actors teaser">
+          <span class="plate__mat">
+            <img src="/assets/img/neural_sign_actor-1280.webp"
+                 srcset="/assets/img/neural_sign_actor-640.webp 640w, /assets/img/neural_sign_actor-1280.webp 1280w, /assets/img/neural_sign_actor.webp 1820w"
+                 sizes="(min-width: 1200px) 640px, (min-width: 1024px) 55vw, calc(100vw - 48px)"
+                 width="1280" height="619" loading="lazy" decoding="async"
+                 alt="For the sentence in the speech bubble, four frames of a human signer on a green screen appear above the matching poses of a 3D signing avatar.">
+          </span>
+          <span class="plate__zoom-icon" aria-hidden="true"><svg class="icon" width="14" height="14" focusable="false"><use href="/assets/icons/sprite.svg#maximize-2"/></svg></span>
+        </button>
+        <figcaption class="plate__cap"><i>“You want to just kinda take it easy and then use more paint as you start filling in your details.”</i> Reference signer (top) and 3D SMPL-X avatar (bottom). <span class="plate__src">Paper Fig. 1.</span></figcaption>
+      </figure>
 
-          <tr>
-            <td class="entry-img">
-              <img src="images/tdvit.png" width="400">
-            </td>
-            <td class="entry-content">
-              <a href="https://arxiv.org/abs/2402.09257">
-              <papertitle>TDViT: Temporal Dilated Video Transformer for Dense Video Tasks</papertitle>
-              </a>
-              <br>
-              <strong>Guanxiong Sun</strong>, <a href="https://scholar.google.com/citations?user=N0tFi8MAAAAJ&hl=en"> Yang Hua</a>, <a href="https://huguosheng.github.io/">Guosheng Hu</a>, <a href="https://www.linkedin.com/in/nmrobertson/?originalSubdomain=uk"> Neil Robertson</a>
-              <br>
-              <em>ECCV</em>, 2022
-              <br>
-              <a href="https://arxiv.org/abs/2402.09257">arXiv</a>
-              /
-              <a href="https://github.com/guanxiongsun/vfe.pytorch">Code</a>
-            </td>
-          </tr>
+      <div class="feature__text">
+        <p class="kicker feature__kicker">Plate III · CVPR 2024 · 3D humans</p>
+        <h3 class="feature__title" id="feature-nsa">Neural Sign Actors</h3>
+        <p class="feature__subtitle">A diffusion model for 3D sign language production from text</p>
+        <p class="feature__deck">A diffusion model that turns English text directly into 3D signing avatars (body, hands and face). It is trained on a 3D reconstruction of How2Sign with SMPL-X, and denoises motion with an anatomically informed graph network on the skeleton.</p>
+        <p class="feature__aside">Led by V. Baltatzis and R. A. Potamias (Imperial College London), with E. Ververas, J. Deng and S. Zafeiriou.</p>
+        <dl class="stats">
+          <div class="stat"><dt class="stat__label">best prior 60.32</dt><dd class="stat__fig"><span class="stat__value">35.87</span><span class="stat__unit">MPJPE ↓</span></dd></div>
+          <div class="stat"><dt class="stat__label">best prior 3.98</dt><dd class="stat__fig"><span class="stat__value">1.56</span><span class="stat__unit">FID ↓</span></dd></div>
+          <div class="stat"><dt class="stat__label">of 3D ASL (How2Sign, SMPL-X)</dt><dd class="stat__fig"><span class="stat__value">~79</span><span class="stat__unit">hours</span></dd></div>
+        </dl>
+        <p class="stats__src">Source: CVPR'24 paper / poster, SLP evaluation and dataset table. ↓ lower is better.</p>
+        <div class="feature__links">
+          <a class="link-arrow" href="/projects/neural-sign-actors/">Explore the project<svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-right"/></svg></a>
+          <a class="link-arrow" href="/projects/neural-sign-actors/#demo">Try the interactive<svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-right"/></svg></a>
+          <span class="feature__pills">
+            <a class="pill" href="https://openaccess.thecvf.com/content/CVPR2024/html/Baltatzis_Neural_Sign_Actors_A_Diffusion_Model_for_3D_Sign_Language_CVPR_2024_paper.html"><svg class="icon" width="14" height="14" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#file-text"/></svg>Paper</a>
+            <a class="pill" href="https://neural-sign-actors.github.io/"><svg class="icon" width="14" height="14" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-up-right"/></svg>Official page</a>
+          </span>
+        </div>
+      </div>
+    </article>
 
-          <tr>
-            <td class="entry-img">
-              <img src="images/mamba.gif" width="400">
-            </td>
-            <td class="entry-content">
-              <a href="https://arxiv.org/abs/2401.09923">
-              <papertitle>MAMBA: Multi-level Aggregation via Memory Bank for Video Object Detection</papertitle>
-              </a>
-              <br>
-              <strong>Guanxiong Sun</strong>, <a href="https://scholar.google.com/citations?user=N0tFi8MAAAAJ&hl=en"> Yang Hua</a>, <a href="https://huguosheng.github.io/">Guosheng Hu</a>, <a href="https://www.linkedin.com/in/nmrobertson/?originalSubdomain=uk"> Neil Robertson</a>
-              <br>
-              <em>AAAI</em>, 2021
-              <br>
-              <a href="https://arxiv.org/abs/2401.09923">arXiv</a>
-              /
-              <a href="https://github.com/guanxiongsun/vfe.pytorch">Code</a>
-            </td>
-          </tr>
+    <!-- Also notable: mini cards link to their publication entries -->
+    <div class="notable">
+      <h3 class="kicker notable__title">Also notable</h3>
+      <ul class="notable__grid">
+        <li class="mini">
+          <figure class="plate plate--thumb plate--video mini__plate">
+            <div class="plate__head"><span class="badge badge--paper">From the paper</span></div>
+            <div class="plate__mat">
+              <video muted loop playsinline controls preload="none" poster="/assets/img/eovod-poster.webp" width="480" height="213" data-autoplay aria-label="Demo: SELSA at about 6.4 frames per second beside EOVOD at about 35.5, detecting a turtle">
+                <source src="/assets/video/eovod.webm" type="video/webm">
+                <source src="/assets/video/eovod.mp4" type="video/mp4">
+              </video>
+              <button class="vid-toggle" type="button" data-vid-toggle aria-label="Play animation">
+                <svg class="icon vid-toggle__play" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#play"/></svg>
+                <svg class="icon vid-toggle__pause" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#pause"/></svg>
+              </button>
+            </div>
+          </figure>
+          <p class="kicker">ECCV 2022 · Video detection</p>
+          <h4 class="mini__title"><a href="#pub-eovod">EOVOD: efficient one-stage video detection</a></h4>
+          <p class="mini__note">A one-stage video detector that exploits temporal consistency: about 35.5 FPS vs 6.4 for SELSA (5.5×), per the paper's demo.</p>
+          <a class="link-arrow link-arrow--sm link-arrow--down" href="#pub-eovod" aria-label="Read: EOVOD publication entry">Read<svg class="icon" width="14" height="14" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-down"/></svg></a>
+        </li>
+        <li class="mini">
+          <figure class="plate plate--thumb mini__plate">
+            <div class="plate__head"><span class="badge badge--paper">From the paper</span></div>
+            <div class="plate__mat"><img src="/assets/img/tdvit-640.webp" width="640" height="286" loading="lazy" decoding="async" alt="TDViT architecture: four stages of temporal dilated transformer blocks, each reading a memory of past features with growing temporal dilation."></div>
+          </figure>
+          <p class="kicker">ECCV 2022 · Video transformers</p>
+          <h4 class="mini__title"><a href="#pub-tdvit">TDViT: temporal dilated video transformer</a></h4>
+          <p class="mini__note">Temporal dilated transformer blocks with a hierarchical memory structure for dense video tasks.</p>
+          <a class="link-arrow link-arrow--sm link-arrow--down" href="#pub-tdvit" aria-label="Read: TDViT publication entry">Read<svg class="icon" width="14" height="14" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-down"/></svg></a>
+        </li>
+        <li class="mini">
+          <figure class="plate plate--thumb mini__plate">
+            <div class="plate__head"><span class="badge badge--paper">From the paper</span></div>
+            <div class="plate__mat"><img src="/assets/img/tactfl-640.webp" width="640" height="191" loading="lazy" decoding="async" alt="TACTFL overview: clients train encoders on unlabelled multimodal sensor data with temporal contrastive learning; the server aggregates client models by similarity."></div>
+          </figure>
+          <p class="kicker">BMVC 2025 · Oral</p>
+          <h4 class="mini__title"><a href="#pub-tactfl">TACTFL: multimodal federated learning</a></h4>
+          <p class="mini__note">Temporal contrastive training for multi-modal federated learning with similarity-guided aggregation.</p>
+          <a class="link-arrow link-arrow--sm link-arrow--down" href="#pub-tactfl" aria-label="Read: TACTFL publication entry">Read<svg class="icon" width="14" height="14" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-down"/></svg></a>
+        </li>
+      </ul>
+    </div>
 
-        </tbody></table>
+    <!-- Code, models & data -->
+    <div class="oss">
+      <h3 class="kicker oss__title">Code, models &amp; data</h3>
+      <ul class="oss__grid">
+        <li class="oss__card">
+          <p class="kicker oss__kicker">Open source</p>
+          <h4 class="oss__name"><a href="https://github.com/guanxiongsun/vfe.pytorch">vfe.pytorch 2.0</a></h4>
+          <p>MAMBA and STPN re-implemented on plain PyTorch 2.x, checked tensor by tensor against the original. Released checkpoints reproduce to within 0.02 AP50.</p>
+          <p class="oss__url"><svg class="icon" width="14" height="14" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#github"/></svg>github.com/<wbr>guanxiongsun/<wbr>vfe.pytorch</p>
+        </li>
+        <li class="oss__card">
+          <p class="kicker oss__kicker">Open source</p>
+          <h4 class="oss__name"><a href="https://huggingface.co/guanxiongsun/vfe.pytorch">Checkpoints</a></h4>
+          <p>The released MAMBA (ResNet-101) and STPN (Swin-T) models, one folder per config, ready for the evaluation command.</p>
+          <p class="oss__url"><svg class="icon" width="14" height="14" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#huggingface"/></svg>huggingface.co/<wbr>guanxiongsun/<wbr>vfe.pytorch</p>
+        </li>
+        <li class="oss__card">
+          <p class="kicker oss__kicker">Open source</p>
+          <h4 class="oss__name"><a href="https://huggingface.co/datasets/guanxiongsun/imagenetvid">ImageNet VID mirror</a></h4>
+          <p>The official links are gone; the data and COCO-style annotations live here.</p>
+          <p class="oss__url"><svg class="icon" width="14" height="14" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#database"/></svg>huggingface.co/<wbr>datasets/<wbr>guanxiongsun/<wbr>imagenetvid</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
 
-        <!-- Affiliations -->
-        <!-- <table class="homepage"><tbody>
-          <tr>
-            <heading>Affiliations</heading>
-          </tr>
-          <tr style="padding:20px;width:100%;vertical-align:middle">
-            <td class="entry-img">
-              <img src="images/neural_sign_actor.png" width="150">
-            </td>
-            <td>
-            <b>Purdue University</b>, West Lafayette, IN, USA <span style="float:right;"><em>Jan 2021 - Present</em></span>
-            <br>
-            Graduate student in the Department of Computer Science
-            </td>
-            <p>
-            <b>Rensselaer Polytechnic Institute</b>, Troy, NY, USA <span style="float:right;"><em>Jan 2017 - May 2020</em></span>
-            <br>
-            B.S. in Computer Science and Mathematics (double major) with <em>summa cum laude</em> honor
-            </p>
-            <p>
-            <b>Wuhan University</b>, Wuhan, Hubei, CN <span style="float:right;"><em>Sep 2015 - Nov 2016</em></span>
-            <br>
-            B.S. in Mathematics (transferred to RPI)
-            </p>
-          </tr>
-        </tbody></table> -->
 
-        <!-- <table class="homepage"><tbody>
-          <tr>
-            <td style="padding:20px;width:100%;vertical-align:middle">
-              <heading>Internship</heading>
-              <p>
-              <b>Amazon AI</b>, Palo Alto, CA, USA
-              <br>
-              Incoming applied scientist intern at the computer vision group of Amazon AI
-              </p>
-              <p>
-	      <b>Johns Hopkins University</b>, Baltimore, MA, USA <span style="float:right;"><em>May 2021 - Present</em></span>
-              <b>Johns Hopkins University</b>, Baltimore, MA, USA
-              <br>
-              Research on robust 6DoF object detection supervised by <a href="https://www.cs.jhu.edu/~ayuille/">Prof. Alan Yuille</a> and <a href="https://adamkortylewski.com">Dr. Adam Kortylewski</a>
-              </p>
-              <p>
-	      <b>Microsoft Research Asia</b>, Beijing, CN <span style="float:right;"><em>Jan 2021 - Aug 2021</em></span>
-              <b>Microsoft Research Asia</b>, Beijing, CN
-              <br>
-              Research on deep learning-based video compression supervised by <a href="https://www.microsoft.com/en-us/research/people/libin/">Dr. Bin Li</a> and <a href="https://www.microsoft.com/en-us/research/people/jiahali/">Dr. Jiahao Li</a>
-              <br>
-              Award: "Stars of Tomorrow" Award of Excellence
-              </p>
-              <p>
-	      <b>Megvii (Face++) Research</b>, Beijing, CN <span style="float:right;"><em>Aug 2020 - Dec 2020</em></span>
-              <b>Megvii (Face++) Research</b>, Beijing, CN
-              <br>
-              Research on monocular 3D object detection supervised by Dr. Zhikang Liu
-              </p>
-            </td>
-          </tr>
-        </tbody></table> -->
+<!-- ===== 03 VISION (the only tinted band) ===== -->
+<section class="section band" id="vision" aria-labelledby="vision-title">
+  <div class="wrap">
+    <header class="section-head reveal">
+      <p class="kicker section-head__kicker">03 — Vision</p>
+      <h2 class="section-head__title" id="vision-title">Next: memory for machines that act.</h2>
+    </header>
 
-        <table class="homepage"><tbody>
-          <tr>
-            <td style="padding:20px;width:100%;vertical-align:middle">
-              <heading>Academic Service</heading>
-              <p>
-              <b>Reviewer</b>
-              <br>
-              CVPR, ICCV, NeurIPS, AAAI, ICLR, ICML, ECCV, WACV
-              </p>
-            </td>
-          </tr>
-        </tbody></table>
+    <div class="essay">
+      <p class="essay__first">My work so far has circled one question: what should a machine keep from what it has seen? In video perception the answer was a memory bank that stores features from the entire video and reads them cheaply (MAMBA), and prompts that carry context from neighbouring frames into the backbone (STPN). In generation it was learning the structure of human motion well enough to produce signing avatars from text (Neural Sign Actors).</p>
+      <p>Physical AI raises the stakes. A robot following an instruction must remember where it put something, what it has already tried and what has changed, over minutes rather than frames, and on a fixed compute budget. Many vision-language-action policies still act mostly on the current observation and instruction.</p>
+      <blockquote class="pullquote"><p>Perception with memory, generation with structure, action with both.</p></blockquote>
+      <p>MemVLA (working title) is my current project: memory for vision-language-action models that stays grounded in what the robot perceives, so that it tracks what has changed in the world and not only what the robot itself did. That matters as soon as people and other agents share the workspace. It builds on the memory-bank ideas of my video work, and it is where I am most keen to collaborate.</p>
+    </div>
 
-        <!-- <table class="homepage"><tbody>
-          <tr>
-            <td style="padding:20px;width:100%;vertical-align:middle">
-              <heading>Teaching</heading>
-              <p>
-              <b>CS661 - Computer Vision</b> <span style="float: right;"><em>Johns Hopkins University, Spring 2024</em></span>
-              <br>
-              Graduate Course Assistant
-              </p>
+    <div class="progress-grid">
+      <!-- In-progress card: data-thread makes it a node on the throughline. Never claim results here. -->
+      <article class="card-progress" id="memvla" aria-labelledby="memvla-title"
+        data-thread data-key="memvla" data-short="MemVLA" data-date="2026-09" data-lane="act" data-status="in-progress"
+        data-venue="In progress" data-note="Memory for vision-language-action policies that tracks what changed in the world, not only what the robot did."
+        data-href="#memvla">
+        <p class="status-pill">In progress · 2026</p>
+        <h3 class="card-progress__title" id="memvla-title">MemVLA (working title): memory for vision-language-action models</h3>
+        <figure class="schematic">
+          <div class="plate__head"><span class="badge badge--schematic">Schematic · work in progress</span></div>
+          <svg class="schematic__svg schematic--memvla" viewBox="0 0 480 214" role="img" aria-labelledby="memvla-svg-title">
+            <title id="memvla-svg-title">Schematic: observations are encoded and written into a small memory of slots; the policy reads from memory, together with a language instruction, and outputs actions to a robot arm. A dashed return path asks whether the policy's own actions should be written to memory too.</title>
+            <defs>
+              <marker id="ah-ink" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0.5 L7.5 4 L0 7.5z" class="sx-head"/></marker>
+              <marker id="ah-acc" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0.5 L7.5 4 L0 7.5z" class="sx-head-acc"/></marker>
+            </defs>
+            <!-- observations: a stack of three frames -->
+            <g class="sx-frames">
+              <rect x="32" y="40" width="42" height="30" rx="2"/>
+              <rect x="26" y="46" width="42" height="30" rx="2"/>
+              <rect x="20" y="52" width="42" height="30" rx="2"/>
+            </g>
+            <text class="sx-label" x="48" y="102" text-anchor="middle">observations</text>
+            <path class="sx-line" d="M80 62 H104" marker-end="url(#ah-ink)"/>
+            <!-- encoder -->
+            <rect class="sx-box" x="108" y="44" width="76" height="36" rx="4"/>
+            <text class="sx-label sx-label--box" x="146" y="67" text-anchor="middle">encoder</text>
+            <!-- write: encoder → memory -->
+            <path class="sx-flow" d="M146 82 V118" marker-end="url(#ah-acc)"/>
+            <text class="sx-label sx-label--acc" x="154" y="105">write</text>
+            <!-- memory: 2 × 4 slots; newest in focus colour, one still empty -->
+            <g class="sx-mem">
+              <rect x="104" y="124" width="18" height="18" rx="2"/><rect x="126" y="124" width="18" height="18" rx="2"/><rect x="148" y="124" width="18" height="18" rx="2"/><rect x="170" y="124" width="18" height="18" rx="2" class="sx-mem--new"/>
+              <rect x="104" y="146" width="18" height="18" rx="2"/><rect x="126" y="146" width="18" height="18" rx="2"/><rect x="148" y="146" width="18" height="18" rx="2"/><rect x="170" y="146" width="18" height="18" rx="2" class="sx-mem--empty"/>
+            </g>
+            <text class="sx-label" x="146" y="186" text-anchor="middle">memory</text>
+            <!-- read: memory → policy -->
+            <path class="sx-flow" d="M192 133 H236 V100" marker-end="url(#ah-acc)"/>
+            <text class="sx-label sx-label--acc" x="244" y="124">read</text>
+            <!-- instruction → policy -->
+            <text class="sx-label sx-label--quote" x="272" y="22" text-anchor="middle">“put the cup back where it was”</text>
+            <path class="sx-line" d="M272 30 V54" marker-end="url(#ah-ink)"/>
+            <!-- policy -->
+            <rect class="sx-box sx-box--strong" x="218" y="58" width="108" height="38" rx="4"/>
+            <text class="sx-label sx-label--box" x="272" y="82" text-anchor="middle">policy (VLA)</text>
+            <!-- actions → arm -->
+            <path class="sx-line" d="M328 77 H382" marker-end="url(#ah-ink)"/>
+            <text class="sx-label" x="355" y="68" text-anchor="middle">actions</text>
+            <g class="sx-arm">
+              <path d="M398 166 H462"/>
+              <path d="M430 166 V138 L406 108 L438 82"/>
+              <path d="M438 82 L452 76 M438 82 L448 94"/>
+              <circle cx="430" cy="138" r="3.5"/><circle cx="406" cy="108" r="3.5"/><circle cx="438" cy="82" r="3"/>
+            </g>
+            <!-- open question: should the policy's own actions be written too? -->
+            <path class="sx-line sx-line--dashed" d="M355 80 V155 H194" marker-end="url(#ah-ink)"/>
+            <text class="sx-label sx-label--muted" x="274" y="176" text-anchor="middle">or its own actions?</text>
+          </svg>
+        </figure>
+        <p>Robots that work alongside people need memory of the world, not just of their own actions. MemVLA explores how a vision-language-action policy should decide what to write, what to keep, and what to read back as an episode unfolds.</p>
+        <p data-todo="arXiv link when public"><a class="link-arrow" href="#memvla">Read the preprint (arXiv)<svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-up-right"/></svg></a></p>
+        <h4 class="card-progress__qhead kicker">Open questions</h4>
+        <ul class="card-progress__questions">
+          <li>What should a policy's memory record: its own actions, or changes in the world?</li>
+          <li>How should memory be written and read efficiently as episodes grow longer?</li>
+          <li>How do we evaluate memory itself, not just task success?</li>
+        </ul>
+      </article>
 
-              <p>
-              <b>CS661 - Computer Vision</b> <span style="float: right;"><em>Johns Hopkins University, Fall 2023</em></span>
-              <br>
-              Graduate Course Assistant
-              </p>
+      <article class="card-progress" id="physical-ai" aria-labelledby="physical-ai-title"
+        data-thread data-key="physical-ai" data-short="Physical AI" data-date="2026-09" data-lane="act" data-status="in-progress"
+        data-venue="Direction" data-note="World models that remember, and agents that use them."
+        data-href="#physical-ai">
+        <p class="status-pill">Direction · 2026</p>
+        <h3 class="card-progress__title" id="physical-ai-title">Physical AI: perception and generation, grounded in interaction</h3>
+        <figure class="schematic">
+          <div class="plate__head"><span class="badge badge--schematic">Schematic · work in progress</span></div>
+          <svg class="schematic__svg schematic--loop" viewBox="0 0 480 214" role="img" aria-labelledby="pai-svg-title">
+            <title id="pai-svg-title">Schematic: a loop from perceive, to predict with a world model, to act, to the environment and back to perceive, with memory at the centre linked to every step.</title>
+            <defs>
+              <marker id="ah-ink2" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0.5 L7.5 4 L0 7.5z" class="sx-head"/></marker>
+            </defs>
+            <!-- memory at the centre, linked to every station -->
+            <g class="sx-links">
+              <path d="M240 46 V84"/><path d="M316 107 H266"/><path d="M240 168 V132"/><path d="M134 107 H214"/>
+            </g>
+            <g class="sx-mem">
+              <rect x="219" y="86" width="19" height="19" rx="2.5"/>
+              <rect x="242" y="86" width="19" height="19" rx="2.5" class="sx-mem--new"/>
+              <rect x="219" y="109" width="19" height="19" rx="2.5"/>
+              <rect x="242" y="109" width="19" height="19" rx="2.5"/>
+            </g>
+            <text class="sx-label sx-label--acc" x="240" y="150" text-anchor="middle">memory</text>
+            <!-- four stations -->
+            <rect class="sx-box" x="180" y="10" width="120" height="34" rx="17"/>
+            <text class="sx-label sx-label--box" x="240" y="32" text-anchor="middle">perceive</text>
+            <rect class="sx-box sx-box--strong" x="318" y="90" width="156" height="34" rx="17"/>
+            <text class="sx-label sx-label--box" x="396" y="112" text-anchor="middle">predict (world model)</text>
+            <rect class="sx-box" x="180" y="170" width="120" height="34" rx="17"/>
+            <text class="sx-label sx-label--box" x="240" y="192" text-anchor="middle">act</text>
+            <rect class="sx-box" x="8" y="90" width="124" height="34" rx="17"/>
+            <text class="sx-label sx-label--box" x="70" y="112" text-anchor="middle">environment</text>
+            <!-- the loop, clockwise -->
+            <path class="sx-line" d="M302 27 C 360 27, 396 46, 396 86" marker-end="url(#ah-ink2)"/>
+            <path class="sx-line" d="M396 126 C 396 168, 360 187, 304 187" marker-end="url(#ah-ink2)"/>
+            <path class="sx-line" d="M178 187 C 118 187, 70 168, 70 128" marker-end="url(#ah-ink2)"/>
+            <path class="sx-line" d="M70 88 C 70 46, 118 27, 176 27" marker-end="url(#ah-ink2)"/>
+          </svg>
+        </figure>
+        <p>Grounding perception and generative models in physical interaction: world models that remember, and agents that use them.</p>
+        <!-- Photo slot (3:2). When approved: replace the span with <img ... width height alt> and remove hidden + data-todo. -->
+        <figure class="card-progress__photo" hidden data-todo="photo of the robot setup, if approved">
+          <span class="card-progress__photo-slot">Photo slot, 3:2</span>
+        </figure>
+        <h4 class="card-progress__qhead kicker">Open questions</h4>
+        <ul class="card-progress__questions">
+          <li>Can video world models keep a persistent state?</li>
+          <li>What transfers from human-motion generation to robot motion?</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
 
-              <p>
-              <b>CS471/671 - NLP: Self-supervised Models</b> <span style="float:right;"><em>Johns Hopkins University, Spring 2023</em></span>
-              <br>
-              Graduate Course Assistant
-              </p>
 
-              <p>
-              <b>CS182 - Foundations of Computer Science</b> <span style="float:right;"><em>Purdue University, Fall 2021</em></span>
-              <br>
-              Graduate Teaching Assistant
-              </p>
-            </td>
-          </tr>
-        </tbody></table> -->
+<!-- ===== 04 COLLABORATE ===== -->
+<section class="section" id="collaborate" aria-labelledby="collaborate-title">
+  <div class="wrap">
+    <header class="section-head reveal">
+      <p class="kicker section-head__kicker">04 — Collaborate</p>
+      <h2 class="section-head__title" id="collaborate-title">Open problems. Let's work on them together.</h2>
+      <p class="section-head__deck">I'm looking for collaborators (faculty, industry researchers and students) who care about memory in perception and action. If one of these is your problem too, write to me.</p>
+    </header>
 
-        <!-- <table class="homepage"><tbody>
-          <tr>
-            <td style="padding-left:20px;width:100%;vertical-align:middle">
-              <heading>Affiliations <span style="font-size:16px;line-height:22.85714340209961px;color:#999999;">(current and previous)</span></heading>
-            </td>
-          </tr>
-          <tr>
-            <td style="padding-left:20px;width:100%;vertical-align:middle">
-              <a href="https://www.jhu.edu" target="_blank">
-                <img src="images/logo_jhu.png" height="100px" style="padding-top:10px;padding-bottom:10px">
-              </a>
-              <a href="https://www.purdue.edu" target="_blank">
-                <img src="images/logo_purdue.png" height="80px" style="padding-left:20px;padding-top:20px;padding-bottom:20px">
-              </a>
-              <a href="https://rpi.edu" target="_blank" style="padding-left:20px">
-                <img src="images/logo_rpi.png" height="120px">
-              </a>
-              <a href="https://en.whu.edu.cn" target="_blank" style="padding-left:20px">
-                <img src="images/logo_whu.png" height="120px">
-              </a>
-              <a href="https://eng.shs.cn" target="_blank" style="padding-left:20px">
-                <img src="images/logo_shs.jpeg" height="120px">
-              </a>
-            </td>
-          </tr>
-          <tr>
-            <td style="padding-left:20px;width:100%;vertical-align:middle">
-              <a href="https://about.meta.com/realitylabs/" target="_blank">
-                <img src="images/meta.svg.png" height="36px" style="padding-top:42px;padding-bottom:42px;padding-right:10px;">
-              </a>
-              <a href="https://aws.amazon.com" target="_blank">
-                <img src="images/logo_aws.svg.png" height="60px" style="padding-top:30px;padding-bottom:30px">
-              </a>
-              <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-asia/" target="_blank">
-                <img src="images/logo_microsoft.svg.png" height="80px" style="padding-left:20px;padding-top:20px;padding-bottom:20px">
-              </a>
-              <a href="https://en.megvii.com" target="_blank">
-                <img src="images/logo_megvii.png" height="80px" style="padding-left:20px;padding-top:20px;padding-bottom:20px">
-              </a>
-            </td>
-          </tr>
-        </tbody></table> -->
+    <!-- PROBLEM: set data-state="connected" when public, and add
+         <p class="problem__partner">Now with <a href="…">Name, Institution</a></p> plus a News line. -->
+    <ol class="problems">
+      <li class="problem" data-state="open">
+        <span class="problem__num" aria-hidden="true">I</span>
+        <div class="problem__body">
+          <h3 class="problem__title">Efficient memory for long-horizon VLA policies</h3>
+          <p>Robot episodes run for minutes, and the world changes while they run. I bring memory-bank design from video (MAMBA, STPN) and a working VLA evaluation pipeline.</p>
+          <div class="problem__fit"><span class="problem__fit-label">Good fit if you work on:</span> <ul class="tags"><li class="tag">Robot learning</li><li class="tag">VLA</li><li class="tag">Long context</li></ul></div>
+          <a class="link-arrow" href="mailto:sungx.cs@gmail.com?subject=Collaboration%3A%20Efficient%20memory%20for%20long-horizon%20VLA%20policies">Discuss this<svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-right"/></svg></a>
+        </div>
+      </li>
+      <li class="problem" data-state="open">
+        <span class="problem__num" aria-hidden="true">II</span>
+        <div class="problem__body">
+          <h3 class="problem__title">Memory as architecture</h3>
+          <p>Architectural memory, such as token-indexed memory tables inside attention, meets episodic memory in agents. I'd like to test such mechanisms where memory is the bottleneck: long videos and embodied agents. <span class="problem__reading">Reading: e.g. <a href="https://arxiv.org/abs/2609.28399"><cite>Memory Attention</cite> (arXiv:2609.28399)</a>.</span></p>
+          <div class="problem__fit"><span class="problem__fit-label">Good fit if you work on:</span> <ul class="tags"><li class="tag">Efficient attention</li><li class="tag">KV cache</li><li class="tag">Memory layers</li></ul></div>
+          <a class="link-arrow" href="mailto:sungx.cs@gmail.com?subject=Collaboration%3A%20Memory%20as%20architecture">Discuss this<svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-right"/></svg></a>
+        </div>
+      </li>
+      <li class="problem" data-state="open">
+        <span class="problem__num" aria-hidden="true">III</span>
+        <div class="problem__body">
+          <h3 class="problem__title">Video world models with persistent memory</h3>
+          <p>World models that keep a state of the scene across long rollouts, not just the last few frames.</p>
+          <div class="problem__fit"><span class="problem__fit-label">Good fit if you work on:</span> <ul class="tags"><li class="tag">Video generation</li><li class="tag">World models</li></ul></div>
+          <a class="link-arrow" href="mailto:sungx.cs@gmail.com?subject=Collaboration%3A%20Video%20world%20models%20with%20persistent%20memory">Discuss this<svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-right"/></svg></a>
+        </div>
+      </li>
+      <li class="problem" data-state="open">
+        <span class="problem__num" aria-hidden="true">IV</span>
+        <div class="problem__body">
+          <h3 class="problem__title">Human motion and sign-language generation</h3>
+          <p>Continuing the Neural Sign Actors line: expressive hands and faces, evaluated with Deaf signers.</p>
+          <div class="problem__fit"><span class="problem__fit-label">Good fit if you work on:</span> <ul class="tags"><li class="tag">3D humans</li><li class="tag">Accessibility</li></ul></div>
+          <a class="link-arrow" href="mailto:sungx.cs@gmail.com?subject=Collaboration%3A%20Human%20motion%20and%20sign-language%20generation">Discuss this<svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-right"/></svg></a>
+        </div>
+      </li>
+    </ol>
 
-        <!-- Hitsteps TRACKING CODE - Manual 2022-07-27 - DO NOT CHANGE -->
-        <script type="text/javascript">(function(){var hstc=document.createElement('script'); hstc.src='https://cdnhst.xyz/code?code=cfb4eb29123fa0d2696e10bb513199c7';hstc.async=true;var htssc = document.getElementsByTagName('script')[0];htssc.parentNode.insertBefore(hstc, htssc);})();
-        </script><noscript><a href="http://www.hitsteps.com/"><img src="//cdnhst.xyz/code?mode=img&amp;code=cfb4eb29123fa0d2696e10bb513199c7" alt="web stats" width="1" height="1" />visitor activity monitor</a></noscript>
-        <!-- Hitsteps TRACKING CODE - DO NOT CHANGE -->
+    <div class="hang collab-extra">
+      <div class="hang__main">
+        <!-- ON MY DESK: 1–3 papers, each with why it matters. Reading interest only, never a collaboration claim. -->
+        <aside class="desk" aria-labelledby="desk-title">
+          <h3 class="kicker desk__title" id="desk-title">On my desk</h3>
+          <ul class="desk__list">
+            <li><a href="https://arxiv.org/abs/2609.28399"><cite>Memory Attention</cite></a> — J. Kang, arXiv:2609.28399 (2026). Builds attention values from token-indexed memory tables instead of a value projection. <span class="desk__why">Why it matters to me: memory that is cheap to read is exactly what long-horizon VLA policies need.</span></li>
+          </ul>
+        </aside>
 
-        <style>
-            table, th, td {
-              border: 0px solid black;
-              border-collapse: collapse;
-            }
-            
-            table.center {
-              margin-left: auto; 
-              margin-right: auto;
-            }
-            </style>
-        <table class="center">
-            <td> Number of visits: &nbsp;  </td>
-            <td>
-                <a href="https://www.easycounter.com/"><img src="https://www.easycounter.com/counter.php?guanxiongsun" border="1" alt="Web Counters"></a>
-            </td>
-            <td>
-                &nbsp; in total.
-            </td>
-        </table>
+        <div class="ways">
+          <h3 class="visually-hidden">Ways to work together</h3>
+          <p><b>Research collaboration:</b> joint projects, shared benchmarks, co-supervision.</p>
+          <p><b>Talks &amp; reading groups:</b> happy to present MAMBA → MemVLA.</p>
+          <p data-todo="confirm recruiting"><b>Students &amp; visitors:</b> PhD applicants and visiting researchers at QUB.</p>
+        </div>
 
-        <table class="homepage"><tbody>
-          <tr>
-            <td style="padding:0px">
-              <p style="text-align:center;font-size:14px;">
-                Copyright &copy; 2024-28 Guanxiong Sun. 
-                <br>
-                Theme modified from <a href="https://jonbarron.info" style="font-size:14px;">Jon Barron</a>'s and <a href="https://wufeim.github.io/" style="font-size:14px;">Wufei Ma's</a> webpages.
-              </p>
-            </td>
-          </tr>
-        </tbody></table>
+        <div class="contact">
+          <div class="contact__mail">
+            <a class="contact__email" id="contact-email" href="mailto:sungx.cs@gmail.com">sungx.cs@gmail.com</a>
+            <button class="btn-icon copy-btn" type="button" data-copy="#contact-email" data-copy-msg="Email address copied" aria-label="Copy email address">
+              <svg class="icon copy-btn__copy" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#copy"/></svg>
+              <svg class="icon copy-btn__done" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#check"/></svg>
+            </button>
+          </div>
+          <p class="contact__addr">School of EEECS, Queen's University Belfast, Belfast, UK<span data-todo="street address">, street address</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-      </td>
-    </tr>
-  </tbody>
-</table>
+
+<!-- ===== 05 NEWS ===== -->
+<section class="section" id="news" aria-labelledby="news-title">
+  <div class="wrap">
+    <header class="section-head reveal">
+      <p class="kicker section-head__kicker">05 — News</p>
+      <h2 class="section-head__title" id="news-title">Recent</h2>
+    </header>
+    <div class="hang">
+      <div class="hang__main">
+        <!-- NEWS: add newest at top. Keep 5 visible; move the 6th into details.news__more. -->
+        <ol class="news">
+          <li class="news__item"><time datetime="2026"><span data-todo="news month">Mon </span>2026</time><p><b>vfe.pytorch 2.0</b>: MAMBA and STPN on modern PyTorch, reproduced on 4× GH200.</p></li>
+          <li class="news__item"><time datetime="2026">2026</time><p>Started <b>MemVLA</b> (working title): memory for vision-language-action models.</p></li>
+          <li class="news__item"><time datetime="2025-11">Nov 2025</time><p><a href="#pub-tactfl"><b>TACTFL</b></a> presented as an <b>oral</b> at BMVC 2025.</p></li>
+          <li class="news__item"><time datetime="2025-07">Jul 2025</time><p><a href="#pub-icml25"><b>Training diffusion-based generative models with limited data</b></a> at ICML 2025.</p></li>
+          <li class="news__item"><time datetime="2025-06">Jun 2025</time><p><a href="#pub-qaddrs"><b>Quality-aware dynamic discriminator rejection sampling</b></a> at CVPR 2025.</p></li>
+        </ol>
+        <details class="news__more">
+          <summary>Earlier news</summary>
+          <ol class="news">
+            <li class="news__item"><time datetime="2024-06">Jun 2024</time><p><a href="/projects/neural-sign-actors/"><b>Neural Sign Actors</b></a> at CVPR 2024.</p></li>
+            <li class="news__item" data-todo="date"><time>Date</time><p>Joined Queen's University Belfast as a Lecturer.</p></li>
+          </ol>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ===== 06 PUBLICATIONS: newest first; copy a .pub block (docs/HOWTO.md) =====
+     Every .pub is also a throughline node (data-thread). Filters read data-tags and data-first-author. -->
+<section class="section" id="publications" aria-labelledby="publications-title">
+  <div class="wrap">
+    <header class="section-head section-head--row reveal">
+      <p class="kicker section-head__kicker">06 — Publications</p>
+      <h2 class="section-head__title" id="publications-title">Publications</h2>
+      <a class="section-head__aside link-quiet" href="https://scholar.google.com/citations?user=vLk3IzoAAAAJ">Full list on Google Scholar<svg class="icon" width="14" height="14" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-up-right"/></svg></a>
+    </header>
+
+    <div class="hang">
+      <div class="hang__main pub-controls" data-pub-controls>
+        <div class="chips" role="group" aria-label="Filter publications by topic">
+          <button class="chip" type="button" data-topic="all" aria-pressed="true">All <span class="chip__count" data-count>10</span></button>
+          <button class="chip" type="button" data-topic="video" aria-pressed="false">Video perception <span class="chip__count" data-count>4</span></button>
+          <button class="chip" type="button" data-topic="generative" aria-pressed="false">Generative models <span class="chip__count" data-count>5</span></button>
+          <button class="chip" type="button" data-topic="motion" aria-pressed="false">3D humans &amp; motion <span class="chip__count" data-count>1</span></button>
+          <button class="chip" type="button" data-topic="multimodal" aria-pressed="false">Multimodal &amp; federated <span class="chip__count" data-count>1</span></button>
+        </div>
+        <div class="pub-controls__row">
+          <button class="switch" type="button" role="switch" aria-checked="false" data-first-author-switch>
+            <span class="switch__track" aria-hidden="true"><span class="switch__thumb"></span></span>
+            <span class="switch__label">First-author only</span>
+          </button>
+          <p class="pub-controls__status" aria-live="polite" data-pub-status>Showing 10 of 10 publications</p>
+        </div>
+        <p class="pub-controls__note"><span class="badge badge--paper">From the paper</span> Every thumbnail is a figure from the paper beside it; select one to enlarge.</p>
+      </div>
+    </div>
+
+    <div class="pubs" data-pub-list>
+
+      <!-- ─── 2025 ─── -->
+      <div class="pub-year hang" data-year="2025">
+        <h3 class="pub-year__label hang__margin">2025</h3>
+        <div class="hang__main pub-year__items">
+
+          <article class="pub" id="pub-tactfl" data-thread data-key="tactfl" data-short="TACTFL" data-date="2025-11"
+            data-lane="learn" data-tags="multimodal" data-first-author data-venue="BMVC 2025"
+            data-note="Temporal contrastive training for multi-modal federated learning, with similarity-guided model aggregation."
+            data-href="#pub-tactfl" data-thumb="/assets/img/tactfl-640.webp">
+            <button class="plate plate--thumb plate__zoom" type="button" data-full="/assets/img/tactfl.webp" data-caption="TACTFL overview (paper figure)." aria-label="Enlarge figure: TACTFL overview">
+              <span class="plate__mat"><img src="/assets/img/tactfl-640.webp" srcset="/assets/img/tactfl-640.webp 640w, /assets/img/tactfl-1280.webp 1280w" sizes="(min-width: 1024px) 280px, (min-width: 600px) 220px, calc(100vw - 32px)" width="640" height="191" loading="lazy" decoding="async" alt="TACTFL overview: each client trains its encoder on unlabelled multimodal sensor data with temporal contrastive learning; the server aggregates client models by similarity in embedding space."></span>
+              <span class="plate__zoom-icon" aria-hidden="true"><svg class="icon" width="14" height="14" focusable="false"><use href="/assets/icons/sprite.svg#maximize-2"/></svg></span>
+            </button>
+            <div class="pub__body">
+              <p class="pub__meta"><span class="venue">BMVC 2025</span> <span class="badge badge--outline">Oral</span></p>
+              <h4 class="pub__title"><a href="https://bmva-archive.org.uk/bmvc/2025/assets/papers/Paper_69/paper.pdf">TACTFL: Temporal Contrastive Training for Multi-modal Federated Learning with Similarity-guided Model Aggregation</a></h4>
+              <p class="pub__authors"><b class="me">Guanxiong Sun</b>, Majid Mirmehdi, Zahraa Abdallah, Raul Santos-Rodriguez, Ian Craddock, Telmo de Menezes e Silva Filho</p>
+              <p class="pub__tldr">Temporal contrastive training for multi-modal federated learning, with similarity-guided model aggregation.</p>
+              <div class="pub__links">
+                <a class="pill" href="https://bmva-archive.org.uk/bmvc/2025/assets/papers/Paper_69/paper.pdf">PDF</a>
+                <a class="pill" href="https://arxiv.org/abs/2509.17532">arXiv</a>
+                <a class="pill" href="https://bmva-archive.org.uk/bmvc/2025/assets/papers/Paper_69/poster.pdf">Poster</a>
+                <details class="bib"><summary class="pill">BibTeX</summary><div class="code-wrap"><pre class="code"><code>@inproceedings{sun2025tactfl,
+  title     = {{TACTFL}: Temporal Contrastive Training for Multi-modal Federated Learning with Similarity-guided Model Aggregation},
+  author    = {Sun, Guanxiong and Mirmehdi, Majid and Abdallah, Zahraa and Santos-Rodriguez, Raul and Craddock, Ian and {de Menezes e Silva Filho}, Telmo},
+  booktitle = {British Machine Vision Conference (BMVC)},
+  year      = {2025},
+  eprint    = {2509.17532},
+  archivePrefix = {arXiv}
+}</code></pre><button class="btn-icon code-copy" type="button" aria-label="Copy BibTeX"><svg class="icon copy-btn__copy" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#copy"/></svg><svg class="icon copy-btn__done" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#check"/></svg></button></div></details>
+              </div>
+            </div>
+          </article>
+
+          <article class="pub" id="pub-icml25" data-thread data-key="icml25" data-short="Limited-data diffusion" data-date="2025-07"
+            data-lane="generate" data-tags="generative" data-venue="ICML 2025"
+            data-note="Diffusion models trained with limited data, by constraining the denoiser's hypothesis space and adding mixed augmentation."
+            data-href="#pub-icml25" data-thumb="/assets/img/icml-640.webp">
+            <button class="plate plate--thumb plate__zoom" type="button" data-full="/assets/img/icml.webp" data-caption="Training diffusion-based generative models with limited data: method overview (paper figure)." aria-label="Enlarge figure: limited-data diffusion framework">
+              <span class="plate__mat"><img src="/assets/img/icml-640.webp" srcset="/assets/img/icml-640.webp 640w, /assets/img/icml-1280.webp 1280w" sizes="(min-width: 1024px) 280px, (min-width: 600px) 220px, calc(100vw - 32px)" width="640" height="256" loading="lazy" decoding="async" alt="Framework for training latent diffusion models with limited data: augmented images are encoded by a pretrained autoencoder and denoised in the latent space, with a negative-augmentation loss."></span>
+              <span class="plate__zoom-icon" aria-hidden="true"><svg class="icon" width="14" height="14" focusable="false"><use href="/assets/icons/sprite.svg#maximize-2"/></svg></span>
+            </button>
+            <div class="pub__body">
+              <p class="pub__meta"><span class="venue">ICML 2025</span></p>
+              <h4 class="pub__title"><a href="https://icml.cc/virtual/2025/poster/45514">Training Diffusion-based Generative Models with Limited Data</a></h4>
+              <p class="pub__authors"><a href="https://pure.qub.ac.uk/en/persons/zhaoyu-zhang">Zhaoyu Zhang</a>, <a href="https://scholar.google.com/citations?user=N0tFi8MAAAAJ&amp;hl=en">Yang Hua</a>, <b class="me">Guanxiong Sun</b>, <a href="https://scholar.google.com/citations?user=Re6xr7YAAAAJ&amp;hl=en">Hui Wang</a>, <a href="https://scholar.google.com/citations?user=lNHnKBAAAAAJ&amp;hl=en">Seán McLoone</a></p>
+              <p class="pub__tldr">Diffusion models trained with limited data, by constraining the denoiser's hypothesis space and adding mixed augmentation.</p>
+              <div class="pub__links">
+                <a class="pill" href="https://proceedings.mlr.press/v267/zhang25z.html">Paper</a>
+                <a class="pill" href="https://openreview.net/pdf?id=NDH7AzljFD">PDF</a>
+                <a class="pill" href="https://icml.cc/media/PosterPDFs/ICML%202025/45514.png?t=1751545355.7902794">Poster</a>
+                <a class="pill" href="https://github.com/zzhang05/LD-Diffusion">Code</a>
+                <details class="bib"><summary class="pill">BibTeX</summary><div class="code-wrap"><pre class="code"><code>@InProceedings{pmlr-v267-zhang25z,
+  title     = {Training Diffusion-based Generative Models with Limited Data},
+  author    = {Zhang, Zhaoyu and Hua, Yang and Sun, Guanxiong and Wang, Hui and McLoone, Se{\'a}n},
+  booktitle = {Proceedings of the 42nd International Conference on Machine Learning},
+  pages     = {74950--74965},
+  year      = {2025},
+  volume    = {267},
+  series    = {Proceedings of Machine Learning Research},
+  publisher = {PMLR},
+  url       = {https://proceedings.mlr.press/v267/zhang25z.html}
+}</code></pre><button class="btn-icon code-copy" type="button" aria-label="Copy BibTeX"><svg class="icon copy-btn__copy" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#copy"/></svg><svg class="icon copy-btn__done" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#check"/></svg></button></div></details>
+              </div>
+            </div>
+          </article>
+
+          <article class="pub" id="pub-qaddrs" data-thread data-key="qaddrs" data-short="Rejection sampling" data-date="2025-06"
+            data-lane="generate" data-tags="generative" data-venue="CVPR 2025"
+            data-note="A quality-aware, dynamic discriminator rejection-sampling scheme for data-efficient GANs."
+            data-href="#pub-qaddrs" data-thumb="/assets/img/cvpr25-640.webp">
+            <button class="plate plate--thumb plate__zoom" type="button" data-full="/assets/img/cvpr25.webp" data-caption="Quality-aware dynamic discriminator rejection sampling (paper figure)." aria-label="Enlarge figure: quality-aware dynamic discriminator rejection sampling">
+              <span class="plate__mat"><img src="/assets/img/cvpr25-640.webp" srcset="/assets/img/cvpr25-640.webp 640w, /assets/img/cvpr25-1280.webp 1280w" sizes="(min-width: 1024px) 280px, (min-width: 600px) 220px, calc(100vw - 32px)" width="640" height="302" loading="lazy" decoding="async" alt="Method diagram: when the discriminator is updated, the highest-scoring real samples and lowest-scoring generated samples are rejected, with the number set dynamically."></span>
+              <span class="plate__zoom-icon" aria-hidden="true"><svg class="icon" width="14" height="14" focusable="false"><use href="/assets/icons/sprite.svg#maximize-2"/></svg></span>
+            </button>
+            <div class="pub__body">
+              <p class="pub__meta"><span class="venue">CVPR 2025</span></p>
+              <h4 class="pub__title"><a href="https://openaccess.thecvf.com/content/CVPR2025/html/Zhang_Improving_the_Training_of_Data-Efficient_GANs_via_Quality_Aware_Dynamic_CVPR_2025_paper.html">Improving the Training of Data-Efficient GANs via Quality Aware Dynamic Discriminator Rejection Sampling</a></h4>
+              <p class="pub__authors"><a href="https://pure.qub.ac.uk/en/persons/zhaoyu-zhang">Zhaoyu Zhang</a>, <a href="https://scholar.google.com/citations?user=N0tFi8MAAAAJ&amp;hl=en">Yang Hua</a>, <b class="me">Guanxiong Sun</b>, <a href="https://scholar.google.com/citations?user=Re6xr7YAAAAJ&amp;hl=en">Hui Wang</a>, <a href="https://scholar.google.com/citations?user=lNHnKBAAAAAJ&amp;hl=en">Seán McLoone</a></p>
+              <p class="pub__tldr">A quality-aware, dynamic discriminator rejection-sampling scheme for data-efficient GANs.</p>
+              <div class="pub__links">
+                <a class="pill" href="https://openaccess.thecvf.com/content/CVPR2025/papers/Zhang_Improving_the_Training_of_Data-Efficient_GANs_via_Quality_Aware_Dynamic_CVPR_2025_paper.pdf">PDF</a>
+                <a class="pill" href="https://github.com/zzhang05/QADDRS">Code</a>
+                <details class="bib"><summary class="pill">BibTeX</summary><div class="code-wrap"><pre class="code"><code>@InProceedings{Zhang_2025_CVPR,
+  author    = {Zhang, Zhaoyu and Hua, Yang and Sun, Guanxiong and Wang, Hui and McLoone, Se{\'a}n},
+  title     = {Improving the Training of Data-Efficient GANs via Quality Aware Dynamic Discriminator Rejection Sampling},
+  booktitle = {Proceedings of the Computer Vision and Pattern Recognition Conference (CVPR)},
+  month     = {June},
+  year      = {2025},
+  pages     = {30682--30691}
+}</code></pre><button class="btn-icon code-copy" type="button" aria-label="Copy BibTeX"><svg class="icon copy-btn__copy" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#copy"/></svg><svg class="icon copy-btn__done" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#check"/></svg></button></div></details>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <!-- ─── 2024 ─── -->
+      <div class="pub-year hang" data-year="2024">
+        <h3 class="pub-year__label hang__margin">2024</h3>
+        <div class="hang__main pub-year__items">
+
+          <article class="pub" id="pub-dani" data-thread data-key="dani" data-short="Noise injection" data-date="2024-10"
+            data-lane="generate" data-tags="generative" data-venue="ACM MM 2024"
+            data-note="Dual adaptive noise injection to improve GAN training with limited data."
+            data-href="#pub-dani" data-thumb="/assets/img/mm24-640.webp">
+            <button class="plate plate--thumb plate__zoom" type="button" data-full="/assets/img/mm24.webp" data-caption="Dual adaptive noise injection: 100-shot Obama samples, grids (a) and (b) (paper figure)." aria-label="Enlarge figure: dual adaptive noise injection samples">
+              <span class="plate__mat"><img src="/assets/img/mm24-640.webp" srcset="/assets/img/mm24-640.webp 640w, /assets/img/mm24.webp 1244w" sizes="(min-width: 1024px) 280px, (min-width: 600px) 220px, calc(100vw - 32px)" width="640" height="332" loading="lazy" decoding="async" alt="Two 2 by 2 grids of 100-shot Obama face images, labelled (a) and (b), comparing image quality for GAN training with limited data."></span>
+              <span class="plate__zoom-icon" aria-hidden="true"><svg class="icon" width="14" height="14" focusable="false"><use href="/assets/icons/sprite.svg#maximize-2"/></svg></span>
+            </button>
+            <div class="pub__body">
+              <p class="pub__meta"><span class="venue">ACM MM 2024</span></p>
+              <h4 class="pub__title"><a href="https://dl.acm.org/doi/10.1145/3664647.3681509">Improving the Training of the GANs with Limited Data via Dual Adaptive Noise Injection</a></h4>
+              <p class="pub__authors"><a href="https://pure.qub.ac.uk/en/persons/zhaoyu-zhang">Zhaoyu Zhang</a>, <a href="https://scholar.google.com/citations?user=N0tFi8MAAAAJ&amp;hl=en">Yang Hua</a>, <b class="me">Guanxiong Sun</b>, <a href="https://scholar.google.com/citations?user=Re6xr7YAAAAJ&amp;hl=en">Hui Wang</a>, <a href="https://scholar.google.com/citations?user=lNHnKBAAAAAJ&amp;hl=en">Seán McLoone</a></p>
+              <p class="pub__tldr">Dual adaptive noise injection to improve GAN training with limited data.</p>
+              <div class="pub__links">
+                <a class="pill" href="https://dl.acm.org/doi/10.1145/3664647.3681509">Paper</a>
+                <a class="pill" href="https://github.com/zzhang05/DANI">Code</a>
+                <details class="bib"><summary class="pill">BibTeX</summary><div class="code-wrap"><pre class="code"><code>@inproceedings{zhang2024dani,
+  title     = {Improving the Training of the GANs with Limited Data via Dual Adaptive Noise Injection},
+  author    = {Zhang, Zhaoyu and Hua, Yang and Sun, Guanxiong and Wang, Hui and McLoone, Se{\'a}n},
+  booktitle = {Proceedings of the 32nd ACM International Conference on Multimedia},
+  series    = {MM '24},
+  pages     = {6725--6734},
+  year      = {2024},
+  publisher = {Association for Computing Machinery},
+  address   = {New York, NY, USA},
+  doi       = {10.1145/3664647.3681509}
+}</code></pre><button class="btn-icon code-copy" type="button" aria-label="Copy BibTeX"><svg class="icon copy-btn__copy" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#copy"/></svg><svg class="icon copy-btn__done" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#check"/></svg></button></div></details>
+              </div>
+            </div>
+          </article>
+
+          <article class="pub" id="pub-nsa" data-thread data-key="nsa" data-short="Sign Actors" data-date="2024-06"
+            data-lane="generate" data-tags="generative motion" data-flagship data-venue="CVPR 2024"
+            data-note="Text to 3D signing avatars with a diffusion model on an anatomically informed SMPL-X skeleton graph."
+            data-href="/projects/neural-sign-actors/" data-thumb="/assets/img/neural_sign_actor-640.webp">
+            <button class="plate plate--thumb plate__zoom" type="button" data-full="/assets/img/neural_sign_actor.webp" data-caption="Neural Sign Actors: reference signer (top) and 3D SMPL-X avatar (bottom). Paper Fig. 1." aria-label="Enlarge figure: Neural Sign Actors teaser">
+              <span class="plate__mat"><img src="/assets/img/neural_sign_actor-640.webp" srcset="/assets/img/neural_sign_actor-640.webp 640w, /assets/img/neural_sign_actor-1280.webp 1280w" sizes="(min-width: 1024px) 280px, (min-width: 600px) 220px, calc(100vw - 32px)" width="640" height="309" loading="lazy" decoding="async" alt="Four frames of a human signer on a green screen above the matching poses of a 3D signing avatar."></span>
+              <span class="plate__zoom-icon" aria-hidden="true"><svg class="icon" width="14" height="14" focusable="false"><use href="/assets/icons/sprite.svg#maximize-2"/></svg></span>
+            </button>
+            <div class="pub__body">
+              <p class="pub__meta"><span class="venue">CVPR 2024</span> <span class="badge badge--progress">Project page</span></p>
+              <h4 class="pub__title"><a href="/projects/neural-sign-actors/">Neural Sign Actors: A Diffusion Model for 3D Sign Language Production from Text</a></h4>
+              <p class="pub__authors"><a href="https://scholar.google.com/citations?user=J6BbEBQAAAAJ&amp;hl=en">Vasileios Baltatzis</a>, <a href="https://rolpotamias.github.io/">Rolandos Alexandros Potamias</a>, <a href="https://scholar.google.com/citations?user=KkAjki8AAAAJ&amp;hl=en">Evangelos Ververas</a>, <b class="me">Guanxiong Sun</b>, <a href="https://jiankangdeng.github.io/">Jiankang Deng</a>, <a href="https://scholar.google.com/citations?user=QKOH5iYAAAAJ&amp;hl=en">Stefanos Zafeiriou</a></p>
+              <p class="pub__tldr">Text to 3D signing avatars with a diffusion model on an anatomically informed SMPL-X skeleton graph.</p>
+              <div class="pub__links">
+                <a class="pill" href="/projects/neural-sign-actors/">Project</a>
+                <a class="pill" href="https://openaccess.thecvf.com/content/CVPR2024/html/Baltatzis_Neural_Sign_Actors_A_Diffusion_Model_for_3D_Sign_Language_CVPR_2024_paper.html">Paper</a>
+                <a class="pill" href="https://arxiv.org/abs/2312.02702">arXiv</a>
+                <a class="pill" href="https://neural-sign-actors.github.io/">Official page</a>
+                <a class="pill" href="https://www.youtube.com/watch?v=u89bnprj46Q">Talk</a>
+                <details class="bib"><summary class="pill">BibTeX</summary><div class="code-wrap"><pre class="code"><code>@InProceedings{Baltatzis_2024_CVPR,
+  author    = {Baltatzis, Vasileios and Potamias, Rolandos Alexandros and Ververas, Evangelos and Sun, Guanxiong and Deng, Jiankang and Zafeiriou, Stefanos},
+  title     = {Neural Sign Actors: A diffusion model for 3D sign language production from text},
+  booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+  month     = {June},
+  year      = {2024}
+}</code></pre><button class="btn-icon code-copy" type="button" aria-label="Copy BibTeX"><svg class="icon copy-btn__copy" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#copy"/></svg><svg class="icon copy-btn__done" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#check"/></svg></button></div></details>
+              </div>
+            </div>
+          </article>
+
+          <article class="pub" id="pub-anda" data-thread data-key="anda" data-short="Negative augmentation" data-date="2024-01"
+            data-lane="generate" data-tags="generative" data-venue="WACV 2024"
+            data-note="Adaptive negative data augmentation to reduce augmentation leaking in data-efficient GANs."
+            data-href="#pub-anda" data-thumb="/assets/img/anda-640.webp">
+            <button class="plate plate--thumb plate__zoom" type="button" data-full="/assets/img/anda.webp" data-caption="ANDA: 100-shot samples, Diffusion-GAN baseline (left) and with ANDA (right). Paper figure." aria-label="Enlarge figure: ANDA qualitative comparison">
+              <span class="plate__mat"><img src="/assets/img/anda-640.webp" srcset="/assets/img/anda-640.webp 640w, /assets/img/anda-1280.webp 1280w" sizes="(min-width: 1024px) 280px, (min-width: 600px) 220px, calc(100vw - 32px)" width="640" height="309" loading="lazy" decoding="async" alt="100-shot Obama, Panda and Grumpy Cat samples: Diffusion-GAN baseline (left, FID 28.55, 8.69, 21.87) versus Diffusion-GAN with ANDA (right, FID 26.40, 7.88, 19.01)."></span>
+              <span class="plate__zoom-icon" aria-hidden="true"><svg class="icon" width="14" height="14" focusable="false"><use href="/assets/icons/sprite.svg#maximize-2"/></svg></span>
+            </button>
+            <div class="pub__body">
+              <p class="pub__meta"><span class="venue">WACV 2024</span></p>
+              <h4 class="pub__title"><a href="https://openaccess.thecvf.com/content/WACV2024/html/Zhang_Improving_the_Leaking_of_Augmentations_in_Data-Efficient_GANs_via_Adaptive_WACV_2024_paper.html">Improving the Leaking of Augmentations in Data-Efficient GANs via Adaptive Negative Data Augmentation</a></h4>
+              <p class="pub__authors"><a href="https://pure.qub.ac.uk/en/persons/zhaoyu-zhang">Zhaoyu Zhang</a>, <a href="https://scholar.google.com/citations?user=N0tFi8MAAAAJ&amp;hl=en">Yang Hua</a>, <b class="me">Guanxiong Sun</b>, <a href="https://scholar.google.com/citations?user=Re6xr7YAAAAJ&amp;hl=en">Hui Wang</a>, <a href="https://scholar.google.com/citations?user=lNHnKBAAAAAJ&amp;hl=en">Seán McLoone</a></p>
+              <p class="pub__tldr">Adaptive negative data augmentation to reduce augmentation leaking in data-efficient GANs.</p>
+              <div class="pub__links">
+                <a class="pill" href="https://openaccess.thecvf.com/content/WACV2024/papers/Zhang_Improving_the_Leaking_of_Augmentations_in_Data-Efficient_GANs_via_Adaptive_WACV_2024_paper.pdf">PDF</a>
+                <a class="pill" href="https://github.com/zzhang05/ANDA">Code</a>
+                <details class="bib"><summary class="pill">BibTeX</summary><div class="code-wrap"><pre class="code"><code>@InProceedings{Zhang_2024_WACV,
+  author    = {Zhang, Zhaoyu and Hua, Yang and Sun, Guanxiong and Wang, Hui and McLoone, Se{\'a}n},
+  title     = {Improving the Leaking of Augmentations in Data-Efficient GANs via Adaptive Negative Data Augmentation},
+  booktitle = {Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)},
+  month     = {January},
+  year      = {2024},
+  pages     = {5412--5421}
+}</code></pre><button class="btn-icon code-copy" type="button" aria-label="Copy BibTeX"><svg class="icon copy-btn__copy" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#copy"/></svg><svg class="icon copy-btn__done" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#check"/></svg></button></div></details>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <!-- ─── 2023 ─── -->
+      <div class="pub-year hang" data-year="2023">
+        <h3 class="pub-year__label hang__margin">2023</h3>
+        <div class="hang__main pub-year__items">
+
+          <article class="pub" id="pub-stpn" data-thread data-key="stpn" data-short="STPN" data-date="2023-10"
+            data-lane="perceive" data-tags="video" data-first-author data-flagship data-venue="ICCV 2023"
+            data-note="Video prompts predicted from neighbouring frames make one backbone robust for detection, segmentation and tracking."
+            data-href="/projects/stpn/" data-thumb="/assets/img/stpn-640.webp">
+            <button class="plate plate--thumb plate__zoom" type="button" data-full="/assets/img/stpn.webp" data-caption="STPN overview: (a) current pipeline, (b) STPN. Paper Fig. 1." aria-label="Enlarge figure: STPN overview">
+              <span class="plate__mat"><img src="/assets/img/stpn-640.webp" srcset="/assets/img/stpn-640.webp 640w, /assets/img/stpn-1280.webp 1280w" sizes="(min-width: 1024px) 280px, (min-width: 600px) 220px, calc(100vw - 32px)" width="640" height="309" loading="lazy" decoding="async" alt="Task-specific integration modules versus STPN's prompt predictor feeding one shared backbone."></span>
+              <span class="plate__zoom-icon" aria-hidden="true"><svg class="icon" width="14" height="14" focusable="false"><use href="/assets/icons/sprite.svg#maximize-2"/></svg></span>
+            </button>
+            <div class="pub__body">
+              <p class="pub__meta"><span class="venue">ICCV 2023</span> <span class="badge badge--progress">Project page</span></p>
+              <h4 class="pub__title"><a href="/projects/stpn/">Spatio-temporal Prompting Network for Robust Video Feature Extraction</a></h4>
+              <p class="pub__authors"><b class="me">Guanxiong Sun</b>, <a href="https://www.linkedin.com/in/chi-wang-33104647">Chi Wang</a>, <a href="https://pure.qub.ac.uk/en/persons/zhaoyu-zhang">Zhaoyu Zhang</a>, <a href="https://jiankangdeng.github.io/">Jiankang Deng</a>, <a href="https://scholar.google.com/citations?user=QKOH5iYAAAAJ&amp;hl=en">Stefanos Zafeiriou</a>, <a href="https://scholar.google.com/citations?user=N0tFi8MAAAAJ&amp;hl=en">Yang Hua</a></p>
+              <p class="pub__tldr">Video prompts predicted from neighbouring frames make one backbone robust for detection, segmentation and tracking.</p>
+              <div class="pub__links">
+                <a class="pill" href="/projects/stpn/">Project</a>
+                <a class="pill" href="https://openaccess.thecvf.com/content/ICCV2023/html/Sun_Spatio-temporal_Prompting_Network_for_Robust_Video_Feature_Extraction_ICCV_2023_paper.html">Paper</a>
+                <a class="pill" href="https://arxiv.org/abs/2402.02574">arXiv</a>
+                <a class="pill" href="https://github.com/guanxiongsun/vfe.pytorch">Code</a>
+                <a class="pill" href="https://github.com/guanxiongsun/STPN">Original code</a>
+                <details class="bib"><summary class="pill">BibTeX</summary><div class="code-wrap"><pre class="code"><code>@inproceedings{sun2023stpn,
+  title     = {Spatio-temporal Prompting Network for Robust Video Feature Extraction},
+  author    = {Sun, Guanxiong and Wang, Chi and Zhang, Zhaoyu and Deng, Jiankang
+               and Zafeiriou, Stefanos and Hua, Yang},
+  booktitle = {ICCV},
+  year      = {2023}
+}</code></pre><button class="btn-icon code-copy" type="button" aria-label="Copy BibTeX"><svg class="icon copy-btn__copy" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#copy"/></svg><svg class="icon copy-btn__done" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#check"/></svg></button></div></details>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <!-- ─── 2022 ─── -->
+      <div class="pub-year hang" data-year="2022">
+        <h3 class="pub-year__label hang__margin">2022</h3>
+        <div class="hang__main pub-year__items">
+
+          <article class="pub" id="pub-eovod" data-thread data-key="eovod" data-short="EOVOD" data-date="2022-10"
+            data-lane="perceive" data-tags="video" data-first-author data-venue="ECCV 2022"
+            data-note="A one-stage video detector exploiting temporal consistency; 5.5× faster than SELSA in the paper's demo."
+            data-href="#pub-eovod" data-thumb="/assets/img/eovod.webp">
+            <figure class="plate plate--thumb plate--video">
+              <div class="plate__mat">
+                <video muted loop playsinline controls preload="none" poster="/assets/img/eovod-poster.webp" width="480" height="213" data-autoplay aria-label="Demo: SELSA at about 6.4 frames per second beside EOVOD at about 35.5, detecting a turtle">
+                  <source src="/assets/video/eovod.webm" type="video/webm">
+                  <source src="/assets/video/eovod.mp4" type="video/mp4">
+                </video>
+                <button class="vid-toggle" type="button" data-vid-toggle aria-label="Play animation">
+                  <svg class="icon vid-toggle__play" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#play"/></svg>
+                  <svg class="icon vid-toggle__pause" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#pause"/></svg>
+                </button>
+              </div>
+            </figure>
+            <div class="pub__body">
+              <p class="pub__meta"><span class="venue">ECCV 2022</span></p>
+              <h4 class="pub__title"><a href="https://arxiv.org/abs/2402.09241">Efficient One-stage Video Object Detection by Exploiting Temporal Consistency</a></h4>
+              <p class="pub__authors"><b class="me">Guanxiong Sun</b>, <a href="https://scholar.google.com/citations?user=N0tFi8MAAAAJ&amp;hl=en">Yang Hua</a>, <a href="https://huguosheng.github.io/">Guosheng Hu</a>, <a href="https://www.linkedin.com/in/nmrobertson/?originalSubdomain=uk">Neil Robertson</a></p>
+              <p class="pub__tldr">A one-stage video detector exploiting temporal consistency; 5.5× faster than SELSA in the paper's demo.</p>
+              <div class="pub__links">
+                <a class="pill" href="https://arxiv.org/abs/2402.09241">arXiv</a>
+                <a class="pill" href="https://www.ecva.net/papers/eccv_2022/papers_ECCV/papers/136950001.pdf">PDF</a>
+                <a class="pill" href="https://github.com/guanxiongsun/EOVOD">Code</a>
+                <details class="bib"><summary class="pill">BibTeX</summary><div class="code-wrap"><pre class="code"><code>@inproceedings{sun2022eovod,
+  title     = {Efficient One-Stage Video Object Detection by Exploiting Temporal Consistency},
+  author    = {Sun, Guanxiong and Hua, Yang and Hu, Guosheng and Robertson, Neil},
+  booktitle = {Computer Vision -- ECCV 2022: 17th European Conference, Tel Aviv, Israel, October 23--27, 2022, Proceedings, Part XXXV},
+  series    = {Lecture Notes in Computer Science},
+  volume    = {13695},
+  pages     = {1--16},
+  publisher = {Springer},
+  year      = {2022},
+  doi       = {10.1007/978-3-031-19833-5_1}
+}</code></pre><button class="btn-icon code-copy" type="button" aria-label="Copy BibTeX"><svg class="icon copy-btn__copy" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#copy"/></svg><svg class="icon copy-btn__done" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#check"/></svg></button></div></details>
+              </div>
+            </div>
+          </article>
+
+          <article class="pub" id="pub-tdvit" data-thread data-key="tdvit" data-short="TDViT" data-date="2022-10"
+            data-lane="perceive" data-tags="video" data-first-author data-venue="ECCV 2022"
+            data-note="A temporal dilated video transformer with a hierarchical memory structure for dense video tasks."
+            data-href="#pub-tdvit" data-thumb="/assets/img/tdvit-640.webp">
+            <button class="plate plate--thumb plate__zoom" type="button" data-full="/assets/img/tdvit.webp" data-caption="TDViT architecture (paper figure)." aria-label="Enlarge figure: TDViT architecture">
+              <span class="plate__mat"><img src="/assets/img/tdvit-640.webp" srcset="/assets/img/tdvit-640.webp 640w, /assets/img/tdvit-1280.webp 1280w" sizes="(min-width: 1024px) 280px, (min-width: 600px) 220px, calc(100vw - 32px)" width="640" height="286" loading="lazy" decoding="async" alt="TDViT architecture: four hierarchical stages of temporal dilated transformer blocks with temporal dilation growing from 3 to 24 over a memory of past spatio-temporal features."></span>
+              <span class="plate__zoom-icon" aria-hidden="true"><svg class="icon" width="14" height="14" focusable="false"><use href="/assets/icons/sprite.svg#maximize-2"/></svg></span>
+            </button>
+            <div class="pub__body">
+              <p class="pub__meta"><span class="venue">ECCV 2022</span></p>
+              <h4 class="pub__title"><a href="https://arxiv.org/abs/2402.09257">TDViT: Temporal Dilated Video Transformer for Dense Video Tasks</a></h4>
+              <p class="pub__authors"><b class="me">Guanxiong Sun</b>, <a href="https://scholar.google.com/citations?user=N0tFi8MAAAAJ&amp;hl=en">Yang Hua</a>, <a href="https://huguosheng.github.io/">Guosheng Hu</a>, <a href="https://www.linkedin.com/in/nmrobertson/?originalSubdomain=uk">Neil Robertson</a></p>
+              <p class="pub__tldr">A temporal dilated video transformer with a hierarchical memory structure for dense video tasks.</p>
+              <div class="pub__links">
+                <a class="pill" href="https://arxiv.org/abs/2402.09257">arXiv</a>
+                <a class="pill" href="https://www.ecva.net/papers/eccv_2022/papers_ECCV/papers/136950281.pdf">PDF</a>
+                <a class="pill" href="https://github.com/guanxiongsun/TDViT">Repo (code pending)</a>
+                <details class="bib"><summary class="pill">BibTeX</summary><div class="code-wrap"><pre class="code"><code>@inproceedings{sun2022tdvit,
+  title     = {{TDViT}: Temporal Dilated Video Transformer for Dense Video Tasks},
+  author    = {Sun, Guanxiong and Hua, Yang and Hu, Guosheng and Robertson, Neil},
+  booktitle = {Computer Vision -- ECCV 2022: 17th European Conference, Tel Aviv, Israel, October 23--27, 2022, Proceedings, Part XXXV},
+  series    = {Lecture Notes in Computer Science},
+  volume    = {13695},
+  publisher = {Springer},
+  year      = {2022},
+  doi       = {10.1007/978-3-031-19833-5_17}
+}</code></pre><button class="btn-icon code-copy" type="button" aria-label="Copy BibTeX"><svg class="icon copy-btn__copy" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#copy"/></svg><svg class="icon copy-btn__done" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#check"/></svg></button></div></details>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <!-- ─── 2021 ─── -->
+      <div class="pub-year hang" data-year="2021">
+        <h3 class="pub-year__label hang__margin">2021</h3>
+        <div class="hang__main pub-year__items">
+
+          <article class="pub" id="pub-mamba" data-thread data-key="mamba" data-short="MAMBA" data-date="2021-02"
+            data-lane="perceive" data-tags="video" data-first-author data-flagship data-venue="AAAI 2021"
+            data-note="A memory bank with sampled key sets and feature-wise updates for fast, accurate video detection."
+            data-href="/projects/mamba/" data-thumb="/assets/img/mamba-640.webp">
+            <figure class="plate plate--thumb plate--video">
+              <div class="plate__mat">
+                <video muted loop playsinline controls preload="none" poster="/assets/img/mamba-still.webp" width="669" height="291" data-autoplay aria-label="Animation: MAMBA's memory bank as the video advances">
+                  <source src="/assets/video/mamba.webm" type="video/webm">
+                  <source src="/assets/video/mamba.mp4" type="video/mp4">
+                </video>
+                <button class="vid-toggle" type="button" data-vid-toggle aria-label="Play animation">
+                  <svg class="icon vid-toggle__play" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#play"/></svg>
+                  <svg class="icon vid-toggle__pause" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#pause"/></svg>
+                </button>
+              </div>
+            </figure>
+            <div class="pub__body">
+              <p class="pub__meta"><span class="venue">AAAI 2021</span> <span class="badge badge--progress">Project page</span></p>
+              <h4 class="pub__title"><a href="/projects/mamba/">MAMBA: Multi-level Aggregation via Memory Bank for Video Object Detection</a></h4>
+              <p class="pub__authors"><b class="me">Guanxiong Sun</b>, <a href="https://scholar.google.com/citations?user=N0tFi8MAAAAJ&amp;hl=en">Yang Hua</a>, <a href="https://huguosheng.github.io/">Guosheng Hu</a>, <a href="https://www.linkedin.com/in/nmrobertson/?originalSubdomain=uk">Neil Robertson</a></p>
+              <p class="pub__tldr">A memory bank with sampled key sets and feature-wise updates for fast, accurate video detection.</p>
+              <div class="pub__links">
+                <a class="pill" href="/projects/mamba/">Project</a>
+                <a class="pill" href="https://ojs.aaai.org/index.php/AAAI/article/view/16365">Paper</a>
+                <a class="pill" href="https://arxiv.org/abs/2401.09923">arXiv</a>
+                <a class="pill" href="https://github.com/guanxiongsun/vfe.pytorch">Code</a>
+                <a class="pill" href="https://huggingface.co/guanxiongsun/vfe.pytorch/tree/main/work_dirs/mamba_r101_dc5_6x">Model</a>
+                <details class="bib"><summary class="pill">BibTeX</summary><div class="code-wrap"><pre class="code"><code>@inproceedings{sun2021mamba,
+  title     = {MAMBA: Multi-level Aggregation via Memory Bank for Video Object Detection},
+  author    = {Sun, Guanxiong and Hua, Yang and Hu, Guosheng and Robertson, Neil},
+  booktitle = {AAAI},
+  year      = {2021}
+}</code></pre><button class="btn-icon code-copy" type="button" aria-label="Copy BibTeX"><svg class="icon copy-btn__copy" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#copy"/></svg><svg class="icon copy-btn__done" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#check"/></svg></button></div></details>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ===== 07 SERVICE & BACKGROUND ===== -->
+<section class="section" id="about" aria-labelledby="about-title">
+  <div class="wrap">
+    <header class="section-head reveal">
+      <p class="kicker section-head__kicker">07 — Service &amp; background</p>
+      <h2 class="section-head__title" id="about-title">Service and background</h2>
+    </header>
+    <div class="hang">
+      <div class="hang__main">
+        <div class="about-grid">
+          <div class="about-block">
+            <h3 class="about-block__title">Reviewing</h3>
+            <ul class="tags tags--venues"><li class="tag">CVPR</li><li class="tag">ICCV</li><li class="tag">ECCV</li><li class="tag">NeurIPS</li><li class="tag">ICLR</li><li class="tag">ICML</li><li class="tag">AAAI</li><li class="tag">WACV</li></ul>
+          </div>
+          <div class="about-block">
+            <h3 class="about-block__title">Education</h3>
+            <ul class="about-list">
+              <li><b>Ph.D., Queen's University Belfast.</b> Video object detection, segmentation and tracking, advised by Dr. Yang Hua, Prof. Hui Wang and Prof. Neil Robertson.</li>
+              <li><b>M.S. (2018) and B.S. (2016), <a href="https://www.hit.edu.cn/">Harbin Institute of Technology</a>.</b> Medical image processing<span data-todo="confirm HIT supervisor line"> with <a href="https://scholar.google.com/citations?user=FMb0GfYAAAAJ&amp;hl=zh-CN">Prof. Kuanquan Wang</a></span>.</li>
+            </ul>
+          </div>
+          <div class="about-block">
+            <h3 class="about-block__title">Positions</h3>
+            <ul class="about-list">
+              <li><b>Lecturer</b>, Queen's University Belfast<span data-todo="Lecturer start year">, since YYYY</span>.</li>
+              <li data-todo="earlier positions: confirm roles and dates (University of Bristol; Huawei UK R&amp;D appear as affiliations on papers)">Earlier positions.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="hosts">
+          <h3 class="about-block__title">For hosts</h3>
+          <blockquote class="hosts__bio" id="bio-3p"><p>Guanxiong Sun is a Lecturer at Queen's University Belfast working on computer vision and machine learning, with a focus on memory for perception and action. He received his PhD from Queen's University Belfast (advised by Dr Yang Hua, Prof. Hui Wang and Prof. Neil Robertson) and his B.S. and M.S. from Harbin Institute of Technology. His work appears at CVPR, ICCV, ECCV, ICML and AAAI.</p></blockquote>
+          <div class="hosts__actions">
+            <button class="btn btn--ghost btn--sm copy-btn" type="button" data-copy="#bio-3p" data-copy-msg="Bio copied">
+              <svg class="icon copy-btn__copy" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#copy"/></svg>
+              <svg class="icon copy-btn__done" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#check"/></svg>
+              Copy bio
+            </button>
+            <a class="btn btn--ghost btn--sm" href="/assets/img/profile25.webp" download="guanxiong-sun-headshot.webp">
+              <svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#download"/></svg>
+              Download headshot
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ===== FOOTER (shared) ===== -->
+<footer class="site-footer">
+  <div class="wrap site-footer__grid">
+    <div class="site-footer__id">
+      <svg class="logomark" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false">
+        <rect class="logomark__cell" x="1.625" y="1.625" width="4.75" height="4.75" rx="1"/>
+        <rect class="logomark__cell logomark__cell--on" x="9" y="1" width="6" height="6" rx="1"/>
+        <rect class="logomark__cell" x="1.625" y="9.625" width="4.75" height="4.75" rx="1"/>
+        <rect class="logomark__cell" x="9.625" y="9.625" width="4.75" height="4.75" rx="1"/>
+      </svg>
+      <p>Guanxiong Sun · Queen's University Belfast</p>
+    </div>
+    <ul class="site-footer__links" aria-label="Profiles">
+      <li><a href="mailto:sungx.cs@gmail.com" aria-label="Email"><svg class="icon" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#mail"/></svg></a></li>
+      <li><a href="https://scholar.google.com/citations?user=vLk3IzoAAAAJ" aria-label="Google Scholar"><svg class="icon" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#scholar"/></svg></a></li>
+      <li><a href="https://github.com/guanxiongsun" aria-label="GitHub"><svg class="icon" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#github"/></svg></a></li>
+      <li><a href="https://huggingface.co/guanxiongsun" aria-label="Hugging Face"><svg class="icon" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#huggingface"/></svg></a></li>
+      <li><a href="https://www.linkedin.com/in/guanxiongsun/" aria-label="LinkedIn"><svg class="icon" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#linkedin"/></svg></a></li>
+    </ul>
+    <div class="site-footer__meta">
+      <p>Updated <time datetime="2026-09">September 2026</time> · <a class="link-quiet" href="#top">Back to top<svg class="icon" width="14" height="14" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-up"/></svg></a></p>
+      <p class="site-footer__colophon">Set in Newsreader, Inter and JetBrains Mono. Hand-built HTML, no frameworks. Earlier versions adapted Jon Barron's template.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- Hitsteps TRACKING CODE - Manual 2022-07-27 - DO NOT CHANGE -->
+<script type="text/javascript">(function(){var hstc=document.createElement('script'); hstc.src='https://cdnhst.xyz/code?code=cfb4eb29123fa0d2696e10bb513199c7';hstc.async=true;var htssc = document.getElementsByTagName('script')[0];htssc.parentNode.insertBefore(hstc, htssc);})();
+</script><noscript><a href="http://www.hitsteps.com/"><img src="//cdnhst.xyz/code?mode=img&amp;code=cfb4eb29123fa0d2696e10bb513199c7" alt="web stats" width="1" height="1" />visitor activity monitor</a></noscript>
+<!-- Hitsteps TRACKING CODE - DO NOT CHANGE -->
 </body>
-
 </html>

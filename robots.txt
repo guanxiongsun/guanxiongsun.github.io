@@ -1,0 +1,5 @@
+# Everything on this site is public; the project template is marked noindex in its own <head>.
+User-agent: *
+Allow: /
+
+Sitemap: https://guanxiongsun.github.io/sitemap.xml
