@@ -850,6 +850,8 @@ html:not(.js) .chips, html:not(.js) .pub-controls__row { display: none; }
 .about-grid { display: grid; gap: 36px 40px; }
 @media (min-width: 840px) { .about-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 .about-block__title { margin-bottom: 12px; font-size: var(--fs-title); font-weight: 600; }
+.about-award { margin-top: var(--s-3); font: 400 var(--fs-ui)/1.5 var(--font-sans); color: var(--ink-2); }
+.about-award b { color: var(--ink); font-weight: 600; }
 .about-list { list-style: none; display: grid; gap: 12px; font: 400 var(--fs-cap)/1.55 var(--font-sans); color: var(--ink-2); }
 .about-list b { color: var(--ink); font-weight: 600; }
 .hosts { margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--rule); }
