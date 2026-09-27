@@ -1,0 +1,212 @@
+:root {
+  --todo: #66FFCC;
+}
+
+a {
+  color: #1772d0;
+  text-decoration: none;
+}
+
+a:focus,
+a:hover {
+  color: #f09228;
+  text-decoration: none;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
+  font-style: normal;
+  font-variant: normal;
+}
+
+h1 {
+  font-size: 32px;
+  line-height: 35.20000076293945px;
+}
+
+h2 {
+  font-size: 28px;
+  line-height: 30.799999237060547px;
+}
+
+h3 {
+  font-size: 24px;
+  line-height: 26.399999618530273px;
+}
+
+h4 {
+  font-size: 22px;
+  line-height: 24.200000762939453px;
+}
+
+body, td, th, tr, p, a, papertitle {
+  font-family: Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
+  font-size: 16px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 400;
+  line-height: 22.85714340209961px;
+  text-align: justify;
+}
+
+pre code {
+  font-size: 16px;
+}
+
+body, td, th, tr, p {
+  color: #222222;
+}
+
+heading {
+  font-family: Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
+  font-size: 24px;
+}
+
+papertitle {
+  font-weight: 700;
+}
+
+name {
+  font-family: Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
+  font-size: 32px;
+  line-height: 35.20000076293945px;
+}
+
+date {
+  font-family: Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
+  font-size: 22px;
+  line-height: 24.200000762939453px;
+  color: #999999;
+}
+
+.one {
+  width: 160px;
+  height: 160px;
+  position: relative;
+}
+
+.two {
+  width: 160px;
+  height: 160px;
+  position: absolute;
+  transition: opacity .2s ease-in-out;
+  -moz-transition: opacity .2s ease-in-out;
+  -webkit-transition: opacity .2s ease-in-out;
+}
+
+.two-img {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+}
+
+.fade {
+  transition: opacity .2s ease-in-out;
+  -moz-transition: opacity .2s ease-in-out;
+  -webkit-transition: opacity .2s ease-in-out;
+}
+
+span.highlight {
+  background-color: #ffffd0;
+}
+
+table.homepage {
+  width: 100%;
+  border: 0px;
+  border-spacing: 0px;
+  border-collapse: separate;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+td.entry-img {
+  padding: 20px;
+  width: 25%;
+  vertical-align: top;
+  text-align: center;
+}
+
+td.entry-content {
+  padding: 20px;
+  width: 75%;
+  vertical-align: top;
+}
+
+.navbar {
+  border-top: 0.5px solid #222222;
+  border-bottom: 0.5px solid #222222;
+  text-align: center;
+}
+
+.navbar-list {
+  list-style-type: none;
+  margin: 0;
+  padding-top: 16px;
+  padding-bottom: 14px;
+}
+
+.navbar-item {
+  display: inline;
+  padding-left: 5%;
+  padding-right: 5%;
+  letter-spacing: 2px;
+  color: #222222;
+}
+
+a.nav {
+  color: #222222;
+}
+
+a.nav:hover {
+  color: #f09228;
+}
+
+pre {
+white-space: pre-wrap;       /* Since CSS 2.1 */
+white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+white-space: -pre-wrap;      /* Opera 4-6 */
+white-space: -o-pre-wrap;    /* Opera 7 */
+word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
+
+table.result {
+  border: 1px solid #EAE8E1;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.result > th, .result > td {
+  border: 1px solid #EAE8E1;
+  border-collapse: collapse;
+  padding: 4pt 12pt 4pt 12pt;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22.85714340209961px;
+}
+
+.result > th {
+  background-color: #F7F6F3;
+}
+
+.leftcol {
+  float: left;
+  width: 30%;
+}
+
+.rightcol {
+  float: left;
+  width: 70%;
+}
+
+ul.toc {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+a.current {
+  background-color: #F9E79F;
+  color: black;
+}
