@@ -848,7 +848,7 @@ html:not(.js) .chips, html:not(.js) .pub-controls__row { display: none; }
 #about { content-visibility: auto; contain-intrinsic-size: auto 1000px; }
 
 .about-grid { display: grid; gap: 36px 40px; }
-@media (min-width: 840px) { .about-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 840px) { .about-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .about-block__title { margin-bottom: 12px; font-size: var(--fs-title); font-weight: 600; }
 .about-award { margin-top: var(--s-3); font: 400 var(--fs-ui)/1.5 var(--font-sans); color: var(--ink-2); }
 .about-award b { color: var(--ink); font-weight: 600; }
@@ -1064,4 +1064,92 @@ html.dev [data-todo]::after {
   .tl-rail__lane.is-future::before { background: repeating-linear-gradient(to bottom, CanvasText 0 5px, transparent 5px 10px); }
   .tl-rail__item:is(.tl-rail__item--future, .tl-rail__item--open)::before { background: Canvas; border-color: CanvasText; color: CanvasText; box-shadow: none; }
   .tl-rail__item--open::after { background: Canvas; }
+}
+
+/* ---------------------------------------------------------------------------------------------
+   Experience line (§07). /assets/js/career.js sets --x / --y (start / end, % of the axis) on each
+   .career__item and wraps badge + text in .career__label; before that (or with JS off) the list
+   reads as a plain list. Same visual language as the throughline: hairline track, ink dots,
+   accent for the present, dotted year columns. Below ~1160px the figure scrolls sideways.
+   --------------------------------------------------------------------------------------------- */
+.career-block { margin-bottom: 40px; }
+@media (min-width: 1024px) { .career-block > .about-block__title { margin-left: calc((100% + var(--col-gap)) / 12 * 3); } }
+.career__list { list-style: none; display: grid; gap: 14px; }
+.career__item { display: flex; align-items: flex-start; gap: 12px; }
+.career__badge {
+  flex: none; display: inline-grid; place-items: center; width: 30px; height: 30px; border-radius: 50%;
+  border: 1px solid var(--rule-strong); background: var(--surface); color: var(--ink);
+}
+.career__badge--mono { font: 600 9px/1 var(--font-mono); letter-spacing: .02em; color: var(--ink-2); }
+.career__badge img { width: 18px; height: 18px; object-fit: contain; }
+.career__text { display: grid; font: 400 var(--fs-sm)/1.35 var(--font-sans); color: var(--ink-2); }
+.career__org { font: 600 var(--fs-ui)/1.3 var(--font-sans); color: var(--ink); }
+.career__sub { color: var(--ink-3); }
+.career__years { font: 500 var(--fs-xs)/1.5 var(--font-mono); letter-spacing: var(--track-kicker); color: var(--ink-3); }
+
+.career[data-ready] {
+  --track: 108px;                         /* y of the main track inside the canvas */
+  --lift: 20px;                           /* how far an overlapping role rises above it */
+  overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: thin;
+}
+.career[data-ready] .career__list {
+  position: relative; display: block; min-width: 1100px; height: 262px; margin: 0 2px;
+}
+/* The main track, full width, and the dotted year columns behind it. */
+.career[data-ready] .career__list::before {
+  content: ""; position: absolute; left: 0; right: 0; top: var(--track); height: 1px; background: var(--rule-strong);
+}
+.career__axis { position: absolute; inset: 0; list-style: none; pointer-events: none; }
+.career__axis li {
+  position: absolute; left: calc(var(--x) * 1%); top: 0; bottom: 0; width: 10%;
+  border-left: 1px dashed var(--rule); padding-left: 0; display: flex; align-items: flex-end; justify-content: center;
+  font: 500 11px/1 var(--font-mono); letter-spacing: .08em; color: var(--ink-3);
+}
+.career__axis li:first-child { border-left-color: transparent; }
+
+/* Each item is its own segment on the track: from --x to --y. */
+.career[data-ready] .career__item {
+  position: absolute; display: block; z-index: 1;
+  left: calc(var(--x) * 1%); width: calc((var(--y) - var(--x)) * 1%);
+  top: calc(var(--track) - 2px); height: 5px; border-radius: 3px; background: var(--ink-3);
+}
+.career[data-ready] .career__item::before {        /* start dot */
+  content: ""; position: absolute; left: -6px; top: -3.5px; width: 12px; height: 12px; border-radius: 50%;
+  background: var(--ink); box-shadow: 0 0 0 3px var(--paper);
+}
+.career[data-ready] .career__item::after {         /* leader from the track to the label */
+  content: ""; position: absolute; left: 50%; width: 1px; background: var(--rule-strong);
+}
+.career[data-ready] .career__item[data-side="below"]::after { top: 9px; height: 16px; }
+.career[data-ready] .career__item[data-side="above"]::after { bottom: 9px; height: 16px; }
+.career[data-ready] .career__item--point { width: 0; }
+/* The present: an accent segment that fades out towards the right edge (ongoing). */
+.career[data-ready] .career__item[data-current] { background: linear-gradient(90deg, var(--accent) 70%, color-mix(in srgb, var(--accent) 0%, transparent)); }
+.career[data-ready] .career__item[data-current]::before { background: var(--accent); }
+/* A role that overlaps another rises off the track as a dashed bracket, so both stay legible. */
+.career[data-ready] .career__item[data-overlap] {
+  top: calc(var(--track) - var(--lift)); height: var(--lift); background: none; border-radius: 6px 6px 0 0;
+  border: 1.5px dashed var(--ink-3); border-bottom: 0;
+}
+.career[data-ready] .career__item[data-overlap]::before { top: -6.5px; left: calc(50% - 6px); }
+
+/* Labels: centred on the segment, above or below the track; edge items anchor to the edge. */
+.career[data-ready] .career__label {
+  position: absolute; left: 50%; transform: translateX(-50%);
+  display: flex; align-items: flex-start; gap: 10px; width: max-content; max-width: 230px;
+}
+.career[data-ready] .career__item[data-side="below"] .career__label { top: 28px; }
+.career[data-ready] .career__item[data-side="above"] .career__label { bottom: 28px; }
+.career[data-ready] .career__item--start .career__label { left: -15px; transform: none; }
+.career[data-ready] .career__item--start::after { left: 0; }
+.career[data-ready] .career__item--end .career__label { left: auto; right: 0; transform: none; }
+.career[data-ready] .career__item[data-current] .career__badge { border-color: var(--accent); color: var(--accent); }
+
+.career[data-ready]:focus-visible { outline-offset: 4px; }
+.career__hint { display: none; margin-top: 8px; font: 500 var(--fs-xs)/1.4 var(--font-mono); letter-spacing: var(--track-kicker); text-transform: uppercase; color: var(--ink-3); }
+@media (max-width: 1159px) { .career__hint { display: block; } }
+
+@media (forced-colors: active) {
+  .career[data-ready] .career__item, .career[data-ready] .career__item::before { forced-color-adjust: none; background: CanvasText; }
+  .career[data-ready] .career__item[data-overlap] { background: none; border-color: CanvasText; }
 }
