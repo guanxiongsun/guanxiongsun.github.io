@@ -1,0 +1,592 @@
+/* =====================================================================
+   article.css: project pages only. Load after tokens.css and site.css.
+   Reuses site.css components (plates, badges, callouts, .tldr, .stats,
+   .code-wrap, .seg, .switch, .btn, .yt); this file adds only what the
+   long-form explainers need. Colours come from tokens.css.
+
+   Contents
+     1. Article grid (text / wide / full) and vertical rhythm
+     2. Article head, hero plate
+     3. TOC (sticky left rail at ≥1200, <details> below) and sidenotes
+     4. Tables (data + reproducibility)
+     5. Charts drawn by charts.js from <table data-chart>
+     6. Hotspot figure            7. Frame stepper
+     8. Explorable container, controls, range input, tabs, speech bubble
+     9. Explorable SVG vocabulary (.ex-*) for the demo modules
+    10. Where it led (mini throughline), open question, cite, prev/next
+    11. Template markers (.todo), motion, forced colours, print
+   ===================================================================== */
+
+/* ---------- 1. Article grid ----------
+   Named lines: full-start | wide-start | text-start … text-end | wide-end | full-end.
+   Children default to the text column; add .wide or .full to break out.
+   Below 1200 the columns have no gaps and the text column is min(42rem, viewport − gutters),
+   so on phones text and wide coincide. At ≥1200 the margins are 10rem each (TOC on the left,
+   sidenotes on the right) and wide = 66rem. */
+.article { position: relative; padding-bottom: var(--section-y); }
+.article,
+.article__section {
+  display: grid;
+  align-content: start;
+  row-gap: var(--flow, 1.1em);
+  grid-template-columns:
+    [full-start] minmax(var(--gutter), 1fr)
+    [wide-start] minmax(0, 12rem)
+    [text-start] min(var(--measure), 100% - 2 * var(--gutter))
+    [text-end] minmax(0, 12rem)
+    [wide-end] minmax(var(--gutter), 1fr)
+    [full-end];
+}
+@media (min-width: 1200px) {
+  .article,
+  .article__section {
+    column-gap: 32px;
+    grid-template-columns:
+      [full-start] minmax(0, 1fr)
+      [wide-start] 10rem
+      [text-start] var(--measure)
+      [text-end] 10rem
+      [wide-end] minmax(0, 1fr)
+      [full-end];
+  }
+}
+:is(.article, .article__section) > * { grid-column: text; min-width: 0; margin: 0; }
+:is(.article, .article__section) > .wide { grid-column: wide; }
+:is(.article, .article__section) > .full { grid-column: full; }
+.article > .article__section { grid-column: full; padding-top: clamp(48px, 2.5rem + 3vw, 96px); }
+
+/* Rhythm: the row gap spaces prose; blocks add their own margin on both sides, so a sidenote
+   that shares a paragraph's row (≥1200) always lines up with it. */
+:is(.article, .article__section) > :is(figure, .explorable, .callout, .tldr, .stats, .code-wrap, .table-wrap,
+  .hotspots, .stepper, .thread, .cite, .speech, .pagenav) { margin-block: var(--s-5); }
+:is(.article, .article__section) > :is(ul, ol):not([class]) { padding-left: 1.3em; }
+:is(.article, .article__section) > :is(ul, ol):not([class]) > li + li { margin-top: .4em; }
+:is(.article, .article__section) > .explorable { margin-bottom: 0; }
+:is(.article, .article__section) > .explorable + .callout { margin-top: 0; }
+:is(.article, .article__section) > .stats { margin-bottom: 0; }
+:is(.article, .article__section) > .stats__src { margin-top: -6px; }
+
+.article__section > h2 {
+  padding-top: var(--s-4); border-top: 1px solid var(--rule);
+  font-size: var(--fs-h3); line-height: 1.15; letter-spacing: -.01em; font-weight: 500;
+}
+.article__section > h2 + * { margin-top: 4px; }
+.article__section > h3 { margin-top: var(--s-4); font: 600 var(--fs-title)/1.3 var(--font-serif); }
+.article__section > .kicker + h2 { margin-top: -8px; }
+.article :is(h2, h3)[id], .article__section[id], .explorable[id] { scroll-margin-top: calc(var(--header-h) + 24px); }
+
+/* Figure number + badge row above any figure (plate__head comes from site.css). */
+.article .plate__cap { max-width: 68ch; }
+
+/* ---------- 2. Article head, hero plate ---------- */
+.article-head { padding-top: clamp(28px, 4vw, 64px); }
+.article-head__back { min-height: 32px; }
+.article-head__back .icon { transition: transform var(--dur-2) var(--ease-out); }
+.article-head__back:hover .icon { transform: translateX(-3px); }
+.article-head__kicker { margin-top: var(--s-5); }
+.article-head__title {
+  margin-top: 12px; font-size: var(--fs-h1); font-weight: 400; line-height: 1.04;
+  letter-spacing: -.022em; font-variant-numeric: lining-nums;
+}
+.article-head__subtitle { margin-top: 14px; font-size: var(--fs-lede); font-style: italic; line-height: 1.4; color: var(--ink-2); }
+.article-head__authors { margin-top: var(--s-5); font: 400 15px/1.6 var(--font-sans); color: var(--ink-2); }
+.article-head__authors a { color: inherit; text-decoration-color: var(--rule-strong); text-underline-offset: .2em; }
+.article-head__authors a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+.article-head__authors sup, .article-head__affil sup { font-size: .7em; line-height: 0; margin-left: 1px; font-variant-numeric: lining-nums; }
+.article-head__affil { margin-top: 4px; font: 400 13px/1.5 var(--font-sans); color: var(--ink-3); }
+.article-head__links { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin-top: var(--s-5); }
+.article-head__links .btn .icon { width: 15px; height: 15px; }
+
+.article-hero { --mat-pad: 16px; }
+@media (min-width: 840px) { .article-hero { --mat-pad: 24px; } }
+:is(.article, .article__section) > .article-hero { margin-top: var(--s-6); }
+
+/* ---------- 3. TOC and sidenotes ----------
+   Markup: <nav class="toc" aria-label="Contents" data-toc><details class="toc__box">
+   <summary class="toc__summary">Contents</summary><ol class="toc__list"></ol></details></nav>
+   Below 1200 (and without JS) it is a collapsible box in the text column. At ≥1200 with JS it
+   leaves the flow and becomes a rail in the left margin (wide-start/text-start) that starts
+   where it stood (--toc-top, set by article.js), with the list sticky under the header. It
+   fades out while a wide figure passes underneath it (.is-covered). */
+.toc { font: 400 13px/1.4 var(--font-sans); }
+.toc__box { border: 1px solid var(--rule); border-radius: var(--r-sm); }
+.toc__summary {
+  display: flex; align-items: center; justify-content: space-between; min-height: 44px; padding: 0 14px;
+  cursor: pointer; list-style: none;
+  font: 500 var(--fs-xs)/1 var(--font-mono); letter-spacing: var(--track-kicker); text-transform: uppercase; color: var(--ink-2);
+}
+.toc__summary::-webkit-details-marker { display: none; }
+.toc__summary::after {
+  content: ""; width: 7px; height: 7px; margin-top: -4px; border: solid currentColor; border-width: 0 1.25px 1.25px 0;
+  transform: rotate(45deg); transition: transform var(--dur-2);
+}
+.toc__box[open] > .toc__summary::after { transform: rotate(-135deg); margin-top: 3px; }
+.toc__summary:hover { color: var(--ink); }
+.toc__list { list-style: none; padding: 0 14px 10px; }
+.toc__list a {
+  display: block; padding: 7px 0 7px 12px; border-left: 2px solid transparent; margin-left: -1px;
+  color: var(--ink-3); text-decoration: none; transition: color var(--dur-1), border-color var(--dur-1);
+}
+.toc__list a:hover { color: var(--ink); }
+.toc__list a[aria-current] { color: var(--ink); border-left-color: var(--accent); }
+.toc__list { border-left: 0; }
+@media (min-width: 1200px) {
+  /* The rail spans the article's height: only the list itself takes the pointer. */
+  html.js .article > .toc { position: absolute; grid-column: wide-start / text-start; top: var(--toc-top, 0px); bottom: 0; margin: 0; pointer-events: none; }
+  html.js .toc__box { pointer-events: auto; }
+  html.js .toc__box {
+    position: sticky; top: calc(var(--header-h) + 32px); border: 0; border-radius: 0;
+    transition: opacity var(--dur-2) var(--ease-out);
+  }
+  html.js .toc__summary { min-height: 0; padding: 0 0 12px; cursor: default; pointer-events: none; color: var(--ink-3); }
+  html.js .toc__summary::after { content: none; }
+  html.js .toc__list { padding: 0; border-left: 1px solid var(--rule); }
+  html.js .toc__list a { padding: 5px 0 5px 12px; }
+  /* Fade only (no visibility:hidden), so the links stay in the tab order; focus brings it back. */
+  html.js .toc.is-covered .toc__box { opacity: 0; pointer-events: none; }
+  html.js .toc.is-covered:focus-within .toc__box { opacity: 1; pointer-events: auto; }
+}
+
+/* Sidenote: <aside class="sidenote"><sup>1</sup> …</aside>, placed right after its paragraph
+   (which carries <sup class="sn-ref">1</sup>). Inline and indented below 1200; in the right
+   margin at ≥1200, sharing the paragraph's grid row. */
+.sidenote {
+  padding-left: 14px; margin-left: 4px; border-left: 2px solid var(--rule-strong);
+  font: 400 13px/1.5 var(--font-sans); color: var(--ink-3);
+}
+.sidenote sup, .sn-ref { font: 600 .72em/0 var(--font-sans); color: var(--accent); font-variant-numeric: lining-nums; }
+.sn-ref { margin-left: 1px; }
+.sidenote a { color: var(--ink-2); }
+@media (min-width: 1200px) {
+  :is(.article, .article__section) > .sidenote {
+    grid-column: text-end / wide-end; align-self: start; padding: 6px 0 0; margin: 0; border-left: 0;
+  }
+}
+
+/* ---------- 4. Tables ----------
+   Data tables (reproducibility, results): <div class="table-wrap" role="region" tabindex="0"
+   aria-label="…"><table class="data-table">. Chart tables share the same look. */
+.table-wrap { overflow-x: auto; }
+:is(.data-table, .chart table) {
+  width: 100%; border-collapse: collapse;
+  font: 400 14px/1.4 var(--font-sans); font-variant-numeric: lining-nums tabular-nums; color: var(--ink-2);
+}
+:is(.data-table, .chart table) caption {
+  caption-side: top; padding-bottom: 10px; text-align: left;
+  font: 600 var(--fs-ui)/1.4 var(--font-sans); color: var(--ink);
+}
+:is(.data-table, .chart table) :is(th, td) { padding: 8px 12px; border-bottom: 1px solid var(--rule); text-align: right; white-space: nowrap; }
+:is(.data-table, .chart table) :is(th, td):first-child { padding-left: 0; text-align: left; white-space: normal; }
+:is(.data-table, .chart table) :is(th, td):last-child { padding-right: 0; }
+:is(.data-table, .chart table) thead th {
+  border-bottom-color: var(--rule-strong); vertical-align: bottom;
+  font: 500 var(--fs-xs)/1.3 var(--font-mono); letter-spacing: var(--track-kicker); text-transform: uppercase; color: var(--ink-3);
+}
+:is(.data-table, .chart table) tbody th { font-weight: 400; }
+:is(.data-table, .chart table) :is(.is-best, b, strong), :is(.data-table, .chart table) tr[data-highlight] th { font-weight: 600; color: var(--ink); }
+.data-table__note { margin-top: 10px; font: 400 13px/1.5 var(--font-sans); color: var(--ink-3); }
+
+/* ---------- 5. Charts (charts.js) ----------
+   <figure class="chart">[plate__head] <table data-chart=…><caption>…</caption>…</table>
+   <p class="chart__src">Source: …</p></figure>. charts.js adds .chart__title, the SVG (or
+   .chart__panels), an optional .chart__legend, and moves the table into details.chart__table. */
+.chart__title { font: 600 var(--fs-ui)/1.4 var(--font-sans); color: var(--ink); }
+.chart__lb { margin-left: 8px; white-space: nowrap; font: 500 var(--fs-xs)/1 var(--font-mono); letter-spacing: .04em; color: var(--ink-3); }
+.chart__legend { list-style: none; display: flex; flex-wrap: wrap; gap: 4px 18px; margin-top: 8px; font: 400 13px/1.4 var(--font-sans); color: var(--ink-2); }
+.chart__legend li { display: inline-flex; align-items: center; gap: 7px; }
+.chart__sw { width: 10px; height: 10px; flex: none; border-radius: 50%; background: var(--data-context); }
+.chart__sw--focus { background: var(--data-focus); }
+.chart__sw--memory { background: var(--data-memory); border-radius: 1px; }
+.chart__sw--hollow { background: var(--paper); border: 1.75px solid var(--data-context); }
+.chart__sw--bar { width: 14px; height: 8px; border-radius: 1px; }
+.chart__svg { display: block; width: 100%; height: auto; margin-top: 10px; overflow: visible; }
+.chart__svg text { font: 400 13px var(--font-sans); fill: var(--ink-2); font-variant-numeric: lining-nums tabular-nums; }
+.chart__svg .ch-lab--focus { font-weight: 600; fill: var(--ink); }
+.chart__svg .ch-tick { font: 500 11px var(--font-mono); fill: var(--ink-3); }
+.chart__svg .ch-val { font-size: 12px; paint-order: stroke; stroke: var(--chart-bg, var(--paper)); stroke-width: 4px; stroke-linejoin: round; }
+.chart__svg .ch-val--focus { font-weight: 600; fill: var(--ink); }
+.chart__svg .ch-dl { font-size: 11.5px; fill: var(--ink-2); }
+.ch-grid { stroke: var(--rule); stroke-width: 1; shape-rendering: crispEdges; }
+.ch-axis { stroke: var(--rule-strong); stroke-width: 1; shape-rendering: crispEdges; }
+.ch-guide { stroke: var(--rule); stroke-width: 1; stroke-dasharray: 1 3; }
+.ch-focus { fill: var(--data-focus); }
+.ch-memory { fill: var(--data-memory); }
+.ch-context { fill: var(--data-context); }
+.ch-hollow { fill: var(--paper); stroke: var(--data-context); stroke-width: 1.75; }
+.ch-hit { fill: transparent; }
+.ch-row:hover .ch-hit { fill: color-mix(in srgb, var(--ink) 4%, transparent); }
+.chart__panels { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 24px 40px; margin-top: 12px; }
+@media (min-width: 600px) { .chart__panels:is([data-n="2"], [data-n="4"], [data-n="6"]) { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.chart__panels .chart__svg { margin-top: 4px; }
+.chart__ptitle { font: 500 var(--fs-xs)/1.3 var(--font-mono); letter-spacing: var(--track-kicker); text-transform: uppercase; color: var(--ink-3); }
+.chart__table { margin-top: 12px; }
+.chart__table > summary {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 32px; cursor: pointer; list-style: none;
+  font: 500 var(--fs-sm)/1 var(--font-sans); color: var(--ink-2);
+}
+.chart__table > summary::-webkit-details-marker { display: none; }
+.chart__table > summary::before { content: "+"; font: 500 15px/1 var(--font-mono); color: var(--accent); }
+.chart__table[open] > summary::before { content: "−"; }
+.chart__table > summary:hover { color: var(--accent); }
+.chart__scroll { overflow-x: auto; margin-top: 8px; }
+.chart table { margin-top: 4px; }
+.chart.is-ready table caption { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.chart__src, .figure__src { margin-top: 12px; font: 400 13px/1.45 var(--font-sans); color: var(--ink-3); }
+.chart__note { margin-top: 6px; font: 400 13px/1.45 var(--font-sans); color: var(--ink-2); }
+
+/* ---------- 6. Hotspot figure (spec §7.19) ----------
+   <figure class="hotspots wide" data-hotspots>
+     <div class="hotspots__figure plate">[plate__head]<div class="plate__mat"><div class="hotspots__frame">
+       <img …><button class="hotspot" type="button" style="--x:37%;--y:60%" aria-describedby="hs-x-1">1</button>…
+     </div></div></div>
+     <ol class="hotspots__list"><li id="hs-x-1"><b>Label.</b> Explanation.</li>…</ol>
+     <figcaption class="plate__cap">…</figcaption>
+   </figure>
+   The list is always visible (beside the figure at ≥1024, below it otherwise); nothing covers the figure. */
+.hotspots { display: grid; gap: 16px 32px; align-items: start; }
+.hotspots__figure { min-width: 0; }
+.hotspots__frame { position: relative; }
+.hotspot {
+  position: absolute; left: var(--x, 50%); top: var(--y, 50%); z-index: 1; translate: -50% -50%;
+  display: grid; place-items: center; width: 28px; height: 28px; padding: 0; border: 0; border-radius: 50%;
+  background: var(--accent); color: var(--on-accent); font: 600 13px/1 var(--font-sans); font-variant-numeric: lining-nums;
+  box-shadow: 0 0 0 2px var(--mat), 0 1px 4px rgb(0 0 0 / .25);
+  transition: scale var(--dur-2) var(--ease-out), box-shadow var(--dur-2), background-color var(--dur-1);
+}
+.hotspot::before { content: ""; position: absolute; inset: -8px; border-radius: 50%; }
+.hotspot:hover, .hotspot.is-active { scale: 1.14; background: var(--accent-strong); }
+.hotspot.is-active { box-shadow: 0 0 0 2px var(--mat), 0 0 0 4px var(--ink); }
+.hotspot:focus-visible { outline-offset: 4px; border-radius: 50%; }
+.hotspots__list {
+  list-style: none; display: grid; gap: 2px; counter-reset: hs;
+  font: 400 var(--fs-cap)/1.5 var(--font-sans); color: var(--ink-2);
+}
+.hotspots__list > li {
+  counter-increment: hs; position: relative; padding: 8px 10px 8px 44px; border-radius: var(--r-sm);
+  transition: background-color var(--dur-1);
+}
+.hotspots__list > li::before {
+  content: counter(hs); position: absolute; left: 10px; top: 8px;
+  display: grid; place-items: center; width: 24px; height: 24px; border: 1.5px solid var(--accent); border-radius: 50%;
+  font: 600 12px/1 var(--font-sans); font-variant-numeric: lining-nums; color: var(--accent);
+  transition: background-color var(--dur-1), color var(--dur-1);
+}
+.hotspots__list > li.is-active { background: var(--accent-wash); color: var(--ink); }
+.hotspots__list > li.is-active::before { background: var(--accent); color: var(--on-accent); }
+.hotspots__list b { color: var(--ink); font-weight: 600; }
+.hotspots > .plate__cap { grid-column: 1 / -1; margin-top: 0; }
+@media (max-width: 599.98px) { .hotspot { width: 24px; height: 24px; font-size: 12px; } .hotspot::before { inset: -10px; } }
+/* ≥1024: list beside the figure. The caption stays in the figure's column, directly under the picture;
+   the list spans every row and a final 1fr row absorbs its extra height, so a long list no longer pushes
+   the caption away from its figure. */
+@media (min-width: 1024px) {
+  .hotspots { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); grid-template-rows: auto auto 1fr; }
+  .hotspots__figure { grid-column: 1; grid-row: 1; }
+  .hotspots__list { grid-column: 2; grid-row: 1 / -1; margin-top: 32px; }
+  .hotspots > .plate__cap { grid-column: 1; grid-row: 2; }
+}
+
+/* ---------- 7. Frame stepper (spec §7.23) ----------
+   <figure class="plate stepper wide" data-stepper data-label="Frame" [data-interval="900"] [data-autoplay]>
+     [plate__head]<div class="plate__mat"><div class="stepper__frame"><img …>
+       <svg class="stepper__overlay" viewBox="0 0 W H" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+         <rect data-step="1" x y width height/> … (any number of rects per step: the holes)
+       </svg></div></div>
+     <div class="stepper__controls" data-stepper-controls></div>   (filled by article.js)
+     <figcaption class="plate__cap"><span class="plate__num">Fig. 1</span> <span data-stepper-status>All 7 frames</span>: …</figcaption>
+   </figure>
+   Without JS the rects are invisible and the whole figure shows. ?debug outlines every rect. */
+.stepper__frame { position: relative; }
+.stepper__overlay { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+.stepper__overlay rect[data-step] { fill: none; stroke: none; }
+.stepper__dim { fill: var(--mat); fill-opacity: .72; opacity: 0; transition: opacity var(--dur-2) var(--ease-out); }
+.stepper__dim.is-on { opacity: 1; }
+.stepper.is-debug .stepper__overlay rect[data-step] { stroke: var(--data-focus); stroke-width: 2; stroke-dasharray: 6 4; vector-effect: non-scaling-stroke; }
+.stepper__debug { font: 600 44px var(--font-mono); fill: var(--data-focus); }
+.stepper__controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin-top: 14px; }
+.stepper__controls:empty { display: none; }
+.stepper__btns { display: inline-flex; flex-wrap: wrap; gap: 6px; }
+.stepper__seg .seg__opt span { min-width: 32px; justify-content: center; padding: 0 10px; font-variant-numeric: lining-nums tabular-nums; }
+html:not(.js) .stepper__controls { display: none; }
+
+/* ---------- 8. Explorable container (spec §7.22) ----------
+   The demo module adds .is-ready once it has drawn; until then (no JS, or an error) the
+   .explorable__fallback shows and the controls and readouts stay hidden. */
+.explorable {
+  padding: 12px; background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r-md);
+  font-family: var(--font-sans);
+}
+@media (min-width: 600px) { .explorable { padding: 20px; } }
+.explorable__head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding-bottom: 12px; border-bottom: 1px solid var(--rule); }
+.explorable__num { font: 500 var(--fs-xs)/1 var(--font-mono); letter-spacing: var(--track-kicker); text-transform: uppercase; color: var(--ink-3); }
+.explorable__title { flex: 1 1 16rem; font: 600 var(--fs-title)/1.3 var(--font-serif); color: var(--ink); }
+.explorable__head [data-action="reset"] { margin-left: auto; }
+.explorable__stage { position: relative; display: grid; align-content: center; min-height: 280px; margin-top: 16px; }
+@media (min-width: 840px) { .explorable__stage { min-height: 340px; } }
+.explorable__stage > svg { display: block; width: 100%; height: auto; }
+.explorable__stage :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.explorable__controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; margin-top: 16px; }
+.explorable__readout {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: 12px 20px;
+  margin: 16px 0 0; padding-top: 14px; border-top: 1px solid var(--rule);
+}
+.explorable__readout > div { display: flex; flex-direction: column-reverse; justify-content: flex-end; gap: 4px; min-width: 0; }
+.explorable__readout dt { font: 400 12px/1.35 var(--font-sans); color: var(--ink-3); }
+.explorable__readout dd { margin: 0; font: 500 20px/1.15 var(--font-mono); font-variant-numeric: tabular-nums lining-nums; color: var(--ink); }
+.explorable__readout dd small { font-size: 12px; color: var(--ink-3); }
+.explorable__desc { margin-top: 12px; min-height: 3em; font: 400 14px/1.5 var(--font-sans); color: var(--ink-2); }
+.explorable:not(.is-ready) :is(.explorable__controls, .explorable__readout, .explorable__desc, [data-action]) { display: none; }
+.explorable.is-ready .explorable__fallback { display: none; }
+.explorable__fallback { margin-top: 16px; }
+.explorable__fallback img { width: 100%; height: auto; }
+
+/* Play/pause button: <button class="btn btn--ghost btn--sm play-btn" data-action="play">
+   <svg class="icon play-btn__play">…play</svg><svg class="icon play-btn__pause">…pause</svg>
+   <span class="play-btn__label">Play</span></button>. syncPlayButton() sets data-playing. */
+.play-btn__pause, .play-btn[data-playing="true"] .play-btn__play { display: none; }
+.play-btn[data-playing="true"] .play-btn__pause { display: inline-block; }
+.explorable .btn--sm { gap: 6px; padding: 0 12px; }
+.explorable .btn--sm .icon { width: 15px; height: 15px; }
+.explorable .btn-icon { border: 1px solid var(--control-border); }
+.explorable .btn-icon:hover { border-color: var(--ink); }
+.btn[disabled], .btn-icon[disabled] { opacity: .45; cursor: not-allowed; }
+
+/* Labelled range control: <div class="ctrl"><label class="ctrl__label" for="id">…</label>
+   <input class="range" id="id" type="range" …><output class="ctrl__out" for="id">8</output></div> */
+.ctrl { display: inline-grid; grid-template-columns: auto minmax(7rem, 12rem) auto; align-items: center; gap: 0 10px; }
+.ctrl__label { font: 500 var(--fs-sm)/1.3 var(--font-sans); color: var(--ink-2); }
+.ctrl__out { min-width: 2.5ch; font: 500 14px/1 var(--font-mono); font-variant-numeric: tabular-nums; color: var(--ink); }
+.range { --val: 50%; width: 100%; height: 44px; margin: 0; background: transparent; cursor: pointer; -webkit-appearance: none; appearance: none; }
+.range::-webkit-slider-runnable-track { height: 4px; border-radius: 2px; background: linear-gradient(to right, var(--accent) var(--val), var(--rule-strong) var(--val)); }
+.range::-moz-range-track { height: 4px; border-radius: 2px; background: var(--rule-strong); }
+.range::-moz-range-progress { height: 4px; border-radius: 2px; background: var(--accent); }
+.range::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 18px; height: 18px; margin-top: -7px; border: 0; border-radius: 50%; background: var(--ink); box-shadow: 0 0 0 2px var(--surface); }
+.range::-moz-range-thumb { width: 18px; height: 18px; border: 0; border-radius: 50%; background: var(--ink); box-shadow: 0 0 0 2px var(--surface); }
+.range:focus-visible { outline: none; }
+.range:focus-visible::-webkit-slider-thumb { outline: 2px solid var(--accent); outline-offset: 3px; }
+.range:focus-visible::-moz-range-thumb { outline: 2px solid var(--accent); outline-offset: 3px; }
+@media (max-width: 599.98px) {
+  .ctrl { grid-template-columns: auto minmax(0, 1fr) auto; width: 100%; }
+}
+
+/* Tabs (ARIA tabs pattern; the module handles arrow keys):
+   <div class="tabs" role="tablist" aria-label="…"><button class="tab" role="tab" aria-selected="true" aria-controls="…" id="…">…</button>… */
+.tabs { display: flex; flex-wrap: wrap; gap: 0 4px; border-bottom: 1px solid var(--rule); }
+.tab {
+  position: relative; min-height: 44px; margin-bottom: -1px; padding: 8px 12px; border: 0; border-bottom: 2px solid transparent;
+  background: none; text-align: left; font: 500 var(--fs-sm)/1.3 var(--font-sans); color: var(--ink-2);
+  transition: color var(--dur-1), border-color var(--dur-1);
+}
+.tab:hover { color: var(--ink); }
+.tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+.tab:focus-visible { outline-offset: -2px; }
+
+/* Speech bubble: a transcript or prompt set in serif italic (NSA hero and sentence explorer). */
+.speech {
+  position: relative; max-width: 44rem; padding: 14px 20px; background: var(--surface);
+  border: 1px solid var(--rule); border-radius: var(--r-md);
+  font: italic 400 var(--fs-lede)/1.4 var(--font-serif); color: var(--ink);
+}
+.speech::after {
+  content: ""; position: absolute; left: 28px; bottom: -7px; width: 12px; height: 12px;
+  background: var(--surface); border: solid var(--rule); border-width: 0 1px 1px 0; transform: rotate(45deg);
+}
+.speech--sm { font-size: 1.125rem; }
+figure > .speech { margin-bottom: 18px; }
+
+/* ---------- 9. Explorable SVG vocabulary ----------
+   Classes for the demo modules' SVG so no demo needs its own colours. Colour follows
+   meaning (tokens.css): focus = current / ours / being read; memory = stored; noise = seeds,
+   references, degradation (hollow); context = baselines. Never encode meaning by colour
+   alone: pair each with an outline, a hollow shape or a text label. */
+.ex-svg { display: block; width: 100%; height: auto; overflow: visible; font-family: var(--font-sans); font-variant-numeric: lining-nums tabular-nums; }
+.ex-text { font: 500 12px var(--font-sans); fill: var(--ink-2); }
+.ex-text--strong { font-weight: 600; fill: var(--ink); }
+.ex-text--muted { fill: var(--ink-3); }
+.ex-text--acc { font-weight: 600; fill: var(--accent); }
+.ex-text--mono { font: 500 10px var(--font-mono); letter-spacing: .02em; fill: var(--ink-3); }
+.ex-text--title { font: 600 13px var(--font-sans); fill: var(--ink); }
+.ex-box { fill: var(--surface); stroke: var(--control-border); stroke-width: 1.25; }
+.ex-box--focus { stroke: var(--data-focus); stroke-width: 1.5; }
+.ex-box--memory { stroke: var(--data-memory); stroke-width: 1.5; }
+.ex-box--dashed { stroke-dasharray: 4 3; }
+.ex-panel { fill: var(--paper); stroke: var(--rule); stroke-width: 1; }
+.ex-line { fill: none; stroke: var(--ink-3); stroke-width: 1.25; }
+.ex-line--focus { stroke: var(--data-focus); }
+.ex-line--memory { stroke: var(--data-memory); }
+.ex-line--thick { stroke-width: 2.5; }
+.ex-line--dashed { stroke-dasharray: 4 4; }
+.ex-line--rule { stroke: var(--rule-strong); }
+.ex-focus { fill: var(--data-focus); }
+.ex-memory { fill: var(--data-memory); }
+.ex-noise { fill: var(--data-noise); }
+.ex-context { fill: var(--data-context); }
+.ex-ink { fill: var(--ink); }
+.ex-ink3 { fill: var(--ink-3); }
+.ex-empty { fill: none; stroke: var(--rule-strong); stroke-width: 1; }
+.ex-hollow--noise { fill: none; stroke: var(--data-noise); stroke-width: 1.5; }
+.ex-hollow--memory { fill: none; stroke: var(--data-memory); stroke-width: 1.5; }
+.ex-ring { fill: none; stroke: var(--data-focus); stroke-width: 2; }
+.ex-dim { opacity: .35; }
+.ex-hidden { opacity: 0; }
+.ex-anim { transition: opacity var(--dur-3) var(--ease-out), transform var(--ex-dur, 250ms) var(--ease-out), fill var(--dur-2), stroke var(--dur-2); }
+.ex-flash { animation: ex-flash 300ms var(--ease-out); }
+@keyframes ex-flash { from { fill: var(--data-focus); } }
+.ex-pulse { animation: ex-pulse 400ms var(--ease-out); }
+@keyframes ex-pulse { 50% { stroke: var(--data-focus); stroke-width: 3; } }
+/* SVG focus ring. Chrome does not reliably paint a CSS outline on SVG <g>/<rect> controls, so a
+   demo draws its own ring around the focused mark: <rect class="ex-focusring ex-focusring--halo">
+   then <rect class="ex-focusring"> (same geometry, positioned by the module). Shown only while
+   something in the stage has keyboard focus; keep it separate from any selection ring. */
+.ex-focusring { display: none; fill: none; stroke: var(--ink); stroke-width: 2; pointer-events: none; }
+.ex-focusring--halo { stroke: var(--surface); stroke-width: 6; }
+.explorable__stage:has(:focus-visible) .ex-focusring { display: inline; }
+.ex-legend { list-style: none; display: flex; flex-wrap: wrap; gap: 4px 18px; margin-top: 12px; font: 400 13px/1.4 var(--font-sans); color: var(--ink-2); }
+.ex-legend li { display: inline-flex; align-items: center; gap: 7px; }
+.ex-legend svg { width: 14px; height: 14px; flex: none; }
+
+/* ---------- 10. Where it led, open question, cite, prev/next ---------- */
+/* Mini throughline: <ol class="thread"><li class="thread__node" aria-current="page">…</li>
+   <li class="thread__node"><a href="…"><span class="thread__year">2023</span><span class="thread__name">STPN</span></a>
+   <span class="thread__note">…</span></li><li class="thread__node thread__node--future">…</li></ol> */
+.thread { list-style: none; display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); }
+.thread__node { position: relative; padding: 30px 12px 0 0; font: 400 13px/1.45 var(--font-sans); color: var(--ink-3); }
+.thread__node::after { content: ""; position: absolute; z-index: 0; left: 6px; right: 0; top: 10px; height: 1px; background: var(--rule-strong); }
+.thread__node:last-child::after { content: none; }
+.thread__node:has(+ .thread__node--future)::after { height: 0; border-top: 1.5px dashed var(--accent); background: none; }
+.thread__node::before {
+  content: ""; position: absolute; z-index: 1; left: 0; top: 4px; width: 13px; height: 13px; border-radius: 50%;
+  background: var(--ink); box-shadow: 0 0 0 3px var(--paper);
+}
+.thread__node[aria-current]::before { background: var(--accent); }
+.thread__node--future::before { background: var(--paper); border: 1.5px dashed var(--accent); }
+.thread__node > a { display: block; color: inherit; text-decoration: none; }
+.thread__year { display: block; font: 500 var(--fs-xs)/1.4 var(--font-mono); letter-spacing: var(--track-kicker); text-transform: uppercase; color: var(--ink-3); }
+.thread__name { display: block; margin-top: 2px; font: 600 1.0625rem/1.25 var(--font-serif); color: var(--ink); }
+.thread__node > a:is(:hover, :focus-visible) .thread__name { color: var(--accent); text-decoration: underline 1px; text-underline-offset: .18em; }
+.thread__node[aria-current] .thread__name { color: var(--accent); }
+.thread__node--future .thread__name { color: var(--ink-2); }
+.thread__note { display: block; margin-top: 4px; max-width: 22ch; }
+@media (max-width: 599.98px) {
+  .thread { grid-auto-flow: row; gap: 0; }
+  .thread__node { padding: 0 0 18px 30px; }
+  .thread__node::before { top: 5px; }
+  .thread__node::after { left: 6px; right: auto; top: 12px; bottom: 0; width: 1px; height: auto; }
+  .thread__node:has(+ .thread__node--future)::after { width: 0; height: auto; border-top: 0; border-left: 1.5px dashed var(--accent); }
+}
+
+/* Open question (callout--question from site.css) */
+.callout--question { padding: 12px 0 12px 20px; font-family: var(--font-sans); }
+.callout__q { font: 400 var(--fs-lede)/1.4 var(--font-serif); color: var(--ink); }
+.callout--question .link-arrow { margin-top: 12px; }
+.callout > p + p { margin-top: .6em; }
+.callout__text { font: 400 var(--fs-cap)/1.55 var(--font-sans); color: var(--ink-2); }
+.callout--key .callout__text, .callout--credit .callout__text { color: var(--ink); }
+
+/* Cite: BibTeX (.code-wrap from site.css) plus a plain-text citation with a copy button. */
+.cite { display: grid; gap: 16px; }
+.cite__plain { position: relative; padding: 14px 52px 14px 16px; border: 1px solid var(--rule); border-radius: var(--r-sm); font: 400 var(--fs-cap)/1.55 var(--font-sans); color: var(--ink-2); }
+.cite__plain .btn-icon { position: absolute; top: 6px; right: 6px; }
+.cite .code { white-space: pre-wrap; overflow-wrap: anywhere; }
+
+/* Prev/next: two cards, cyclic order. */
+.pagenav { display: grid; gap: 16px; }
+@media (min-width: 600px) { .pagenav { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; } }
+.pagenav__card {
+  display: grid; grid-template-columns: 112px minmax(0, 1fr); align-items: center; gap: 16px;
+  padding: 14px; border: 1px solid var(--rule); border-radius: var(--r-md);
+  color: var(--ink); text-decoration: none; transition: border-color var(--dur-1);
+}
+.pagenav__card:hover { border-color: var(--control-border); color: var(--ink); }
+.pagenav__card .plate__mat { --mat-pad: 6px; aspect-ratio: 2 / 1; display: flex; align-items: center; box-shadow: none; }
+.pagenav__card .plate__mat img { width: 100%; height: 100%; object-fit: contain; }
+.pagenav__dir { display: block; font: 500 var(--fs-xs)/1.3 var(--font-mono); letter-spacing: var(--track-kicker); text-transform: uppercase; color: var(--ink-3); }
+.pagenav__title { display: block; margin-top: 4px; font: 600 var(--fs-title)/1.25 var(--font-serif); }
+.pagenav__note { display: block; margin-top: 2px; font: 400 13px/1.45 var(--font-sans); color: var(--ink-2); }
+.pagenav__card:hover .pagenav__title { color: var(--accent); }
+@media (min-width: 600px) {
+  .pagenav__card--next { grid-template-columns: minmax(0, 1fr) 112px; text-align: right; }
+  .pagenav__card--next .plate__mat { order: 2; }
+}
+
+/* ---------- 11. Template markers, motion, forced colours, print ---------- */
+/* .todo: visible outline on every fill-in of /projects/_template/ (delete with the content).
+   Different from data-todo, which hides unconfirmed content in production. */
+.todo { outline: 2px dashed #C2185B; outline-offset: 4px; }
+.todo-note { font: 500 12px/1.4 var(--font-mono); color: #C2185B; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) :is(.todo-note) { color: #F48FB1; } }
+:root[data-theme="dark"] .todo-note { color: #F48FB1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hotspot:hover, .hotspot.is-active { scale: 1; }
+  .ex-flash, .ex-pulse { animation: none; }
+}
+@media (forced-colors: active) {
+  .hotspot { forced-color-adjust: none; background: Highlight; color: HighlightText; box-shadow: 0 0 0 2px Canvas; }
+  .hotspots__list > li.is-active { outline: 2px solid Highlight; }
+  .toc__list a[aria-current] { border-left-color: Highlight; }
+  .stepper__dim { fill: Canvas; }
+  .chart__svg :is(.ch-focus, .ch-memory, .ch-context) { fill: CanvasText; }
+  .chart__svg .ch-hollow { stroke: CanvasText; fill: Canvas; }
+  /* Bars: context series drawn hollow so two series still differ by more than colour. */
+  .chart__svg path.ch-context { fill: Canvas; stroke: CanvasText; stroke-width: 1.5; }
+  .chart__svg text { fill: CanvasText; }
+  .chart__svg .ch-val { stroke: Canvas; }
+  /* Legend swatches are backgrounds, which forced colours would drop: keep the shapes. */
+  .chart__sw { forced-color-adjust: none; background: CanvasText; }
+  .chart__sw--hollow { background: Canvas; border-color: CanvasText; }
+  .chart__sw--bar.chart__sw--context { background: Canvas; border: 1.5px solid CanvasText; }
+  .ex-svg :is(.ex-line, .ex-box, .ex-ring) { stroke: CanvasText; }
+  .ex-focusring { stroke: Highlight; }
+  .ex-focusring--halo { stroke: Canvas; }
+  .thread__node::before, .thread__node::after { forced-color-adjust: none; background: CanvasText; }
+  /* Range: keep the track fill and the thumb visible (both are author-drawn). */
+  .range { forced-color-adjust: none; }
+  .range::-webkit-slider-runnable-track { background: linear-gradient(to right, Highlight var(--val), GrayText var(--val)); }
+  .range::-moz-range-track { background: GrayText; }
+  .range::-moz-range-progress { background: Highlight; }
+  .range::-webkit-slider-thumb { background: CanvasText; box-shadow: 0 0 0 2px Canvas; }
+  .range::-moz-range-thumb { background: CanvasText; box-shadow: 0 0 0 2px Canvas; }
+  .range:focus-visible::-webkit-slider-thumb { outline-color: Highlight; }
+  .range:focus-visible::-moz-range-thumb { outline-color: Highlight; }
+}
+@media print {
+  .toc, .explorable, .explorable + .callout, .stepper__controls, .pagenav, .article-head__links, .chart__table > summary { display: none !important; }
+  .chart__table { display: block; }
+  .article { display: block; padding: 0; }
+  .article__section { display: block; }
+  .sidenote { margin: 8px 0; }
+}
+
+/* =====================================================================
+   Vision & Collaborate pages (/vision/, /collaborate/): the homepage's
+   detail sections moved to standalone pages. They reuse the homepage
+   components from site.css (.section, .wrap, .band, .essay, .pullquote,
+   .card-progress, .problems, .desk, .ways, .contact) and .pagenav above.
+   Only the page head and the text-only prev/next strip are new.
+   ===================================================================== */
+/* Page head: back link, kicker in the hanging margin (≥1024), H1 and a one-line deck. */
+.page-intro { padding-top: 0; }
+.page-head { display: grid; gap: 12px; padding-top: clamp(40px, 6vw, 96px); margin-bottom: clamp(36px, 2rem + 2.5vw, 72px); }
+.page-head:last-child { margin-bottom: 0; }
+.page-head__back { justify-self: start; min-height: 32px; margin-bottom: var(--s-4); }
+.page-head__back .icon { transition: transform var(--dur-2) var(--ease-out); }
+.page-head__back:hover .icon { transform: translateX(-3px); }
+.page-head__title { font-size: var(--fs-h1); font-weight: 400; line-height: 1.04; letter-spacing: -.022em; max-width: 20ch; }
+.page-head__deck { font-size: var(--fs-lede); line-height: 1.4; color: var(--ink-2); max-width: 40rem; }
+@media (min-width: 1024px) {
+  .page-head { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--col-gap); row-gap: var(--s-4); }
+  .page-head__back { grid-column: 1 / -1; }
+  .page-head__kicker { grid-column: 1 / 4; grid-row: 2 / span 2; padding-top: 1.2em; }
+  .page-head__title, .page-head__deck { grid-column: 4 / 12; }
+}
+/* On /vision/ the head section is followed by the tinted band (site.css adds the bottom padding);
+   on /collaborate/ the open problems follow inside the same section. */
+/* Prev/next strip without images: the cards drop the 112px plate column. */
+.pagenav--text .pagenav__card { grid-template-columns: minmax(0, 1fr); padding: 18px 20px; }
+.pagenav--text .pagenav__card--next { text-align: right; }
+.pagenav--text .pagenav__note { max-width: 40ch; }
+.pagenav--text .pagenav__card--next .pagenav__note { margin-left: auto; }
+.pagenext { padding-bottom: var(--section-y); }
+.band + .pagenext { padding-top: calc(var(--section-y) * .75); }
+@media print { .pagenext, .page-head__back { display: none !important; } }

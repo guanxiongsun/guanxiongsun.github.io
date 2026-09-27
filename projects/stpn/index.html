@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Theme boot: runs before any stylesheet so a saved theme never flashes. Keep it first. -->
+  <script>try{const t=localStorage.getItem('theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){};document.documentElement.classList.add('js')</script>
+  <title>STPN: Spatio-temporal Prompting Network for Robust Video Feature Extraction · Guanxiong Sun</title>
+  <meta name="description" content="STPN (ICCV 2023): a few video prompts predicted from other frames make a standard backbone robust for detection, segmentation and tracking, with no task-specific module.">
+  <meta name="author" content="Guanxiong Sun">
+  <link rel="canonical" href="https://guanxiongsun.github.io/projects/stpn/">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#FAF8F4" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#121110" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <link rel="preload" href="/assets/fonts/newsreader-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <!-- Cache-bust: bump ?v=YYYYMMDD on every CSS/JS link at release (and in demo-module imports). -->
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=20261001">
+  <link rel="stylesheet" href="/assets/css/site.css?v=20261001">
+  <link rel="stylesheet" href="/assets/css/article.css?v=20261001">
+  <link rel="stylesheet" href="/assets/css/demos/stpn.css?v=20261001">
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Guanxiong Sun">
+  <meta property="og:url" content="https://guanxiongsun.github.io/projects/stpn/">
+  <meta property="og:title" content="STPN: Spatio-temporal Prompting Network for Robust Video Feature Extraction">
+  <meta property="og:description" content="A few video prompts predicted from other frames make a standard backbone robust for detection, segmentation and tracking. ICCV 2023.">
+  <meta property="og:image" content="https://guanxiongsun.github.io/assets/og/stpn.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="STPN, ICCV 2023: the paper’s pipeline figure, in which a DVP predictor turns support frames into video prompts for one shared backbone.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="STPN: Spatio-temporal Prompting Network for Robust Video Feature Extraction">
+  <meta name="twitter:description" content="A few video prompts predicted from other frames make a standard backbone robust for detection, segmentation and tracking. ICCV 2023.">
+  <meta name="twitter:image" content="https://guanxiongsun.github.io/assets/og/stpn.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "headline": "Spatio-temporal Prompting Network for Robust Video Feature Extraction",
+    "name": "STPN",
+    "url": "https://guanxiongsun.github.io/projects/stpn/",
+    "image": "https://guanxiongsun.github.io/assets/og/stpn.png",
+    "author": [
+      { "@type": "Person", "name": "Guanxiong Sun", "url": "https://guanxiongsun.github.io/" },
+      { "@type": "Person", "name": "Chi Wang" },
+      { "@type": "Person", "name": "Zhaoyu Zhang" },
+      { "@type": "Person", "name": "Jiankang Deng" },
+      { "@type": "Person", "name": "Stefanos Zafeiriou" },
+      { "@type": "Person", "name": "Yang Hua" }
+    ],
+    "datePublished": "2023-10",
+    "isPartOf": { "@type": "CreativeWork", "name": "Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV) 2023" },
+    "sameAs": ["https://arxiv.org/abs/2402.02574", "https://doi.org/10.1109/ICCV51070.2023.01250"]
+  }
+  </script>
+
+  <script type="module" src="/assets/js/site.js?v=20261001"></script>
+  <script type="module" src="/assets/js/article.js?v=20261001"></script>
+  <script type="module" src="/assets/js/charts.js?v=20261001"></script>
+  <script type="module" src="/assets/js/demos/stpn-prompts.js?v=20261001"></script>
+</head>
+
+<body>
+<a class="skip-link" href="#content">Skip to content</a>
+
+<header class="site-header" data-header>
+  <div class="site-header__inner wrap">
+    <a class="wordmark" href="/">
+      <svg class="logomark" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false">
+        <rect class="logomark__cell" x="1.625" y="1.625" width="4.75" height="4.75" rx="1"/>
+        <rect class="logomark__cell logomark__cell--on" x="9" y="1" width="6" height="6" rx="1"/>
+        <rect class="logomark__cell" x="1.625" y="9.625" width="4.75" height="4.75" rx="1"/>
+        <rect class="logomark__cell" x="9.625" y="9.625" width="4.75" height="4.75" rx="1"/>
+      </svg>
+      <span class="wordmark__name">Guanxiong Sun</span>
+    </a>
+
+    <nav class="site-nav" aria-label="Primary">
+      <ul class="site-nav__list" id="site-menu" data-menu-panel>
+        <li><a class="site-nav__link" href="/#news">News</a></li>
+        <li><a class="site-nav__link" href="/#work" aria-current="true">Work</a></li>
+        <li><a class="site-nav__link" href="/#publications">Publications</a></li>
+        <li><a class="site-nav__link" href="/vision/">Vision</a></li>
+        <li><a class="site-nav__link" href="/collaborate/">Collaborate</a></li>
+      </ul>
+    </nav>
+
+    <div class="site-header__tools">
+      <button class="btn-icon theme-toggle" type="button" data-theme-toggle aria-label="Theme: Auto (follows system). Switch to light">
+        <svg class="icon theme-toggle__icon theme-toggle__icon--auto" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#contrast"/></svg>
+        <svg class="icon theme-toggle__icon theme-toggle__icon--light" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#sun"/></svg>
+        <svg class="icon theme-toggle__icon theme-toggle__icon--dark" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#moon"/></svg>
+      </button>
+      <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="site-menu">
+        <svg class="icon menu-toggle__open" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#menu"/></svg>
+        <svg class="icon menu-toggle__close" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#x"/></svg>
+        <span>Menu</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="content">
+<article class="article" aria-labelledby="article-title">
+
+  <!-- ===== ARTICLE HEAD ===== -->
+  <header class="article-head" id="top">
+    <a class="link-quiet article-head__back" href="/#work"><svg class="icon" width="14" height="14" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-left"/></svg>All work</a>
+    <p class="kicker article-head__kicker">ICCV 2023 · Video understanding</p>
+    <h1 class="article-head__title" id="article-title">STPN</h1>
+    <p class="article-head__subtitle">Spatio-temporal Prompting Network for Robust Video Feature Extraction</p>
+    <p class="article-head__authors"><b class="me">Guanxiong Sun</b>, <a href="https://www.linkedin.com/in/chi-wang-33104647">Chi Wang</a>, <a href="https://pure.qub.ac.uk/en/persons/zhaoyu-zhang">Zhaoyu Zhang</a>, <a href="https://jiankangdeng.github.io/">Jiankang Deng</a>, <a href="https://scholar.google.com/citations?user=QKOH5iYAAAAJ&amp;hl=en">Stefanos Zafeiriou</a>, <a href="https://scholar.google.com/citations?user=N0tFi8MAAAAJ&amp;hl=en">Yang Hua</a></p>
+    <p class="article-head__affil" data-todo="affiliations (and author superscripts): copy from the paper PDF, not verified this session">Affiliations to be added from the paper.</p>
+    <ul class="article-head__links">
+      <li><a class="btn btn--ghost btn--sm" href="https://openaccess.thecvf.com/content/ICCV2023/html/Sun_Spatio-temporal_Prompting_Network_for_Robust_Video_Feature_Extraction_ICCV_2023_paper.html"><svg class="icon" width="15" height="15" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#file-text"/></svg>Paper (CVF)</a></li>
+      <li><a class="btn btn--ghost btn--sm" href="https://arxiv.org/abs/2402.02574"><svg class="icon" width="15" height="15" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#file"/></svg>arXiv</a></li>
+      <li><a class="btn btn--ghost btn--sm" href="https://github.com/guanxiongsun/vfe.pytorch"><svg class="icon" width="15" height="15" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#code-xml"/></svg>Code (vfe.pytorch)</a></li>
+      <li><a class="btn btn--ghost btn--sm" href="https://github.com/guanxiongsun/STPN"><svg class="icon" width="15" height="15" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#github"/></svg>Original code</a></li>
+      <li><a class="btn btn--ghost btn--sm" href="https://huggingface.co/guanxiongsun/vfe.pytorch/tree/main/work_dirs/stpn_swint_adam_9x"><svg class="icon" width="15" height="15" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#box"/></svg>Models</a></li>
+      <li><a class="btn btn--ghost btn--sm" href="#cite"><svg class="icon" width="15" height="15" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-down"/></svg>BibTeX</a></li>
+    </ul>
+  </header>
+
+  <!-- ===== HERO: the paper's Fig. 1 as an A/B toggle (site.js [data-ab]) ===== -->
+  <figure class="plate ab article-hero stpn-hero wide" data-ab>
+    <div class="plate__head"><span class="plate__num">Fig. 1</span><span class="badge badge--paper">From the paper</span><button class="btn-icon st-zoom" type="button" data-ab-item="a" data-full="/assets/img/projects/stpn/stpn-a.webp" data-caption="(a) Prior pipelines: a backbone per frame plus a separate integration module for each task. Paper Fig. 1." aria-label="Enlarge figure: panel (a), current pipeline"><svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#maximize-2"/></svg></button><button class="btn-icon st-zoom" type="button" data-ab-item="b" data-full="/assets/img/projects/stpn/stpn-b.webp" data-caption="(b) STPN: a DVP predictor turns support frames into video prompts at the backbone’s input. Paper Fig. 1." aria-label="Enlarge figure: panel (b), STPN"><svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#maximize-2"/></svg></button></div>
+    <fieldset class="seg ab__control">
+      <legend class="visually-hidden">Show panel of the STPN figure</legend>
+      <label class="seg__opt"><input type="radio" name="stpn-hero-ab" value="a"><span>(a) Previous pipeline</span></label>
+      <label class="seg__opt"><input type="radio" name="stpn-hero-ab" value="b" checked><span>(b) STPN</span></label>
+    </fieldset>
+    <div class="plate__mat ab__stage">
+      <img class="ab__img" data-ab-item="a" src="/assets/img/projects/stpn/stpn-a.webp"
+           srcset="/assets/img/projects/stpn/stpn-a-640.webp 640w, /assets/img/projects/stpn/stpn-a.webp 1000w"
+           sizes="(min-width: 600px) 36rem, calc(100vw - 32px)"
+           width="1000" height="934" decoding="async"
+           alt="Panel (a), previous pipeline: support frames and the blurred current frame each pass through a backbone, then tangled connections feed three separate integration modules, A for detection, B for segmentation and C for tracking.">
+      <img class="ab__img" data-ab-item="b" src="/assets/img/projects/stpn/stpn-b.webp"
+           srcset="/assets/img/projects/stpn/stpn-b-640.webp 640w, /assets/img/projects/stpn/stpn-b.webp 896w"
+           sizes="(min-width: 600px) 36rem, calc(100vw - 32px)"
+           width="896" height="934" fetchpriority="high" decoding="async"
+           alt="Panel (b), STPN: a DVP predictor turns the support frames into video prompts, which join the current frame at the input of one shared backbone feeding detection, segmentation and tracking heads.">
+    </div>
+    <figcaption class="plate__cap">
+      <span class="ab__cap" data-ab-item="a"><b>(a)</b> Prior pipelines: a backbone per frame plus a separate integration module for each task (A: detection, B: segmentation, C: tracking).</span>
+      <span class="ab__cap" data-ab-item="b"><b>(b)</b> STPN: a DVP predictor turns support frames into video prompts at the backbone’s input, and the same design serves every task with no integration module.</span>
+      <span class="plate__src">Source: paper Fig. 1. VOD, VIS and VOT are video object detection, video instance segmentation and visual object tracking.</span>
+    </figcaption>
+  </figure>
+
+  <!-- ===== TL;DR ===== -->
+  <div class="tldr">
+    <p class="kicker">In one paragraph</p>
+    <p>Deteriorated frames (motion blur, defocus, occlusion) hurt every video task. Prior work compensates with heavy integration modules, a different one per task. STPN instead predicts a few video prompts from neighbouring frames and prepends them to the current frame’s patch embeddings, so a standard backbone, with no task-specific module, produces robust features for detection (ImageNet VID), instance segmentation (YouTube-VIS) and tracking (GOT-10k).</p>
+  </div>
+
+  <nav class="toc" aria-label="Contents" data-toc>
+    <details class="toc__box">
+      <summary class="toc__summary">Contents</summary>
+      <ol class="toc__list">
+        <li><a href="#problem">The problem</a></li>
+        <li><a href="#idea">The idea</a></li>
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#results">Results</a></li>
+        <li><a href="#led">Where it led</a></li>
+        <li><a href="#code">Code</a></li>
+        <li><a href="#cite">Cite</a></li>
+      </ol>
+    </details>
+  </nav>
+
+  <!-- ===== § THE PROBLEM ===== -->
+  <section class="article__section" id="problem" aria-labelledby="problem-title">
+    <h2 id="problem-title">The problem</h2>
+    <p>Video frames rarely stay clean. The object moves fast and blurs, the camera loses focus, something passes in front, or the animal turns into an unusual pose. A network that looks at one frame at a time loses exactly the evidence it needs, and the fox in Fig. 1 is a typical case: sharp in a neighbouring frame, a smear in the current one.</p>
+    <p>The usual remedy is to borrow from neighbouring frames. Methods such as SELSA, MEGA and TransVOD run every frame through the backbone and then fuse the features in an attention-based integration module. That works, but the modules are heavy and complex, and each one is built for one task: a module designed for detection does not carry over to instance segmentation or tracking (Fig. 1a).<sup class="sn-ref">1</sup></p>
+    <aside class="sidenote"><sup>1</sup> The paper evaluates three tasks: video object detection (VOD, on ImageNet VID), video instance segmentation (VIS, on YouTube-VIS) and visual object tracking (VOT, on GOT-10k).</aside>
+    <p>STPN asks a different question. Instead of repairing features after the backbone, can we change what goes into it, so that one standard backbone produces robust features for every video task?</p>
+  </section>
+
+  <!-- ===== § THE IDEA: the explorable ===== -->
+  <section class="article__section" id="idea" aria-labelledby="idea-title">
+    <h2 id="idea-title">The idea</h2>
+    <p>Fig. 2 rebuilds the pipeline with real pixels from the paper’s figure: a sharp support frame and the motion-blurred current frame. The frame is cut into patch tokens, and STPN puts five prompt tokens in front of them. Pick any patch to see what it can read inside the backbone, then switch to the prior pipeline and change the task.</p>
+
+    <section class="explorable wide" id="demo" aria-labelledby="demo-title">
+      <header class="explorable__head">
+        <span class="explorable__num">Fig. 2</span>
+        <span class="badge badge--schematic">Schematic</span>
+        <h3 class="explorable__title" id="demo-title">Prompting the backbone</h3>
+        <button class="btn-icon" type="button" data-action="reset" aria-label="Reset demo"><svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#rotate-ccw"/></svg></button>
+      </header>
+      <div class="explorable__stage">
+        <svg class="ex-svg st-svg" data-stage viewBox="0 0 960 420" role="group" aria-labelledby="demo-title" aria-describedby="demo-desc"></svg>
+      </div>
+      <ul class="ex-legend st-legend" aria-hidden="true">
+        <li><svg viewBox="0 0 14 14"><rect class="ex-focus" x="1" y="1" width="12" height="12" rx="2"/></svg>prompt token (predicted)</li>
+        <li><svg viewBox="0 0 14 14"><rect class="st-lg-patch" x="1" y="1" width="12" height="12" rx="2"/></svg>patch token (real pixels)</li>
+        <li><svg viewBox="0 0 14 14"><path class="st-att" d="M1 7h12"/></svg>patch reads a prompt</li>
+        <li><svg viewBox="0 0 14 14"><path class="st-nb" d="M1 7h12"/></svg>patch reads a neighbour</li>
+        <li><svg viewBox="0 0 14 14"><path class="st-sup" d="M1 7h12"/></svg>support features</li>
+      </ul>
+      <div class="explorable__controls">
+        <fieldset class="seg">
+          <legend class="visually-hidden">Pipeline</legend>
+          <label class="seg__opt"><input type="radio" name="stpn-mode" value="prior"><span>Prior<span class="st-long">: integration modules</span></span></label>
+          <label class="seg__opt"><input type="radio" name="stpn-mode" value="stpn" checked><span>STPN<span class="st-long">: video prompts</span></span></label>
+        </fieldset>
+        <fieldset class="seg">
+          <legend class="visually-hidden">Task</legend>
+          <label class="seg__opt"><input type="radio" name="stpn-task" value="0" checked><span>VOD<span class="visually-hidden"> (video object detection)</span></span></label>
+          <label class="seg__opt"><input type="radio" name="stpn-task" value="1"><span>VIS<span class="visually-hidden"> (video instance segmentation)</span></span></label>
+          <label class="seg__opt"><input type="radio" name="stpn-task" value="2"><span>VOT<span class="visually-hidden"> (visual object tracking)</span></span></label>
+        </fieldset>
+        <button class="switch" type="button" role="switch" aria-checked="true" data-prepend>
+          <span class="switch__track" aria-hidden="true"><span class="switch__thumb"></span></span>
+          <span class="switch__label">Prepend prompts</span>
+        </button>
+      </div>
+      <dl class="explorable__readout" aria-hidden="true">
+        <div><dt>Input tokens</dt><dd data-out="tokens">–</dd></div>
+        <div><dt>Task-specific modules</dt><dd data-out="modules">–</dd></div>
+        <div><dt>Where temporal information enters</dt><dd data-out="where">–</dd></div>
+      </dl>
+      <p class="explorable__desc" id="demo-desc" aria-live="polite"></p>
+      <div class="explorable__fallback">
+        <img src="/assets/img/projects/stpn/stpn-b-640.webp" width="640" height="667" loading="lazy" decoding="async" alt="The paper’s panel (b): a DVP predictor turns the support frames into video prompts, which join the current frame at the backbone’s input.">
+        <p class="callout__text">This interactive figure needs JavaScript. In words: the prior pipeline sends 40 patch tokens of the blurred current frame through the backbone and fuses the support frames afterwards, in an integration module built for one task. STPN predicts 5 prompt tokens from the support frames and prepends them, so 45 tokens enter a standard backbone with no new layers and every patch can read the prompts. Each task keeps its own framework and head, with no integration module.</p>
+      </div>
+    </section>
+    <aside class="callout callout--schematic">
+      <p class="kicker">How to read this</p>
+      <p class="callout__text">The frames are real crops from the paper’s Fig. 1; the grid size and attention lines are illustrative, not measured attention (in Swin-T a patch attends to every patch in its 7×7 window; three neighbours are drawn). The VOD / VIS / VOT switch is illustrative too: the released configuration is the VOD detector (Faster R-CNN, Swin-T), and segmentation and tracking are separately trained models in their own frameworks (see the paper). What matches the released configuration: 5 prompts of 96 dimensions, predicted by 5 learned queries attending over the support frames’ last-stage features, prepended to the patch embeddings at the backbone input only (<code>num_tokens=5, location='prepend', deep=False</code>), and computed once per video from 14 reference frames spread over it. At the test resolution (up to 1000×600), Swin-T’s 4×4 patch embedding produces up to 37,500 patch tokens; STPN adds just 5.</p>
+    </aside>
+  </section>
+
+  <!-- ===== § HOW IT WORKS ===== -->
+  <section class="article__section" id="how" aria-labelledby="how-title">
+    <h2 id="how-title">How it works</h2>
+    <p>Panel (b) of the paper’s figure has five parts. Select a number to highlight its note.</p>
+
+    <figure class="hotspots wide st-hs" data-hotspots>
+      <div class="hotspots__figure plate">
+        <div class="plate__head"><span class="plate__num">Fig. 3</span><span class="badge badge--paper">From the paper</span><button class="btn-icon st-zoom" type="button" data-full="/assets/img/projects/stpn/stpn-b.webp" data-caption="STPN pipeline, panel (b) of the paper’s Fig. 1." aria-label="Enlarge figure: the STPN pipeline"><svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#maximize-2"/></svg></button></div>
+        <div class="plate__mat">
+          <div class="hotspots__frame">
+            <img src="/assets/img/projects/stpn/stpn-b.webp" srcset="/assets/img/projects/stpn/stpn-b-640.webp 640w, /assets/img/projects/stpn/stpn-b.webp 896w" sizes="(min-width: 1200px) 42rem, (min-width: 1024px) 60vw, calc(100vw - 32px)" width="896" height="934" loading="lazy" decoding="async" alt="STPN pipeline: support frames feed a DVP predictor, whose video prompts join the motion-blurred current frame at the input of one backbone; the backbone’s output branches to VOD, VIS and VOT.">
+            <button class="hotspot" type="button" style="--x:25%;--y:70%" aria-describedby="hs-stpn-1">1</button>
+            <button class="hotspot" type="button" style="--x:25%;--y:37%;--xs:6.5%;--ys:44%" aria-describedby="hs-stpn-2">2</button>
+            <button class="hotspot" type="button" style="--x:67%;--y:54%" aria-describedby="hs-stpn-3">3</button>
+            <button class="hotspot" type="button" style="--x:69%;--y:38%;--xs:88.5%;--ys:42%" aria-describedby="hs-stpn-4">4</button>
+            <button class="hotspot" type="button" style="--x:69%;--y:26.5%" aria-describedby="hs-stpn-5">5</button>
+          </div>
+        </div>
+      </div>
+      <ol class="hotspots__list">
+        <li id="hs-stpn-1"><b>Support frames.</b> Other frames of the same video: neighbours within ±9 frames in training; at test time, 14 frames spread over the whole video, sampled once.</li>
+        <li id="hs-stpn-2"><b>DVP predictor.</b> Predicts dynamic video prompts that summarise spatio-temporal information from the support frames.</li>
+        <li id="hs-stpn-3"><b>Prepend.</b> The prompts are concatenated in front of the current frame’s patch embeddings.</li>
+        <li id="hs-stpn-4"><b>Backbone.</b> A standard backbone with no new layers (Swin-T in the released detector) processes prompts and patches together; self-attention lets every patch read the prompts.</li>
+        <li id="hs-stpn-5"><b>Tasks.</b> The same prompting design plugs into detection, instance segmentation and tracking frameworks, with no task-specific integration module.</li>
+      </ol>
+      <figcaption class="plate__cap">Panel (b) of the paper’s overview figure. <span class="plate__src">Source: paper Fig. 1.</span></figcaption>
+    </figure>
+
+    <p>At test time, the released model samples 14 reference frames spread evenly over the whole video and passes them through the backbone without prompts. The DVP predictor takes their last-stage features (768 channels in Swin-T) and projects them to 96 dimensions, the width of Swin-T’s patch embeddings. Five learned queries then attend over every spatial position of those features, and each query becomes one prompt token.</p>
+    <p>The prompts are prepended to the current frame’s patch embeddings and travel through all four Swin stages. In every shifted-window attention layer, each 7×7 window attends to the same five prompts, so any patch can read a summary of the video; when patches merge between stages, the prompts are carried along. Before the feature pyramid the prompts are dropped again, so the neck and the task heads are the unchanged still-image ones.</p>
+    <p>Two things follow. The predictor is small, about 0.11 M parameters,<sup class="sn-ref">2</sup> and the released code computes the prompts once per video, at its first frame, and reuses them for every later frame, so each further frame costs only five extra tokens. And because nothing after the backbone changes, the same design carries over to segmentation and tracking frameworks without a new integration module.</p>
+    <aside class="sidenote"><sup>2</sup> 111,552 parameters, counted from the released predictor in <code>vfe/models/vid/stpn.py</code>: a 768→96 projection, 5 query vectors and four 96×96 linear layers.</aside>
+    <aside class="callout callout--key">
+      <p class="kicker">Key idea</p>
+      <p class="callout__text">Don’t repair features after the backbone. Tell the backbone about the video, with five tokens at its input.</p>
+    </aside>
+  </section>
+
+  <!-- ===== § RESULTS ===== -->
+  <section class="article__section" id="results" aria-labelledby="results-title">
+    <h2 id="results-title">Results</h2>
+    <p>On ImageNet VID the released Swin-T checkpoint reaches 85.2 AP50. The numbers below come from the authors’ released code (the vfe.pytorch README), not the paper’s tables, and the baselines use ResNet-101, so read them as context rather than a controlled test.</p>
+
+    <dl class="stats">
+      <div class="stat"><dt class="stat__label">ImageNet VID val, Swin-T</dt><dd class="stat__fig"><span class="stat__value">85.2</span><span class="stat__unit">AP50</span></dd></div>
+      <div class="stat"><dt class="stat__label">VOD · VIS · VOT, no task-specific module</dt><dd class="stat__fig"><span class="stat__value">3</span><span class="stat__unit">tasks</span></dd></div>
+      <div class="stat"><dt class="stat__label">prompt tokens (released config)</dt><dd class="stat__fig"><span class="stat__value">5</span><span class="stat__unit">prompts</span></dd></div>
+    </dl>
+    <p class="stats__src">Source: vfe.pytorch README (AP50 of the released checkpoint; may differ slightly from the paper’s table) and released config <code>stpn_swint_adam_9x.py</code> (prompts); tasks as evaluated in the paper.</p>
+
+    <figure class="chart">
+      <div class="plate__head"><span class="plate__num">Fig. 4</span><span class="badge badge--paper">From the paper</span></div>
+      <table data-chart="dot" data-min="75" data-max="90" data-unit="AP50" data-highlight="STPN (Swin-T)">
+        <caption>ImageNet VID val, AP50</caption>
+        <thead><tr><th scope="col">Method</th><th scope="col">AP50</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Faster R-CNN (R101)</th><td>76.7</td></tr>
+          <tr><th scope="row">SELSA (R101)</th><td>81.5</td></tr>
+          <tr><th scope="row">MEGA (R101)</th><td>82.9</td></tr>
+          <tr data-memory-row><th scope="row">MAMBA (R101)</th><td>83.8</td></tr>
+          <tr><th scope="row">STPN (Swin-T)</th><td>85.2</td></tr>
+        </tbody>
+      </table>
+      <p class="chart__note">Backbones differ; see the paper for STPN against a same-backbone baseline.</p>
+      <p class="chart__src">Source: the authors’ released code, not the paper’s tables. vfe.pytorch README: STPN and MAMBA are the released checkpoints (STPN may differ slightly from the paper’s table); Faster R-CNN and MEGA are taken from the MEGA repository, SELSA from MMTracking.</p>
+    </figure>
+
+    <figure class="chart">
+      <div class="plate__head"><span class="plate__num">Fig. 5</span><span class="badge badge--paper">From the paper</span></div>
+      <table data-chart="dots-multi" data-min="60" data-max="100" data-unit="AP50" data-highlight="STPN" data-memory="MAMBA">
+        <caption>AP by object speed, ImageNet VID val</caption>
+        <thead><tr><th scope="col">Speed</th><th scope="col">MEGA</th><th scope="col">MAMBA</th><th scope="col">STPN</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Slow</th><td>89.4</td><td>89.5</td><td>91.4</td></tr>
+          <tr><th scope="row">Medium</th><td>81.6</td><td>83.8</td><td>84.1</td></tr>
+          <tr><th scope="row">Fast</th><td>62.7</td><td>65.3</td><td>64.1</td></tr>
+        </tbody>
+      </table>
+      <p class="chart__note">STPN (Swin-T) scores highest on slow and medium objects; MAMBA (ResNet-101) scores highest on fast ones. Backbones differ (MEGA and MAMBA: ResNet-101), so this is not a controlled comparison.</p>
+      <p class="chart__src">Source: the authors’ released code, not the paper’s tables. vfe.pytorch README: STPN and MAMBA are the released checkpoints; MEGA is taken from the MEGA repository.</p>
+    </figure>
+
+    <h3>Segmentation and tracking</h3>
+    <p class="st-see-paper">Results on YouTube-VIS and GOT-10k: <a href="https://openaccess.thecvf.com/content/ICCV2023/html/Sun_Spatio-temporal_Prompting_Network_for_Robust_Video_Feature_Extraction_ICCV_2023_paper.html">see the paper</a>.</p>
+    <div class="table-wrap" role="region" aria-labelledby="vis-cap" tabindex="0" data-todo="YouTube-VIS 2019 (STPN + MinVIS, Swin-T): copy AP / AP50 and the baseline from the paper PDF. Never estimate.">
+      <table class="data-table">
+        <caption id="vis-cap">YouTube-VIS 2019 val</caption>
+        <thead><tr><th scope="col">Method</th><th scope="col">AP</th><th scope="col">AP50</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Baseline (from the paper)</th><td>—</td><td>—</td></tr>
+          <tr><th scope="row">+ STPN</th><td>—</td><td>—</td></tr>
+        </tbody>
+      </table>
+      <p class="data-table__note">Source: paper (to be copied).</p>
+    </div>
+    <div class="table-wrap" role="region" aria-labelledby="vot-cap" tabindex="0" data-todo="GOT-10k (STPN + MixFormer): copy AO and the baseline from the paper PDF. Never estimate.">
+      <table class="data-table">
+        <caption id="vot-cap">GOT-10k test</caption>
+        <thead><tr><th scope="col">Method</th><th scope="col">AO</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Baseline (from the paper)</th><td>—</td></tr>
+          <tr><th scope="row">+ STPN</th><td>—</td></tr>
+        </tbody>
+      </table>
+      <p class="data-table__note">Source: paper (to be copied).</p>
+    </div>
+
+    <h3>Reproducibility</h3>
+    <p>vfe.pytorch 2.0 re-evaluates the released checkpoint and retrains STPN from scratch in plain PyTorch.</p>
+    <div class="table-wrap" role="region" aria-labelledby="repro-cap" tabindex="0">
+      <table class="data-table">
+        <caption id="repro-cap">Reproducibility, ImageNet VID val AP50 (STPN, Swin-T)</caption>
+        <thead><tr><th scope="col">Run</th><th scope="col">AP50</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Released checkpoint, evaluated in vfe.pytorch 2.0</th><td>85.15</td></tr>
+          <tr><th scope="row">Trained from scratch, vfe.pytorch 2.0</th><td>84.54</td></tr>
+          <tr><th scope="row">Originally published</th><td>85.15</td></tr>
+        </tbody>
+      </table>
+      <p class="data-table__note">Training lands 0.61 low; likely run-to-run variance, not confirmed with a second seed. Source: vfe.pytorch README. Measured on 4× <span class="lnum">GH200</span>.</p>
+    </div>
+  </section>
+
+  <!-- ===== § WHERE IT LED ===== -->
+  <section class="article__section" id="led" aria-labelledby="led-title">
+    <h2 id="led-title">Where it led</h2>
+    <ol class="thread">
+      <li class="thread__node"><a href="/projects/mamba/"><span class="thread__year">2021</span><span class="thread__name">MAMBA</span></a><span class="thread__note">a memory bank that enhances features after the backbone</span></li>
+      <li class="thread__node" aria-current="page"><span class="thread__year">2023</span><span class="thread__name">STPN</span><span class="thread__note">video context as a few tokens at the backbone’s input</span></li>
+      <li class="thread__node thread__node--future"><a href="/vision/#physical-ai"><span class="thread__year">Direction</span><span class="thread__name">Physical AI</span></a><span class="thread__note">memory for agents that act</span></li>
+    </ol>
+    <p>MAMBA kept a memory of features and read from it after the backbone; STPN compressed a video’s context into five tokens that the backbone reads at its input. My current direction, Physical AI, takes the same question, what to remember and where to feed it in, to agents that act in the physical world.</p>
+    <aside class="callout callout--question">
+      <p class="kicker">Open question</p>
+      <p class="callout__q">Can a VLA take its memory as a handful of prompt tokens, the way STPN’s backbone takes its neighbours?</p>
+      <a class="link-arrow" href="/collaborate/">Pick up this thread<svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-right"/></svg></a>
+    </aside>
+  </section>
+
+  <!-- ===== § CODE ===== -->
+  <section class="article__section" id="code" aria-labelledby="code-title">
+    <h2 id="code-title">Code</h2>
+    <p>STPN is maintained in <a href="https://github.com/guanxiongsun/vfe.pytorch">vfe.pytorch</a>, a plain-PyTorch rewrite that also holds MAMBA; the original ICCV code is at <a href="https://github.com/guanxiongsun/STPN">guanxiongsun/STPN</a>. To evaluate the released checkpoint (<code>CHECKPOINT</code> is the <a href="https://huggingface.co/guanxiongsun/vfe.pytorch/tree/main/work_dirs/stpn_swint_adam_9x">stpn_swint_adam_9x model</a>; data setup is in the README):</p>
+    <div class="code-wrap">
+      <pre class="code" id="quickstart"><code>uv venv --python 3.12 &amp;&amp; uv sync
+python -m vfe.cli.test configs/vid/stpn/stpn_swint_adam_9x.py \
+    CHECKPOINT --work-dir WORK_DIR</code></pre>
+      <button class="btn-icon code-copy" type="button" aria-label="Copy commands" data-copy-msg="Commands copied"><svg class="icon copy-btn__copy" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#copy"/></svg><svg class="icon copy-btn__done" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#check"/></svg></button>
+    </div>
+  </section>
+
+  <!-- ===== § CITE ===== -->
+  <section class="article__section" id="cite" aria-labelledby="cite-title">
+    <h2 id="cite-title">Cite</h2>
+    <div class="cite">
+      <div class="code-wrap">
+        <pre class="code"><code>@inproceedings{sun2023stpn,
+  title     = {Spatio-temporal Prompting Network for Robust Video Feature Extraction},
+  author    = {Sun, Guanxiong and Wang, Chi and Zhang, Zhaoyu and Deng, Jiankang and Zafeiriou, Stefanos and Hua, Yang},
+  booktitle = {ICCV},
+  year      = {2023}
+}</code></pre>
+        <button class="btn-icon code-copy" type="button" aria-label="Copy BibTeX" data-copy-msg="BibTeX copied"><svg class="icon copy-btn__copy" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#copy"/></svg><svg class="icon copy-btn__done" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#check"/></svg></button>
+      </div>
+      <p class="cite__plain"><span id="cite-text">Guanxiong Sun, Chi Wang, Zhaoyu Zhang, Jiankang Deng, Stefanos Zafeiriou, Yang Hua. Spatio-temporal Prompting Network for Robust Video Feature Extraction. ICCV 2023. doi:10.1109/ICCV51070.2023.01250</span>
+        <button class="btn-icon" type="button" data-copy="#cite-text" data-copy-msg="Citation copied" aria-label="Copy citation"><svg class="icon copy-btn__copy" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#copy"/></svg><svg class="icon copy-btn__done" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#check"/></svg></button></p>
+    </div>
+  </section>
+
+  <!-- ===== PREV / NEXT (cyclic: MAMBA → STPN → NSA → MAMBA) ===== -->
+  <nav class="pagenav wide" aria-label="More projects">
+    <a class="pagenav__card" href="/projects/mamba/" rel="prev">
+      <span class="plate__mat"><img src="/assets/img/mamba-640.webp" width="640" height="278" loading="lazy" decoding="async" alt=""></span>
+      <span><span class="pagenav__dir">← Previous</span><span class="pagenav__title">MAMBA</span><span class="pagenav__note">A memory bank for video object detection</span></span>
+    </a>
+    <a class="pagenav__card pagenav__card--next" href="/projects/neural-sign-actors/" rel="next">
+      <span class="plate__mat"><img src="/assets/img/neural_sign_actor-640.webp" width="640" height="309" loading="lazy" decoding="async" alt=""></span>
+      <span><span class="pagenav__dir">Next →</span><span class="pagenav__title">Neural Sign Actors</span><span class="pagenav__note">Text to 3D signing avatars</span></span>
+    </a>
+  </nav>
+
+</article>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap site-footer__grid">
+    <div class="site-footer__id">
+      <svg class="logomark" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false">
+        <rect class="logomark__cell" x="1.625" y="1.625" width="4.75" height="4.75" rx="1"/>
+        <rect class="logomark__cell logomark__cell--on" x="9" y="1" width="6" height="6" rx="1"/>
+        <rect class="logomark__cell" x="1.625" y="9.625" width="4.75" height="4.75" rx="1"/>
+        <rect class="logomark__cell" x="9.625" y="9.625" width="4.75" height="4.75" rx="1"/>
+      </svg>
+      <p>Guanxiong Sun · Queen’s University Belfast</p>
+    </div>
+    <ul class="site-footer__links">
+      <li><a href="mailto:sungx.cs@gmail.com" aria-label="Email"><svg class="icon" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#mail"/></svg></a></li>
+      <li><a href="https://scholar.google.com/citations?user=vLk3IzoAAAAJ" aria-label="Google Scholar"><svg class="icon" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#scholar"/></svg></a></li>
+      <li><a href="https://github.com/guanxiongsun" aria-label="GitHub"><svg class="icon" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#github"/></svg></a></li>
+      <li><a href="https://huggingface.co/guanxiongsun" aria-label="Hugging Face"><svg class="icon" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#huggingface"/></svg></a></li>
+      <li><a href="https://www.linkedin.com/in/guanxiongsun/" aria-label="LinkedIn"><svg class="icon" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#linkedin"/></svg></a></li>
+    </ul>
+    <div class="site-footer__meta">
+      <p>Updated <time datetime="2026-09">September 2026</time> · <a class="link-quiet" href="#top">Back to top<svg class="icon" width="14" height="14" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-up"/></svg></a></p>
+      <p class="site-footer__colophon">Set in Newsreader, Inter and JetBrains Mono. Hand-built HTML, no frameworks. Earlier versions adapted Jon Barron’s and Wufei Ma’s pages.</p>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
