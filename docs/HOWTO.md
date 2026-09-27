@@ -40,13 +40,14 @@ Rules that keep the site easy to edit:
 - **No inline styles**, except the custom properties `--x`, `--y`, `--i`.
 - **Behaviour attaches through `data-*` attributes**; you never need to touch the JS to add content.
 - **Every section must read fine with JavaScript off.**
-- **Cache-busting:** CSS and JS links end in `?v=20261002`. When you change a CSS or JS file,
-  bump that date everywhere at once: search and replace `?v=20261002` across **all `.html` and
+- **Cache-busting:** CSS and JS links end in `?v=20261003`. When you change a CSS or JS file,
+  bump that date everywhere at once: search and replace `?v=20261003` across **all `.html` and
   `.js` files** (the demo modules in `assets/js/demos/` and `projects/_template/example-demo.js`
   import `article.js?v=…`, and that string must match the page's own `<script>` tag).
 
-The homepage runs, in this order: hero, **01 News**, **02 Throughline**, **03 Selected work**,
-**04 Publications**, **05 Vision** (teaser), **06 Collaborate** (teaser), **07 Service & background**.
+The homepage runs, in this order: hero, **01 News**, **02 Throughline**, **03 Experience**,
+**04 Selected work**, **05 Publications**, **06 Vision** (teaser), **07 Collaborate** (teaser),
+**08 Service & background**.
 The header nav on every page is News · Work · Publications · Vision · Collaborate (on the homepage
 these are `#news #work #publications #vision #collaborate`; elsewhere `/#news /#work /#publications
 /vision/ /collaborate/`). Keep that order and the `<nav>` markup identical on every page.
@@ -224,7 +225,7 @@ The full cards on `/vision/` (e.g. `#physical-ai`, with schematics and open ques
 - Open node: `data-open-label`, `data-open-href`, `data-open-note` on `#throughline-figure`.
 - The no-JS list `ol.throughline__fallback` is written by hand: keep it in step with the cards.
 
-### Add a role to the Experience line (§07)
+### Add a role to the Experience line (§03)
 
 The horizontal line is built by `assets/js/career.js` from the list inside `<div class="career" data-career>`
 in `index.html`. Add one `<li class="career__item">`, oldest first:

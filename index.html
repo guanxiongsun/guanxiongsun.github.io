@@ -20,8 +20,8 @@
   <link rel="preload" href="/assets/fonts/newsreader-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <!-- Cache-bust: bump ?v=YYYYMMDD on every CSS/JS link at release. -->
-  <link rel="stylesheet" href="/assets/css/tokens.css?v=20261002">
-  <link rel="stylesheet" href="/assets/css/site.css?v=20261002">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=20261003">
+  <link rel="stylesheet" href="/assets/css/site.css?v=20261003">
 
   <!-- Social cards -->
   <meta property="og:type" content="website">
@@ -64,9 +64,9 @@
   </script>
 
   <!-- Scripts are modules, so they are deferred automatically. -->
-  <script type="module" src="/assets/js/site.js?v=20261002"></script>
-  <script type="module" src="/assets/js/throughline.js?v=20261002"></script>
-  <script type="module" src="/assets/js/career.js?v=20261002"></script>
+  <script type="module" src="/assets/js/site.js?v=20261003"></script>
+  <script type="module" src="/assets/js/throughline.js?v=20261003"></script>
+  <script type="module" src="/assets/js/career.js?v=20261003"></script>
 </head>
 
 <body>
@@ -232,11 +232,59 @@
 </section>
 
 
-<!-- ===== 03 SELECTED WORK: three feature spreads, then "also notable" and open source ===== -->
+<!-- ===== 03 EXPERIENCE ===== -->
+<section class="section section--compact" id="experience" aria-labelledby="experience-title">
+  <div class="wrap">
+    <header class="section-head reveal">
+      <p class="kicker section-head__kicker">03 — Experience</p>
+      <h2 class="section-head__title" id="experience-title">Experience</h2>
+    </header>
+    <!-- EXPERIENCE: one <li> per role, oldest first. /assets/js/career.js lays the list out as a
+         horizontal line from data-start / data-end (decimal years; data-end="now" for the current
+         role, omit it for a short stint shown as a dot). data-side="above|below" picks the label
+         side, data-align="start|end" pins it to the segment's start or end instead of its centre; data-overlap draws a role that overlaps another as a raised branch.
+         Logos: <span class="career__badge"> holds either a sprite mark (#org-…) or a monogram;
+         to use an official logo file, replace its contents with <img src="/assets/img/logos/…" alt="">.
+         Without JS the list shows as a plain list. -->
+    <div class="career-block">
+      <div class="career" data-career data-from="2017" data-to="2027">
+        <ol class="career__list">
+      <li class="career__item" data-start="2017.3" data-side="below">
+        <span class="career__badge" aria-hidden="true"><svg width="16" height="16" focusable="false"><use href="/assets/icons/sprite.svg#org-baidu"/></svg></span>
+        <span class="career__text"><b class="career__org">Baidu</b> <span class="career__sub">Institute of Deep Learning (IDL)</span><span class="career__role">Intern</span><span class="career__years">2017</span></span>
+      </li>
+      <li class="career__item" data-start="2019.25" data-side="above">
+        <span class="career__badge career__badge--mono" aria-hidden="true">ST</span>
+        <span class="career__text"><b class="career__org">SenseTime</b><span class="career__role">Intern</span><span class="career__years">2019</span></span>
+      </li>
+      <li class="career__item" data-start="2019.55" data-end="2022.9" data-side="below">
+        <span class="career__badge career__badge--mono" aria-hidden="true">AV</span>
+        <span class="career__text"><b class="career__org">AnyVision</b> <span class="career__sub">now Oosto</span><span class="career__role">Research Intern</span><span class="career__years">2019–2022</span></span>
+      </li>
+      <li class="career__item" data-start="2023" data-end="2025.45" data-side="below" data-align="start">
+        <span class="career__badge" aria-hidden="true"><svg width="16" height="16" focusable="false"><use href="/assets/icons/sprite.svg#org-huawei"/></svg></span>
+        <span class="career__text"><b class="career__org">Huawei Noah’s Ark Lab</b> <span class="career__sub">London</span><span class="career__role">Research Scientist</span><span class="career__years">2023–2025</span></span>
+      </li>
+      <li class="career__item" data-start="2024.1" data-end="2024.9" data-side="above" data-overlap>
+        <span class="career__badge career__badge--mono" aria-hidden="true">UoB</span>
+        <span class="career__text"><b class="career__org">University of Bristol</b><span class="career__role">Senior Research Associate</span><span class="career__years">2024</span></span>
+      </li>
+      <li class="career__item" data-start="2025.55" data-end="now" data-side="below" data-current>
+        <span class="career__badge career__badge--mono" aria-hidden="true">QUB</span>
+        <span class="career__text"><b class="career__org">Queen’s University Belfast</b><span class="career__role">Assistant Professor</span><span class="career__years">2025–now</span></span>
+      </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ===== 04 SELECTED WORK: three feature spreads, then "also notable" and open source ===== -->
 <section class="section" id="work" aria-labelledby="work-title">
   <div class="wrap">
     <header class="section-head reveal">
-      <p class="kicker section-head__kicker">03 — Selected work</p>
+      <p class="kicker section-head__kicker">04 — Selected work</p>
       <h2 class="section-head__title" id="work-title">Three projects, opened up.</h2>
       <p class="section-head__deck">Interactive explainers, real results and code for the work I’m asked about most.</p>
     </header>
@@ -443,12 +491,12 @@
 </section>
 
 
-<!-- ===== 04 PUBLICATIONS: newest first; copy a .pub block (docs/HOWTO.md) =====
+<!-- ===== 05 PUBLICATIONS: newest first; copy a .pub block (docs/HOWTO.md) =====
      Every .pub is also a throughline node (data-thread). Filters read data-tags and data-first-author. -->
 <section class="section" id="publications" aria-labelledby="publications-title">
   <div class="wrap">
     <header class="section-head section-head--row reveal">
-      <p class="kicker section-head__kicker">04 — Publications</p>
+      <p class="kicker section-head__kicker">05 — Publications</p>
       <h2 class="section-head__title" id="publications-title">Publications</h2>
       <a class="section-head__aside link-quiet" href="https://scholar.google.com/citations?user=vLk3IzoAAAAJ">Full list on Google Scholar<svg class="icon" width="14" height="14" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-up-right"/></svg></a>
     </header>
@@ -832,7 +880,7 @@
 </section>
 
 
-<!-- ===== 05 VISION (teaser; the only tinted band) =====
+<!-- ===== 06 VISION (teaser; the only tinted band) =====
      The essay, the schematics and the open questions live on /vision/. Teaser cards here are
      what feeds the throughline: keep their data-thread attributes in step with the full cards on
      /vision/ (data-key/short/date/lane/status/venue/note) and point data-href at /vision/#<id>.
@@ -840,7 +888,7 @@
 <section class="section band" id="vision" aria-labelledby="vision-title">
   <div class="wrap">
     <header class="section-head reveal">
-      <p class="kicker section-head__kicker">05 — Vision</p>
+      <p class="kicker section-head__kicker">06 — Vision</p>
       <h2 class="section-head__title" id="vision-title">Next: memory for machines that act.</h2>
       <p class="section-head__deck">Where the thread leads: from memory banks for video to memory for agents that act in the physical world, and the work in progress.</p>
     </header>
@@ -863,14 +911,14 @@
 </section>
 
 
-<!-- ===== 06 COLLABORATE (teaser) =====
+<!-- ===== 07 COLLABORATE (teaser) =====
      The full problem rows, "On my desk", "Ways to work together" and the address live on
      /collaborate/. Each line here links to its row (/collaborate/#problem-N): when you add or
      rename a problem there, mirror the title and tags here. -->
 <section class="section" id="collaborate" aria-labelledby="collaborate-title">
   <div class="wrap">
     <header class="section-head reveal">
-      <p class="kicker section-head__kicker">06 — Collaborate</p>
+      <p class="kicker section-head__kicker">07 — Collaborate</p>
       <h2 class="section-head__title" id="collaborate-title">Open problems. Let’s work on them together.</h2>
       <p class="section-head__deck">I’m looking for collaborators (faculty, industry researchers and students) who care about memory in perception and action. If one of these is your problem too, write to me.</p>
     </header>
@@ -926,52 +974,13 @@
 </section>
 
 
-<!-- ===== 07 EXPERIENCE & SERVICE ===== -->
+<!-- ===== 08 SERVICE & BACKGROUND ===== -->
 <section class="section" id="about" aria-labelledby="about-title">
   <div class="wrap">
     <header class="section-head reveal">
-      <p class="kicker section-head__kicker">07 — Experience &amp; service</p>
-      <h2 class="section-head__title" id="about-title">Experience and service</h2>
+      <p class="kicker section-head__kicker">08 — Service &amp; background</p>
+      <h2 class="section-head__title" id="about-title">Service and background</h2>
     </header>
-    <!-- EXPERIENCE: one <li> per role, oldest first. /assets/js/career.js lays the list out as a
-         horizontal line from data-start / data-end (decimal years; data-end="now" for the current
-         role, omit it for a short stint shown as a dot). data-side="above|below" picks the label
-         side, data-align="start|end" pins it to the segment's start or end instead of its centre; data-overlap draws a role that overlaps another as a raised branch.
-         Logos: <span class="career__badge"> holds either a sprite mark (#org-…) or a monogram;
-         to use an official logo file, replace its contents with <img src="/assets/img/logos/…" alt="">.
-         Without JS the list shows as a plain list. -->
-    <div class="career-block">
-      <h3 class="about-block__title">Experience</h3>
-      <div class="career" data-career data-from="2017" data-to="2027">
-        <ol class="career__list">
-      <li class="career__item" data-start="2017.3" data-side="below">
-        <span class="career__badge" aria-hidden="true"><svg width="16" height="16" focusable="false"><use href="/assets/icons/sprite.svg#org-baidu"/></svg></span>
-        <span class="career__text"><b class="career__org">Baidu</b> <span class="career__sub">Institute of Deep Learning (IDL)</span><span class="career__role">Intern</span><span class="career__years">2017</span></span>
-      </li>
-      <li class="career__item" data-start="2019.25" data-side="above">
-        <span class="career__badge career__badge--mono" aria-hidden="true">ST</span>
-        <span class="career__text"><b class="career__org">SenseTime</b><span class="career__role">Intern</span><span class="career__years">2019</span></span>
-      </li>
-      <li class="career__item" data-start="2019.55" data-end="2022.9" data-side="below">
-        <span class="career__badge career__badge--mono" aria-hidden="true">AV</span>
-        <span class="career__text"><b class="career__org">AnyVision</b> <span class="career__sub">now Oosto</span><span class="career__role">Research Intern</span><span class="career__years">2019–2022</span></span>
-      </li>
-      <li class="career__item" data-start="2023" data-end="2025.45" data-side="below" data-align="start">
-        <span class="career__badge" aria-hidden="true"><svg width="16" height="16" focusable="false"><use href="/assets/icons/sprite.svg#org-huawei"/></svg></span>
-        <span class="career__text"><b class="career__org">Huawei Noah’s Ark Lab</b> <span class="career__sub">London</span><span class="career__role">Research Scientist</span><span class="career__years">2023–2025</span></span>
-      </li>
-      <li class="career__item" data-start="2024.1" data-end="2024.9" data-side="above" data-overlap>
-        <span class="career__badge career__badge--mono" aria-hidden="true">UoB</span>
-        <span class="career__text"><b class="career__org">University of Bristol</b><span class="career__role">Senior Research Associate</span><span class="career__years">2024</span></span>
-      </li>
-      <li class="career__item" data-start="2025.55" data-end="now" data-side="below" data-current>
-        <span class="career__badge career__badge--mono" aria-hidden="true">QUB</span>
-        <span class="career__text"><b class="career__org">Queen’s University Belfast</b><span class="career__role">Assistant Professor</span><span class="career__years">2025–now</span></span>
-      </li>
-        </ol>
-      </div>
-    </div>
-
     <div class="hang">
       <div class="hang__main">
         <div class="about-grid">

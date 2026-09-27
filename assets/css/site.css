@@ -1073,6 +1073,8 @@ html.dev [data-todo]::after {
    accent for the present, dotted year columns. Below ~1160px the figure scrolls sideways.
    --------------------------------------------------------------------------------------------- */
 .career-block { margin-bottom: 40px; }
+#experience .section-head { margin-bottom: 8px; }
+#experience .career-block { margin-bottom: 0; }
 @media (min-width: 1024px) { .career-block > .about-block__title { margin-left: calc((100% + var(--col-gap)) / 12 * 3); } }
 .career__list { list-style: none; display: grid; gap: 14px; }
 .career__item { display: flex; align-items: flex-start; gap: 12px; }
