@@ -446,11 +446,10 @@ html:not(.js) :is(.code-copy, .copy-btn, [data-copy]) { display: none; } /* wire
 .link-row a { display: inline-flex; align-items: center; gap: 7px; min-height: 28px; font: 500 var(--fs-ui)/1 var(--font-sans); color: var(--ink-2); text-decoration: none; }
 .link-row a:hover { color: var(--accent); }
 
-.hero__ctas { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; margin-top: 32px; }
+.hero__ctas { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin-top: 32px; }
 @media (max-width: 419.98px) {
   .hero__ctas { flex-direction: column; align-items: stretch; }
   .hero__ctas .btn { width: 100%; }
-  .hero__ctas .link-arrow { justify-content: center; min-height: 44px; }
 }
 
 .now { margin-top: 28px; }
