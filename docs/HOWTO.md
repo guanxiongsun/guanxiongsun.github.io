@@ -40,8 +40,8 @@ Rules that keep the site easy to edit:
 - **No inline styles**, except the custom properties `--x`, `--y`, `--i`.
 - **Behaviour attaches through `data-*` attributes**; you never need to touch the JS to add content.
 - **Every section must read fine with JavaScript off.**
-- **Cache-busting:** CSS and JS links end in `?v=20261003`. When you change a CSS or JS file,
-  bump that date everywhere at once: search and replace `?v=20261003` across **all `.html` and
+- **Cache-busting:** CSS and JS links end in `?v=20261004`. When you change a CSS or JS file,
+  bump that date everywhere at once: search and replace `?v=20261004` across **all `.html` and
   `.js` files** (the demo modules in `assets/js/demos/` and `projects/_template/example-demo.js`
   import `article.js?v=…`, and that string must match the page's own `<script>` tag).
 
@@ -244,7 +244,8 @@ in `index.html`. Add one `<li class="career__item">`, oldest first:
 - `data-overlap` draws a role that overlaps another (e.g. Bristol inside the Huawei years) as a raised
   dashed bracket.
 - Extend the axis with `data-to` on `.career` (it is exclusive: `data-to="2028"` ends after 2027).
-- **Logos:** a badge holds a sprite mark (`<svg><use href="/assets/icons/sprite.svg#org-baidu"/></svg>`),
+- **Logos:** the current marks are official emblems taken from each organisation's own website
+  (`assets/img/logos/`: SenseTime, Oosto, Bristol, QUB; Baidu and Huawei are sprite marks). A badge holds a sprite mark (`<svg><use href="/assets/icons/sprite.svg#org-baidu"/></svg>`),
   a monogram, or an official logo file: put it in `assets/img/logos/` and replace the badge contents with
   `<img src="/assets/img/logos/qub.svg" alt="">` (square-ish, transparent background works best).
 
@@ -425,7 +426,6 @@ Search the HTML for `data-todo` (or open the site on localhost) for the full lis
 - CV PDF at `/cv.pdf` (then remove `data-todo` from the CV link in the hero). Until then the
   local link checker reports `/cv.pdf` as missing; visitors never see the link.
 - The month you joined Queen's (the Experience line says 2025).
-- Official logo files for SenseTime, AnyVision/Oosto, University of Bristol and Queen's University Belfast (see "Add a role to the Experience line").
 - Recruiting line ("Students & visitors"), office street address, earlier positions.
 - HIT supervisor line (Prof. Kuanquan Wang) and the HIT degree years (2016, 2018).
 - An image for the Physical AI card, if any.
