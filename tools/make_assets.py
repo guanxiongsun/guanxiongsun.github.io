@@ -621,7 +621,7 @@ def trim_white(im: Image.Image, margin: int = 16, threshold: int = 12) -> Image.
 # "credit" may contain "\n" for a deliberate line break.
 OG_CARDS = {
     "home": {
-        "kicker": "LECTURER · QUEEN’S UNIVERSITY BELFAST",
+        "kicker": "ASSISTANT PROFESSOR · QUEEN’S UNIVERSITY BELFAST",
         "headline": "Guanxiong Sun",
         "title": "Computer vision & machine learning",
         # hero deck; the (text, italic-accent) pairs mark the <em>

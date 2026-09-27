@@ -40,8 +40,8 @@ Rules that keep the site easy to edit:
 - **No inline styles**, except the custom properties `--x`, `--y`, `--i`.
 - **Behaviour attaches through `data-*` attributes**; you never need to touch the JS to add content.
 - **Every section must read fine with JavaScript off.**
-- **Cache-busting:** CSS and JS links end in `?v=20261001`. When you change a CSS or JS file,
-  bump that date everywhere at once: search and replace `?v=20261001` across **all `.html` and
+- **Cache-busting:** CSS and JS links end in `?v=20261002`. When you change a CSS or JS file,
+  bump that date everywhere at once: search and replace `?v=20261002` across **all `.html` and
   `.js` files** (the demo modules in `assets/js/demos/` and `projects/_template/example-demo.js`
   import `article.js?v=…`, and that string must match the page's own `<script>` tag).
 
@@ -224,6 +224,29 @@ The full cards on `/vision/` (e.g. `#physical-ai`, with schematics and open ques
 - Open node: `data-open-label`, `data-open-href`, `data-open-note` on `#throughline-figure`.
 - The no-JS list `ol.throughline__fallback` is written by hand: keep it in step with the cards.
 
+### Add a role to the Experience line (§07)
+
+The horizontal line is built by `assets/js/career.js` from the list inside `<div class="career" data-career>`
+in `index.html`. Add one `<li class="career__item">`, oldest first:
+
+```html
+<li class="career__item" data-start="2027.2" data-end="now" data-side="below" data-current>
+  <span class="career__badge career__badge--mono" aria-hidden="true">ABC</span>
+  <span class="career__text"><b class="career__org">Organisation</b><span class="career__role">Role</span><span class="career__years">2027–now</span></span>
+</li>
+```
+
+- `data-start` / `data-end` are decimal years (2027.5 = mid-2027). Omit `data-end` for a short stint (a dot);
+  use `data-end="now"` for the current role, and move `data-current` onto it (accent colour).
+- `data-side="above|below"` puts the label above or below the track; `data-align="start|end"` pins it to the
+  segment's start or end when centred labels would collide.
+- `data-overlap` draws a role that overlaps another (e.g. Bristol inside the Huawei years) as a raised
+  dashed bracket.
+- Extend the axis with `data-to` on `.career` (it is exclusive: `data-to="2028"` ends after 2027).
+- **Logos:** a badge holds a sprite mark (`<svg><use href="/assets/icons/sprite.svg#org-baidu"/></svg>`),
+  a monogram, or an official logo file: put it in `assets/img/logos/` and replace the badge contents with
+  `<img src="/assets/img/logos/qub.svg" alt="">` (square-ish, transparent background works best).
+
 ### A collaboration becomes public ("connected")
 
 Only once the partner has agreed, in public, to be named. In `collaborate/index.html`, find
@@ -400,7 +423,8 @@ Search the HTML for `data-todo` (or open the site on localhost) for the full lis
 
 - CV PDF at `/cv.pdf` (then remove `data-todo` from the CV link in the hero). Until then the
   local link checker reports `/cv.pdf` as missing; visitors never see the link.
-- The date you joined Queen's as a Lecturer.
+- The month you joined Queen's (the Experience line says 2025).
+- Official logo files for SenseTime, AnyVision/Oosto, University of Bristol and Queen's University Belfast (see "Add a role to the Experience line").
 - Recruiting line ("Students & visitors"), office street address, earlier positions.
 - HIT supervisor line (Prof. Kuanquan Wang) and the HIT degree years (2016, 2018).
 - An image for the Physical AI card, if any.
