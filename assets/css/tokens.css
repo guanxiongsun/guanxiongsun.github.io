@@ -1,0 +1,206 @@
+/* =====================================================================
+   tokens.css: fonts and every design token (colour, type, space, motion).
+   This is the ONLY file that defines colours, fonts and spacing.
+   Components live in site.css (all pages) and article.css (project pages).
+
+   Theme mechanics (spec §2.1):
+     :root                       light values (default)
+     @media dark + :root:not([data-theme="light"])   dark values (follows OS)
+     :root[data-theme="dark"]    dark values, forced by the theme toggle
+   The dark block is intentionally duplicated so it works without light-dark().
+   ===================================================================== */
+
+/* ---------- Fonts: self-hosted, latin subset, variable (OFL-1.1, see /assets/fonts/LICENSES/) ---------- */
+@font-face {
+  font-family: "Newsreader";
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url("/assets/fonts/newsreader-latin-opsz-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* Italic: a static instance (wght 400, opsz 24) cut from newsreader-latin-opsz-italic.woff2
+   with fontTools' instancer: 24 KB instead of 143 KB, since the hero deck's <em> loads it on
+   first view. Italic is only ever set at 400. The variable file stays in the repo for
+   tools/make_assets.py (OG cards). OFL-1.1, no Reserved Font Name. */
+@font-face {
+  font-family: "Newsreader";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/fonts/newsreader-latin-italic-400.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/assets/fonts/inter-latin-wght-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 100 800;
+  font-display: swap;
+  src: url("/assets/fonts/jetbrains-mono-latin-wght-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  color-scheme: light dark;
+
+  /* ---------- Colour: light ("warm paper and ink") ---------- */
+  --paper: #FAF8F4;          /* page background */
+  --paper-2: #F2EEE6;        /* vision band, TL;DR boxes */
+  --surface: #FFFFFF;        /* cards, popovers, explorable frames */
+  --mat: #FFFFFF;            /* figure mats (see .plate__mat) */
+  --ink: #1A1814;
+  --ink-2: #4A443B;          /* secondary text, decks, authors */
+  --ink-3: #6B6458;          /* meta, kickers, axis labels */
+  --rule: #E3DDD2;           /* hairlines */
+  --rule-strong: #C9C0B0;    /* chip borders, stronger dividers */
+  --control-border: #8C8374; /* inputs and segmented controls (3:1 non-text) */
+  --accent: #B23A17;         /* cinnabar: links on hover, focus, "ours", memory motif */
+  --accent-strong: #8E2C10;
+  --accent-wash: #F7E7DE;
+  --on-accent: #FFFFFF;
+  --code-bg: #F2EEE6;
+  --header-bg: rgb(250 248 244 / .86);
+  --scrim: rgb(26 24 20 / .72); /* round overlay buttons on media (zoom, play) */
+  --on-scrim: #FFFFFF;          /* icons on --scrim */
+  --backdrop: rgb(18 17 16 / .86); /* lightbox backdrop (dark in both themes) */
+  --on-backdrop: #F2EEE6;       /* lightbox caption text */
+  --photo-filter: none;         /* photos (portrait): dimmed slightly in dark mode */
+
+  /* Data and demo colours: colour follows meaning, never rank. */
+  --data-focus: #B23A17;     /* "ours", key set being read, prompts, current frame */
+  --data-memory: #2A5EA8;    /* memory contents, support frames */
+  --data-noise: #8A6A12;     /* degradation, seeds, reference frames (hollow marks) */
+  --data-context: #6B6458;   /* baselines, context */
+  --badge-schematic: #8A6A12;
+  --badge-paper: #2A5EA8;
+  --badge-real: #2F6B3A;
+
+  /* Shadows */
+  --shadow-plate: 0 1px 1px rgb(26 24 20 / .04), 0 12px 32px -20px rgb(26 24 20 / .28);
+  --shadow-plate-hover: 0 2px 2px rgb(26 24 20 / .05), 0 18px 36px -18px rgb(26 24 20 / .34);
+  --shadow-pop: 0 2px 6px rgb(26 24 20 / .08), 0 18px 40px -12px rgb(26 24 20 / .24);
+  --plate-border: var(--rule);
+
+  /* ---------- Fonts ---------- */
+  --font-serif: "Newsreader", Georgia, "Times New Roman", serif;
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  /* ---------- Type scale (root 16px) ---------- */
+  --fs-display: clamp(3rem, 1.9rem + 5vw, 6rem);
+  --fs-h1: clamp(2.5rem, 1.8rem + 3.2vw, 4.25rem);
+  --fs-h2: clamp(2rem, 1.6rem + 1.8vw, 3rem);
+  --fs-h3: clamp(1.5rem, 1.3rem + .8vw, 2rem);
+  --fs-lede: clamp(1.1875rem, 1.1rem + .4vw, 1.375rem);
+  --fs-deck-xl: clamp(1.375rem, 1.1rem + 1.1vw, 1.875rem);
+  --fs-title: 1.1875rem;
+  --fs-body: clamp(1.0625rem, 1.02rem + .18vw, 1.1875rem);
+  --fs-cap: .9375rem;
+  --fs-ui: .875rem;
+  --fs-sm: .8125rem;
+  --fs-xs: .75rem;
+  --track-kicker: .08em;
+
+  /* ---------- Spacing (4px base) ---------- */
+  --s-1: 4px;  --s-2: 8px;  --s-3: 12px; --s-4: 16px; --s-5: 24px;
+  --s-6: 32px; --s-7: 48px; --s-8: 64px; --s-9: 96px; --s-10: 128px;
+  --section-y: clamp(4rem, 3rem + 5vw, 8rem);
+
+  /* ---------- Layout ---------- */
+  --container: 75rem;  /* 1200px */
+  --measure: 42rem;    /* prose */
+  --wide: 66rem;       /* wide figures, explorables */
+  --gutter: 16px;      /* 24px ≥600, 40px ≥1024 (set below) */
+  --col-gap: 16px;     /* 24px ≥840 */
+  --header-h: 56px;    /* 64px ≥840 */
+  --mat-pad: 12px;
+
+  /* ---------- Radii ---------- */
+  --r-xs: 2px;    /* plates and images, as in print */
+  --r-sm: 4px;    /* buttons, inputs, code */
+  --r-md: 8px;    /* cards, popovers, explorable frames */
+  --r-pill: 999px;
+
+  /* ---------- Motion ---------- */
+  --dur-1: 120ms;    /* colour */
+  --dur-2: 200ms;    /* UI state */
+  --dur-3: 320ms;    /* popovers, crossfades */
+  --dur-4: 480ms;    /* reveals */
+  --dur-draw: 1400ms; /* throughline */
+  --ease-out: cubic-bezier(.22, .8, .26, 1);
+  --ease-inout: cubic-bezier(.65, 0, .35, 1);
+
+  /* ---------- z-index ---------- */
+  --z-header: 50;
+  --z-pop: 60;
+  --z-toast: 70;
+}
+
+@media (min-width: 600px) { :root { --gutter: 24px; } }
+@media (min-width: 840px) { :root { --col-gap: 24px; --header-h: 64px; } }
+@media (min-width: 1024px) { :root { --gutter: 40px; } }
+
+/* ---------- Colour: dark ("a dark reading-room table with light plates on it") ---------- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #121110; --paper-2: #1A1816; --surface: #1F1D1A; --mat: #E8E3D9;
+    --ink: #EEE9E0; --ink-2: #C2BAAD; --ink-3: #9A9184;
+    --rule: #2F2B26; --rule-strong: #4A443C; --control-border: #6E665B;
+    --accent: #F0875A; --accent-strong: #F6A884; --accent-wash: #3A2117; --on-accent: #121110;
+    --code-bg: #1A1816; --header-bg: rgb(18 17 16 / .82); --scrim: rgb(18 17 16 / .78);
+    --data-focus: #D56A3B; --data-memory: #5B8CD6; --data-noise: #AE8820; --data-context: #9A9184;
+    --badge-schematic: #D9B45A; --badge-paper: #8EB1DA; --badge-real: #8CC79A;
+    --shadow-plate: 0 18px 40px -22px rgb(0 0 0 / .9);
+    --shadow-plate-hover: 0 22px 44px -20px rgb(0 0 0 / .95);
+    --shadow-pop: 0 0 0 1px #2F2B26, 0 20px 48px -12px rgb(0 0 0 / .75);
+    --plate-border: transparent;
+    --photo-filter: brightness(.9);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --paper: #121110; --paper-2: #1A1816; --surface: #1F1D1A; --mat: #E8E3D9;
+  --ink: #EEE9E0; --ink-2: #C2BAAD; --ink-3: #9A9184;
+  --rule: #2F2B26; --rule-strong: #4A443C; --control-border: #6E665B;
+  --accent: #F0875A; --accent-strong: #F6A884; --accent-wash: #3A2117; --on-accent: #121110;
+  --code-bg: #1A1816; --header-bg: rgb(18 17 16 / .82); --scrim: rgb(18 17 16 / .78);
+  --data-focus: #D56A3B; --data-memory: #5B8CD6; --data-noise: #AE8820; --data-context: #9A9184;
+  --badge-schematic: #D9B45A; --badge-paper: #8EB1DA; --badge-real: #8CC79A;
+  --shadow-plate: 0 18px 40px -22px rgb(0 0 0 / .9);
+  --shadow-plate-hover: 0 22px 44px -20px rgb(0 0 0 / .95);
+  --shadow-pop: 0 0 0 1px #2F2B26, 0 20px 48px -12px rgb(0 0 0 / .75);
+  --plate-border: transparent;
+  --photo-filter: brightness(.9);
+}
+:root[data-theme="light"] { color-scheme: light; }
+
+/* Higher contrast on request: stronger rules, opaque header. */
+@media (prefers-contrast: more) {
+  /* Selectors repeat the theme selectors so this block wins in both themes. */
+  :root, :root:not([data-theme="light"]), :root[data-theme] { --rule: var(--rule-strong); --header-bg: var(--paper); }
+}
+
+/* Print: always the light palette, whatever the screen theme. Listed after the dark
+   blocks and with the same specificity, so it wins by source order. */
+@media print {
+  :root, :root:not([data-theme="light"]), :root[data-theme] {
+    color-scheme: light;
+    --paper: #FFFFFF; --paper-2: #FFFFFF; --surface: #FFFFFF; --mat: #FFFFFF;
+    --ink: #000000; --ink-2: #333333; --ink-3: #555555;
+    --rule: #CCCCCC; --rule-strong: #999999; --control-border: #777777;
+    --accent: #8E2C10; --accent-strong: #8E2C10; --accent-wash: #FFFFFF; --on-accent: #FFFFFF;
+    --code-bg: #FFFFFF; --header-bg: #FFFFFF;
+    --data-focus: #B23A17; --data-memory: #2A5EA8; --data-noise: #8A6A12; --data-context: #555555;
+    --badge-schematic: #8A6A12; --badge-paper: #2A5EA8; --badge-real: #2F6B3A;
+    --shadow-plate: none; --shadow-plate-hover: none; --shadow-pop: none;
+    --plate-border: #CCCCCC; --photo-filter: none;
+  }
+}

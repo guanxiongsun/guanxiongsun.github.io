@@ -1,0 +1,212 @@
+/* neural-sign-actors.css: page-only styles for /projects/neural-sign-actors/ and its sentence
+   explorer (nsa-compare.js). Colours come from tokens.css only.
+
+   Explorer layout (.nsa-grid, --i = focused frame − 1, animated through @property):
+     ≥ 600, Frames   three rows (label | 4-frame strip); frames other than --i are dimmed and a
+                     focus bracket spans the rows.
+     < 600, Frames   one frame per row: each strip is 400% wide, slid by −25% · --i; the two avatars
+                     sit side by side under the video.
+     Average         one cell per row with the four frames stacked at equal weight
+                     (opacities 1, 1/2, 1/3, 1/4 composite to the mean).
+   Without JS (or before .is-ready) the strips show whole, undimmed, for sentence 1. */
+
+@property --i { syntax: "<number>"; inherits: true; initial-value: 0; }
+
+/* ---------- Page helpers ---------- */
+.nsa-src { font: 400 13px/1.5 var(--font-sans); color: var(--ink-3); }
+.nsa-src code { font-size: .95em; }
+.nsa-math { white-space: nowrap; font-family: var(--font-serif); font-size: 1.05em; }
+/* Hats and stacked indices drawn in CSS: the combining circumflex drifts in Newsreader italic. */
+.nsa-hat { position: relative; display: inline-block; }
+.nsa-hat::after {
+  content: "^"; position: absolute; left: 58%; top: -.16em; translate: -50% 0;
+  font: 400 .8em/1 var(--font-serif); font-style: normal; pointer-events: none;
+}
+.nsa-ss { display: inline-flex; flex-direction: column; vertical-align: .32em; font-size: .72em; line-height: 1; margin-left: 1px; }
+.nsa-ss sup, .nsa-ss sub { position: static; top: auto; bottom: auto; vertical-align: baseline; font-size: 1em; line-height: 1; }
+.nsa-h3 { margin-top: var(--s-5); font: 600 var(--fs-title)/1.3 var(--font-serif); color: var(--ink); }
+.nsa-study .plate__mat { display: grid; justify-items: center; }
+.nsa-study img { width: 100%; max-width: 496px; height: auto; }
+.nsa-media { display: grid; gap: 32px; margin-block: var(--s-5); align-items: start; }
+@media (min-width: 840px) { .nsa-media { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.nsa-media .plate__zoom { display: block; }
+.nsa-media .plate__mat img { display: block; width: 100%; height: auto; }
+
+/* ---------- Explorer: tabs, transcript ---------- */
+#demo:not(.is-ready) :is(.nsa-tabs, .nsa-bracket) { display: none; }
+.nsa-tabs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 12px; }
+.nsa-tabs .tab { display: flex; align-items: flex-start; gap: 8px; padding: 10px 10px 10px 4px; }
+.nsa-tab__n {
+  display: inline-grid; place-items: center; flex: none; width: 22px; height: 22px; margin-top: -1px;
+  border: 1px solid var(--control-border); border-radius: 50%;
+  font: 600 12px/1 var(--font-mono); color: var(--ink-2);
+  transition: background-color var(--dur-1), color var(--dur-1), border-color var(--dur-1);
+}
+.tab[aria-selected="true"] .nsa-tab__n { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.nsa-tab__t { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+@media (max-width: 599.98px) {
+  .nsa-tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .nsa-tabs .tab { font-size: 13px; }
+}
+
+.explorable__stage.nsa-stage { display: block; min-height: 0; }
+.nsa-say { max-width: none; margin: 0; }
+.nsa-look { max-width: 60rem; margin: 22px 0 16px; font: 400 14px/1.55 var(--font-sans); color: var(--ink-2); }
+.nsa-look b { font-weight: 600; color: var(--ink); }
+
+/* ---------- Explorer: rows ---------- */
+.nsa-grid {
+  --dim: color-mix(in srgb, var(--mat) 45%, transparent);
+  position: relative; display: grid; align-items: center;
+  grid-template-columns: 9.5rem minmax(0, 1fr); gap: 10px 16px;
+  transition: --i 320ms var(--ease-out);
+}
+.nsa-ticks { grid-column: 2; grid-row: 1; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.nsa-ticks span {
+  justify-self: center; min-width: 64px; padding: 5px 8px; border-radius: var(--r-pill); text-align: center;
+  font: 500 12px/1 var(--font-mono); letter-spacing: .04em; color: var(--ink-3);
+  transition: background-color var(--dur-2), color var(--dur-2);
+}
+.nsa-ticks span::before { content: "Frame "; }
+#demo.is-ready .nsa-ticks span { cursor: pointer; }
+#demo.is-ready .nsa-ticks span:hover { color: var(--ink); }
+.nsa-ticks span.is-on { background: var(--accent); color: var(--on-accent); font-weight: 600; }
+
+.nsa-lab { grid-column: 1; margin: 0; font: 600 14px/1.3 var(--font-sans); color: var(--ink); }
+.nsa-lab small { display: block; margin-top: 3px; font: 400 12px/1.35 var(--font-sans); color: var(--ink-3); }
+.nsa-lab--ours { color: var(--accent); }
+.nsa-view { grid-column: 2; min-width: 0; }
+.nsa-lab--gt, .nsa-view--gt { grid-row: 2; }
+.nsa-lab--base, .nsa-view--base { grid-row: 3; }
+.nsa-lab--ours, .nsa-view--ours { grid-row: 4; }
+.nsa-view--gt { --ar: 400 / 225; }
+.nsa-view--base { --ar: 400 / 464; } /* padded to the NSA cell height; the extra is mat */
+.nsa-view--ours { --ar: 400 / 464; }
+.nsa-view .plate__mat { position: relative; padding: 0; overflow: hidden; }
+/* Blend the stacked layers normally, then multiply the group into the mat (dark-mode trick). */
+.nsa-layers { position: relative; mix-blend-mode: multiply; transition: opacity var(--dur-2); }
+.nsa-view--gt .nsa-layers { mix-blend-mode: normal; }
+.nsa-layers img { display: block; width: 100%; height: auto; max-width: none; mix-blend-mode: normal; }
+.nsa-layers .nsa-ghost { display: none; }
+.nsa-grid.is-busy .nsa-layers { opacity: .55; }
+.no-base :is(.nsa-lab--base, .nsa-view--base) { display: none; }
+.no-base :is(.nsa-lab--ours, .nsa-view--ours) { grid-row: 3; }
+
+/* Frames view, wide screens: dim the other frames, bracket the focused one across the rows. */
+#demo.is-ready .nsa-grid[data-view="frames"] .nsa-view { cursor: pointer; }
+#demo.is-ready [data-view="frames"] .nsa-view .plate__mat::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(to right,
+    var(--dim) 0 calc(var(--i) * 25%), transparent 0 calc(var(--i) * 25% + 25%), var(--dim) 0);
+}
+.nsa-bracket {
+  grid-column: 2; grid-row: 2 / 5; align-self: stretch; z-index: 1; box-sizing: border-box;
+  width: calc(25% + 8px); margin: -5px 0 -5px -4px; pointer-events: none;
+  border: 2px solid var(--data-focus); border-radius: 7px;
+  transform: translateX(calc(var(--i) * (100% - 8px)));
+}
+.no-base .nsa-bracket { grid-row: 2 / 4; }
+[data-view="avg"] :is(.nsa-bracket, .nsa-ticks) { display: none; }
+
+/* Wide screens: cap the strips so tabs, rows and controls fit one 900px-tall screen. */
+@media (min-width: 840px) {
+  .nsa-grid:not([data-view="avg"]) { grid-template-columns: 7.5rem minmax(0, 1fr); max-width: 54rem; margin-inline: auto; }
+}
+/* Average: the frame controls have nothing to point at until moved (moving one returns to Frames). */
+#demo[data-view="avg"] .explorable__controls .ctrl { opacity: .6; }
+#demo[data-view="avg"] .explorable__controls .ctrl:focus-within { opacity: 1; }
+
+@media (min-width: 600px) and (max-width: 839.98px) {
+  .nsa-grid { grid-template-columns: 6.5rem minmax(0, 1fr); gap: 10px 12px; }
+  .nsa-lab { font-size: 13px; }
+  .nsa-ticks span { min-width: 0; }
+  .nsa-ticks span::before { content: none; }
+}
+
+/* One cell per row (Average everywhere; Frames on phones). */
+[data-view="avg"] .nsa-layers { aspect-ratio: var(--ar); overflow: hidden; }
+[data-view="avg"] .nsa-layers img { position: absolute; top: 0; left: 0; width: 400%; }
+[data-view="avg"] .nsa-layers .nsa-ghost { display: block; opacity: calc(1 / (var(--k) + 1)); transform: translateX(calc(var(--k) * -25%)); }
+
+@media (min-width: 600px) {
+  .nsa-grid[data-view="avg"] { grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: start; }
+  .nsa-grid.no-base[data-view="avg"] { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 44rem; margin-inline: auto; }
+  [data-view="avg"] .nsa-lab { grid-row: 1; align-self: end; }
+  [data-view="avg"] .nsa-view { grid-row: 2; }
+  [data-view="avg"] :is(.nsa-lab--gt, .nsa-view--gt) { grid-column: 1; }
+  [data-view="avg"] :is(.nsa-lab--base, .nsa-view--base) { grid-column: 2; }
+  [data-view="avg"] :is(.nsa-lab--ours, .nsa-view--ours) { grid-column: 3; }
+  .no-base[data-view="avg"] :is(.nsa-lab--ours, .nsa-view--ours) { grid-column: 2; }
+}
+
+@media (max-width: 599.98px) {
+  #demo.is-ready .nsa-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 10px; align-items: start; }
+  #demo.is-ready .nsa-ticks { grid-column: 1 / -1; display: flex; justify-content: center; gap: 6px; }
+  #demo.is-ready .nsa-ticks span { min-width: 36px; min-height: 28px; padding: 8px 10px; }
+  #demo.is-ready .nsa-ticks span::before { content: none; }
+  #demo.is-ready [data-view="avg"] .nsa-ticks { display: none; }
+  /* Without JS: labels above full-width strips. */
+  #demo:not(.is-ready) .nsa-grid { grid-template-columns: minmax(0, 1fr); gap: 6px; }
+  #demo:not(.is-ready) :is(.nsa-lab, .nsa-view, .nsa-ticks) { grid-column: 1; }
+  #demo:not(.is-ready) .nsa-lab:not(.nsa-lab--gt) { margin-top: 8px; }
+  #demo:not(.is-ready) .nsa-lab--gt { grid-row: 2; } #demo:not(.is-ready) .nsa-view--gt { grid-row: 3; }
+  #demo:not(.is-ready) .nsa-lab--base { grid-row: 4; } #demo:not(.is-ready) .nsa-view--base { grid-row: 5; }
+  #demo:not(.is-ready) .nsa-lab--ours { grid-row: 6; } #demo:not(.is-ready) .nsa-view--ours { grid-row: 7; }
+  #demo:not(.is-ready) .nsa-ticks span { min-width: 0; padding: 5px 2px; }
+  #demo:not(.is-ready) .nsa-ticks span::before { content: none; }
+  #demo.is-ready :is(.nsa-lab--gt, .nsa-view--gt) { grid-column: 1 / -1; }
+  #demo.is-ready .nsa-lab--gt { grid-row: 2; }
+  #demo.is-ready .nsa-view--gt { grid-row: 3; }
+  #demo.is-ready :is(.nsa-lab--base, .nsa-lab--ours) { grid-row: 4; align-self: end; }
+  #demo.is-ready :is(.nsa-view--base, .nsa-view--ours) { grid-row: 5; }
+  #demo.is-ready :is(.nsa-lab--base, .nsa-view--base) { grid-column: 1; }
+  #demo.is-ready :is(.nsa-lab--ours, .nsa-view--ours) { grid-column: 2; }
+  #demo.is-ready .no-base :is(.nsa-lab--ours, .nsa-view--ours) { grid-column: 1 / -1; justify-self: center; width: 62%; }
+  #demo.is-ready .nsa-bracket, #demo.is-ready .nsa-view .plate__mat::after { display: none; }
+  #demo.is-ready .nsa-view { touch-action: pan-y; }
+  #demo.is-ready .nsa-layers { aspect-ratio: var(--ar); overflow: hidden; }
+  #demo.is-ready [data-view="frames"] .nsa-layers img { width: 400%; transform: translateX(calc(var(--i) * -25%)); }
+  .nsa-lab { font-size: 13px; }
+  .nsa-lab small { font-size: 11.5px; }
+}
+
+/* ---------- Fig. 4: method figure (full width, list below) ---------- */
+.nsa-zoom { display: block; position: relative; cursor: zoom-in; border-radius: var(--r-xs); }
+.nsa-zoom img { display: block; }
+.nsa-zoom:is(:hover, :focus-visible) .plate__zoom-icon { opacity: 1; }
+.nsa-zoom .plate__zoom-icon { top: auto; bottom: 6px; right: 6px; }
+@media (min-width: 840px) {
+  .nsa-hot.hotspots { grid-template-columns: minmax(0, 1fr); }
+  .nsa-hot .hotspots__list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2px 24px; margin-top: 0; }
+}
+@media (min-width: 1200px) { .nsa-hot .hotspots__list { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+/* Phones: the diagram is small, so keep each marker's padded hit area from covering its neighbours. */
+@media (max-width: 599.98px) { .nsa-hot .hotspot::before { inset: -4px; } }
+
+/* ---------- Fig. 1 on phones: a chosen frame is zoomed to fill the plate ---------- */
+@media (max-width: 599.98px) {
+  .stepper.article-hero .plate__mat { --mat-pad: 8px; overflow: hidden; }
+  .stepper.article-hero .stepper__frame { transition: transform var(--dur-3, 320ms) var(--ease-out); }
+  .stepper.article-hero:has(.stepper__seg input:not([value="all"]):checked) .stepper__frame {
+    width: 344.5%; transform: translateX(var(--tx, 0%)); /* a 1100-px window of the 3789-px strip */
+  }
+  .stepper.article-hero:has(.stepper__seg input[value="2"]:checked) { --tx: -9.98%; }
+  .stepper.article-hero:has(.stepper__seg input[value="3"]:checked) { --tx: -23.88%; }
+  .stepper.article-hero:has(.stepper__seg input[value="4"]:checked) { --tx: -37.77%; }
+  .stepper.article-hero:has(.stepper__seg input[value="5"]:checked) { --tx: -51.65%; }
+  .stepper.article-hero:has(.stepper__seg input[value="6"]:checked) { --tx: -65.56%; }
+  .stepper.article-hero:has(.stepper__seg input[value="7"]:checked) { --tx: -70.97%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nsa-grid, .nsa-layers, .nsa-ticks span, .nsa-tab__n, .stepper.article-hero .stepper__frame { transition: none; }
+}
+@media (forced-colors: active) {
+  .nsa-bracket { border-color: Highlight; }
+  .nsa-ticks span.is-on { forced-color-adjust: none; background: Highlight; color: HighlightText; }
+  .tab[aria-selected="true"] .nsa-tab__n { forced-color-adjust: none; background: Highlight; color: HighlightText; }
+  #demo.is-ready [data-view="frames"] .nsa-view .plate__mat::after { background: none; }
+  /* The avatar strips multiply into the mat; over a Canvas-black mat that is solid black. */
+  .nsa-layers { mix-blend-mode: normal; }
+  .nsa-view .plate__mat { forced-color-adjust: none; background: #fff; }
+}

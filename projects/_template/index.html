@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Theme boot: runs before any stylesheet so a saved theme never flashes. Keep it first. -->
+  <script>try{const t=localStorage.getItem('theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){};document.documentElement.classList.add('js')</script>
+  <!--
+    PROJECT PAGE TEMPLATE. Copy this folder to /projects/<slug>/, then:
+      1. delete the robots noindex line below;
+      2. fill every block marked with a FILL comment, and remove every class="todo" / .todo-note marker;
+      3. delete the sections and EXAMPLE components you do not need (see docs/HOWTO.md).
+    The EXAMPLE figures and charts use real, sourced numbers from the MAMBA / STPN / NSA
+    pages so every component can be seen working; replace them with your own.
+  -->
+  <meta name="robots" content="noindex">
+  <!-- FILL: "SHORT: Full paper title · Guanxiong Sun" -->
+  <title>SHORT: Full paper title · Guanxiong Sun</title>
+  <!-- FILL: one sentence, ≤ 160 characters -->
+  <meta name="description" content="Project page template: copy this folder to start a new project page.">
+  <meta name="author" content="Guanxiong Sun">
+  <!-- FILL: slug -->
+  <link rel="canonical" href="https://guanxiongsun.github.io/projects/_template/">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#FAF8F4" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#121110" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <link rel="preload" href="/assets/fonts/newsreader-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <!-- Cache-bust: bump ?v=YYYYMMDD on every CSS/JS link at release (and in demo-module imports). -->
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=20260926">
+  <link rel="stylesheet" href="/assets/css/site.css?v=20260926">
+  <link rel="stylesheet" href="/assets/css/article.css?v=20260926">
+
+  <!-- Social cards. FILL: slug, title, description; make the card with tools/make_assets.py og <slug> -->
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Guanxiong Sun">
+  <meta property="og:url" content="https://guanxiongsun.github.io/projects/_template/">
+  <meta property="og:title" content="SHORT: Full paper title">
+  <meta property="og:description" content="Project page template: copy this folder to start a new project page.">
+  <meta property="og:image" content="https://guanxiongsun.github.io/assets/og/home.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="FILL: what the social card shows">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SHORT: Full paper title">
+  <meta name="twitter:description" content="Project page template: copy this folder to start a new project page.">
+  <meta name="twitter:image" content="https://guanxiongsun.github.io/assets/og/home.png">
+
+  <!-- FILL: every field. Authors in paper order; isPartOf = the venue; sameAs = arXiv. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "headline": "FILL: Full paper title",
+    "name": "SHORT",
+    "url": "https://guanxiongsun.github.io/projects/_template/",
+    "image": "https://guanxiongsun.github.io/assets/og/home.png",
+    "author": [
+      { "@type": "Person", "name": "Guanxiong Sun", "url": "https://guanxiongsun.github.io/" },
+      { "@type": "Person", "name": "FILL: Co-author" }
+    ],
+    "datePublished": "2026-01",
+    "isPartOf": { "@type": "CreativeWork", "name": "FILL: Proceedings of VENUE YEAR" },
+    "sameAs": ["https://arxiv.org/abs/FILL"]
+  }
+  </script>
+
+  <!-- Scripts are modules (deferred). site.js + article.js + charts.js on every project page,
+       plus the page's own demo module. -->
+  <script type="module" src="/assets/js/site.js?v=20260926"></script>
+  <script type="module" src="/assets/js/article.js?v=20260926"></script>
+  <script type="module" src="/assets/js/charts.js?v=20260926"></script>
+  <!-- FILL: the page's demo, e.g. /assets/js/demos/mamba-memory.js?v=20260926 -->
+  <script type="module" src="/projects/_template/example-demo.js?v=20260926"></script>
+</head>
+
+<body>
+<a class="skip-link" href="#content">Skip to content</a>
+
+<!-- ===== SITE HEADER (shared by every page; on project pages nav links point to /#work etc.) ===== -->
+<header class="site-header" data-header>
+  <div class="site-header__inner wrap">
+    <a class="wordmark" href="/">
+      <svg class="logomark" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false">
+        <rect class="logomark__cell" x="1.625" y="1.625" width="4.75" height="4.75" rx="1"/>
+        <rect class="logomark__cell logomark__cell--on" x="9" y="1" width="6" height="6" rx="1"/>
+        <rect class="logomark__cell" x="1.625" y="9.625" width="4.75" height="4.75" rx="1"/>
+        <rect class="logomark__cell" x="9.625" y="9.625" width="4.75" height="4.75" rx="1"/>
+      </svg>
+      <span class="wordmark__name">Guanxiong Sun</span>
+    </a>
+
+    <nav class="site-nav" aria-label="Primary">
+      <ul class="site-nav__list" id="site-menu" data-menu-panel>
+        <li><a class="site-nav__link" href="/#work" aria-current="true">Work</a></li>
+        <li><a class="site-nav__link" href="/#vision">Vision</a></li>
+        <li><a class="site-nav__link" href="/#collaborate">Collaborate</a></li>
+        <li><a class="site-nav__link" href="/#publications">Publications</a></li>
+        <li><a class="site-nav__link" href="/#news">News</a></li>
+      </ul>
+    </nav>
+
+    <div class="site-header__tools">
+      <button class="btn-icon theme-toggle" type="button" data-theme-toggle aria-label="Theme: Auto (follows system). Switch to light">
+        <svg class="icon theme-toggle__icon theme-toggle__icon--auto" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#contrast"/></svg>
+        <svg class="icon theme-toggle__icon theme-toggle__icon--light" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#sun"/></svg>
+        <svg class="icon theme-toggle__icon theme-toggle__icon--dark" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#moon"/></svg>
+      </button>
+      <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="site-menu">
+        <svg class="icon menu-toggle__open" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#menu"/></svg>
+        <svg class="icon menu-toggle__close" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#x"/></svg>
+        <span>Menu</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="content">
+<article class="article" aria-labelledby="article-title">
+
+  <!-- ===== ARTICLE HEAD ===== -->
+  <header class="article-head" id="top">
+    <a class="link-quiet article-head__back" href="/#work"><svg class="icon" width="14" height="14" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-left"/></svg>All work</a>
+    <!-- FILL: VENUE YEAR · AREA (mono kicker, written in sentence case; CSS uppercases it) -->
+    <p class="kicker article-head__kicker todo">Venue 2026 · Research area</p>
+    <!-- FILL: short name -->
+    <h1 class="article-head__title todo" id="article-title">Project title</h1>
+    <!-- FILL: full paper title as a subtitle -->
+    <p class="article-head__subtitle todo">The full paper title, set as a subtitle in serif italic</p>
+    <!-- FILL: authors in paper order; his name in <b class="me">; link co-authors; <sup> affiliation numbers -->
+    <p class="article-head__authors todo"><b class="me">Guanxiong Sun</b><sup>1</sup>, <a href="https://example.org/">Co-author Name</a><sup>2</sup>, Co-author Name<sup>1</sup></p>
+    <!-- FILL: affiliations; wrap anything unconfirmed in data-todo -->
+    <p class="article-head__affil todo"><sup>1</sup>Queen’s University Belfast · <sup>2</sup><span data-todo="affiliation to confirm">Institution</span></p>
+    <!-- FILL: keep only the buttons that exist. BibTeX always jumps to #cite. -->
+    <ul class="article-head__links todo">
+      <li><a class="btn btn--ghost btn--sm" href="https://example.org/paper"><svg class="icon" width="15" height="15" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#file-text"/></svg>Paper</a></li>
+      <li><a class="btn btn--ghost btn--sm" href="https://arxiv.org/abs/FILL"><svg class="icon" width="15" height="15" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#file"/></svg>arXiv</a></li>
+      <li><a class="btn btn--ghost btn--sm" href="https://github.com/guanxiongsun"><svg class="icon" width="15" height="15" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#code-xml"/></svg>Code</a></li>
+      <li><a class="btn btn--ghost btn--sm" href="https://huggingface.co/guanxiongsun"><svg class="icon" width="15" height="15" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#box"/></svg>Models</a></li>
+      <li><a class="btn btn--ghost btn--sm" href="https://example.org/data"><svg class="icon" width="15" height="15" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#database"/></svg>Data</a></li>
+      <li><a class="btn btn--ghost btn--sm" href="/assets/img/projects/nsa/poster-3000.webp" data-full="/assets/img/projects/nsa/poster-3000.webp" data-caption="FILL: poster caption."><svg class="icon" width="15" height="15" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#image"/></svg>Poster</a></li>
+      <li><a class="btn btn--ghost btn--sm" href="#talk"><svg class="icon" width="15" height="15" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#youtube"/></svg>Talk</a></li>
+      <li><a class="btn btn--ghost btn--sm" href="#cite"><svg class="icon" width="15" height="15" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-down"/></svg>BibTeX</a></li>
+    </ul>
+  </header>
+
+  <!-- A paper led by someone else: add a credit callout here, directly under the head.
+  <aside class="callout callout--credit"><p class="kicker">Credit</p><p class="callout__text">This project was led by NAME and NAME at INSTITUTION. My contribution: <span data-todo="owner: one sentence">…</span></p><p><a class="link-arrow link-arrow--sm" href="OFFICIAL-URL">Official project page<svg class="icon" width="14" height="14" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-up-right"/></svg></a></p></aside>
+  -->
+
+  <!-- ===== HERO PLATE (wide). Alternatives: a video plate (.plate--video, site.css), the A/B
+       toggle (data-ab), or the frame stepper shown in "The problem" below. One badge only. ===== -->
+  <figure class="plate article-hero wide">
+    <div class="plate__head"><span class="plate__num">Fig. 1</span><span class="badge badge--paper">From the paper</span></div>
+    <a class="plate__zoom" href="/assets/img/stpn.webp" data-full="/assets/img/stpn.webp" data-caption="EXAMPLE. STPN overview: (a) current pipeline, (b) STPN. Paper Fig. 1."><span class="visually-hidden">Enlarge figure: </span>
+      <span class="plate__mat"><img src="/assets/img/stpn-1280.webp" srcset="/assets/img/stpn-640.webp 640w, /assets/img/stpn-1280.webp 1280w, /assets/img/stpn.webp 1936w" sizes="(min-width: 1200px) 66rem, calc(100vw - 32px)" width="1936" height="934" fetchpriority="high" decoding="async" alt="EXAMPLE: STPN overview, prior task-specific pipelines on the left and STPN's prompt predictor feeding one backbone on the right."></span>
+      <span class="plate__zoom-icon" aria-hidden="true"><svg class="icon" width="14" height="14" focusable="false"><use href="/assets/icons/sprite.svg#maximize-2"/></svg></span>
+    </a>
+    <!-- FILL: "Fig. 1 …" caption + source -->
+    <figcaption class="plate__cap"><span class="todo-note">EXAMPLE:</span> What the key figure shows, in one or two sentences. <span class="plate__src">Source: paper Fig. 1.</span></figcaption>
+  </figure>
+
+  <!-- ===== TL;DR (≤ 70 words) ===== -->
+  <div class="tldr todo">
+    <p class="kicker">In one paragraph</p>
+    <!-- FILL -->
+    <p>The problem in one sentence. The idea in one sentence. What it achieves, with no number that lacks a source on this page. At most seventy words.</p>
+  </div>
+
+  <!-- ===== TOC: list one link per section by hand so it also works without JS (article.js
+       fills an EMPTY list from the section h2s, but only when JS runs). Keep it in step with
+       the section ids below. ===== -->
+  <nav class="toc" aria-label="Contents" data-toc>
+    <details class="toc__box">
+      <summary class="toc__summary">Contents</summary>
+      <ol class="toc__list">
+        <li><a href="#problem">The problem</a></li>
+        <li><a href="#idea">The idea</a></li>
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#results">Results</a></li>
+        <li><a href="#led">Where it led</a></li>
+        <li><a href="#code">Code</a></li>
+        <li><a href="#cite">Cite</a></li>
+      </ol>
+    </details>
+  </nav>
+
+  <!-- ===== § THE PROBLEM (150–250 words, at most one small figure) ===== -->
+  <section class="article__section" id="problem" aria-labelledby="problem-title">
+    <h2 id="problem-title">The problem</h2>
+    <!-- FILL -->
+    <p class="todo">What goes wrong without this work, in plain words. Name the prior approaches and the assumption they share, then say why that assumption breaks. Keep it to one or two paragraphs.</p>
+    <p class="todo">A sidenote hangs off the end of a paragraph like this one.<sup class="sn-ref">1</sup> Place the aside directly after its paragraph so it lines up in the margin on wide screens.</p>
+    <aside class="sidenote"><sup>1</sup> EXAMPLE sidenote: not the Mamba state-space model (Gu &amp; Dao, 2023). This MAMBA came first, in 2021.</aside>
+
+    <!-- EXAMPLE: frame stepper (spec §7.23), as on the NSA hero. rect[data-step] are the holes
+         for each step, in the image's own pixel coordinates (viewBox = the image size).
+         Add ?debug to the URL to outline every rect. -->
+    <figure class="plate stepper wide" data-stepper data-label="Frame">
+      <div class="plate__head"><span class="plate__num">Fig. 2</span><span class="badge badge--paper">From the paper</span></div>
+      <p class="speech speech--sm">“You want to just kinda take it easy and then use more paint as you start filling in your details.”</p>
+      <div class="plate__mat">
+        <div class="stepper__frame">
+          <img src="/assets/img/projects/nsa/teaser-1200.webp" srcset="/assets/img/projects/nsa/teaser-1200.webp 1200w, /assets/img/projects/nsa/teaser-2400.webp 2400w" sizes="(min-width: 1200px) 66rem, calc(100vw - 32px)" width="2400" height="579" loading="lazy" decoding="async" alt="EXAMPLE: seven frames of a How2Sign signer on a green screen, above seven matching 3D avatar poses.">
+          <svg class="stepper__overlay" viewBox="0 0 3789 914" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+            <rect data-step="1" x="52" y="2" width="526" height="528"/><rect data-step="1" x="248" y="346" width="452" height="512"/>
+            <rect data-step="2" x="578" y="2" width="526" height="528"/><rect data-step="2" x="772" y="346" width="420" height="512"/>
+            <rect data-step="3" x="1105" y="2" width="526" height="528"/><rect data-step="3" x="1280" y="346" width="452" height="512"/>
+            <rect data-step="4" x="1631" y="2" width="526" height="528"/><rect data-step="4" x="1808" y="346" width="400" height="512"/>
+            <rect data-step="5" x="2157" y="2" width="526" height="528"/><rect data-step="5" x="2328" y="346" width="408" height="512"/>
+            <rect data-step="6" x="2684" y="2" width="526" height="528"/><rect data-step="6" x="2860" y="346" width="384" height="512"/>
+            <rect data-step="7" x="3210" y="2" width="526" height="528"/><rect data-step="7" x="3388" y="346" width="372" height="512"/>
+          </svg>
+        </div>
+      </div>
+      <div class="stepper__controls" data-stepper-controls></div>
+      <figcaption class="plate__cap"><span class="todo-note">EXAMPLE:</span> <span data-stepper-status>All 7 frames</span>: reference How2Sign signer (top) and 3D SMPL-X avatar (bottom). <span class="plate__src">Source: Neural Sign Actors, paper Fig. 1 (official project page).</span></figcaption>
+    </figure>
+  </section>
+
+  <!-- ===== § THE IDEA: the explorable (#demo) + how-to-read callout ===== -->
+  <section class="article__section" id="idea" aria-labelledby="idea-title">
+    <h2 id="idea-title">The idea</h2>
+    <!-- FILL -->
+    <p class="todo">One paragraph that sets up the demo: what to try first and what to watch.</p>
+
+    <!-- The demo module draws into [data-stage], fills [data-out] readouts and the description,
+         then adds .is-ready (until then, and without JS, only the fallback shows). -->
+    <section class="explorable wide" id="demo" aria-labelledby="demo-title">
+      <header class="explorable__head">
+        <span class="explorable__num">Fig. 3</span>
+        <span class="badge badge--schematic">Schematic</span>
+        <h3 class="explorable__title" id="demo-title">Placeholder demo: a frame-wise queue</h3>
+        <button class="btn-icon" type="button" data-action="reset" aria-label="Reset demo"><svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#rotate-ccw"/></svg></button>
+      </header>
+      <div class="explorable__stage">
+        <svg class="ex-svg" data-stage viewBox="0 0 640 170" role="img" aria-labelledby="demo-title" aria-describedby="demo-desc"></svg>
+      </div>
+      <div class="explorable__controls">
+        <button class="btn btn--ghost btn--sm play-btn" type="button" data-action="play">
+          <svg class="icon play-btn__play" width="15" height="15" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#play"/></svg>
+          <svg class="icon play-btn__pause" width="15" height="15" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#pause"/></svg>
+          <span class="play-btn__label">Play</span>
+        </button>
+        <button class="btn btn--ghost btn--sm" type="button" data-action="step"><svg class="icon" width="15" height="15" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#step-forward"/></svg>Step</button>
+        <div class="ctrl">
+          <label class="ctrl__label" for="demo-k">Keys read</label>
+          <input class="range" id="demo-k" type="range" min="1" max="8" value="4">
+          <output class="ctrl__out" for="demo-k">4</output>
+        </div>
+      </div>
+      <dl class="explorable__readout" aria-hidden="true">
+        <div><dt>Frame</dt><dd data-out="frame">–</dd></div>
+        <div><dt>Slots used</dt><dd data-out="used">–</dd></div>
+        <div><dt>Keys read this frame</dt><dd data-out="keys">–</dd></div>
+      </dl>
+      <p class="explorable__desc" id="demo-desc" aria-live="polite"></p>
+      <div class="explorable__fallback">
+        <!-- FILL: a static image or short description of the initial state for visitors without JS -->
+        <p class="callout__text">Without JavaScript this demo shows as a still: FILL a static image of its initial state here.</p>
+      </div>
+    </section>
+    <aside class="callout callout--schematic">
+      <p class="kicker">How to read this</p>
+      <!-- FILL: what is real vs illustrative, then the real configuration -->
+      <p class="callout__text">A placeholder that models nothing: it only shows how a demo uses the shared helpers. State here which parts are illustrative (sizes, colours, timing) and which match the paper or the released configuration.</p>
+    </aside>
+  </section>
+
+  <!-- ===== § HOW IT WORKS: hotspot figure on a real paper figure (200–350 words) + key idea ===== -->
+  <section class="article__section" id="how" aria-labelledby="how-title">
+    <h2 id="how-title">How it works</h2>
+    <!-- FILL -->
+    <p class="todo">Walk through the method figure. The numbered points below the figure (beside it on wide screens) stay visible; hovering or focusing a number highlights its note.</p>
+
+    <!-- Hotspots: --x/--y are percentages of the image; each button's aria-describedby names its list item. -->
+    <figure class="hotspots wide" data-hotspots>
+      <div class="hotspots__figure plate">
+        <div class="plate__head"><span class="plate__num">Fig. 4</span><span class="badge badge--paper">From the paper</span></div>
+        <div class="plate__mat">
+          <div class="hotspots__frame">
+            <img src="/assets/img/mamba-still.webp" width="669" height="291" loading="lazy" decoding="async" alt="EXAMPLE: MAMBA method animation frame: a memory bank of feature slots, a sampled key set, and the current frame being enhanced.">
+            <button class="hotspot" type="button" style="--x:44%;--y:76%" aria-describedby="hs-t-1">1</button>
+            <button class="hotspot" type="button" style="--x:61%;--y:36%" aria-describedby="hs-t-2">2</button>
+            <button class="hotspot" type="button" style="--x:44%;--y:12%" aria-describedby="hs-t-3">3</button>
+            <button class="hotspot" type="button" style="--x:77%;--y:57%" aria-describedby="hs-t-4">4</button>
+            <button class="hotspot" type="button" style="--x:5%;--y:69%" aria-describedby="hs-t-5">5</button>
+          </div>
+        </div>
+      </div>
+      <ol class="hotspots__list">
+        <li id="hs-t-1"><b>Memory bank.</b> Features are stored individually, drawn as 2×2 slot groups; some slots are already replaced.</li>
+        <li id="hs-t-2"><b>Sampling.</b> Each read draws a small random key set instead of concatenating everything.</li>
+        <li id="hs-t-3"><b>Key set.</b> The sampled features the current frame attends to.</li>
+        <li id="hs-t-4"><b>Current frame.</b> Enhanced by attending to the key set.</li>
+        <li id="hs-t-5"><b>Feature-wise update.</b> New features replace individual old ones, so knowledge from the whole video survives.</li>
+      </ol>
+      <figcaption class="plate__cap"><span class="todo-note">EXAMPLE:</span> A frame from the MAMBA method animation. <span class="plate__src">Source: MAMBA paper animation (the authors).</span></figcaption>
+    </figure>
+
+    <p class="todo">Explain the mechanism in prose after the figure. Cross-reference figures by their hand-written numbers (“Fig. 4”).</p>
+    <aside class="callout callout--key">
+      <p class="kicker">Key idea</p>
+      <!-- FILL: one sentence -->
+      <p class="callout__text">Read a sample, write a feature.</p>
+    </aside>
+  </section>
+
+  <!-- ===== § RESULTS (#results): stats, 1–3 table-driven charts with sources, reproducibility ===== -->
+  <section class="article__section" id="results" aria-labelledby="results-title">
+    <h2 id="results-title">Results</h2>
+    <p class="todo">One or two sentences on what to look at. Every number needs a source line directly below it.</p>
+
+    <!-- EXAMPLE numbers are real (MAMBA, vfe.pytorch README and paper abstract). -->
+    <dl class="stats">
+      <div class="stat"><dt class="stat__label">ImageNet VID val, ResNet-101</dt><dd class="stat__fig"><span class="stat__value">83.8</span><span class="stat__unit">AP50</span></dd></div>
+      <div class="stat"><dt class="stat__label">at 83.7 mAP, ResNet-101</dt><dd class="stat__fig"><span class="stat__value">12.6</span><span class="stat__unit">FPS</span></dd></div>
+      <div class="stat"><dt class="stat__label">at 84.6 mAP, ResNet-101</dt><dd class="stat__fig"><span class="stat__value">9.1</span><span class="stat__unit">FPS</span></dd></div>
+    </dl>
+    <p class="stats__src">Source: vfe.pytorch README (AP50); paper abstract (FPS).</p>
+
+    <!-- Chart: dot. data-min/max = axis; data-highlight = ours; data-memory = the memory colour. -->
+    <figure class="chart">
+      <div class="plate__head"><span class="plate__num">Fig. 5</span><span class="badge badge--paper">From the paper</span></div>
+      <table data-chart="dot" data-min="75" data-max="86" data-unit="AP50" data-highlight="MAMBA">
+        <caption>ImageNet VID val, AP50 (ResNet-101)</caption>
+        <thead><tr><th scope="col">Method</th><th scope="col">AP50</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Faster R-CNN</th><td>76.7</td></tr>
+          <tr><th scope="row">SELSA</th><td>81.5</td></tr>
+          <tr><th scope="row">MEGA</th><td>82.9</td></tr>
+          <tr><th scope="row">MAMBA</th><td>83.8</td></tr>
+        </tbody>
+      </table>
+      <p class="chart__src">Source: vfe.pytorch README (baselines as reported by their authors).</p>
+    </figure>
+
+    <!-- Chart: grouped bars (rows = categories, columns = series; bars start at 0). -->
+    <figure class="chart">
+      <div class="plate__head"><span class="plate__num">Fig. 6</span><span class="badge badge--paper">From the paper</span></div>
+      <table data-chart="bars" data-max="14" data-unit="AP50" data-highlight="MAMBA">
+        <caption>Gain over the single-frame baseline, by object speed (AP50)</caption>
+        <thead><tr><th scope="col">Speed</th><th scope="col">MEGA</th><th scope="col">MAMBA</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Slow</th><td>+4.5</td><td>+4.6</td></tr>
+          <tr><th scope="row">Medium</th><td>+7.5</td><td>+9.7</td></tr>
+          <tr><th scope="row">Fast</th><td>+10.4</td><td>+13.0</td></tr>
+        </tbody>
+      </table>
+      <p class="chart__note">Memory helps most when objects move fast.</p>
+      <p class="chart__src">Computed from the vfe.pytorch README AP (slow/medium/fast): Faster R-CNN 84.9/74.1/52.3, MEGA 89.4/81.6/62.7, MAMBA 89.5/83.8/65.3.</p>
+    </figure>
+
+    <!-- Chart: dots-multi (one dot per series on a shared axis; shapes differ by role). -->
+    <figure class="chart">
+      <div class="plate__head"><span class="plate__num">Fig. 7</span><span class="badge badge--paper">From the paper</span></div>
+      <table data-chart="dots-multi" data-min="60" data-max="95" data-unit="AP50" data-highlight="STPN" data-memory="MAMBA">
+        <caption>AP50 by object speed, ImageNet VID val</caption>
+        <thead><tr><th scope="col">Speed</th><th scope="col">MEGA</th><th scope="col">MAMBA</th><th scope="col">STPN</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Slow</th><td>89.4</td><td>89.5</td><td>91.4</td></tr>
+          <tr><th scope="row">Medium</th><td>81.6</td><td>83.8</td><td>84.1</td></tr>
+          <tr><th scope="row">Fast</th><td>62.7</td><td>65.3</td><td>64.1</td></tr>
+        </tbody>
+      </table>
+      <p class="chart__note">Backbones differ (MEGA and MAMBA: ResNet-101; STPN: Swin-T).</p>
+      <p class="chart__src">Source: vfe.pytorch README.</p>
+    </figure>
+
+    <!-- Chart: bars as small multiples (data-panels: one panel per column) and lower-is-better. -->
+    <figure class="chart wide">
+      <div class="plate__head"><span class="plate__num">Fig. 8</span><span class="badge badge--paper">From the paper</span></div>
+      <table data-chart="bars" data-panels data-lower-better data-highlight="Neural Sign Actors">
+        <caption>Sign language production from text, How2Sign test set</caption>
+        <thead><tr><th scope="col">Method</th><th scope="col">MPVPE</th><th scope="col">MPJPE</th><th scope="col">FID</th><th scope="col">DTW</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Saunders et al. (i)</th><td>67.21</td><td>70.06</td><td>4.71</td><td>14.15</td></tr>
+          <tr><th scope="row">Saunders et al. (ii)</th><td>63.19</td><td>65.25</td><td>3.98</td><td>13.78</td></tr>
+          <tr><th scope="row">Hwang et al.</th><td>62.74</td><td>63.25</td><td>4.45</td><td>13.94</td></tr>
+          <tr><th scope="row">Stoll et al.</th><td>55.02</td><td>60.32</td><td>4.96</td><td>13.99</td></tr>
+          <tr><th scope="row">Neural Sign Actors</th><td>31.47</td><td>35.87</td><td>1.56</td><td>7.83</td></tr>
+        </tbody>
+      </table>
+      <p class="chart__src">Source: Neural Sign Actors (CVPR 2024), SLP evaluation table, checked against the CVPR 2024 poster.</p>
+    </figure>
+
+    <!-- Reproducibility table: a plain data table in a keyboard-scrollable region. -->
+    <div class="table-wrap" role="region" aria-labelledby="repro-cap" tabindex="0">
+      <table class="data-table">
+        <caption id="repro-cap">Reproducibility, ImageNet VID val AP50 (MAMBA)</caption>
+        <thead><tr><th scope="col">Run</th><th scope="col">AP50</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Released checkpoint, evaluated</th><td>83.80</td></tr>
+          <tr><th scope="row">Trained from scratch, vfe.pytorch 2.0</th><td>84.06</td></tr>
+          <tr><th scope="row">Originally published</th><td>83.82</td></tr>
+        </tbody>
+      </table>
+      <p class="data-table__note">Source: vfe.pytorch README. Measured on 4× <span class="lnum">GH200</span>.</p>
+    </div>
+
+    <!-- Talk: YouTube facade (nothing from YouTube loads before the click).
+    <figure class="plate wide" id="talk">…see docs/HOWTO.md "A YouTube talk"…</figure> -->
+    <p id="talk" class="todo-note">FILL or delete: the talk facade (id="talk") belongs here if there is a recording.</p>
+  </section>
+
+  <!-- ===== § WHERE IT LED: mini throughline + open question ===== -->
+  <section class="article__section" id="led" aria-labelledby="led-title">
+    <h2 id="led-title">Where it led</h2>
+    <!-- FILL: 3–4 nodes, the current one with aria-current="page"; future work dashed. -->
+    <ol class="thread todo">
+      <li class="thread__node" aria-current="page"><span class="thread__year">2021</span><span class="thread__name">This project</span><span class="thread__note">the idea this page explains</span></li>
+      <li class="thread__node"><a href="/#pub-tdvit"><span class="thread__year">2022</span><span class="thread__name">TDViT</span></a><span class="thread__note">hierarchical memory structure</span></li>
+      <li class="thread__node"><a href="/projects/stpn/"><span class="thread__year">2023</span><span class="thread__name">STPN</span></a><span class="thread__note">prompts instead of integration modules</span></li>
+      <li class="thread__node thread__node--future"><a href="/#vision"><span class="thread__year">In progress</span><span class="thread__name">MemVLA</span></a><span class="thread__note">memory for vision-language-action models</span></li>
+    </ol>
+    <p class="todo">One or two sentences on how this work shaped what came next.</p>
+    <aside class="callout callout--question">
+      <p class="kicker">Open question</p>
+      <!-- FILL: one sentence -->
+      <p class="callout__q todo">The open question this work leaves, in one sentence.</p>
+      <a class="link-arrow" href="/#collaborate">Pick up this thread<svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-right"/></svg></a>
+    </aside>
+  </section>
+
+  <!-- ===== § CODE (only if code exists) ===== -->
+  <section class="article__section" id="code" aria-labelledby="code-title">
+    <h2 id="code-title">Code</h2>
+    <p class="todo">Where the code lives and what the command below does.</p>
+    <div class="code-wrap">
+      <pre class="code" id="quickstart"><code>uv venv --python 3.12 &amp;&amp; uv sync
+python -m vfe.cli.test configs/vid/mamba/mamba_r101_dc5_6x.py CHECKPOINT --work-dir WORK_DIR</code></pre>
+      <button class="btn-icon code-copy" type="button" aria-label="Copy commands" data-copy-msg="Commands copied"><svg class="icon copy-btn__copy" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#copy"/></svg><svg class="icon copy-btn__done" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#check"/></svg></button>
+    </div>
+  </section>
+
+  <!-- ===== § CITE (#cite): BibTeX exactly as published + a plain-text citation ===== -->
+  <section class="article__section" id="cite" aria-labelledby="cite-title">
+    <h2 id="cite-title">Cite</h2>
+    <div class="cite">
+      <div class="code-wrap">
+        <!-- FILL: BibTeX, copied verbatim from the source (README, official page or DBLP) -->
+        <pre class="code"><code>@inproceedings{sun2021mamba,
+  title     = {MAMBA: Multi-level Aggregation via Memory Bank for Video Object Detection},
+  author    = {Sun, Guanxiong and Hua, Yang and Hu, Guosheng and Robertson, Neil},
+  booktitle = {AAAI},
+  year      = {2021}
+}</code></pre>
+        <button class="btn-icon code-copy" type="button" aria-label="Copy BibTeX" data-copy-msg="BibTeX copied"><svg class="icon copy-btn__copy" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#copy"/></svg><svg class="icon copy-btn__done" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#check"/></svg></button>
+      </div>
+      <!-- FILL: plain-text citation -->
+      <p class="cite__plain"><span id="cite-text">Guanxiong Sun, Yang Hua, Guosheng Hu, Neil Robertson. MAMBA: Multi-level Aggregation via Memory Bank for Video Object Detection. AAAI 2021.</span>
+        <button class="btn-icon" type="button" data-copy="#cite-text" data-copy-msg="Citation copied" aria-label="Copy citation"><svg class="icon copy-btn__copy" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#copy"/></svg><svg class="icon copy-btn__done" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#check"/></svg></button></p>
+    </div>
+  </section>
+
+  <!-- ===== PREV / NEXT (cyclic: MAMBA → STPN → NSA → MAMBA) ===== -->
+  <nav class="pagenav wide" aria-label="More projects">
+    <a class="pagenav__card" href="/projects/neural-sign-actors/" rel="prev">
+      <span class="plate__mat"><img src="/assets/img/neural_sign_actor-640.webp" width="640" height="309" loading="lazy" decoding="async" alt=""></span>
+      <span><span class="pagenav__dir">← Previous</span><span class="pagenav__title">Neural Sign Actors</span><span class="pagenav__note">Text to 3D signing avatars</span></span>
+    </a>
+    <a class="pagenav__card pagenav__card--next" href="/projects/stpn/" rel="next">
+      <span class="plate__mat"><img src="/assets/img/stpn-640.webp" width="640" height="309" loading="lazy" decoding="async" alt=""></span>
+      <span><span class="pagenav__dir">Next →</span><span class="pagenav__title">STPN</span><span class="pagenav__note">Video prompts for one robust backbone</span></span>
+    </a>
+  </nav>
+
+</article>
+</main>
+
+<!-- ===== SITE FOOTER (identical on every page) ===== -->
+<footer class="site-footer">
+  <div class="wrap site-footer__grid">
+    <div class="site-footer__id">
+      <svg class="logomark" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false">
+        <rect class="logomark__cell" x="1.625" y="1.625" width="4.75" height="4.75" rx="1"/>
+        <rect class="logomark__cell logomark__cell--on" x="9" y="1" width="6" height="6" rx="1"/>
+        <rect class="logomark__cell" x="1.625" y="9.625" width="4.75" height="4.75" rx="1"/>
+        <rect class="logomark__cell" x="9.625" y="9.625" width="4.75" height="4.75" rx="1"/>
+      </svg>
+      <p>Guanxiong Sun · Queen’s University Belfast</p>
+    </div>
+    <ul class="site-footer__links">
+      <li><a href="mailto:sungx.cs@gmail.com" aria-label="Email"><svg class="icon" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#mail"/></svg></a></li>
+      <li><a href="https://scholar.google.com/citations?user=vLk3IzoAAAAJ" aria-label="Google Scholar"><svg class="icon" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#scholar"/></svg></a></li>
+      <li><a href="https://github.com/guanxiongsun" aria-label="GitHub"><svg class="icon" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#github"/></svg></a></li>
+      <li><a href="https://huggingface.co/guanxiongsun" aria-label="Hugging Face"><svg class="icon" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#huggingface"/></svg></a></li>
+      <li><a href="https://www.linkedin.com/in/guanxiongsun/" aria-label="LinkedIn"><svg class="icon" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#linkedin"/></svg></a></li>
+    </ul>
+    <div class="site-footer__meta">
+      <p>Updated <time datetime="2026-09">September 2026</time> · <a class="link-quiet" href="#top">Back to top<svg class="icon" width="14" height="14" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-up"/></svg></a></p>
+      <p class="site-footer__colophon">Set in Newsreader, Inter and JetBrains Mono. Hand-built HTML, no frameworks. Earlier versions adapted Jon Barron’s and Wufei Ma’s pages.</p>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
