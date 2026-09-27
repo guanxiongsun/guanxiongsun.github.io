@@ -1,14 +1,22 @@
 /* throughline.js: "The Throughline", the homepage signature figure (spec §5). No libraries.
-   Data: every [data-thread] element on the page (pub cards + vision cards); see index.html §01.
-   ≥840px: an inline SVG (lanes × years, the memory thread, a hatched Next column).
-   <840px: a vertical HTML rail. The no-JS list (.throughline__fallback) hides once [data-ready] is set.
+   Data: every [data-thread] element on the page (pub cards + vision teaser cards); see index.html §02 and the Vision teaser in §05.
+   ≥840px: an inline SVG (lanes × years, the memory thread, a hatched Next column). When the box is
+   ≥900px wide the lane legend (ul.throughline__legend) is drawn into the gutter as lane name +
+   description, and the usage hint (p.throughline__hint) into the year row; the HTML legend and hint then
+   hide (the legend stays for assistive tech). Between 840 and 900px the HTML hint and a compact legend show.
+   <840px: a vertical HTML rail grouped by lane (the group headers repeat the legend, which is then
+   aria-hidden so it is read once), one row per node.
+   The no-JS list (.throughline__fallback) hides once [data-ready] is set.
    Adding a paper = adding a [data-thread] card; the figure redraws itself. */
 
 const box = document.querySelector('[data-throughline]');
 const NS = 'http://www.w3.org/2000/svg';
 const LANES = ['perceive', 'generate', 'learn', 'act'];
-const LANE_Y = [64, 124, 184, 244]; // lane centres (px); the figure is 288px tall
-const GUT = 128, DRAW = 1400; // left gutter for lane labels; draw time (= --dur-draw)
+const LANE_Y = [46, 90, 134, 178]; // lane centres (px); the figure is H px tall
+const H = 212, TOP = 26, BOT = 206, YEAR_Y = 14; // frame: gridlines run TOP..BOT, year labels at YEAR_Y
+const UP = -13, DN = 24; // label baselines above / below a node
+const INLINE_W = 900, GUT_INLINE = 300, GUT_NAMES = 128; // gutter: legend inline (name + text) vs names only
+const DRAW = 1400; // draw time (= --dur-draw)
 const EASE = 'cubic-bezier(.65,0,.35,1)'; // --ease-inout
 const wide = matchMedia('(min-width: 840px)');
 const reduce = matchMedia('(prefers-reduced-motion: reduce)');
@@ -37,7 +45,11 @@ function init() {
   }).sort((a, b) => a.date.localeCompare(b.date) || b.i - a.i);
   const y0 = all[0].year, years = all.at(-1).year - y0 + 1;
   const bx = box.dataset;
-  all.push({ key: 'open', open: true, future: true, lane: 'act', short: bx.openLabel || 'Your project?', href: bx.openHref || '#collaborate',
+  // Lane descriptions come from the HTML legend, so they are written once.
+  const legend = document.querySelector('.throughline__legend');
+  const laneText = Object.fromEntries(LANES.map((l) => [l, legend?.querySelector(`.lane[data-lane="${l}"] .lane__text`)?.textContent.trim() || '']));
+  const hint = document.querySelector('.throughline__hint')?.textContent.trim() || bx.hint || '';
+  all.push({ key: 'open', open: true, future: true, lane: 'act', short: bx.openLabel || 'Your project?', href: bx.openHref || '/collaborate/',
     meta: 'Next', title: bx.openLabel || 'Your project?', note: bx.openNote || 'Open problems in memory for perception and action.' });
   const lastPub = all.findLastIndex((n) => !n.future);
   const byKey = Object.fromEntries(all.map((n) => [n.key, n]));
@@ -46,29 +58,64 @@ function init() {
 
   let svg, pop, active, cur = all[0], drawn = false, ptype = '', lastW = 0, mode, rt, hideT;
   let io, settle; // entrance observer for the current SVG; settle() skips the entrance (focus arrived first)
+  let wrapped = []; // gutter texts to re-wrap once web fonts load: [{ t, s, w }]
+
+  // Greedy word wrap of s into <tspan>s of width ≤ w (measured, so it follows the loaded font).
+  function wrapText(t, s, w) {
+    t.textContent = '';
+    const x = t.getAttribute('x'), lh = +t.dataset.lh;
+    let line = null, n = 0;
+    for (const word of s.split(' ')) {
+      if (line) {
+        const was = line.textContent;
+        line.textContent = `${was} ${word}`;
+        if (line.getComputedTextLength() <= w) continue;
+        line.textContent = was;
+      }
+      line = el('tspan', { x, dy: n++ ? lh : 0 }, t);
+      line.textContent = word;
+    }
+    return n;
+  }
 
   // ---- Desktop: SVG ----
   function drawSvg(W) {
+    const inline = W >= INLINE_W, GUT = inline ? GUT_INLINE : GUT_NAMES;
     const cols = years + 1, colW = (W - GUT - 48) / cols, cx = (c) => GUT + colW * (c + 0.5);
-    svg = el('svg', { class: 'tl', viewBox: `0 0 ${W} 288`, width: W, height: 288, role: 'group',
+    svg = el('svg', { class: 'tl', viewBox: `0 0 ${W} ${H}`, width: W, height: H, role: 'group',
       'aria-label': `Research timeline, ${y0} to ${y0 + years - 1}, then next. Use arrow keys to move between papers.` });
     const pat = el('pattern', { id: 'tl-hatch', width: 6, height: 6, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)' }, el('defs', {}, svg));
     el('line', { class: 'tl__hatch', x1: 0, y1: 0, x2: 0, y2: 6 }, pat);
 
     // Frame: gridlines, lane guides and labels, year labels, the hatched Next column.
     const f = el('g', { class: 'tl__frame', 'aria-hidden': 'true' }, svg);
-    const text = (cls, x, y, s, anchor = 'middle') => { el('text', { class: cls, x, y, 'text-anchor': anchor }, f).textContent = s; };
+    const text = (cls, x, y, s, anchor = 'middle') => { const t = el('text', { class: cls, x, y, 'text-anchor': anchor }, f); t.textContent = s; return t; };
     for (let c = 0; c < years; c++) {
-      el('line', { class: 'tl__grid', x1: GUT + colW * c, y1: 34, x2: GUT + colW * c, y2: 272 }, f);
-      text('tl__year', cx(c), 20, y0 + c);
+      el('line', { class: 'tl__grid', x1: GUT + colW * c, y1: TOP, x2: GUT + colW * c, y2: BOT }, f);
+      text('tl__year', cx(c), YEAR_Y, y0 + c);
     }
     const nx = GUT + colW * years;
-    el('rect', { class: 'tl__next', x: nx + 6, y: 34, width: colW - 12, height: 248, rx: 4 }, f);
-    text('tl__year tl__year--next', cx(years), 20, 'NEXT');
+    el('rect', { class: 'tl__next', x: nx + 6, y: TOP, width: colW - 12, height: BOT - TOP, rx: 4 }, f);
+    text('tl__year tl__year--next', cx(years), YEAR_Y, 'NEXT');
+    // Gutter: lane names; with the legend inline, each lane's description sits under its name
+    // (two 11px lines fit the 44px lane pitch) and the usage hint takes the year row.
+    wrapped = [];
+    const gw = GUT - 24;
     LANES.forEach((l, i) => {
-      el('line', { class: 'tl__guide', x1: 112, y1: LANE_Y[i], x2: W - 24, y2: LANE_Y[i] }, f);
-      text(`tl__lane tl__lane--${l}`, 0, LANE_Y[i] + 4, l.toUpperCase(), 'start');
+      el('line', { class: 'tl__guide', x1: GUT - 16, y1: LANE_Y[i], x2: W - 24, y2: LANE_Y[i] }, f);
+      text(`tl__lane tl__lane--${l}${inline ? ' tl__lane--inline' : ''}`, 0, LANE_Y[i] + (inline ? -8 : 4), l.toUpperCase(), 'start');
+      if (inline && laneText[l]) {
+        const t = text('tl__lanetext', 0, LANE_Y[i] + 6, '', 'start');
+        t.dataset.lh = 13;
+        wrapped.push({ t, s: laneText[l], w: gw });
+      }
     });
+    if (inline && hint) { // the year row is free up to the first year label
+      const t = text('tl__hint', 0, YEAR_Y, '', 'start');
+      t.dataset.lh = 13;
+      wrapped.push({ t, s: hint, w: cx(0) - 36 });
+    }
+    box.dataset.legend = inline ? 'inline' : '';
 
     // Positions: nodes sharing a year and lane sit side by side, in date order.
     const cells = {};
@@ -99,15 +146,16 @@ function init() {
       el('circle', { class: 'tl__dot', r: { pub: 5, flag: 6.5, future: 6, open: 9 }[type] }, glyph);
       if (n.open) el('path', { class: 'tl__plus', d: 'M-4 0H4M0-4V4' }, glyph);
       // Default label spot. In the Act lane the thread arrives from the upper left, so the first
-      // in-progress node (Physical AI) and the open node label below; MemVLA labels above, centred,
+      // in-progress node (Physical AI) labels below; MemVLA and the open node label above, centred,
       // clear of the Next column's border. declutter() starts from n.ly.
-      const below = n.open || (n.future && pair && k === 0);
+      const below = n.future && pair && k === 0;
       const centred = n.open || (n.future && pair && k === 1);
-      n.ly = below ? 27 : -14;
+      n.ly = below ? DN : UP;
       el('text', { class: 'tl__label', x: pair && !centred ? (k ? -6 : 6) : 0, y: n.ly,
         'text-anchor': centred ? 'middle' : pair ? (k ? 'start' : 'end') : 'middle' }, a).textContent = n.short;
     });
     box.append(svg);
+    wrapped.forEach(({ t, s, w }) => wrapText(t, s, w));
     declutter();
 
     // Entrance: draw the thread once, on first sight; nodes pop in as the pen reaches them.
@@ -146,37 +194,33 @@ function init() {
     all.forEach((n) => {
       if (!n.el || n.el.classList.contains('tl__node--quiet')) return;
       const t = n.el.querySelector('.tl__label');
-      let ly = n.ly ?? -14;
+      let ly = n.ly ?? UP;
       t.setAttribute('y', ly);
       const b = t.getBBox(), l = n.x + b.x, r = l + b.width;
-      if (seen.some((o) => o.y === n.y && o.ly === ly && o.l < r + 4 && l < o.r + 4)) t.setAttribute('y', ly = ly < 0 ? 27 : -14);
+      if (seen.some((o) => o.y === n.y && o.ly === ly && o.l < r + 8 && l < o.r + 8)) t.setAttribute('y', ly = ly < 0 ? DN : UP);
       seen.push({ y: n.y, ly, l, r });
     });
   }
 
-  // ---- Mobile: vertical rail ----
+  // ---- Mobile: vertical rail, grouped by lane (the lane header is the legend), one row per node ----
   function drawRail() {
-    const groups = [];
-    all.forEach((n) => {
-      const y = n.open ? 'Next' : n.year;
-      if (groups.at(-1)?.y !== y) groups.push({ y, list: [] });
-      groups.at(-1).list.push(n);
-    });
     const item = (n) => {
-      if (!n.flag && !n.future) {
-        return `<li class="tl-rail__item"><a class="tl-rail__row" href="${esc(n.href)}"><span class="tl-rail__label">${esc(n.short)}</span> <span class="tl-rail__meta">${esc(n.meta)}</span></a></li>`;
-      }
-      const [txt, ic] = n.open ? ['See open problems', 'arrow-right'] : n.flag ? ['Explore', 'arrow-right'] : ['Read more', 'arrow-down'];
-      return `<li class="tl-rail__item tl-rail__item--${n.open ? 'open' : n.flag ? 'flag' : 'future'}"><p class="tl-rail__label">${esc(n.short)}</p>` +
-        `<p class="tl-rail__meta">${esc(kicker(n))}</p><p class="tl-rail__note">${esc(n.note)}</p>` +
-        `<a class="link-arrow link-arrow--sm${ic === 'arrow-down' ? ' link-arrow--down' : ''}" href="${esc(n.href)}">${txt}${n.open ? '' : `<span class="visually-hidden">: ${esc(n.short)}</span>`}${icon(ic)}</a></li>`;
+      const type = n.open ? 'open' : n.future ? 'future' : n.flag ? 'flag' : 'pub';
+      const note = n.future ? `<p class="tl-rail__note">${esc(n.note)}</p>` : '';
+      return `<li class="tl-rail__item tl-rail__item--${type}"><a class="tl-rail__row" href="${esc(n.href)}">` +
+        `<span class="tl-rail__label">${esc(n.short)}</span> <span class="tl-rail__meta">${esc(n.meta)}</span></a>${note}</li>`;
     };
     const ol = document.createElement('ol');
     ol.className = 'tl-rail';
-    ol.setAttribute('aria-label', 'Research timeline, oldest first');
-    ol.innerHTML = groups.map((gr) => `<li class="tl-rail__year${gr.list.every((n) => n.future) ? ' is-future' : ''}">` +
-      `<p class="tl-rail__yr">${gr.y}</p><ol class="tl-rail__list">${gr.list.map(item).join('')}</ol></li>`).join('');
+    ol.setAttribute('aria-label', 'Research timeline by lane, oldest first');
+    ol.innerHTML = LANES.map((l) => {
+      const list = all.filter((n) => n.lane === l);
+      return `<li class="tl-rail__lane${list.every((n) => n.future) ? ' is-future' : ''}" data-lane="${l}">` +
+        `<p class="kicker tl-rail__name">${cap(l)}</p>${laneText[l] ? `<p class="tl-rail__text">${esc(laneText[l])}</p>` : ''}` +
+        `<ol class="tl-rail__list">${list.map(item).join('')}</ol></li>`;
+    }).join('');
     box.append(ol);
+    box.dataset.legend = 'inline';
   }
 
   // ---- Popover (desktop): shows on hover or focus; first touch tap shows it without navigating ----
@@ -289,6 +333,7 @@ function init() {
     all.forEach((n) => { n.el = null; });
     svg = null;
     if (m) drawSvg(w); else drawRail();
+    legend?.toggleAttribute('aria-hidden', !m); // the rail's lane headers already read the legend out
     box.append(pop); // after the figure, so Tab order is node → popover CTA → onwards
     box.dataset.ready = '';
     if (had && had.el) had.el.focus({ preventScroll: true });
@@ -297,7 +342,11 @@ function init() {
   wide.addEventListener('change', () => render(true));
   reduce.addEventListener('change', () => { drawn = true; render(true); });
   render(true);
-  document.fonts?.ready.then(() => svg?.isConnected && declutter()); // label widths change once web fonts load
+  document.fonts?.ready.then(() => { // text widths change once web fonts load
+    if (!svg?.isConnected) return;
+    wrapped.forEach(({ t, s, w }) => wrapText(t, s, w));
+    declutter();
+  });
 }
 
 // Inverse of the draw easing: the time fraction at which the pen has covered fraction f of the thread.

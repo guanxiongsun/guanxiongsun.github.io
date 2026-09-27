@@ -31,9 +31,9 @@
   <link rel="preload" href="/assets/fonts/newsreader-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <!-- Cache-bust: bump ?v=YYYYMMDD on every CSS/JS link at release (and in demo-module imports). -->
-  <link rel="stylesheet" href="/assets/css/tokens.css?v=20260926">
-  <link rel="stylesheet" href="/assets/css/site.css?v=20260926">
-  <link rel="stylesheet" href="/assets/css/article.css?v=20260926">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=20260927">
+  <link rel="stylesheet" href="/assets/css/site.css?v=20260927">
+  <link rel="stylesheet" href="/assets/css/article.css?v=20260927">
 
   <!-- Social cards. FILL: slug, title, description; make the card with tools/make_assets.py og <slug> -->
   <meta property="og:type" content="article">
@@ -71,11 +71,11 @@
 
   <!-- Scripts are modules (deferred). site.js + article.js + charts.js on every project page,
        plus the page's own demo module. -->
-  <script type="module" src="/assets/js/site.js?v=20260926"></script>
-  <script type="module" src="/assets/js/article.js?v=20260926"></script>
-  <script type="module" src="/assets/js/charts.js?v=20260926"></script>
-  <!-- FILL: the page's demo, e.g. /assets/js/demos/mamba-memory.js?v=20260926 -->
-  <script type="module" src="/projects/_template/example-demo.js?v=20260926"></script>
+  <script type="module" src="/assets/js/site.js?v=20260927"></script>
+  <script type="module" src="/assets/js/article.js?v=20260927"></script>
+  <script type="module" src="/assets/js/charts.js?v=20260927"></script>
+  <!-- FILL: the page's demo, e.g. /assets/js/demos/mamba-memory.js?v=20260927 -->
+  <script type="module" src="/projects/_template/example-demo.js?v=20260927"></script>
 </head>
 
 <body>
@@ -96,11 +96,11 @@
 
     <nav class="site-nav" aria-label="Primary">
       <ul class="site-nav__list" id="site-menu" data-menu-panel>
-        <li><a class="site-nav__link" href="/#work" aria-current="true">Work</a></li>
-        <li><a class="site-nav__link" href="/#vision">Vision</a></li>
-        <li><a class="site-nav__link" href="/#collaborate">Collaborate</a></li>
-        <li><a class="site-nav__link" href="/#publications">Publications</a></li>
         <li><a class="site-nav__link" href="/#news">News</a></li>
+        <li><a class="site-nav__link" href="/#work" aria-current="true">Work</a></li>
+        <li><a class="site-nav__link" href="/#publications">Publications</a></li>
+        <li><a class="site-nav__link" href="/vision/">Vision</a></li>
+        <li><a class="site-nav__link" href="/collaborate/">Collaborate</a></li>
       </ul>
     </nav>
 
@@ -415,14 +415,14 @@
       <li class="thread__node" aria-current="page"><span class="thread__year">2021</span><span class="thread__name">This project</span><span class="thread__note">the idea this page explains</span></li>
       <li class="thread__node"><a href="/#pub-tdvit"><span class="thread__year">2022</span><span class="thread__name">TDViT</span></a><span class="thread__note">hierarchical memory structure</span></li>
       <li class="thread__node"><a href="/projects/stpn/"><span class="thread__year">2023</span><span class="thread__name">STPN</span></a><span class="thread__note">prompts instead of integration modules</span></li>
-      <li class="thread__node thread__node--future"><a href="/#vision"><span class="thread__year">In progress</span><span class="thread__name">MemVLA</span></a><span class="thread__note">memory for vision-language-action models</span></li>
+      <li class="thread__node thread__node--future"><a href="/vision/#memvla"><span class="thread__year">In progress</span><span class="thread__name">MemVLA</span></a><span class="thread__note">memory for vision-language-action models</span></li>
     </ol>
     <p class="todo">One or two sentences on how this work shaped what came next.</p>
     <aside class="callout callout--question">
       <p class="kicker">Open question</p>
       <!-- FILL: one sentence -->
       <p class="callout__q todo">The open question this work leaves, in one sentence.</p>
-      <a class="link-arrow" href="/#collaborate">Pick up this thread<svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-right"/></svg></a>
+      <a class="link-arrow" href="/collaborate/">Pick up this thread<svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-right"/></svg></a>
     </aside>
   </section>
 

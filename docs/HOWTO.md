@@ -21,14 +21,16 @@ stops a second copy, but the exports would come from a different instance).
 | What | File |
 |---|---|
 | Colours, fonts, type sizes, spacing, motion | `assets/css/tokens.css` (the only place colours are defined) |
-| Shared components + homepage sections | `assets/css/site.css` |
-| Project-page layout (article grid, TOC, sidenotes, demos, charts) | `assets/css/article.css` |
+| Shared components + homepage sections (incl. the Vision / Collaborate teasers) | `assets/css/site.css` |
+| Project-page layout (article grid, TOC, sidenotes, demos, charts) + the `/vision/` and `/collaborate/` page heads | `assets/css/article.css` |
 | Behaviour (theme, menu, videos, lightbox, copy, filters, A/B toggle, YouTube) | `assets/js/site.js` |
 | The homepage throughline figure | `assets/js/throughline.js` |
 | Project pages: TOC, hotspots, frame stepper, demo helpers | `assets/js/article.js` |
 | Charts drawn from tables (project pages) | `assets/js/charts.js` |
 | One interactive demo per project page | `assets/js/demos/<name>.js` |
 | Copy-to-start project page | `projects/_template/` (noindex; see "Add a project page") |
+| The full Vision page (essay, pull quote, in-progress cards with schematics) | `vision/index.html` |
+| The full Collaborate page (open problems, "On my desk", ways to work together, contact) | `collaborate/index.html` |
 | Icons | `assets/icons/sprite.svg`, used as `<svg class="icon"><use href="/assets/icons/sprite.svg#github"/></svg>` |
 | Fonts + licences | `assets/fonts/`, `assets/fonts/LICENSES/` |
 | Images, videos | `assets/img/`, `assets/video/` (originals stay in `images/`) |
@@ -38,17 +40,26 @@ Rules that keep the site easy to edit:
 - **No inline styles**, except the custom properties `--x`, `--y`, `--i`.
 - **Behaviour attaches through `data-*` attributes**; you never need to touch the JS to add content.
 - **Every section must read fine with JavaScript off.**
-- **Cache-busting:** CSS and JS links end in `?v=20260926`. When you change a CSS or JS file,
-  bump that date everywhere at once: search and replace `?v=20260926` across **all `.html` and
+- **Cache-busting:** CSS and JS links end in `?v=20260927`. When you change a CSS or JS file,
+  bump that date everywhere at once: search and replace `?v=20260927` across **all `.html` and
   `.js` files** (the demo modules in `assets/js/demos/` and `projects/_template/example-demo.js`
   import `article.js?v=…`, and that string must match the page's own `<script>` tag).
 
-Comment fences in `index.html` mark the places you will edit most:
+The homepage runs, in this order: hero, **01 News**, **02 Throughline**, **03 Selected work**,
+**04 Publications**, **05 Vision** (teaser), **06 Collaborate** (teaser), **07 Service & background**.
+The header nav on every page is News · Work · Publications · Vision · Collaborate (on the homepage
+these are `#news #work #publications #vision #collaborate`; elsewhere `/#news /#work /#publications
+/vision/ /collaborate/`). Keep that order and the `<nav>` markup identical on every page.
 
-- `<!-- NOW: edit me -->`: the "Now" line in the hero.
-- `<!-- NEWS: add newest at top -->`
-- `<!-- ===== 06 PUBLICATIONS: newest first; copy a .pub block (docs/HOWTO.md) ===== -->`
-- `<!-- PROBLEM: set data-state="connected" when public -->`
+Vision and Collaborate are **teasers** on the homepage: a section head, a short intro, a compact
+preview and a link to the full page. Their full content lives on `/vision/` and `/collaborate/`.
+
+Comment fences mark the places you will edit most:
+
+- `index.html`: `<!-- NOW: edit me -->` (the "Now" line in the hero), `<!-- NEWS: add newest at top -->`,
+  `<!-- ===== 04 PUBLICATIONS: newest first; copy a .pub block (docs/HOWTO.md) ===== -->`,
+  `<!-- ===== 05 VISION (teaser…) -->` and `<!-- ===== 06 COLLABORATE (teaser) -->`.
+- `collaborate/index.html`: `<!-- PROBLEM: set data-state="connected" when public -->`.
 
 ---
 
@@ -85,7 +96,7 @@ In `index.html`, find `<!-- NEWS: add newest at top -->`. Paste the new line at 
 - `datetime` is `YYYY-MM` (or `YYYY` when the month is unknown; then wrap the missing month in
   `<span data-todo="news month">Mon </span>` until you know it).
 - Link the thing the news is about: a paper card (`href="#pub-KEY"`), a project page
-  (`/projects/<slug>/`) or an external page. Papers led by someone else name them
+  (`/projects/<slug>/`), an in-progress card on the Vision page (`/vision/#memvla`) or an external page. Papers led by someone else name them
   ("Zhaoyu Zhang’s <a …>Title</a> (I’m a co-author)").
 
 ### Add a publication
@@ -147,15 +158,75 @@ For a paper led by someone else, leave out `data-first-author`, and link their n
 5. Preview on localhost: the new dot appears on the throughline, the filter chips count it,
    and dev mode lists any `data-todo` you left.
 
-### Add an in-progress item to the throughline
+### Add an in-progress item to the throughline (Vision teaser + Vision page)
 
-Add a card in the Vision section with
-`data-thread data-status="in-progress" data-lane="act" data-date="YYYY-MM"` (plus `data-key`,
-`data-short`, `data-note`, `data-href`). It is drawn dashed, in the accent colour. Claim no results.
+The throughline is built from every `[data-thread]` element on the **homepage**: the `.pub` cards
+plus the two teaser cards in `<section id="vision">` (`#memvla-teaser`, `#physical-ai-teaser`).
+The full cards on `/vision/` (`#memvla`, `#physical-ai`, with schematics and open questions) carry
+**no** `data-thread`, so nothing is counted twice. To add a third in-progress item:
+
+1. On `/vision/`, copy a `<article class="card-progress" id="KEY">` inside `.progress-grid`.
+   Its `id` is the deep-link target. Claim no results; keep the `badge--schematic` on any figure.
+2. On the homepage, copy a teaser card in `.teaser-grid`:
+
+   ```html
+   <article class="card-progress card-progress--teaser" id="KEY-teaser" aria-labelledby="KEY-teaser-title"
+     data-thread data-key="KEY" data-short="Short label" data-date="YYYY-MM" data-lane="act" data-status="in-progress"
+     data-venue="In progress" data-note="One sentence for the throughline popover."
+     data-href="/vision/#KEY">
+     <p class="status-pill">In progress · YYYY</p>
+     <h3 class="card-progress__title" id="KEY-teaser-title">Same title as the full card</h3>
+     <p class="card-progress__text">One sentence.</p>
+     <p class="card-progress__cta"><a class="link-arrow" href="/vision/#KEY">Read more<span class="visually-hidden">: Short label</span><svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-right"/></svg></a></p>
+   </article>
+   ```
+
+   The teaser's `id` ends in `-teaser` (never the bare `KEY`, which belongs to the full card), and
+   `data-href` points at the Vision page. The node is drawn dashed, in the accent colour; its
+   popover title is the card's `<h3>`.
+3. Add its line to the no-JavaScript fallback list (`ol.throughline__fallback`), e.g.
+   `<li data-lane="act" data-status="in-progress"><span class="tf__year">2027</span> <a href="/vision/#KEY">Short label</a> <span class="tf__meta">In progress · Act</span></li>`.
+
+### Add an open problem (Collaborate page + homepage teaser)
+
+1. On `/collaborate/`, copy a `<li class="problem" id="problem-N" data-state="open">` in
+   `<ol class="problems">`: numeral (`problem__num`), `<h2 class="problem__title">`, one paragraph,
+   the "Good fit if you work on" tags, and the "Discuss this" `mailto:` link with the title in its
+   `subject=`. Number the `id` in order (`problem-5`).
+2. On the homepage, add the matching line to `<ol class="problems problems--teaser">` in
+   `<section id="collaborate">`: the same numeral, the same title linking to
+   `/collaborate/#problem-N`, and the same tags:
+
+   ```html
+   <li class="problem">
+     <span class="problem__num" aria-hidden="true">V</span>
+     <div class="problem__body">
+       <h3 class="problem__title"><a href="/collaborate/#problem-5">Problem title<svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-right"/></svg></a></h3>
+       <ul class="tags"><li class="tag">Tag</li><li class="tag">Tag</li></ul>
+     </div>
+   </li>
+   ```
+
+   The teaser line carries no `data-state` and no description; the state and the details live on
+   the Collaborate page only. If the throughline's open node ("Your project?") should mention the
+   new count, edit `data-open-note` on `#throughline-figure`.
+
+### Throughline text (legend, hint, open node)
+
+`throughline.js` reads its words from the HTML, so each is written once:
+
+- Lane descriptions: `ul.throughline__legend` (`.lane__text` per lane). The figure draws them into
+  the SVG gutter when the box is 900px or wider, the mobile rail repeats them as group headers
+  (the list is then `aria-hidden`), and between 840 and ~950px viewports the list shows as a row.
+- Usage hint: `p.throughline__hint`, right after `#throughline-figure`. Drawn into the SVG year
+  row with the legend inline; shown as a line under the figure between 840 and 900px; not shown
+  with the rail or without JavaScript.
+- Open node: `data-open-label`, `data-open-href`, `data-open-note` on `#throughline-figure`.
+- The no-JS list `ol.throughline__fallback` is written by hand: keep it in step with the cards.
 
 ### A collaboration becomes public ("connected")
 
-Only once the partner has agreed, in public, to be named. In `index.html`, find
+Only once the partner has agreed, in public, to be named. In `collaborate/index.html`, find
 `<!-- PROBLEM: set data-state="connected" when public -->` and the row in `<ol class="problems">`:
 
 1. Change `data-state="open"` to `data-state="connected"` on its `<li class="problem">`.
@@ -168,7 +239,8 @@ Only once the partner has agreed, in public, to be named. In `index.html`, find
 3. Keep the "Discuss this" link (others may still want to join) or delete it if the problem is closed.
 4. Add a News item the same day ("Started working with … on …").
 
-The numeral turns cinnabar and a CONNECTED pill appears; nothing else needs editing.
+The numeral turns cinnabar and a CONNECTED pill appears; nothing else needs editing (the homepage
+teaser line stays as it is; it only links to the row).
 Never name anyone as a collaborator before they agree publicly.
 
 ### Add a project page
@@ -196,13 +268,24 @@ the best worked examples; the template carries the same structure with every blo
    MAMBA → STPN → Neural Sign Actors → MAMBA; to insert a page, change the "Next" card of the page
    before it and the "Previous" card of the page after it.
 9. If the work continues a thread, add a node to the "Where it led" list (`ol.thread`) on the
-   related pages.
+   related pages (in-progress nodes link to `/vision/#memvla` etc.; the "Pick up this thread"
+   callout links to `/collaborate/`).
 10. Add the URL to `sitemap.xml` (and bump `<lastmod>` on pages you changed).
 11. Make its social card: add an entry for `<slug>` to `OG_CARDS` in `tools/make_assets.py`
     (kicker, headline, title, footer, figure), then run `python3 tools/make_assets.py og <slug>`;
     point `og:image` / `twitter:image` at `/assets/og/<slug>.png`.
 12. Check it on localhost at 390px and 1440px, light and dark, with `?dev=0`, and once with
     JavaScript switched off (the page must still read: fallback images, static TOC, tables).
+
+### Edit the Vision or Collaborate page
+
+`vision/index.html` and `collaborate/index.html` are plain pages: the same header and footer as
+`index.html` (the page's own nav link carries `aria-current="page"`; project pages mark Work
+`aria-current="true"` instead, because they belong to that section rather than being it), a `.page-head`, then the
+content, then a `nav.pagenext` strip to the other page and back to Selected work. They load
+`site.css` + `article.css` and only `site.js`. When you change a title or deck there, mirror it in
+the homepage teaser (`#vision` / `#collaborate` in `index.html`); the OG cards come from
+`python3 tools/make_assets.py og vision` / `og collaborate`.
 
 **Contents list.** Write the TOC links by hand, one per section, as in the template: that list is
 what readers without JavaScript get. (If the list is left empty, `article.js` fills it from the

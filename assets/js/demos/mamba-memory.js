@@ -7,7 +7,7 @@
    The stage shows each memory as frame t READS it: frame t-1's write is in, frame t's is not,
    so the rings are exactly the features read. Reads and writes use separate seeded streams,
    so K changes only what is read. */
-import { mulberry32, createPlayer, createAnnouncer, syncPlayButton, bindRange, reducedMotion } from '/assets/js/article.js?v=20260926';
+import { mulberry32, createPlayer, createAnnouncer, syncPlayButton, bindRange, reducedMotion } from '/assets/js/article.js?v=20260927';
 
 const T = 96, CAP = 48, QF = 12, SEED = 20210202, T0 = 40, K0 = 8;
 const REFS = Array.from({ length: 14 }, (_, i) => Math.round(i * (T - 1) / 13));

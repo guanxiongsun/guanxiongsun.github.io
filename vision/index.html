@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Theme boot: runs before any stylesheet so a saved theme never flashes. Keep it first. -->
+  <script>try{const t=localStorage.getItem('theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){};document.documentElement.classList.add('js')</script>
+  <title>Vision: memory for machines that act · Guanxiong Sun</title>
+  <meta name="description" content="Next: memory for machines that act. Guanxiong Sun’s research vision, from memory banks for video perception to memory for vision-language-action models, with MemVLA (working title) and Physical AI in progress.">
+  <meta name="author" content="Guanxiong Sun">
+  <link rel="canonical" href="https://guanxiongsun.github.io/vision/">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#FAF8F4" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#121110" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <link rel="preload" href="/assets/fonts/newsreader-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <!-- Cache-bust: bump ?v=YYYYMMDD on every CSS/JS link at release. -->
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=20260927">
+  <link rel="stylesheet" href="/assets/css/site.css?v=20260927">
+  <link rel="stylesheet" href="/assets/css/article.css?v=20260927">
+
+  <!-- Social cards -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Guanxiong Sun">
+  <meta property="og:url" content="https://guanxiongsun.github.io/vision/">
+  <meta property="og:title" content="Vision: Next, memory for machines that act">
+  <meta property="og:description" content="From memory banks for video perception to memory for vision-language-action models: the essay and the work in progress (MemVLA, Physical AI).">
+  <meta property="og:image" content="https://guanxiongsun.github.io/assets/og/vision.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Vision. Next: memory for machines that act. Guanxiong Sun, Queen’s University Belfast.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Vision: Next, memory for machines that act">
+  <meta name="twitter:description" content="From memory banks for video perception to memory for vision-language-action models: the essay and the work in progress (MemVLA, Physical AI).">
+  <meta name="twitter:image" content="https://guanxiongsun.github.io/assets/og/vision.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Vision: memory for machines that act",
+    "url": "https://guanxiongsun.github.io/vision/",
+    "description": "Next: memory for machines that act. Guanxiong Sun’s research vision, from memory banks for video perception to memory for vision-language-action models, with MemVLA (working title) and Physical AI in progress.",
+    "isPartOf": { "@type": "WebSite", "name": "Guanxiong Sun", "url": "https://guanxiongsun.github.io/" },
+    "author": { "@type": "Person", "name": "Guanxiong Sun", "url": "https://guanxiongsun.github.io/" }
+  }
+  </script>
+
+  <!-- Scripts are modules, so they are deferred automatically. -->
+  <script type="module" src="/assets/js/site.js?v=20260927"></script>
+</head>
+
+<body>
+<a class="skip-link" href="#content">Skip to content</a>
+
+<!-- ===== SITE HEADER (shared by every page; nav order: News · Work · Publications · Vision · Collaborate) ===== -->
+<header class="site-header" data-header>
+  <div class="site-header__inner wrap">
+    <a class="wordmark" href="/">
+      <svg class="logomark" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false">
+        <rect class="logomark__cell" x="1.625" y="1.625" width="4.75" height="4.75" rx="1"/>
+        <rect class="logomark__cell logomark__cell--on" x="9" y="1" width="6" height="6" rx="1"/>
+        <rect class="logomark__cell" x="1.625" y="9.625" width="4.75" height="4.75" rx="1"/>
+        <rect class="logomark__cell" x="9.625" y="9.625" width="4.75" height="4.75" rx="1"/>
+      </svg>
+      <span class="wordmark__name">Guanxiong Sun</span>
+    </a>
+
+    <nav class="site-nav" aria-label="Primary">
+      <ul class="site-nav__list" id="site-menu" data-menu-panel>
+        <li><a class="site-nav__link" href="/#news">News</a></li>
+        <li><a class="site-nav__link" href="/#work">Work</a></li>
+        <li><a class="site-nav__link" href="/#publications">Publications</a></li>
+        <li><a class="site-nav__link" href="/vision/" aria-current="page">Vision</a></li>
+        <li><a class="site-nav__link" href="/collaborate/">Collaborate</a></li>
+      </ul>
+    </nav>
+
+    <div class="site-header__tools">
+      <button class="btn-icon theme-toggle" type="button" data-theme-toggle aria-label="Theme: Auto (follows system). Switch to light">
+        <svg class="icon theme-toggle__icon theme-toggle__icon--auto" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#contrast"/></svg>
+        <svg class="icon theme-toggle__icon theme-toggle__icon--light" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#sun"/></svg>
+        <svg class="icon theme-toggle__icon theme-toggle__icon--dark" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#moon"/></svg>
+      </button>
+      <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="site-menu">
+        <svg class="icon menu-toggle__open" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#menu"/></svg>
+        <svg class="icon menu-toggle__close" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#x"/></svg>
+        <span>Menu</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="content">
+
+<!-- ===== PAGE HEAD ===== -->
+<section class="section page-intro" id="top" aria-labelledby="vision-title">
+  <div class="wrap">
+    <header class="page-head reveal">
+      <a class="link-quiet page-head__back" href="/"><svg class="icon" width="14" height="14" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-left"/></svg>Home</a>
+      <p class="kicker page-head__kicker">Vision</p>
+      <h1 class="page-head__title" id="vision-title">Next: memory for machines that act.</h1>
+      <p class="page-head__deck">Where the thread leads: from memory banks for video to memory for agents that act in the physical world, and the work in progress.</p>
+    </header>
+  </div>
+</section>
+
+<!-- ===== VISION (the tinted band, as on the homepage): essay, pull quote, in-progress cards ===== -->
+<section class="section band" id="vision" aria-label="The essay and work in progress">
+  <div class="wrap">
+    <div class="essay">
+      <p class="essay__first">My work so far has circled one question: what should a machine keep from what it has seen? In video perception the answer was a memory bank that stores features from the entire video and reads them cheaply (MAMBA), and prompts that carry context from neighbouring frames into the backbone (STPN). In generation it was learning the structure of human motion well enough to produce signing avatars from text (Neural Sign Actors, with colleagues at Imperial College London).</p>
+      <p>Physical AI raises the stakes. A robot following an instruction must remember where it put something, what it has already tried and what has changed, over minutes rather than frames, and on a fixed compute budget. Many vision-language-action policies still act mostly on the current observation and instruction.</p>
+      <blockquote class="pullquote"><p>Perception with memory, generation with structure, action with both.</p></blockquote>
+      <p>MemVLA (working title) is my current project: memory for vision-language-action models that stays grounded in what the robot perceives, so that it tracks what has changed in the world and not only what the robot itself did. That matters as soon as people and other agents share the workspace. It builds on the memory-bank ideas of my video work, and it is where I am most keen to collaborate.</p>
+    </div>
+
+    <div class="progress-grid">
+      <!-- In-progress cards. Only the homepage teaser cards feed the throughline figure; these full cards carry no throughline attributes. Never claim results here. -->
+      <article class="card-progress" id="memvla" aria-labelledby="memvla-title">
+        <p class="status-pill">In progress · 2026</p>
+        <h2 class="card-progress__title" id="memvla-title">MemVLA (working title): memory for vision-language-action models</h2>
+        <figure class="schematic">
+          <div class="plate__head"><span class="badge badge--schematic">Schematic · work in progress</span></div>
+          <svg class="schematic__svg schematic--memvla" viewBox="0 0 480 214" role="img" aria-labelledby="memvla-svg-title">
+            <title id="memvla-svg-title">Schematic: observations are encoded and written into a small memory of slots; the policy reads from memory, together with a language instruction, and outputs actions to a robot arm. A dashed return path asks whether the policy’s own actions should be written to memory too.</title>
+            <defs>
+              <marker id="ah-ink" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0.5 L7.5 4 L0 7.5z" class="sx-head"/></marker>
+              <marker id="ah-acc" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0.5 L7.5 4 L0 7.5z" class="sx-head-acc"/></marker>
+            </defs>
+            <!-- observations: a stack of three frames -->
+            <g class="sx-frames">
+              <rect x="32" y="40" width="42" height="30" rx="2"/>
+              <rect x="26" y="46" width="42" height="30" rx="2"/>
+              <rect x="20" y="52" width="42" height="30" rx="2"/>
+            </g>
+            <text class="sx-label" x="48" y="102" text-anchor="middle">observations</text>
+            <path class="sx-line" d="M80 62 H104" marker-end="url(#ah-ink)"/>
+            <!-- encoder -->
+            <rect class="sx-box" x="108" y="44" width="76" height="36" rx="4"/>
+            <text class="sx-label sx-label--box" x="146" y="67" text-anchor="middle">encoder</text>
+            <!-- write: encoder → memory -->
+            <path class="sx-flow" d="M146 82 V118" marker-end="url(#ah-acc)"/>
+            <text class="sx-label sx-label--acc" x="154" y="105">write</text>
+            <!-- memory: 2 × 4 slots; newest in focus colour, one still empty -->
+            <g class="sx-mem">
+              <rect x="104" y="124" width="18" height="18" rx="2"/><rect x="126" y="124" width="18" height="18" rx="2"/><rect x="148" y="124" width="18" height="18" rx="2"/><rect x="170" y="124" width="18" height="18" rx="2" class="sx-mem--new"/>
+              <rect x="104" y="146" width="18" height="18" rx="2"/><rect x="126" y="146" width="18" height="18" rx="2"/><rect x="148" y="146" width="18" height="18" rx="2"/><rect x="170" y="146" width="18" height="18" rx="2" class="sx-mem--empty"/>
+            </g>
+            <text class="sx-label" x="146" y="186" text-anchor="middle">memory</text>
+            <!-- read: memory → policy -->
+            <path class="sx-flow" d="M192 133 H236 V100" marker-end="url(#ah-acc)"/>
+            <text class="sx-label sx-label--acc" x="244" y="124">read</text>
+            <!-- instruction → policy -->
+            <text class="sx-label sx-label--quote" x="272" y="22" text-anchor="middle">“put the cup back where it was”</text>
+            <path class="sx-line" d="M272 30 V54" marker-end="url(#ah-ink)"/>
+            <!-- policy -->
+            <rect class="sx-box sx-box--strong" x="218" y="58" width="108" height="38" rx="4"/>
+            <text class="sx-label sx-label--box" x="272" y="82" text-anchor="middle">policy (VLA)</text>
+            <!-- actions → arm -->
+            <path class="sx-line" d="M328 77 H382" marker-end="url(#ah-ink)"/>
+            <text class="sx-label" x="355" y="68" text-anchor="middle">actions</text>
+            <g class="sx-arm">
+              <path d="M398 166 H462"/>
+              <path d="M430 166 V138 L406 108 L438 82"/>
+              <path d="M438 82 L452 76 M438 82 L448 94"/>
+              <circle cx="430" cy="138" r="3.5"/><circle cx="406" cy="108" r="3.5"/><circle cx="438" cy="82" r="3"/>
+            </g>
+            <!-- open question: should the policy's own actions be written too? -->
+            <path class="sx-line sx-line--dashed" d="M355 80 V155 H194" marker-end="url(#ah-ink)"/>
+            <text class="sx-label sx-label--muted" x="274" y="176" text-anchor="middle">or its own actions?</text>
+          </svg>
+        </figure>
+        <p>Robots that work alongside people need memory of the world, not just of their own actions. MemVLA explores how a vision-language-action policy should decide what to write, what to keep, and what to read back as an episode unfolds.</p>
+        <p data-todo="arXiv link when public"><a class="link-arrow" href="#memvla">Read the preprint (arXiv)<svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-up-right"/></svg></a></p>
+        <h3 class="card-progress__qhead kicker">Open questions</h3>
+        <ul class="card-progress__questions">
+          <li>What should a policy’s memory record: its own actions, or changes in the world?</li>
+          <li>How should memory be written and read efficiently as episodes grow longer?</li>
+          <li>How do we evaluate memory itself, not just task success?</li>
+        </ul>
+        <p class="card-progress__cta"><a class="link-arrow" href="mailto:sungx.cs@gmail.com?subject=Collaboration%3A%20MemVLA">Work on this with me<svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-right"/></svg></a></p>
+      </article>
+
+      <article class="card-progress" id="physical-ai" aria-labelledby="physical-ai-title">
+        <p class="status-pill">Direction · 2026</p>
+        <h2 class="card-progress__title" id="physical-ai-title">Physical AI: perception and generation, grounded in interaction</h2>
+        <figure class="schematic">
+          <div class="plate__head"><span class="badge badge--schematic">Schematic · work in progress</span></div>
+          <svg class="schematic__svg schematic--loop" viewBox="0 0 480 214" role="img" aria-labelledby="pai-svg-title">
+            <title id="pai-svg-title">Schematic: a loop from perceive, to predict with a world model, to act, to the environment and back to perceive, with memory at the centre linked to every step.</title>
+            <defs>
+              <marker id="ah-ink2" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0.5 L7.5 4 L0 7.5z" class="sx-head"/></marker>
+            </defs>
+            <!-- memory at the centre, linked to every station -->
+            <g class="sx-links">
+              <path d="M240 46 V84"/><path d="M316 107 H266"/><path d="M240 168 V132"/><path d="M134 107 H214"/>
+            </g>
+            <g class="sx-mem">
+              <rect x="219" y="86" width="19" height="19" rx="2.5"/>
+              <rect x="242" y="86" width="19" height="19" rx="2.5" class="sx-mem--new"/>
+              <rect x="219" y="109" width="19" height="19" rx="2.5"/>
+              <rect x="242" y="109" width="19" height="19" rx="2.5"/>
+            </g>
+            <text class="sx-label sx-label--acc" x="240" y="150" text-anchor="middle">memory</text>
+            <!-- four stations -->
+            <rect class="sx-box" x="180" y="10" width="120" height="34" rx="17"/>
+            <text class="sx-label sx-label--box" x="240" y="32" text-anchor="middle">perceive</text>
+            <rect class="sx-box sx-box--strong" x="318" y="90" width="156" height="34" rx="17"/>
+            <text class="sx-label sx-label--box" x="396" y="112" text-anchor="middle">predict (world model)</text>
+            <rect class="sx-box" x="180" y="170" width="120" height="34" rx="17"/>
+            <text class="sx-label sx-label--box" x="240" y="192" text-anchor="middle">act</text>
+            <rect class="sx-box" x="8" y="90" width="124" height="34" rx="17"/>
+            <text class="sx-label sx-label--box" x="70" y="112" text-anchor="middle">environment</text>
+            <!-- the loop, clockwise -->
+            <path class="sx-line" d="M302 27 C 360 27, 396 46, 396 86" marker-end="url(#ah-ink2)"/>
+            <path class="sx-line" d="M396 126 C 396 168, 360 187, 304 187" marker-end="url(#ah-ink2)"/>
+            <path class="sx-line" d="M178 187 C 118 187, 70 168, 70 128" marker-end="url(#ah-ink2)"/>
+            <path class="sx-line" d="M70 88 C 70 46, 118 27, 176 27" marker-end="url(#ah-ink2)"/>
+          </svg>
+        </figure>
+        <p>Grounding perception and generative models in physical interaction: world models that remember, and agents that use them.</p>
+        <!-- Image slot (3:2). When approved: replace the span with <img ... width height alt> and remove hidden + data-todo. -->
+        <figure class="card-progress__photo" hidden data-todo="image for this card, if the owner approves one">
+          <span class="card-progress__photo-slot">Photo slot, 3:2</span>
+        </figure>
+        <h3 class="card-progress__qhead kicker">Open questions</h3>
+        <ul class="card-progress__questions">
+          <li>Can video world models keep a persistent state?</li>
+          <li>What transfers from human-motion generation to robot motion?</li>
+        </ul>
+        <p class="card-progress__cta"><a class="link-arrow" href="/collaborate/">See the open problems<svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-right"/></svg></a></p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===== NEXT: the other standalone page, and back to Selected work ===== -->
+<nav class="section pagenext" aria-label="Continue">
+  <div class="wrap">
+    <div class="pagenav pagenav--text">
+      <a class="pagenav__card" href="/#work">
+        <span><span class="pagenav__dir">← Back to</span><span class="pagenav__title">Selected work</span><span class="pagenav__note">Three projects, opened up: interactive explainers, real results and code.</span></span>
+      </a>
+      <a class="pagenav__card pagenav__card--next" href="/collaborate/">
+        <span><span class="pagenav__dir">Next →</span><span class="pagenav__title">Collaborate</span><span class="pagenav__note">Open problems. Let’s work on them together.</span></span>
+      </a>
+    </div>
+  </div>
+</nav>
+</main>
+
+<!-- ===== SITE FOOTER (identical on every page) ===== -->
+<footer class="site-footer">
+  <div class="wrap site-footer__grid">
+    <div class="site-footer__id">
+      <svg class="logomark" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false">
+        <rect class="logomark__cell" x="1.625" y="1.625" width="4.75" height="4.75" rx="1"/>
+        <rect class="logomark__cell logomark__cell--on" x="9" y="1" width="6" height="6" rx="1"/>
+        <rect class="logomark__cell" x="1.625" y="9.625" width="4.75" height="4.75" rx="1"/>
+        <rect class="logomark__cell" x="9.625" y="9.625" width="4.75" height="4.75" rx="1"/>
+      </svg>
+      <p>Guanxiong Sun · Queen’s University Belfast</p>
+    </div>
+    <ul class="site-footer__links">
+      <li><a href="mailto:sungx.cs@gmail.com" aria-label="Email"><svg class="icon" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#mail"/></svg></a></li>
+      <li><a href="https://scholar.google.com/citations?user=vLk3IzoAAAAJ" aria-label="Google Scholar"><svg class="icon" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#scholar"/></svg></a></li>
+      <li><a href="https://github.com/guanxiongsun" aria-label="GitHub"><svg class="icon" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#github"/></svg></a></li>
+      <li><a href="https://huggingface.co/guanxiongsun" aria-label="Hugging Face"><svg class="icon" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#huggingface"/></svg></a></li>
+      <li><a href="https://www.linkedin.com/in/guanxiongsun/" aria-label="LinkedIn"><svg class="icon" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#linkedin"/></svg></a></li>
+    </ul>
+    <div class="site-footer__meta">
+      <p>Updated <time datetime="2026-09">September 2026</time> · <a class="link-quiet" href="#top">Back to top<svg class="icon" width="14" height="14" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-up"/></svg></a></p>
+      <p class="site-footer__colophon">Set in Newsreader, Inter and JetBrains Mono. Hand-built HTML, no frameworks. Earlier versions adapted Jon Barron’s and Wufei Ma’s pages.</p>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

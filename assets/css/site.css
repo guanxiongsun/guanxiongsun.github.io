@@ -8,9 +8,10 @@
      1. Base            6. Pills, badges, tags   11. Publications
      2. Layout          7. Plates + lightbox     12. Vision band
      3. Header          8. Video, A/B, YouTube   13. Collaborate
-     4. Section head    9. Stats, code, callouts 14. News, about, footer
-     5. Buttons/links  10. Hero, throughline     15. Motion, a11y, print, data-todo
-                       10b. Feature spreads      16. Throughline figure (drawn by throughline.js)
+     4. Section head    9. Stats, code, callouts 13b. Homepage teasers (Vision, Collaborate)
+     5. Buttons/links  10. Hero, throughline     14. News, about, footer
+                       10b. Feature spreads      15. Motion, a11y, print, data-todo
+                                                 16. Throughline figure (drawn by throughline.js)
    ===================================================================== */
 
 /* ---------- 1. Base ---------- */
@@ -478,8 +479,14 @@ html:not(.js) :is(.code-copy, .copy-btn, [data-copy]) { display: none; } /* wire
 }
 
 /* Throughline section. throughline.js renders the figure into .throughline and sets
-   [data-ready]; until then (and without JS) the chronological fallback list shows. */
-#throughline { padding-top: clamp(56px, 6vw, 96px); }
+   [data-ready]; until then (and without JS) the chronological fallback list shows.
+   .section--compact: a shorter section head (h3-size title, one-line deck, less air) so the
+   figure, not the head, carries the section. */
+.section--compact { padding-top: calc(var(--section-y) * .5); }
+#throughline .section-head { padding-top: var(--s-4); row-gap: 10px; margin-bottom: 20px; }
+#throughline .section-head__title { font-size: var(--fs-h3); line-height: 1.12; max-width: 34ch; }
+#throughline .section-head__deck { font-size: var(--fs-body); max-width: 50rem; }
+@media (min-width: 1024px) { #throughline .section-head__kicker { padding-top: .55em; } }
 .throughline { position: relative; }
 .throughline[data-ready] .throughline__fallback { display: none; }
 .throughline__fallback {
@@ -505,14 +512,23 @@ html:not(.js) :is(.code-copy, .copy-btn, [data-copy]) { display: none; } /* wire
 @media (min-width: 600px) { .throughline__fallback { columns: 2; } }
 @media (min-width: 1024px) { .throughline__fallback { columns: 3; } }
 
-.throughline__hint { display: none; margin-top: 10px; font: 400 13px/1.45 var(--font-sans); color: var(--ink-3); }
-@media (min-width: 840px) { .throughline[data-ready] + .throughline__hint { display: block; } }
-.throughline__legend { list-style: none; display: grid; gap: 20px 32px; margin-top: 40px; }
+/* Usage hint (p.throughline__hint): the source of the hint text. With the legend inline (>=900px box)
+   the figure draws it into the SVG year row; <840px the rail needs none. Between, the paragraph shows. */
+.throughline__hint { display: none; margin-top: 12px; font: 400 13px/1.45 var(--font-sans); color: var(--ink-3); }
+.throughline[data-ready]:not([data-legend="inline"]) + .throughline__hint { display: block; }
+
+/* Lane legend: the source of the lane descriptions. The figure folds it into its own lane labels
+   (SVG gutter when the box is >=900px, rail group headers <840px) and marks the box data-legend="inline"; the
+   list then stays in the DOM for assistive tech only. Between (840 to ~950px viewports) it shows, compact. */
+.throughline__legend { list-style: none; display: grid; gap: 12px 24px; margin-top: 20px; }
+.throughline[data-legend="inline"] ~ .throughline__legend {
+  position: absolute; width: 1px; height: 1px; margin: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap;
+}
 .lane__name { display: flex; align-items: center; gap: 8px; color: var(--ink); }
 .lane__name::before { content: ""; width: 8px; height: 2px; background: var(--ink); }
 .lane[data-lane="act"] .lane__name { color: var(--accent); }
 .lane[data-lane="act"] .lane__name::before { background: var(--accent); }
-.lane__text { margin-top: 6px; font: 400 var(--fs-ui)/1.5 var(--font-sans); color: var(--ink-2); }
+.lane__text { margin-top: 4px; font: 400 var(--fs-sm)/1.45 var(--font-sans); color: var(--ink-2); }
 @media (min-width: 600px) { .throughline__legend { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (min-width: 1024px) { .throughline__legend { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 
@@ -653,8 +669,8 @@ html:not(.js) .chips, html:not(.js) .pub-controls__row { display: none; }
 /* The band is the page's only tinted block; hairlines keep its edges visible in dark mode.
    The section before it gets its own bottom padding so content never touches the tint. */
 .section:has(+ .band) { padding-bottom: var(--section-y); }
-.band { background: var(--paper-2); border-block: 1px solid var(--rule); padding-top: calc(var(--section-y) * .75); padding-bottom: var(--section-y); }
-.band + .section { padding-top: var(--section-y); }
+.band { background: var(--paper-2); border-block: 1px solid var(--rule); padding-top: calc(var(--section-y) * .75); padding-bottom: calc(var(--section-y) * .75); }
+.band + .section { padding-top: calc(var(--section-y) * .5); }
 .essay > * { max-width: var(--measure); }
 .essay p + p { margin-top: 1.1em; }
 /* A true two-line drop cap: the glyph's top meets line 1's cap height, its foot line 2's baseline. */
@@ -765,6 +781,27 @@ html:not(.js) .chips, html:not(.js) .pub-controls__row { display: none; }
 .contact__email { font-size: var(--fs-h3); line-height: 1.2; letter-spacing: -.01em; overflow-wrap: anywhere; }
 .contact__addr { font: 400 var(--fs-ui)/1.5 var(--font-sans); color: var(--ink-3); }
 
+/* ---------- 13b. Homepage teasers: Vision and Collaborate previews (the full content lives on /vision/ and /collaborate/) ---------- */
+.teaser-grid { display: grid; gap: 24px; }
+@media (min-width: 840px) { .teaser-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.card-progress--teaser .card-progress__title { font-size: clamp(1.1875rem, 1.05rem + .4vw, 1.375rem); }
+.card-progress--teaser .card-progress__text { margin-top: 12px; }
+.card-progress--teaser .card-progress__cta { padding-top: 16px; }
+.teaser__more { margin-top: 32px; }
+/* Compact problem rows: numeral, linked title (a trailing accent arrow is the link cue) and tags; one line at >=1024. */
+.problems--teaser .problem { padding: 18px 0; }
+.problems--teaser .problem__title a { color: var(--ink); text-decoration: none; }
+.problems--teaser .problem__title a .icon { margin-left: 6px; vertical-align: -.1em; color: var(--accent); transition: transform var(--dur-2) var(--ease-out); }
+.problems--teaser .problem__title a:hover { color: var(--accent); text-decoration: underline 1px; text-underline-offset: .18em; }
+.problems--teaser .problem__title a:hover .icon { transform: translateX(3px); }
+.problems--teaser .problem__body { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px; }
+@media (min-width: 1024px) {
+  .problems--teaser .problem { padding: 20px 0; align-items: center; }
+  .problems--teaser .problem__num { font-size: 2rem; }
+}
+#collaborate .teaser__more { margin-top: 24px; }
+#collaborate .contact { margin-top: 28px; }
+
 /* ---------- 14. News, service & background, footer ---------- */
 .news { list-style: none; }
 .news__item { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 16px; padding: 14px 0; border-top: 1px solid var(--rule); }
@@ -786,8 +823,8 @@ html:not(.js) .chips, html:not(.js) .pub-controls__row { display: none; }
 .news__more > summary:hover { color: var(--accent); }
 .news__more .news { margin-top: 8px; }
 
-/* Lower sections skip rendering until near the viewport (sizes are rough estimates). */
-#publications { content-visibility: auto; contain-intrinsic-size: auto 5200px; }
+/* The last section skips rendering until near the viewport (size is a rough estimate). Nothing
+   above it may do the same: a placeholder height shifts every fragment and nav jump below it. */
 #about { content-visibility: auto; contain-intrinsic-size: auto 1000px; }
 
 .about-grid { display: grid; gap: 36px 40px; }
@@ -865,7 +902,7 @@ html.theme-transition, html.theme-transition *, html.theme-transition *::before,
   .pub__title a::after { content: " <" attr(href) ">"; font: 400 9pt var(--font-mono); color: var(--ink-3); }
   .pub__title a[href^="/"]::after { content: " <https://guanxiongsun.github.io" attr(href) ">"; }
   .bib, .throughline__hint { display: none !important; }
-  #publications, #about { content-visibility: visible; }
+  #about { content-visibility: visible; }
 }
 
 /* The owner-mandated Hitsteps snippet (index.html, untouched) renders a visible text link when JS
@@ -892,6 +929,12 @@ html.dev [data-todo]::after {
 .tl__guide { stroke: var(--rule-strong); stroke-dasharray: 1 5; stroke-linecap: round; }
 .tl__year, .tl__lane { font: 500 11px/1 var(--font-mono); letter-spacing: .08em; fill: var(--ink-3); }
 .tl__year--next, .tl__lane--act { fill: var(--accent); }
+/* Wide figure (>=1000px box): the legend lives in the gutter as lane name + description, and the
+   usage hint sits in the gutter's year row. */
+.tl__lane--inline { fill: var(--ink); }
+.tl__lane--inline.tl__lane--act { fill: var(--accent); }
+.tl__lanetext, .tl__hint { font: 400 11px/1 var(--font-sans); fill: var(--ink-2); }
+.tl__hint { fill: var(--ink-3); }
 .tl__next { fill: url(#tl-hatch); stroke: var(--accent); stroke-dasharray: 4 4; }
 .tl__hatch { stroke: var(--rule-strong); stroke-width: 1; }
 
@@ -917,6 +960,7 @@ html.dev [data-todo]::after {
   transition: opacity var(--dur-2) var(--ease-out);
 }
 .tl__node--future .tl__label, .tl__node--open .tl__label { fill: var(--accent); }
+.tl__node--open .tl__label { stroke-width: 7px; } /* it sits on the hatch */
 /* Hidden labels must not catch the pointer: in crowded cells they sit over a neighbour's label. */
 .tl__node--quiet .tl__label, .tl__node.is-muted .tl__label { opacity: 0; pointer-events: none; }
 .tl__node--quiet.is-active .tl__label { opacity: 1; }
@@ -946,29 +990,31 @@ html.dev [data-todo]::after {
 }
 .tl-pop.is-below .tl-pop__arrow { bottom: auto; top: -6px; border-width: 1px 0 0 1px; }
 
-/* Mobile rail: one <li> per year; the rail is drawn per year block, dashed accent for the future. */
-.tl-rail { list-style: none; border-top: 1px solid var(--rule); padding-top: 8px; }
-.tl-rail__year { position: relative; padding: 14px 0 6px 32px; }
-.tl-rail__year::before {
+/* Mobile rail: one <li> per lane (its header is the legend), one row per node, oldest first.
+   The rail is drawn per lane block, dashed accent for the Act lane (in progress). */
+.tl-rail { list-style: none; border-top: 1px solid var(--rule); padding-top: 4px; }
+.tl-rail__lane { position: relative; padding: 12px 0 6px 32px; }
+.tl-rail__lane::before {
   content: ""; position: absolute; left: 7px; top: 0; bottom: 0; width: 1px; background: var(--rule-strong);
 }
-.tl-rail__year:first-child::before { top: 22px; }
-.tl-rail__year.is-future::before {
+.tl-rail__lane:first-child::before { top: 22px; }
+.tl-rail__lane:last-child::before { bottom: 6px; }
+.tl-rail__lane.is-future::before {
   width: 1.5px; left: 6.75px;
   background: repeating-linear-gradient(to bottom, var(--accent) 0 5px, transparent 5px 10px);
 }
-.tl-rail__year:last-child::before { bottom: auto; height: 60px; }
-.tl-rail__yr {
-  position: relative;
-  font: 500 var(--fs-xs)/1.3 var(--font-mono); letter-spacing: var(--track-kicker); text-transform: uppercase; color: var(--ink-3);
-}
-.tl-rail__yr::before { content: ""; position: absolute; left: -29px; top: 50%; width: 9px; height: 1px; background: var(--ink-3); }
-.tl-rail__year.is-future .tl-rail__yr { color: var(--accent); }
-.tl-rail__list { list-style: none; }
+/* The rail ends at the open node: its item covers the rail below its glyph. */
+.tl-rail__item--open::after { content: ""; position: absolute; left: -26px; top: 17px; bottom: -14px; width: 4px; background: var(--paper); }
+.tl-rail__name { position: relative; color: var(--ink); }
+.tl-rail__name::before { content: ""; position: absolute; left: -29px; top: 50%; width: 9px; height: 1px; background: var(--ink-3); }
+.tl-rail__lane.is-future .tl-rail__name { color: var(--accent); }
+.tl-rail__lane.is-future .tl-rail__name::before { background: var(--accent); }
+.tl-rail__text { margin-top: 3px; font: 400 var(--fs-sm)/1.45 var(--font-sans); color: var(--ink-2); }
+.tl-rail__list { list-style: none; margin-top: 2px; }
 .tl-rail__item { position: relative; }
 /* The node glyph sits on the rail (7.5px from the rail's left edge = -24.5px from the text). */
 .tl-rail__item::before {
-  content: ""; position: absolute; left: -24.5px; top: 18px; width: 9px; height: 9px; border-radius: 50%;
+  content: ""; position: absolute; left: -24.5px; top: 17px; width: 9px; height: 9px; border-radius: 50%;
   background: var(--ink); box-shadow: 0 0 0 2px var(--paper); transform: translate(-50%, -50%);
 }
 .tl-rail__item--flag::before { width: 12px; height: 12px; background: var(--accent); }
@@ -978,24 +1024,22 @@ html.dev [data-todo]::after {
   background: var(--paper); border: 1.5px dashed var(--accent); color: var(--accent);
   font: 500 14px/1 var(--font-sans);
 }
-.tl-rail__item:is(.tl-rail__item--flag, .tl-rail__item--future, .tl-rail__item--open) { padding: 8px 0 14px; }
-.tl-rail__item:is(.tl-rail__item--flag, .tl-rail__item--future, .tl-rail__item--open)::before { top: 21px; }
 .tl-rail__row {
-  display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 10px; min-height: 36px; padding: 8px 0;
+  display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 10px; min-height: 34px; padding: 7px 0;
   color: var(--ink); text-decoration: none;
 }
 .tl-rail__label { font: 600 var(--fs-ui)/20px var(--font-sans); }
 .tl-rail__row:hover .tl-rail__label { color: var(--accent); }
+.tl-rail__item--flag .tl-rail__label, .tl-rail__item--future .tl-rail__label, .tl-rail__item--open .tl-rail__label { color: var(--accent); }
 .tl-rail__meta { font: 500 var(--fs-xs)/1.3 var(--font-mono); letter-spacing: var(--track-kicker); text-transform: uppercase; color: var(--ink-3); }
-.tl-rail__item p.tl-rail__label { font: 600 var(--fs-title)/1.3 var(--font-serif); color: var(--ink); }
-.tl-rail__item--future p.tl-rail__label, .tl-rail__item--open p.tl-rail__label { color: var(--accent); }
-.tl-rail__item p.tl-rail__meta { margin-top: 2px; }
-.tl-rail__item .tl-rail__note { margin-top: 6px; max-width: 34rem; font: 400 var(--fs-ui)/1.5 var(--font-sans); color: var(--ink-2); }
-.tl-rail__item .link-arrow { margin-top: 6px; min-height: 32px; }
+.tl-rail__note { margin: -3px 0 6px; max-width: 34rem; font: 400 var(--fs-sm)/1.45 var(--font-sans); color: var(--ink-2); }
 
 @media (forced-colors: active) {
   .tl :is(.tl__thread, .tl__guide, .tl__grid, .tl__next, .tl__dot, .tl__plus, .tl__ring) { stroke: CanvasText; }
   .tl__dot { fill: CanvasText; }
   .tl__node:is(.tl__node--future, .tl__node--open) .tl__dot { fill: Canvas; }
-  .tl-rail__year::before, .tl-rail__item::before { forced-color-adjust: none; background: CanvasText; }
+  .tl-rail__lane::before, .tl-rail__item::before { forced-color-adjust: none; background: CanvasText; }
+  .tl-rail__lane.is-future::before { background: repeating-linear-gradient(to bottom, CanvasText 0 5px, transparent 5px 10px); }
+  .tl-rail__item:is(.tl-rail__item--future, .tl-rail__item--open)::before { background: Canvas; border-color: CanvasText; color: CanvasText; box-shadow: none; }
+  .tl-rail__item--open::after { background: Canvas; }
 }

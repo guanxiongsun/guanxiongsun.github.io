@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Theme boot: runs before any stylesheet so a saved theme never flashes. Keep it first. -->
+  <script>try{const t=localStorage.getItem('theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){};document.documentElement.classList.add('js')</script>
+  <title>Collaborate: open problems in memory for perception and action · Guanxiong Sun</title>
+  <meta name="description" content="Open problems in memory for perception and action, looking for collaborators: efficient memory for long-horizon VLA policies, memory as architecture, video world models with persistent memory, and human motion and sign-language generation. Guanxiong Sun, Queen’s University Belfast.">
+  <meta name="author" content="Guanxiong Sun">
+  <link rel="canonical" href="https://guanxiongsun.github.io/collaborate/">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#FAF8F4" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#121110" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <link rel="preload" href="/assets/fonts/newsreader-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <!-- Cache-bust: bump ?v=YYYYMMDD on every CSS/JS link at release. -->
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=20260927">
+  <link rel="stylesheet" href="/assets/css/site.css?v=20260927">
+  <link rel="stylesheet" href="/assets/css/article.css?v=20260927">
+
+  <!-- Social cards -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Guanxiong Sun">
+  <meta property="og:url" content="https://guanxiongsun.github.io/collaborate/">
+  <meta property="og:title" content="Collaborate: open problems. Let’s work on them together">
+  <meta property="og:description" content="Four open problems in memory for perception and action, looking for collaborators (faculty, industry researchers and students). Write to me.">
+  <meta property="og:image" content="https://guanxiongsun.github.io/assets/og/collaborate.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Collaborate. Open problems. Let’s work on them together. Guanxiong Sun, Queen’s University Belfast.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Collaborate: open problems. Let’s work on them together">
+  <meta name="twitter:description" content="Four open problems in memory for perception and action, looking for collaborators (faculty, industry researchers and students). Write to me.">
+  <meta name="twitter:image" content="https://guanxiongsun.github.io/assets/og/collaborate.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Collaborate: open problems. Let’s work on them together",
+    "url": "https://guanxiongsun.github.io/collaborate/",
+    "description": "Open problems in memory for perception and action, looking for collaborators: efficient memory for long-horizon VLA policies, memory as architecture, video world models with persistent memory, and human motion and sign-language generation. Guanxiong Sun, Queen’s University Belfast.",
+    "isPartOf": { "@type": "WebSite", "name": "Guanxiong Sun", "url": "https://guanxiongsun.github.io/" },
+    "author": { "@type": "Person", "name": "Guanxiong Sun", "url": "https://guanxiongsun.github.io/" }
+  }
+  </script>
+
+  <!-- Scripts are modules, so they are deferred automatically. -->
+  <script type="module" src="/assets/js/site.js?v=20260927"></script>
+</head>
+
+<body>
+<a class="skip-link" href="#content">Skip to content</a>
+
+<!-- ===== SITE HEADER (shared by every page; nav order: News · Work · Publications · Vision · Collaborate) ===== -->
+<header class="site-header" data-header>
+  <div class="site-header__inner wrap">
+    <a class="wordmark" href="/">
+      <svg class="logomark" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false">
+        <rect class="logomark__cell" x="1.625" y="1.625" width="4.75" height="4.75" rx="1"/>
+        <rect class="logomark__cell logomark__cell--on" x="9" y="1" width="6" height="6" rx="1"/>
+        <rect class="logomark__cell" x="1.625" y="9.625" width="4.75" height="4.75" rx="1"/>
+        <rect class="logomark__cell" x="9.625" y="9.625" width="4.75" height="4.75" rx="1"/>
+      </svg>
+      <span class="wordmark__name">Guanxiong Sun</span>
+    </a>
+
+    <nav class="site-nav" aria-label="Primary">
+      <ul class="site-nav__list" id="site-menu" data-menu-panel>
+        <li><a class="site-nav__link" href="/#news">News</a></li>
+        <li><a class="site-nav__link" href="/#work">Work</a></li>
+        <li><a class="site-nav__link" href="/#publications">Publications</a></li>
+        <li><a class="site-nav__link" href="/vision/">Vision</a></li>
+        <li><a class="site-nav__link" href="/collaborate/" aria-current="page">Collaborate</a></li>
+      </ul>
+    </nav>
+
+    <div class="site-header__tools">
+      <button class="btn-icon theme-toggle" type="button" data-theme-toggle aria-label="Theme: Auto (follows system). Switch to light">
+        <svg class="icon theme-toggle__icon theme-toggle__icon--auto" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#contrast"/></svg>
+        <svg class="icon theme-toggle__icon theme-toggle__icon--light" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#sun"/></svg>
+        <svg class="icon theme-toggle__icon theme-toggle__icon--dark" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#moon"/></svg>
+      </button>
+      <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="site-menu">
+        <svg class="icon menu-toggle__open" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#menu"/></svg>
+        <svg class="icon menu-toggle__close" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#x"/></svg>
+        <span>Menu</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="content">
+
+<!-- ===== PAGE HEAD + OPEN PROBLEMS ===== -->
+<section class="section page-intro" id="top" aria-labelledby="collaborate-title">
+  <div class="wrap">
+    <header class="page-head reveal">
+      <a class="link-quiet page-head__back" href="/"><svg class="icon" width="14" height="14" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-left"/></svg>Home</a>
+      <p class="kicker page-head__kicker">Collaborate</p>
+      <h1 class="page-head__title" id="collaborate-title">Open problems. Let’s work on them together.</h1>
+      <p class="page-head__deck">I’m looking for collaborators (faculty, industry researchers and students) who care about memory in perception and action. If one of these is your problem too, write to me.</p>
+    </header>
+
+    <!-- PROBLEM: set data-state="connected" when public, and add
+         <p class="problem__partner">Now with <a href="…">Name, Institution</a></p> plus a News line. -->
+    <ol class="problems">
+      <li class="problem" id="problem-1" data-state="open">
+        <span class="problem__num" aria-hidden="true">I</span>
+        <div class="problem__body">
+          <h2 class="problem__title">Efficient memory for long-horizon VLA policies</h2>
+          <p>Robot episodes run for minutes, and the world changes while they run. I bring memory-bank design from video (MAMBA, STPN) and a working VLA evaluation pipeline.</p>
+          <div class="problem__fit"><span class="problem__fit-label">Good fit if you work on:</span> <ul class="tags"><li class="tag">Robot learning</li><li class="tag">VLA</li><li class="tag">Long context</li></ul></div>
+          <a class="link-arrow" href="mailto:sungx.cs@gmail.com?subject=Collaboration%3A%20Efficient%20memory%20for%20long-horizon%20VLA%20policies">Discuss this<span class="visually-hidden">: Efficient memory for long-horizon VLA policies</span><svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-right"/></svg></a>
+        </div>
+      </li>
+      <li class="problem" id="problem-2" data-state="open">
+        <span class="problem__num" aria-hidden="true">II</span>
+        <div class="problem__body">
+          <h2 class="problem__title">Memory as architecture</h2>
+          <p>Architectural memory, such as token-indexed memory tables inside attention, meets episodic memory in agents. I’d like to test such mechanisms where memory is the bottleneck: long videos and embodied agents. <span class="problem__reading">Reading: e.g. <a href="https://arxiv.org/abs/2609.28399"><cite>Memory Attention</cite> (arXiv:2609.28399)</a>.</span></p>
+          <div class="problem__fit"><span class="problem__fit-label">Good fit if you work on:</span> <ul class="tags"><li class="tag">Efficient attention</li><li class="tag">KV cache</li><li class="tag">Memory layers</li></ul></div>
+          <a class="link-arrow" href="mailto:sungx.cs@gmail.com?subject=Collaboration%3A%20Memory%20as%20architecture">Discuss this<span class="visually-hidden">: Memory as architecture</span><svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-right"/></svg></a>
+        </div>
+      </li>
+      <li class="problem" id="problem-3" data-state="open">
+        <span class="problem__num" aria-hidden="true">III</span>
+        <div class="problem__body">
+          <h2 class="problem__title">Video world models with persistent memory</h2>
+          <p>World models that keep a state of the scene across long rollouts, not just the last few frames.</p>
+          <div class="problem__fit"><span class="problem__fit-label">Good fit if you work on:</span> <ul class="tags"><li class="tag">Video generation</li><li class="tag">World models</li></ul></div>
+          <a class="link-arrow" href="mailto:sungx.cs@gmail.com?subject=Collaboration%3A%20Video%20world%20models%20with%20persistent%20memory">Discuss this<span class="visually-hidden">: Video world models with persistent memory</span><svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-right"/></svg></a>
+        </div>
+      </li>
+      <li class="problem" id="problem-4" data-state="open">
+        <span class="problem__num" aria-hidden="true">IV</span>
+        <div class="problem__body">
+          <h2 class="problem__title">Human motion and sign-language generation</h2>
+          <p>Building on Neural Sign Actors (led by colleagues at Imperial College London): more expressive hands and faces, and evaluation with Deaf and ASL-fluent signers.</p>
+          <div class="problem__fit"><span class="problem__fit-label">Good fit if you work on:</span> <ul class="tags"><li class="tag">3D humans</li><li class="tag">Accessibility</li></ul></div>
+          <a class="link-arrow" href="mailto:sungx.cs@gmail.com?subject=Collaboration%3A%20Human%20motion%20and%20sign-language%20generation">Discuss this<span class="visually-hidden">: Human motion and sign-language generation</span><svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-right"/></svg></a>
+        </div>
+      </li>
+    </ol>
+
+    <div class="hang collab-extra">
+      <div class="hang__main">
+        <!-- ON MY DESK: 1–3 papers, each with why it matters. Reading interest only, never a collaboration claim. -->
+        <aside class="desk" aria-labelledby="desk-title">
+          <h2 class="kicker desk__title" id="desk-title">On my desk</h2>
+          <ul class="desk__list">
+            <li><a href="https://arxiv.org/abs/2609.28399"><cite>Memory Attention</cite></a> — J. Kang, arXiv:2609.28399 (2026). Builds attention values from token-indexed memory tables instead of a value projection. <span class="desk__why">Why it matters to me: memory that is cheap to read is exactly what long-horizon VLA policies need.</span></li>
+          </ul>
+        </aside>
+
+        <div class="ways">
+          <h2 class="kicker ways__title">Ways to work together</h2>
+          <p><b>Research collaboration</b> Joint projects, shared benchmarks, co-supervision.</p>
+          <p><b>Talks &amp; reading groups</b> Happy to present MAMBA → MemVLA.</p>
+          <p data-todo="confirm recruiting"><b>Students &amp; visitors</b> PhD applicants and visiting researchers at QUB.</p>
+        </div>
+
+        <div class="contact">
+          <div class="contact__mail">
+            <a class="contact__email" id="contact-email" href="mailto:sungx.cs@gmail.com">sungx.cs@gmail.com</a>
+            <button class="btn-icon copy-btn" type="button" data-copy="#contact-email" data-copy-msg="Email address copied" aria-label="Copy email address">
+              <svg class="icon copy-btn__copy" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#copy"/></svg>
+              <svg class="icon copy-btn__done" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#check"/></svg>
+            </button>
+          </div>
+          <p class="contact__addr">School of EEECS, Queen’s University Belfast, Belfast, UK<span data-todo="street address">, street address</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== NEXT: the other standalone page, and back to Selected work ===== -->
+<nav class="section pagenext" aria-label="Continue">
+  <div class="wrap">
+    <div class="pagenav pagenav--text">
+      <a class="pagenav__card" href="/vision/">
+        <span><span class="pagenav__dir">← Previous</span><span class="pagenav__title">Vision</span><span class="pagenav__note">Next: memory for machines that act.</span></span>
+      </a>
+      <a class="pagenav__card pagenav__card--next" href="/#work">
+        <span><span class="pagenav__dir">Back to →</span><span class="pagenav__title">Selected work</span><span class="pagenav__note">Three projects, opened up: interactive explainers, real results and code.</span></span>
+      </a>
+    </div>
+  </div>
+</nav>
+</main>
+
+<!-- ===== SITE FOOTER (identical on every page) ===== -->
+<footer class="site-footer">
+  <div class="wrap site-footer__grid">
+    <div class="site-footer__id">
+      <svg class="logomark" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false">
+        <rect class="logomark__cell" x="1.625" y="1.625" width="4.75" height="4.75" rx="1"/>
+        <rect class="logomark__cell logomark__cell--on" x="9" y="1" width="6" height="6" rx="1"/>
+        <rect class="logomark__cell" x="1.625" y="9.625" width="4.75" height="4.75" rx="1"/>
+        <rect class="logomark__cell" x="9.625" y="9.625" width="4.75" height="4.75" rx="1"/>
+      </svg>
+      <p>Guanxiong Sun · Queen’s University Belfast</p>
+    </div>
+    <ul class="site-footer__links">
+      <li><a href="mailto:sungx.cs@gmail.com" aria-label="Email"><svg class="icon" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#mail"/></svg></a></li>
+      <li><a href="https://scholar.google.com/citations?user=vLk3IzoAAAAJ" aria-label="Google Scholar"><svg class="icon" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#scholar"/></svg></a></li>
+      <li><a href="https://github.com/guanxiongsun" aria-label="GitHub"><svg class="icon" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#github"/></svg></a></li>
+      <li><a href="https://huggingface.co/guanxiongsun" aria-label="Hugging Face"><svg class="icon" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#huggingface"/></svg></a></li>
+      <li><a href="https://www.linkedin.com/in/guanxiongsun/" aria-label="LinkedIn"><svg class="icon" width="18" height="18" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#linkedin"/></svg></a></li>
+    </ul>
+    <div class="site-footer__meta">
+      <p>Updated <time datetime="2026-09">September 2026</time> · <a class="link-quiet" href="#top">Back to top<svg class="icon" width="14" height="14" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-up"/></svg></a></p>
+      <p class="site-footer__colophon">Set in Newsreader, Inter and JetBrains Mono. Hand-built HTML, no frameworks. Earlier versions adapted Jon Barron’s and Wufei Ma’s pages.</p>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

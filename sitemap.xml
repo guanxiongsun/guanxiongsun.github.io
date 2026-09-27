@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Add each new project page here (see docs/HOWTO.md). Bump <lastmod> when a page changes. -->
+<!-- Add each new page here (see docs/HOWTO.md). Bump <lastmod> when a page changes. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://guanxiongsun.github.io/</loc><lastmod>2026-09-26</lastmod></url>
-  <url><loc>https://guanxiongsun.github.io/projects/mamba/</loc><lastmod>2026-09-26</lastmod></url>
-  <url><loc>https://guanxiongsun.github.io/projects/stpn/</loc><lastmod>2026-09-26</lastmod></url>
-  <url><loc>https://guanxiongsun.github.io/projects/neural-sign-actors/</loc><lastmod>2026-09-26</lastmod></url>
+  <url><loc>https://guanxiongsun.github.io/</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://guanxiongsun.github.io/vision/</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://guanxiongsun.github.io/collaborate/</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://guanxiongsun.github.io/projects/mamba/</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://guanxiongsun.github.io/projects/stpn/</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://guanxiongsun.github.io/projects/neural-sign-actors/</loc><lastmod>2026-09-27</lastmod></url>
 </urlset>

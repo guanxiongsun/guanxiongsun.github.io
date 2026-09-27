@@ -6,7 +6,7 @@ Run from the repository root:
     python3 tools/make_assets.py figure images/<key>.png   # one publication figure
     python3 tools/make_assets.py project                   # every project-page asset (spec §1.1)
     python3 tools/make_assets.py icons                     # favicon.svg, favicon.ico, apple-touch-icon.png
-    python3 tools/make_assets.py og all                    # social cards (or: og home|mamba|stpn|nsa)
+    python3 tools/make_assets.py og all                    # social cards (or: og home|mamba|stpn|nsa|vision|collaborate)
     python3 tools/make_assets.py all                       # project + icons + og all
 
 Every command is idempotent: it rewrites its outputs from the sources, and the
@@ -636,6 +636,23 @@ OG_CARDS = {
         "figure": "nsa",
         "plate": "Fig. 1",
     },
+    # Standalone pages moved out of the homepage (/vision/, /collaborate/).
+    "vision": {
+        "kicker": "VISION · QUEEN’S UNIVERSITY BELFAST",
+        "headline": "Vision",
+        "title": "Next: memory for machines that act.",
+        "footer": "guanxiongsun.github.io/vision/",
+        # MAMBA's memory bank: the idea MemVLA builds on (same still as the project card).
+        "figure": "mamba",
+        "plate": "MAMBA · AAAI 2021",
+    },
+    "collaborate": {
+        "kicker": "COLLABORATE · QUEEN’S UNIVERSITY BELFAST",
+        "headline": "Collaborate",
+        "title": "Open problems. Let’s work on them together.",
+        "footer": "guanxiongsun.github.io/collaborate/",
+        "figure": "portrait",
+    },
 }
 
 
@@ -672,13 +689,14 @@ def build_og(slug: str, fonts: Fonts) -> None:
     COL_W = 500                 # text column width
     FOOT_RULE, FOOT_BASE = H - 94, H - 60
     is_home = slug == "home"
+    is_portrait = c["figure"] == "portrait"
     card = Image.new("RGB", (W, H), PAPER)
     d = ImageDraw.Draw(card)
 
     # --- Right: plate header ("FIG. 1" + badge) and the figure on its mat,
     #     centred as one group in the right-hand zone.
     fig, pad = og_figure(c["figure"])
-    zx0, zx1 = (756, W - 88) if is_home else (604, W - 60)
+    zx0, zx1 = (756, W - 88) if is_portrait else (604, W - 60)
     header_h = 44 if c.get("plate") else 0
     fig, mw, mh = plate_geometry(fig, zx1 - zx0, H - 2 * 56 - header_h, pad)
     gx = zx0 + (zx1 - zx0 - mw) // 2
