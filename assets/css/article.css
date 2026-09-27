@@ -276,9 +276,14 @@
 .hotspots__list b { color: var(--ink); font-weight: 600; }
 .hotspots > .plate__cap { grid-column: 1 / -1; margin-top: 0; }
 @media (max-width: 599.98px) { .hotspot { width: 24px; height: 24px; font-size: 12px; } .hotspot::before { inset: -10px; } }
+/* ≥1024: list beside the figure. The caption stays in the figure's column, directly under the picture;
+   the list spans every row and a final 1fr row absorbs its extra height, so a long list no longer pushes
+   the caption away from its figure. */
 @media (min-width: 1024px) {
-  .hotspots { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); }
-  .hotspots__list { margin-top: 32px; }
+  .hotspots { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); grid-template-rows: auto auto 1fr; }
+  .hotspots__figure { grid-column: 1; grid-row: 1; }
+  .hotspots__list { grid-column: 2; grid-row: 1 / -1; margin-top: 32px; }
+  .hotspots > .plate__cap { grid-column: 1; grid-row: 2; }
 }
 
 /* ---------- 7. Frame stepper (spec §7.23) ----------

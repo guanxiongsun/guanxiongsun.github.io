@@ -32,6 +32,8 @@ body {
 }
 h1, h2, h3, h4 { margin: 0; font-family: var(--font-serif); font-weight: 500; text-wrap: balance; }
 p { margin: 0; text-wrap: pretty; }
+/* Captions, stat labels, list items and note lines wrap like prose: no one-word last lines. */
+figcaption, dt, dd, li, summary { text-wrap: pretty; }
 p + p { margin-top: 1em; }
 ul, ol { margin: 0; padding: 0; }
 figure { margin: 0; }
@@ -471,6 +473,13 @@ html:not(.js) :is(.code-copy, .copy-btn, [data-copy]) { display: none; } /* wire
 .venue-strip__list { display: flex; flex-wrap: wrap; gap: 6px 0; }
 .venue-strip__list > span + span::before { content: "·"; margin-inline: .6em; }
 
+/* Tablets (600–839): the portrait sits beside the text, top-aligned with the display title, instead of
+   standing alone above it at phone size while the width to the right of the name goes unused. */
+@media (min-width: 600px) and (max-width: 839.98px) {
+  .hero__grid { grid-template-columns: minmax(0, 1fr) 184px; column-gap: 32px; align-items: start; }
+  .hero__text { grid-column: 1; grid-row: 1; }
+  .hero__portrait { grid-column: 2; grid-row: 1; width: auto; margin-top: calc(1.3 * var(--fs-xs) + 14px); }
+}
 @media (min-width: 840px) {
   .hero__grid { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--col-gap); }
   .hero__text { grid-column: 1 / 9; grid-row: 1; }
@@ -535,8 +544,12 @@ html:not(.js) :is(.code-copy, .copy-btn, [data-copy]) { display: none; } /* wire
 .feature { display: grid; gap: 28px; padding-bottom: var(--s-9); margin-bottom: var(--s-9); border-bottom: 1px solid var(--rule); }
 .feature__plate { --mat-pad: 16px; }
 .feature:last-of-type { padding-bottom: 0; margin-bottom: 0; border-bottom: 0; }
-/* The near-square STPN figure would dominate a full-width tablet column. */
-@media (max-width: 1023.98px) { .feature__plate.ab { max-width: 600px; } }
+/* Stacked (<1024): a clear step between a plate's caption and the kicker of the text below it,
+   and the near-square STPN figure would dominate a full-width tablet column. */
+@media (max-width: 1023.98px) {
+  .feature { row-gap: 40px; }
+  .feature__plate.ab { max-width: 600px; }
+}
 .feature__kicker { margin-bottom: 14px; }
 .feature__title { font-size: var(--fs-h3); line-height: 1.15; letter-spacing: -.01em; }
 .feature__subtitle { margin-top: 6px; font-size: var(--fs-lede); font-style: italic; line-height: 1.35; color: var(--ink-2); }
@@ -566,11 +579,20 @@ html:not(.js) :is(.code-copy, .copy-btn, [data-copy]) { display: none; } /* wire
   .feature .stat__fig { flex: none; min-width: 8.25rem; }
   .feature .stat__value { font-size: 1.75rem; }
 }
+/* ≥1200: the flipped (near-square) plate takes five columns and its text six, so the plate ends level
+   with the copy beside it; on six columns it ran about 25% taller and the text floated above a blank band. */
+@media (min-width: 1200px) {
+  .feature--flip .feature__plate { grid-column: 8 / 13; }
+  .feature--flip .feature__text { grid-column: 1 / 7; }
+}
 
 .notable, .oss { margin-top: var(--s-9); }
 .notable__title, .oss__title { padding-top: 16px; border-top: 1px solid var(--rule); margin-bottom: 28px; color: var(--ink); }
 .notable__grid, .oss__grid { list-style: none; display: grid; gap: 40px 32px; }
-.mini__plate { margin-bottom: 16px; }
+/* A column with the "Read" link pinned to the foot, so the three links line up whatever the note's length. */
+.mini { display: flex; flex-direction: column; align-items: flex-start; }
+.mini > .link-arrow { margin-top: auto; }
+.mini__plate { width: 100%; margin-bottom: 16px; }
 .mini__title { margin-top: 8px; font: 600 1.0625rem/1.3 var(--font-serif); }
 .mini__title a { text-decoration: none; }
 .mini__title a:hover { text-decoration: underline 1px var(--accent); }

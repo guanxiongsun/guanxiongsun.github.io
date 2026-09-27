@@ -31,6 +31,9 @@
 @media (min-width: 840px) { .nsa-media { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .nsa-media .plate__zoom { display: block; }
 .nsa-media .plate__mat img { display: block; width: 100%; height: auto; }
+/* The poster (2:1) sits in the same 16:9 frame as the talk facade beside it, centred on its mat, so the two
+   plates are the same height and their captions start on one line. */
+.nsa-media .plate__zoom .plate__mat { display: grid; align-content: center; aspect-ratio: 16 / 9; }
 
 /* ---------- Explorer: tabs, transcript ---------- */
 #demo:not(.is-ready) :is(.nsa-tabs, .nsa-bracket) { display: none; }
@@ -176,7 +179,8 @@
 .nsa-zoom:is(:hover, :focus-visible) .plate__zoom-icon { opacity: 1; }
 .nsa-zoom .plate__zoom-icon { top: auto; bottom: 6px; right: 6px; }
 @media (min-width: 840px) {
-  .nsa-hot.hotspots { grid-template-columns: minmax(0, 1fr); }
+  .nsa-hot.hotspots { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; }
+  .nsa-hot .hotspots__figure, .nsa-hot .hotspots__list, .nsa-hot > .plate__cap { grid-column: 1; grid-row: auto; }
   .nsa-hot .hotspots__list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2px 24px; margin-top: 0; }
 }
 @media (min-width: 1200px) { .nsa-hot .hotspots__list { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
