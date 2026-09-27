@@ -642,7 +642,7 @@ OG_CARDS = {
         "headline": "Vision",
         "title": "Next: memory for machines that act.",
         "footer": "guanxiongsun.github.io/vision/",
-        # MAMBA's memory bank: the idea MemVLA builds on (same still as the project card).
+        # MAMBA's memory bank: the idea the vision builds on (same still as the project card).
         "figure": "mamba",
         "plate": "MAMBA · AAAI 2021",
     },

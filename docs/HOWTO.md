@@ -40,8 +40,8 @@ Rules that keep the site easy to edit:
 - **No inline styles**, except the custom properties `--x`, `--y`, `--i`.
 - **Behaviour attaches through `data-*` attributes**; you never need to touch the JS to add content.
 - **Every section must read fine with JavaScript off.**
-- **Cache-busting:** CSS and JS links end in `?v=20260928`. When you change a CSS or JS file,
-  bump that date everywhere at once: search and replace `?v=20260928` across **all `.html` and
+- **Cache-busting:** CSS and JS links end in `?v=20260929`. When you change a CSS or JS file,
+  bump that date everywhere at once: search and replace `?v=20260929` across **all `.html` and
   `.js` files** (the demo modules in `assets/js/demos/` and `projects/_template/example-demo.js`
   import `article.js?v=…`, and that string must match the page's own `<script>` tag).
 
@@ -96,7 +96,7 @@ In `index.html`, find `<!-- NEWS: add newest at top -->`. Paste the new line at 
 - `datetime` is `YYYY-MM` (or `YYYY` when the month is unknown; then wrap the missing month in
   `<span data-todo="news month">Mon </span>` until you know it).
 - Link the thing the news is about: a paper card (`href="#pub-KEY"`), a project page
-  (`/projects/<slug>/`), an in-progress card on the Vision page (`/vision/#memvla`) or an external page. Papers led by someone else name them
+  (`/projects/<slug>/`), an in-progress card on the Vision page (`/vision/#physical-ai`) or an external page. Papers led by someone else name them
   ("Zhaoyu Zhang’s <a …>Title</a> (I’m a co-author)").
 
 ### Add a publication
@@ -161,8 +161,8 @@ For a paper led by someone else, leave out `data-first-author`, and link their n
 ### Add an in-progress item to the throughline (Vision teaser + Vision page)
 
 The throughline is built from every `[data-thread]` element on the **homepage**: the `.pub` cards
-plus the two teaser cards in `<section id="vision">` (`#memvla-teaser`, `#physical-ai-teaser`).
-The full cards on `/vision/` (`#memvla`, `#physical-ai`, with schematics and open questions) carry
+plus the two teaser cards in `<section id="vision">` (e.g. `#physical-ai-teaser`).
+The full cards on `/vision/` (e.g. `#physical-ai`, with schematics and open questions) carry
 **no** `data-thread`, so nothing is counted twice. To add a third in-progress item:
 
 1. On `/vision/`, copy a `<article class="card-progress" id="KEY">` inside `.progress-grid`.
@@ -268,7 +268,7 @@ the best worked examples; the template carries the same structure with every blo
    MAMBA → STPN → Neural Sign Actors → MAMBA; to insert a page, change the "Next" card of the page
    before it and the "Previous" card of the page after it.
 9. If the work continues a thread, add a node to the "Where it led" list (`ol.thread`) on the
-   related pages (in-progress nodes link to `/vision/#memvla` etc.; the "Pick up this thread"
+   related pages (in-progress nodes link to `/vision/#physical-ai` etc.; the "Pick up this thread"
    callout links to `/collaborate/`).
 10. Add the URL to `sitemap.xml` (and bump `<lastmod>` on pages you changed).
 11. Make its social card: add an entry for `<slug>` to `OG_CARDS` in `tools/make_assets.py`
@@ -403,7 +403,7 @@ Search the HTML for `data-todo` (or open the site on localhost) for the full lis
 - Month of the vfe.pytorch 2.0 release; the date you joined Queen's as a Lecturer.
 - Recruiting line ("Students & visitors"), office street address, earlier positions.
 - HIT supervisor line (Prof. Kuanquan Wang) and the HIT degree years (2016, 2018).
-- MemVLA arXiv link once public; an image for the Physical AI card, if any.
+- An image for the Physical AI card, if any.
 - Project pages (all from the paper PDFs; never estimate):
   - MAMBA and STPN: author affiliations with superscripts, exactly as printed.
   - STPN: YouTube-VIS 2019 (STPN + MinVIS) and GOT-10k (STPN + MixFormer) numbers and baselines.

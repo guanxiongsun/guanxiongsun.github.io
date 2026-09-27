@@ -805,6 +805,15 @@ html:not(.js) .chips, html:not(.js) .pub-controls__row { display: none; }
 /* ---------- 13b. Homepage teasers: Vision and Collaborate previews (the full content lives on /vision/ and /collaborate/) ---------- */
 .teaser-grid { display: grid; gap: 24px; }
 @media (min-width: 840px) { .teaser-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+/* A single in-progress card (e.g. while a project is unannounced) sits in the content column
+   instead of leaving an empty half-row. */
+@media (min-width: 840px) {
+  :is(.teaser-grid, .progress-grid) > :only-child { grid-column: 1 / -1; max-width: 44rem; }
+}
+@media (min-width: 1024px) {
+  :is(.teaser-grid, .progress-grid):has(> :only-child) { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--col-gap); }
+  :is(.teaser-grid, .progress-grid) > :only-child { grid-column: 4 / 11; max-width: none; }
+}
 .card-progress--teaser .card-progress__title { font-size: clamp(1.1875rem, 1.05rem + .4vw, 1.375rem); }
 .card-progress--teaser .card-progress__text { margin-top: 12px; }
 .card-progress--teaser .card-progress__cta { padding-top: 16px; }

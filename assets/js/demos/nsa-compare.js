@@ -1,5 +1,5 @@
 // NSA Fig. 3: real strips; sentence data on the tabs; CSS draws frame --i and the Average view.
-import { createPlayer, createAnnouncer, syncPlayButton, bindRange } from '/assets/js/article.js?v=20260928';
+import { createPlayer, createAnnouncer, syncPlayButton, bindRange } from '/assets/js/article.js?v=20260929';
 
 const root = document.getElementById('demo');
 if (root) init(); // eagerly, so the controls are in the tab order from the start

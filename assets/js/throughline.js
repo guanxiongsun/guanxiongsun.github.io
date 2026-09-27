@@ -146,7 +146,7 @@ function init() {
       el('circle', { class: 'tl__dot', r: { pub: 5, flag: 6.5, future: 6, open: 9 }[type] }, glyph);
       if (n.open) el('path', { class: 'tl__plus', d: 'M-4 0H4M0-4V4' }, glyph);
       // Default label spot. In the Act lane the thread arrives from the upper left, so the first
-      // in-progress node (Physical AI) labels below; MemVLA and the open node label above, centred,
+      // in-progress node labels below; later in-progress nodes and the open node label above, centred,
       // clear of the Next column's border. declutter() starts from n.ly.
       const below = n.future && pair && k === 0;
       const centred = n.open || (n.future && pair && k === 1);

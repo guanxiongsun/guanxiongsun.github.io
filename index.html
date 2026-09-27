@@ -20,8 +20,8 @@
   <link rel="preload" href="/assets/fonts/newsreader-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <!-- Cache-bust: bump ?v=YYYYMMDD on every CSS/JS link at release. -->
-  <link rel="stylesheet" href="/assets/css/tokens.css?v=20260928">
-  <link rel="stylesheet" href="/assets/css/site.css?v=20260928">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=20260929">
+  <link rel="stylesheet" href="/assets/css/site.css?v=20260929">
 
   <!-- Social cards -->
   <meta property="og:type" content="website">
@@ -64,8 +64,8 @@
   </script>
 
   <!-- Scripts are modules, so they are deferred automatically. -->
-  <script type="module" src="/assets/js/site.js?v=20260928"></script>
-  <script type="module" src="/assets/js/throughline.js?v=20260928"></script>
+  <script type="module" src="/assets/js/site.js?v=20260929"></script>
+  <script type="module" src="/assets/js/throughline.js?v=20260929"></script>
 </head>
 
 <body>
@@ -150,10 +150,6 @@
         <a class="btn btn--ghost" href="/vision/">Read the vision<svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-right"/></svg></a>
       </div>
 
-      <!-- NOW: edit me -->
-      <p class="now">
-        <a class="now__link" href="/vision/#memvla"><span class="now__label"><span class="now__dot" aria-hidden="true"></span>Now</span> <span class="now__text">Building MemVLA (working title): memory for vision-language-action&nbsp;models.<svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-right"/></svg></span></a>
-      </p>
     </div>
   </div>
 
@@ -173,7 +169,6 @@
         <!-- NEWS: add newest at top. Keep 5 visible; move the 6th into details.news__more. -->
         <ol class="news">
           <li class="news__item"><time datetime="2026"><span data-todo="news month">Mon </span>2026</time><p><a href="https://github.com/guanxiongsun/vfe.pytorch"><b>vfe.pytorch 2.0</b></a>: MAMBA and STPN on modern PyTorch, reproduced on <span class="lnum">4× GH200</span>.</p></li>
-          <li class="news__item"><time datetime="2026">2026</time><p>Started <a href="/vision/#memvla"><b>MemVLA</b></a> (working title): memory for vision-language-action models.</p></li>
           <li class="news__item"><time datetime="2025-11">Nov 2025</time><p><a href="#pub-tactfl"><b>TACTFL</b></a> presented as an <b>oral</b> at BMVC 2025.</p></li>
           <li class="news__item"><time datetime="2025-07">Jul 2025</time><p>Zhaoyu Zhang’s <a href="#pub-icml25"><b>Training diffusion-based generative models with limited data</b></a> (I’m a co-author) at ICML 2025.</p></li>
           <li class="news__item"><time datetime="2025-06">Jun 2025</time><p>Zhaoyu Zhang’s <a href="#pub-qaddrs"><b>Quality-aware dynamic discriminator rejection sampling</b></a> (I’m a co-author) at CVPR 2025.</p></li>
@@ -221,7 +216,6 @@
         <li data-lane="generate"><span class="tf__year">2025</span> <a href="#pub-icml25">Limited-data diffusion</a> <span class="tf__meta">ICML 2025 · Generate</span></li>
         <li data-lane="learn"><span class="tf__year">2025</span> <a href="#pub-tactfl">TACTFL</a> <span class="tf__meta">BMVC 2025 · Learn</span></li>
         <li data-lane="act" data-status="in-progress"><span class="tf__year">2026</span> <a href="/vision/#physical-ai">Physical AI</a> <span class="tf__meta">Direction · Act</span></li>
-        <li data-lane="act" data-status="in-progress"><span class="tf__year">2026</span> <a href="/vision/#memvla">MemVLA (working title)</a> <span class="tf__meta">In progress · Act</span></li>
         <li data-lane="act" data-status="open"><span class="tf__year">Next</span> <a href="/collaborate/">Your project?</a> <span class="tf__meta">See open problems</span></li>
       </ol>
     </div>
@@ -840,11 +834,10 @@
 
 
 <!-- ===== 05 VISION (teaser; the only tinted band) =====
-     The essay, the schematics and the open questions live on /vision/. These two teaser cards are
+     The essay, the schematics and the open questions live on /vision/. Teaser cards here are
      what feeds the throughline: keep their data-thread attributes in step with the full cards on
-     /vision/ (data-key/short/date/lane/status/venue/note) and point data-href at /vision/#memvla
-     and /vision/#physical-ai. Their ids end in -teaser so that #memvla and #physical-ai mean only
-     the full cards. Never claim results here. -->
+     /vision/ (data-key/short/date/lane/status/venue/note) and point data-href at /vision/#<id>.
+     Their ids end in -teaser so that the plain ids mean only the full cards. Never claim results here. -->
 <section class="section band" id="vision" aria-labelledby="vision-title">
   <div class="wrap">
     <header class="section-head reveal">
@@ -854,15 +847,6 @@
     </header>
 
     <div class="teaser-grid">
-      <article class="card-progress card-progress--teaser" id="memvla-teaser" aria-labelledby="memvla-teaser-title"
-        data-thread data-key="memvla" data-short="MemVLA" data-date="2026-09" data-lane="act" data-status="in-progress"
-        data-venue="In progress" data-note="Memory for vision-language-action policies that tracks what changed in the world, not only what the robot did."
-        data-href="/vision/#memvla">
-        <p class="status-pill">In progress · 2026</p>
-        <h3 class="card-progress__title" id="memvla-teaser-title">MemVLA (working title): memory for vision-language-action models</h3>
-        <p class="card-progress__text">Robots that work alongside people need memory of the world, not just of their own actions.</p>
-        <p class="card-progress__cta"><a class="link-arrow" href="/vision/#memvla">Read more<span class="visually-hidden">: MemVLA</span><svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-right"/></svg></a></p>
-      </article>
 
       <article class="card-progress card-progress--teaser" id="physical-ai-teaser" aria-labelledby="physical-ai-teaser-title"
         data-thread data-key="physical-ai" data-short="Physical AI" data-date="2026-09" data-lane="act" data-status="in-progress"
