@@ -463,16 +463,6 @@ html:not(.js) :is(.code-copy, .copy-btn, [data-copy]) { display: none; } /* wire
 .now__link:hover .now__text { text-decoration: underline 1px var(--accent); text-underline-offset: .2em; }
 .now__link:hover .icon { transform: translateX(3px); }
 
-.venue-strip {
-  display: flex; flex-wrap: wrap; gap: 6px 28px; margin-top: clamp(48px, 6vw, 88px);
-  padding-top: 16px; border-top: 1px solid var(--rule);
-  font: 500 var(--fs-xs)/1.5 var(--font-mono); letter-spacing: var(--track-kicker); text-transform: uppercase; color: var(--ink-3);
-}
-.venue-strip__label { color: var(--ink-2); }
-/* Separators are drawn between items, so a wrapped line never ends in a dangling "·". */
-.venue-strip__list { display: flex; flex-wrap: wrap; gap: 6px 0; }
-.venue-strip__list > span + span::before { content: "·"; margin-inline: .6em; }
-
 /* Tablets (600–839): the portrait sits beside the text, top-aligned with the display title, instead of
    standing alone above it at phone size while the width to the right of the name goes unused. */
 @media (min-width: 600px) and (max-width: 839.98px) {
