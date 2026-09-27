@@ -400,7 +400,7 @@ Search the HTML for `data-todo` (or open the site on localhost) for the full lis
 
 - CV PDF at `/cv.pdf` (then remove `data-todo` from the CV link in the hero). Until then the
   local link checker reports `/cv.pdf` as missing; visitors never see the link.
-- Month of the vfe.pytorch 2.0 release; the date you joined Queen's as a Lecturer.
+- The date you joined Queen's as a Lecturer.
 - Recruiting line ("Students & visitors"), office street address, earlier positions.
 - HIT supervisor line (Prof. Kuanquan Wang) and the HIT degree years (2016, 2018).
 - An image for the Physical AI card, if any.
