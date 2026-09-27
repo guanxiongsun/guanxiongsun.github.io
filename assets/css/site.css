@@ -1083,7 +1083,12 @@ html.dev [data-todo]::after {
   border: 1px solid var(--rule-strong); background: var(--surface); color: var(--ink);
 }
 .career__badge--mono { font: 600 9px/1 var(--font-mono); letter-spacing: .02em; color: var(--ink-2); }
-.career__badge img { width: 18px; height: 18px; object-fit: contain; }
+/* Organisation marks keep their own colours, so every badge sits on the light figure mat (as paper
+   figures do), in both themes. Logo files live in /assets/img/logos/ (official marks, emblem only). */
+.career__badge:has(img, svg) { background: var(--mat); }
+.career__badge img { width: 20px; height: 20px; object-fit: contain; }
+.career__badge--baidu { color: #2932E1; }
+.career__badge--huawei { color: #E60012; }
 .career__text { display: grid; font: 400 var(--fs-sm)/1.35 var(--font-sans); color: var(--ink-2); }
 .career__org { font: 600 var(--fs-ui)/1.3 var(--font-sans); color: var(--ink); }
 .career__sub { color: var(--ink-3); }
@@ -1145,7 +1150,7 @@ html.dev [data-todo]::after {
 .career[data-ready] .career__item--start .career__label { left: -15px; transform: none; }
 .career[data-ready] .career__item--start::after { left: 0; }
 .career[data-ready] .career__item--end .career__label { left: auto; right: 0; transform: none; }
-.career[data-ready] .career__item[data-current] .career__badge { border-color: var(--accent); color: var(--accent); }
+.career[data-ready] .career__item[data-current] .career__badge { border-color: var(--accent); }
 
 .career[data-ready]:focus-visible { outline-offset: 4px; }
 .career__hint { display: none; margin-top: 8px; font: 500 var(--fs-xs)/1.4 var(--font-mono); letter-spacing: var(--track-kicker); text-transform: uppercase; color: var(--ink-3); }
