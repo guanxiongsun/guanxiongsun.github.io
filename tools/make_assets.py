@@ -184,7 +184,7 @@ def cmd_figure(path: Path, frame: int = 0, out_dir: Path = IMG) -> None:
 # Crop boxes (left, top, right, bottom) in stpn.png pixels, measured on the
 # image: panel borders were located by colour and the anti-aliased edge
 # pixels excluded.
-STPN_A = (0, 0, 1000, 934)          # panel "(a) Current pipeline"; its content ends at x~985
+STPN_A = (0, 0, 1000, 934)          # panel (a), relabelled "Previous pipeline" below; its content ends at x~985
 STPN_B = (1040, 0, 1936, 934)       # panel "(b) STPN"; its content starts at x~1075
 # Inside the orange border of the motion-blurred "Current frame" in (b):
 # border at x 1497-1499 / 1824-1826, y 548-550 / 751-753 -> clean 1501-1822 x 552-749.
@@ -194,12 +194,31 @@ STPN_CURRENT = (1502, 552, 1822, 750)   # 320x198 (8x5 patch grid -> 40x39.6 px 
 STPN_SUPPORT = (1088, 620, 1286, 742)   # 198x122
 
 
+# The panel's baked-in caption "(a) Current pipeline" (dark pixels x 285-775, y 850-904 in the
+# crop) is repainted as "(a) Previous pipeline" in the figure's own face (Liberation Sans), centred
+# on the same point, so the site's toggle label and the picture agree.
+STPN_A_LABEL_BOX = (270, 840, 790, 915)
+STPN_A_LABEL = "(a) Previous pipeline"
+STPN_A_FONT = Path("/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf")
+
+
+def relabel_stpn_a(a: Image.Image) -> Image.Image:
+    a = a.copy()
+    d = ImageDraw.Draw(a)
+    d.rectangle(STPN_A_LABEL_BOX, fill=(255, 255, 255))
+    font = ImageFont.truetype(str(STPN_A_FONT), 56)
+    l, t, r, _ = font.getbbox(STPN_A_LABEL)
+    cx = (285 + 775) / 2
+    d.text((cx - (r - l) / 2 - l, 850 - t), STPN_A_LABEL, font=font, fill=(0, 0, 0))
+    return a
+
+
 def build_stpn() -> None:
     src = REPO / "images" / "stpn.png"
     im = load_rgb(src)
     out = PROJ / "stpn"
     print(f"stpn  <- {rel(src)} ({im.width}x{im.height})")
-    a = im.crop(STPN_A)
+    a = relabel_stpn_a(im.crop(STPN_A))
     b = im.crop(STPN_B)
     save_webp(a, out / "stpn-a.webp")
     save_webp(fit_width(a, 640), out / "stpn-a-640.webp")
