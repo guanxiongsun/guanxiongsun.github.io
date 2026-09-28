@@ -20,8 +20,8 @@
   <link rel="preload" href="/assets/fonts/newsreader-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <!-- Cache-bust: bump ?v=YYYYMMDD on every CSS/JS link at release. -->
-  <link rel="stylesheet" href="/assets/css/tokens.css?v=20261005">
-  <link rel="stylesheet" href="/assets/css/site.css?v=20261005">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=20261006">
+  <link rel="stylesheet" href="/assets/css/site.css?v=20261006">
 
   <!-- Social cards -->
   <meta property="og:type" content="website">
@@ -64,9 +64,9 @@
   </script>
 
   <!-- Scripts are modules, so they are deferred automatically. -->
-  <script type="module" src="/assets/js/site.js?v=20261005"></script>
-  <script type="module" src="/assets/js/throughline.js?v=20261005"></script>
-  <script type="module" src="/assets/js/career.js?v=20261005"></script>
+  <script type="module" src="/assets/js/site.js?v=20261006"></script>
+  <script type="module" src="/assets/js/throughline.js?v=20261006"></script>
+  <script type="module" src="/assets/js/career.js?v=20261006"></script>
 </head>
 
 <body>
@@ -170,6 +170,7 @@
         <ol class="news">
           <li class="news__item"><time datetime="2026-09">Sep 2026</time><p><a href="https://github.com/guanxiongsun/vfe.pytorch"><b>vfe.pytorch 2.0</b></a> released.</p></li>
           <li class="news__item"><time datetime="2026-06">Jun 2026</time><p><b>Outstanding Reviewer</b> of CVPR 2026 (top 6.1% of reviewers).</p></li>
+          <li class="news__item" data-todo="month you joined QUB, then show this item"><time datetime="2026">2026</time><p>Joined Queen’s University Belfast as an Assistant Professor.</p></li>
           <li class="news__item"><time datetime="2025-11">Nov 2025</time><p><a href="#pub-tactfl"><b>TACTFL</b></a> in BMVC 2025 (oral).</p></li>
           <li class="news__item"><time datetime="2025-07">Jul 2025</time><p><a href="#pub-icml25"><b>Training diffusion-based generative models with limited data</b></a> in ICML 2025.</p></li>
           <li class="news__item"><time datetime="2025-06">Jun 2025</time><p><a href="#pub-qaddrs"><b>Quality-aware dynamic discriminator rejection sampling</b></a> in CVPR 2025.</p></li>
@@ -178,7 +179,6 @@
           <summary>Earlier news</summary>
           <ol class="news">
             <li class="news__item"><time datetime="2024-06">Jun 2024</time><p><a href="/projects/neural-sign-actors/"><b>Neural Sign Actors</b></a> in CVPR 2024.</p></li>
-            <li class="news__item" data-todo="date"><span class="news__date">Date</span><p>Joined Queen’s University Belfast as an Assistant Professor.</p></li>
           </ol>
         </details>
       </div>
@@ -241,12 +241,13 @@
     </header>
     <!-- EXPERIENCE: two lanes (Education, Work), one <li> per entry, oldest first.
          /assets/js/career.js lays them out on one horizontal time axis (data-from / data-to on
-         .career; data-to is exclusive). Per <li>:
+         .career; data-to is exclusive and only a minimum: the axis always runs through the
+         current year). Per <li>:
            data-start / data-end   decimal years (2024.5 = mid-2024); omit data-end for a short stint
                                    (a dot); data-end="now" + data-current for the current role.
            data-side="above|below" which side of its lane the label sits.
            data-align="start|end|before"  pin the label to the segment's start, its end, or just
-                                   left of its start (default: centred; items near an edge pin to it).
+                                   left of its start, mirrored (default: centred; items near an edge pin to it).
            data-overlap            a role that overlaps another on the same lane rises as a bracket.
          Logos live in /assets/img/logos/ (official emblems) or the icon sprite (#org-…).
          Without JS the two lists show as plain lists. -->
@@ -257,7 +258,7 @@
             <h3 class="career__lane-name">Education</h3>
             <ol class="career__list">
           <li class="career__item" data-start="2012.67" data-end="2018.5" data-side="above">
-            <span class="career__badge" aria-hidden="true"><img src="/assets/img/logos/hit.png" alt="" width="20" height="20" loading="lazy" decoding="async"></span>
+            <span class="career__badge career__badge--seal" aria-hidden="true"><img src="/assets/img/logos/hit.png" alt="" width="20" height="20" loading="lazy" decoding="async"></span>
             <span class="career__text"><b class="career__org">Harbin Institute of Technology</b><span class="career__role">B.Sc. and M.Sc. in Computer Science</span><span class="career__years">2012–2018</span></span>
           </li>
           <li class="career__item" data-start="2019.3" data-end="2023.7" data-side="above">
@@ -281,15 +282,15 @@
             <span class="career__badge" aria-hidden="true"><img src="/assets/img/logos/oosto.png" alt="" width="20" height="20" loading="lazy" decoding="async"></span>
             <span class="career__text"><b class="career__org">AnyVision</b> <span class="career__sub">now Oosto</span><span class="career__role">Research Intern</span><span class="career__years">2019–2022</span></span>
           </li>
-          <li class="career__item" data-start="2023.3" data-end="2026.05" data-side="below" data-align="before">
+          <li class="career__item" data-start="2023.3" data-end="2026.01" data-side="below" data-align="before">
             <span class="career__badge career__badge--huawei" aria-hidden="true"><svg width="16" height="16" focusable="false"><use href="/assets/icons/sprite.svg#org-huawei"/></svg></span>
             <span class="career__text"><b class="career__org">Huawei Noah’s Ark Lab</b> <span class="career__sub">London</span><span class="career__role">Research Scientist</span><span class="career__years">2023–2026</span></span>
           </li>
-          <li class="career__item" data-start="2025.1" data-end="2026.05" data-side="above" data-overlap>
+          <li class="career__item" data-start="2025.1" data-end="2026.01" data-side="above" data-overlap>
             <span class="career__badge" aria-hidden="true"><img src="/assets/img/logos/bristol.svg" alt="" width="20" height="20" loading="lazy" decoding="async"></span>
             <span class="career__text"><b class="career__org">University of Bristol</b><span class="career__role">Senior Research Associate</span><span class="career__years">2025–2026</span></span>
           </li>
-          <li class="career__item" data-start="2026.1" data-end="now" data-side="below" data-current>
+          <li class="career__item" data-start="2026.02" data-end="now" data-side="below" data-current>
             <span class="career__badge" aria-hidden="true"><img src="/assets/img/logos/qub.svg" alt="" width="20" height="20" loading="lazy" decoding="async"></span>
             <span class="career__text"><b class="career__org">Queen’s University Belfast</b><span class="career__role">Assistant Professor</span><span class="career__years">2026–now</span></span>
           </li>
@@ -1022,7 +1023,7 @@
 
         <div class="hosts">
           <h3 class="about-block__title">For hosts</h3>
-          <blockquote class="hosts__bio" id="bio-3p"><p>Guanxiong Sun is an Assistant Professor at Queen’s University Belfast working on computer vision and machine learning, with a focus on memory for perception and action. He received his PhD from Queen’s University Belfast (advised by Dr&nbsp;Yang Hua, Prof.&nbsp;Hui Wang and Prof.&nbsp;Neil&nbsp;Robertson) and his B.S. and M.S. from Harbin Institute of Technology. His work appears at CVPR, ICCV, ECCV, ICML and AAAI.</p></blockquote>
+          <blockquote class="hosts__bio" id="bio-3p"><p>Guanxiong Sun is an Assistant Professor at Queen’s University Belfast working on computer vision and machine learning, with a focus on memory for perception and action. He received his PhD in computer vision from Queen’s University Belfast (advised by Dr&nbsp;Yang Hua, Prof.&nbsp;Hui Wang and Prof.&nbsp;Neil&nbsp;Robertson) and his B.Sc. and M.Sc. in computer science from Harbin Institute of Technology. His work appears at CVPR, ICCV, ECCV, ICML and AAAI.</p></blockquote>
           <div class="hosts__actions">
             <button class="btn btn--ghost btn--sm copy-btn" type="button" data-copy="#bio-3p" data-copy-msg="Bio copied">
               <svg class="icon copy-btn__copy" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#copy"/></svg>

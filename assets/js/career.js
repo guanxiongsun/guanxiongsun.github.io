@@ -10,9 +10,10 @@ if (box) try { init(box); } catch (e) { console.error('career:', e); }
 
 function init(box) {
   const canvas = box.querySelector('.career__canvas');
-  const from = +box.dataset.from, to = +box.dataset.to;
   const d = new Date();
   const now = d.getFullYear() + d.getMonth() / 12;
+  // data-to is a minimum: the axis always runs through the current year, so it never goes stale.
+  const from = +box.dataset.from, to = Math.max(+box.dataset.to, d.getFullYear() + 1);
   const pct = (t) => ((Math.min(Math.max(t, from), to) - from) / (to - from)) * 100;
 
   canvas.querySelectorAll('.career__item').forEach((li) => {
@@ -22,7 +23,7 @@ function init(box) {
     const x = pct(s), y = pct(e);
     li.style.setProperty('--x', x.toFixed(2));
     li.style.setProperty('--y', y.toFixed(2));
-    if (current) li.style.setProperty('--now', (((now - s) / (to - s)) * 100).toFixed(1));
+    if (current) li.style.setProperty('--now', Math.min(Math.max(((now - s) / (to - s)) * 100, 0), 100).toFixed(1));
     if (!li.dataset.end) li.classList.add('career__item--point');
     // Label anchoring: explicit data-align wins; otherwise items near either edge pin to it.
     const mid = (x + y) / 2, align = li.dataset.align;
@@ -49,15 +50,37 @@ function init(box) {
   }
   canvas.prepend(axis);
 
-  // On narrow screens the figure scrolls sideways: keyboard-reachable, and it opens on the present.
-  box.tabIndex = 0;
-  box.setAttribute('role', 'region');
-  box.setAttribute('aria-label', 'Education and experience timeline, scrolls sideways on small screens');
   const hint = document.createElement('p');
   hint.className = 'career__hint';
   hint.setAttribute('aria-hidden', 'true');
   hint.textContent = '← Swipe for earlier years';
   box.after(hint);
   box.dataset.ready = '';
-  if (box.scrollWidth > box.clientWidth) box.scrollLeft = box.scrollWidth;
+
+  // When the box is narrower than the canvas the figure scrolls sideways. Only then is it a
+  // keyboard-reachable region with the hint shown ([data-overflow]); it opens on the present and
+  // stays there across resizes and rotations until the reader scrolls away. [data-scrolled] fades
+  // the left edge once the figure has left its start.
+  let pinned = true;
+  const sync = () => {
+    const scrolls = box.scrollWidth - box.clientWidth > 1;
+    box.toggleAttribute('data-overflow', scrolls);
+    if (scrolls) {
+      box.tabIndex = 0;
+      box.setAttribute('role', 'region');
+      box.setAttribute('aria-label', 'Timeline (scrolls sideways)');
+      if (pinned) box.scrollLeft = box.scrollWidth;
+    } else {
+      box.removeAttribute('tabindex');
+      box.removeAttribute('role');
+      box.removeAttribute('aria-label');
+    }
+    box.toggleAttribute('data-scrolled', box.scrollLeft > 1);
+  };
+  box.addEventListener('scroll', () => {
+    pinned = box.scrollLeft >= box.scrollWidth - box.clientWidth - 2;
+    box.toggleAttribute('data-scrolled', box.scrollLeft > 1);
+  }, { passive: true });
+  sync();
+  if ('ResizeObserver' in window) new ResizeObserver(sync).observe(box);
 }

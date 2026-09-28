@@ -40,8 +40,8 @@ Rules that keep the site easy to edit:
 - **No inline styles**, except the custom properties `--x`, `--y`, `--i`.
 - **Behaviour attaches through `data-*` attributes**; you never need to touch the JS to add content.
 - **Every section must read fine with JavaScript off.**
-- **Cache-busting:** CSS and JS links end in `?v=20261005`. When you change a CSS or JS file,
-  bump that date everywhere at once: search and replace `?v=20261005` across **all `.html` and
+- **Cache-busting:** CSS and JS links end in `?v=20261006`. When you change a CSS or JS file,
+  bump that date everywhere at once: search and replace `?v=20261006` across **all `.html` and
   `.js` files** (the demo modules in `assets/js/demos/` and `projects/_template/example-demo.js`
   import `article.js?v=…`, and that string must match the page's own `<script>` tag).
 
@@ -243,12 +243,15 @@ in `index.html`: the **Education** lane (`<div class="career__lane" data-lane="e
   move `data-current` onto it: it is drawn in accent from its start to today and fades out after that.
 - `data-side="above|below"` puts the label above or below its lane. Education labels go above.
 - `data-align` pins a label when centred labels would collide: `start` (at the segment's start), `end`
-  (at its end), or `before` (hanging just left of its start, as Huawei's does to make room for QUB).
+  (at its end), or `before` (hanging just left of its start, mirrored so the logo sits on the leader, as Huawei's does to
+  make room for QUB).
 - `data-overlap` draws a role that overlaps another on the same lane (Bristol inside the Huawei years) as a
   raised dashed bracket.
 - The axis runs from `data-from` to `data-to` on `.career` (`data-to` is exclusive: `2027` ends after 2026).
-  Bump it each January. The figure is laid out for a 1200px-wide canvas; after adding an entry, check that
-  no labels touch at 1280px wide (below that the figure scrolls sideways and opens on the present).
+  `data-to` is only a minimum: the axis extends itself through the current year, so no yearly bump is needed
+  (re-check the labels when a new year column appears). The canvas never gets narrower than 1160px: after
+  adding an entry, check that no labels touch at that width (a 1200px-wide window). Narrower boxes scroll
+  sideways, open on the present and show a swipe hint.
 - **Logos:** official emblems taken from each organisation's own website live in `assets/img/logos/`
   (HIT, SenseTime, Oosto, Bristol, QUB); Baidu and Huawei are sprite marks
   (`<svg><use href="/assets/icons/sprite.svg#org-baidu"/></svg>`). A new logo: square-ish, transparent
@@ -432,7 +435,7 @@ Search the HTML for `data-todo` (or open the site on localhost) for the full lis
   local link checker reports `/cv.pdf` as missing; visitors never see the link.
 - The month you joined Queen's as Assistant Professor (the Experience line says 2026).
 - Recruiting line ("Students & visitors"), office street address, earlier positions.
-- HIT supervisor line (Prof. Kuanquan Wang) and the HIT degree years (2016, 2018).
+- HIT supervisor line (Prof. Kuanquan Wang).
 - An image for the Physical AI card, if any.
 - Project pages (all from the paper PDFs; never estimate):
   - MAMBA and STPN: author affiliations with superscripts, exactly as printed.
