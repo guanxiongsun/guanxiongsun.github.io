@@ -40,8 +40,8 @@ Rules that keep the site easy to edit:
 - **No inline styles**, except the custom properties `--x`, `--y`, `--i`.
 - **Behaviour attaches through `data-*` attributes**; you never need to touch the JS to add content.
 - **Every section must read fine with JavaScript off.**
-- **Cache-busting:** CSS and JS links end in `?v=20261006`. When you change a CSS or JS file,
-  bump that date everywhere at once: search and replace `?v=20261006` across **all `.html` and
+- **Cache-busting:** CSS and JS links end in `?v=20261008`. When you change a CSS or JS file,
+  bump that date everywhere at once: search and replace `?v=20261008` across **all `.html` and
   `.js` files** (the demo modules in `assets/js/demos/` and `projects/_template/example-demo.js`
   import `article.js?v=…`, and that string must match the page's own `<script>` tag).
 
@@ -247,6 +247,10 @@ in `index.html`: the **Education** lane (`<div class="career__lane" data-lane="e
   make room for QUB).
 - `data-overlap` draws a role that overlaps another on the same lane (Bristol inside the Huawei years) as a
   raised dashed bracket.
+- Each label line stays on one line. A qualifier on the name's own line goes inside the name
+  (`<b class="career__org">AnyVision <span class="career__sub">now Oosto</span></b>`); a second line goes after it
+  (`<b class="career__org">Baidu</b> <span class="career__sub">Institute of Deep Learning (IDL)</span>`).
+  `career__years` is hidden in the figure (the axis shows the years) but kept for screen readers and the no-JS list.
 - The axis runs from `data-from` to `data-to` on `.career` (`data-to` is exclusive: `2027` ends after 2026).
   `data-to` is only a minimum: the axis extends itself through the current year, so no yearly bump is needed
   (re-check the labels when a new year column appears). The canvas never gets narrower than 1160px: after
