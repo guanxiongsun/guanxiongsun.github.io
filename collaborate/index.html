@@ -6,7 +6,7 @@
   <!-- Theme boot: runs before any stylesheet so a saved theme never flashes. Keep it first. -->
   <script>try{const t=localStorage.getItem('theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){};document.documentElement.classList.add('js')</script>
   <title>Collaborate: open problems in memory for perception and action · Guanxiong Sun</title>
-  <meta name="description" content="Open problems in memory for perception and action, looking for collaborators: efficient memory for long-horizon VLA policies, memory as architecture, video world models with persistent memory, and human motion and sign-language generation. Guanxiong Sun, Queen’s University Belfast.">
+  <meta name="description" content="Open problems in memory for perception and action, looking for collaborators: efficient memory for long-horizon VLA policies, memory as architecture, persistent world models for shared spaces, and human motion and sign-language generation. Guanxiong Sun, Queen’s University Belfast.">
   <meta name="author" content="Guanxiong Sun">
   <link rel="canonical" href="https://guanxiongsun.github.io/collaborate/">
   <meta name="color-scheme" content="light dark">
@@ -44,7 +44,7 @@
     "@type": "WebPage",
     "name": "Collaborate: open problems. Let’s work on them together",
     "url": "https://guanxiongsun.github.io/collaborate/",
-    "description": "Open problems in memory for perception and action, looking for collaborators: efficient memory for long-horizon VLA policies, memory as architecture, video world models with persistent memory, and human motion and sign-language generation. Guanxiong Sun, Queen’s University Belfast.",
+    "description": "Open problems in memory for perception and action, looking for collaborators: efficient memory for long-horizon VLA policies, memory as architecture, persistent world models for shared spaces, and human motion and sign-language generation. Guanxiong Sun, Queen’s University Belfast.",
     "isPartOf": { "@type": "WebSite", "name": "Guanxiong Sun", "url": "https://guanxiongsun.github.io/" },
     "author": { "@type": "Person", "name": "Guanxiong Sun", "url": "https://guanxiongsun.github.io/" }
   }
@@ -123,7 +123,7 @@
         <span class="problem__num" aria-hidden="true">II</span>
         <div class="problem__body">
           <h2 class="problem__title">Memory as architecture</h2>
-          <p>Architectural memory, such as token-indexed memory tables inside attention, meets episodic memory in agents. I’d like to test such mechanisms where memory is the bottleneck: long videos and embodied agents. <span class="problem__reading">Reading: e.g. <a href="https://arxiv.org/abs/2609.28399"><cite>Memory Attention</cite> (arXiv:2609.28399)</a>.</span></p>
+          <p>What belongs in weights, and what belongs in context? Parametric memory (lookup tables, memory layers) and episodic memory (memory banks, KV caches, recurrent state) are usually studied apart. I want to know how they should divide the work when the stream is long and the agent has to act.</p>
           <div class="problem__fit"><span class="problem__fit-label">Good fit if you work on:</span> <ul class="tags"><li class="tag">Efficient attention</li><li class="tag">KV cache</li><li class="tag">Memory layers</li></ul></div>
           <a class="link-arrow" href="mailto:sungx.cs@gmail.com?subject=Collaboration%3A%20Memory%20as%20architecture">Discuss this<span class="visually-hidden">: Memory as architecture</span><svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-right"/></svg></a>
         </div>
@@ -131,10 +131,10 @@
       <li class="problem" id="problem-3" data-state="open">
         <span class="problem__num" aria-hidden="true">III</span>
         <div class="problem__body">
-          <h2 class="problem__title">Video world models with persistent memory</h2>
-          <p>World models that keep a state of the scene across long rollouts, not just the last few frames.</p>
-          <div class="problem__fit"><span class="problem__fit-label">Good fit if you work on:</span> <ul class="tags"><li class="tag">Video generation</li><li class="tag">World models</li></ul></div>
-          <a class="link-arrow" href="mailto:sungx.cs@gmail.com?subject=Collaboration%3A%20Video%20world%20models%20with%20persistent%20memory">Discuss this<span class="visually-hidden">: Video world models with persistent memory</span><svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-right"/></svg></a>
+          <h2 class="problem__title">Persistent world models for shared spaces</h2>
+          <p>World models that keep a state of the scene across long rollouts, including the changes people make, not only the effects of the robot’s own actions.</p>
+          <div class="problem__fit"><span class="problem__fit-label">Good fit if you work on:</span> <ul class="tags"><li class="tag">Video generation</li><li class="tag">World models</li><li class="tag">Human–robot interaction</li></ul></div>
+          <a class="link-arrow" href="mailto:sungx.cs@gmail.com?subject=Collaboration%3A%20Persistent%20world%20models%20for%20shared%20spaces">Discuss this<span class="visually-hidden">: Persistent world models for shared spaces</span><svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-right"/></svg></a>
         </div>
       </li>
       <li class="problem" id="problem-4" data-state="open">
@@ -150,14 +150,6 @@
 
     <div class="hang collab-extra">
       <div class="hang__main">
-        <!-- ON MY DESK: 1–3 papers, each with why it matters. Reading interest only, never a collaboration claim. -->
-        <aside class="desk" aria-labelledby="desk-title">
-          <h2 class="kicker desk__title" id="desk-title">On my desk</h2>
-          <ul class="desk__list">
-            <li><a href="https://arxiv.org/abs/2609.28399"><cite>Memory Attention</cite></a> — J. Kang, arXiv:2609.28399 (2026). Builds attention values from token-indexed memory tables instead of a value projection. <span class="desk__why">Why it matters to me: memory that is cheap to read is exactly what long-horizon VLA policies need.</span></li>
-          </ul>
-        </aside>
-
         <div class="ways">
           <h2 class="kicker ways__title">Ways to work together</h2>
           <p><b>Research collaboration</b> Joint projects, shared benchmarks, co-supervision.</p>
@@ -173,7 +165,7 @@
               <svg class="icon copy-btn__done" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#check"/></svg>
             </button>
           </div>
-          <p class="contact__addr">School of EEECS, Queen’s University Belfast, Belfast, UK<span data-todo="street address">, street address</span></p>
+          <p class="contact__addr">School of EEECS, Queen’s University Belfast, Belfast, UK</p>
         </div>
       </div>
     </div>

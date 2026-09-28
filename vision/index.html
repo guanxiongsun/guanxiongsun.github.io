@@ -113,8 +113,8 @@
 <section class="section band" id="vision" aria-label="The essay and work in progress">
   <div class="wrap">
     <div class="essay">
-      <p class="essay__first">My work so far has circled one question: what should a machine keep from what it has seen? In video perception the answer was a memory bank that stores features from the entire video and reads them cheaply (MAMBA), and prompts that carry context from neighbouring frames into the backbone (STPN). In generation it was learning the structure of human motion well enough to produce signing avatars from text (Neural Sign Actors, with colleagues at Imperial College London).</p>
-      <p>Physical AI raises the stakes. A robot following an instruction must remember where it put something, what it has already tried and what has changed, over minutes rather than frames, and on a fixed compute budget. Many vision-language-action policies still act mostly on the current observation and instruction.</p>
+      <p class="essay__first">My perception work has circled one question: what should a machine keep from what it has seen? In video the answer was a memory bank that stores features from the entire video and reads them cheaply (MAMBA), and prompts that carry context from neighbouring frames into the backbone (STPN). In generation the question was structure: learning human motion well enough to produce signing avatars from text (Neural Sign Actors, with colleagues at Imperial College London).</p>
+      <p>Physical AI raises the stakes. A robot must remember over minutes rather than frames, on a fixed compute budget. Memory is arriving in vision-language-action policies, but mostly as a record of what the robot itself did. Robots that share space with people must also remember what others change.</p>
       <blockquote class="pullquote"><p>Perception with memory, generation with structure, action with both.</p></blockquote>
     </div>
 
@@ -158,14 +158,15 @@
             <path class="sx-line" d="M70 88 C 70 46, 118 27, 176 27" marker-end="url(#ah-ink2)"/>
           </svg>
         </figure>
-        <p>Grounding perception and generative models in physical interaction: world models that remember, and agents that use them.</p>
+        <p>Grounding perception and generative models in physical interaction, for robots that share space with people.</p>
         <!-- Image slot (3:2). When approved: replace the span with <img ... width height alt> and remove hidden + data-todo. -->
         <figure class="card-progress__photo" hidden data-todo="image for this card, if the owner approves one">
           <span class="card-progress__photo-slot">Photo slot, 3:2</span>
         </figure>
         <h3 class="card-progress__qhead kicker">Open questions</h3>
         <ul class="card-progress__questions">
-          <li>Can video world models keep a persistent state?</li>
+          <li>What should a robot remember about the people it works with?</li>
+          <li>What belongs in weights, and what in context?</li>
           <li>What transfers from human-motion generation to robot motion?</li>
         </ul>
         <p class="card-progress__cta"><a class="link-arrow" href="/collaborate/">See the open problems<svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#arrow-right"/></svg></a></p>
