@@ -19,7 +19,7 @@
                         data-autoplay (only with motion allowed, only in view). ?debug outlines rects.
 
    Exports (for demo modules). Import with the SAME ?v= as the page's own <script> tag,
-   e.g.  import { createPlayer } from '/assets/js/article.js?v=20261004';
+   e.g.  import { createPlayer } from '/assets/js/article.js?v=20261006';
      mulberry32(seed)                  → rand(): float in [0, 1); same seed, same sequence
      reducedMotion()                   → true when the visitor prefers reduced motion (live)
      onReducedMotion(fn)               → fn(matches) on every change; returns an unsubscribe fn
