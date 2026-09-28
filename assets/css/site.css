@@ -1067,15 +1067,21 @@ html.dev [data-todo]::after {
 }
 
 /* ---------------------------------------------------------------------------------------------
-   Experience line (§07). /assets/js/career.js sets --x / --y (start / end, % of the axis) on each
-   .career__item and wraps badge + text in .career__label; before that (or with JS off) the list
-   reads as a plain list. Same visual language as the throughline: hairline track, ink dots,
-   accent for the present, dotted year columns. Below ~1160px the figure scrolls sideways.
+   Education and experience (§03). /assets/js/career.js sets --x / --y (start / end, % of the axis)
+   on each .career__item, --now on the current role, and wraps badge + text in .career__label;
+   before that (or with JS off) each lane reads as a plain list under its name. Same visual
+   language as the throughline: hairline tracks, ink dots, accent for the present, dotted year
+   columns. Education segments are outlined capsules, work segments solid bars. The canvas never
+   gets narrower than 1200px: below that (viewports < ~1280px) it scrolls sideways.
    --------------------------------------------------------------------------------------------- */
 .career-block { margin-bottom: 40px; }
 #experience .section-head { margin-bottom: 8px; }
 #experience .career-block { margin-bottom: 0; }
-@media (min-width: 1024px) { .career-block > .about-block__title { margin-left: calc((100% + var(--col-gap)) / 12 * 3); } }
+.career__lane + .career__lane { margin-top: 24px; }
+.career__lane-name {
+  margin-bottom: 12px; font: 500 var(--fs-xs)/1.3 var(--font-mono); letter-spacing: var(--track-kicker);
+  text-transform: uppercase; color: var(--ink-3);
+}
 .career__list { list-style: none; display: grid; gap: 14px; }
 .career__item { display: flex; align-items: flex-start; gap: 12px; }
 .career__badge {
@@ -1086,35 +1092,40 @@ html.dev [data-todo]::after {
 /* Organisation marks keep their own colours, so every badge sits on the light figure mat (as paper
    figures do), in both themes. Logo files live in /assets/img/logos/ (official marks, emblem only). */
 .career__badge:has(img, svg) { background: var(--mat); }
-.career__badge img { width: 20px; height: 20px; object-fit: contain; }
+.career__badge img { width: 22px; height: 22px; object-fit: contain; }
+.career__badge img[src$="/hit.png"] { width: 25px; height: 25px; }   /* fine-lined seal: needs the room */
 .career__badge--baidu { color: #2932E1; }
 .career__badge--huawei { color: #E60012; }
-.career__text { display: grid; font: 400 var(--fs-sm)/1.35 var(--font-sans); color: var(--ink-2); }
+.career__text { display: grid; max-width: 165px; font: 400 var(--fs-sm)/1.35 var(--font-sans); color: var(--ink-2); }
 .career__org { font: 600 var(--fs-ui)/1.3 var(--font-sans); color: var(--ink); }
 .career__sub { color: var(--ink-3); }
 .career__years { font: 500 var(--fs-xs)/1.5 var(--font-mono); letter-spacing: var(--track-kicker); color: var(--ink-3); }
 
 .career[data-ready] {
-  --track: 108px;                         /* y of the main track inside the canvas */
-  --lift: 20px;                           /* how far an overlapping role rises above it */
+  --lift: 20px;                           /* how far an overlapping role rises above its lane */
   overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: thin;
 }
-.career[data-ready] .career__list {
-  position: relative; display: block; min-width: 1100px; height: 262px; margin: 0 2px;
-}
-/* The main track, full width, and the dotted year columns behind it. */
-.career[data-ready] .career__list::before {
+.career[data-ready] .career__canvas { position: relative; min-width: 1196px; height: 424px; margin: 0 2px; }
+.career[data-ready] .career__lane { position: absolute; inset: 0; margin: 0; }
+.career[data-ready] .career__lane[data-lane="edu"] { --track: 128px; }
+.career[data-ready] .career__lane[data-lane="work"] { --track: 280px; }
+/* Each lane's hairline track, full width, with the lane name tucked under its left end. */
+.career[data-ready] .career__lane::before {
   content: ""; position: absolute; left: 0; right: 0; top: var(--track); height: 1px; background: var(--rule-strong);
 }
+.career[data-ready] .career__lane-name { position: absolute; left: 0; top: calc(var(--track) + 10px); margin: 0; }
+.career[data-ready] .career__list { display: block; }
+
+/* Year columns behind both lanes. */
 .career__axis { position: absolute; inset: 0; list-style: none; pointer-events: none; }
 .career__axis li {
-  position: absolute; left: calc(var(--x) * 1%); top: 0; bottom: 0; width: 10%;
-  border-left: 1px dashed var(--rule); padding-left: 0; display: flex; align-items: flex-end; justify-content: center;
+  position: absolute; left: calc(var(--x) * 1%); width: calc((var(--y) - var(--x)) * 1%); top: 0; bottom: 0;
+  border-left: 1px dashed var(--rule); display: flex; align-items: flex-end; justify-content: center;
   font: 500 11px/1 var(--font-mono); letter-spacing: .08em; color: var(--ink-3);
 }
 .career__axis li:first-child { border-left-color: transparent; }
 
-/* Each item is its own segment on the track: from --x to --y. */
+/* Each item is its own segment on its lane: from --x to --y. */
 .career[data-ready] .career__item {
   position: absolute; display: block; z-index: 1;
   left: calc(var(--x) * 1%); width: calc((var(--y) - var(--x)) * 1%);
@@ -1130,9 +1141,22 @@ html.dev [data-todo]::after {
 .career[data-ready] .career__item[data-side="below"]::after { top: 9px; height: 16px; }
 .career[data-ready] .career__item[data-side="above"]::after { bottom: 9px; height: 16px; }
 .career[data-ready] .career__item--point { width: 0; }
-/* The present: an accent segment that fades out towards the right edge (ongoing). */
-.career[data-ready] .career__item[data-current] { background: linear-gradient(90deg, var(--accent) 70%, color-mix(in srgb, var(--accent) 0%, transparent)); }
+/* Education: an outlined capsule with a hollow start dot, so study and work read apart at a glance. */
+.career[data-ready] [data-lane="edu"] .career__item {
+  top: calc(var(--track) - 4px); height: 9px; border-radius: 5px;
+  background: var(--paper); border: 1.5px solid var(--ink-3);
+}
+.career[data-ready] [data-lane="edu"] .career__item::before {
+  left: -7px; top: -3.5px; background: var(--paper); border: 2px solid var(--ink); box-sizing: border-box;
+}
+.career[data-ready] [data-lane="edu"] .career__item[data-side="above"]::after { bottom: 11px; }
+/* The present: an accent segment from the start to today, fading out towards the right edge. */
+.career[data-ready] .career__item[data-current] {
+  background: linear-gradient(90deg, var(--accent) calc(var(--now, 70) * 1%),
+    color-mix(in srgb, var(--accent) 0%, transparent) calc(var(--now, 70) * 1% + 56px));
+}
 .career[data-ready] .career__item[data-current]::before { background: var(--accent); }
+.career[data-ready] .career__item[data-current]::after { left: 0; }
 /* A role that overlaps another rises off the track as a dashed bracket, so both stay legible. */
 .career[data-ready] .career__item[data-overlap] {
   top: calc(var(--track) - var(--lift)); height: var(--lift); background: none; border-radius: 6px 6px 0 0;
@@ -1143,20 +1167,26 @@ html.dev [data-todo]::after {
 /* Labels: centred on the segment, above or below the track; edge items anchor to the edge. */
 .career[data-ready] .career__label {
   position: absolute; left: 50%; transform: translateX(-50%);
-  display: flex; align-items: flex-start; gap: 10px; width: max-content; max-width: 230px;
+  display: flex; align-items: flex-start; gap: 10px; width: max-content;
 }
 .career[data-ready] .career__item[data-side="below"] .career__label { top: 28px; }
 .career[data-ready] .career__item[data-side="above"] .career__label { bottom: 28px; }
+.career[data-ready] [data-lane="edu"] .career__item[data-side="above"] .career__label { bottom: 30px; }
 .career[data-ready] .career__item--start .career__label { left: -15px; transform: none; }
 .career[data-ready] .career__item--start::after { left: 0; }
 .career[data-ready] .career__item--end .career__label { left: auto; right: 0; transform: none; }
+/* "before": the label hangs just left of the segment's start (for crowded stretches). */
+.career[data-ready] .career__item--before .career__label { left: auto; right: calc(100% - 15px); transform: none; }
+.career[data-ready] .career__item--before::after { left: 0; }
 .career[data-ready] .career__item[data-current] .career__badge { border-color: var(--accent); }
 
 .career[data-ready]:focus-visible { outline-offset: 4px; }
 .career__hint { display: none; margin-top: 8px; font: 500 var(--fs-xs)/1.4 var(--font-mono); letter-spacing: var(--track-kicker); text-transform: uppercase; color: var(--ink-3); }
-@media (max-width: 1159px) { .career__hint { display: block; } }
+@media (max-width: 1279px) { .career__hint { display: block; } }
 
 @media (forced-colors: active) {
   .career[data-ready] .career__item, .career[data-ready] .career__item::before { forced-color-adjust: none; background: CanvasText; }
-  .career[data-ready] .career__item[data-overlap] { background: none; border-color: CanvasText; }
+  .career[data-ready] .career__item[data-overlap],
+  .career[data-ready] [data-lane="edu"] .career__item { background: Canvas; border-color: CanvasText; }
+  .career[data-ready] [data-lane="edu"] .career__item::before { background: Canvas; border-color: CanvasText; }
 }

@@ -7,7 +7,7 @@
    informative, paused initial state →
    Play/Step/Reset/range drive a pure step() on seeded state (mulberry32) → render() updates the
    SVG, the aria-hidden readout and the throttled description → add .is-ready. */
-import { mulberry32, createPlayer, createAnnouncer, syncPlayButton, bindRange, reducedMotion } from '/assets/js/article.js?v=20261004';
+import { mulberry32, createPlayer, createAnnouncer, syncPlayButton, bindRange, reducedMotion } from '/assets/js/article.js?v=20261005';
 
 const T = 24, CAP = 8, SEED = 20260926;
 const root = document.getElementById('demo');

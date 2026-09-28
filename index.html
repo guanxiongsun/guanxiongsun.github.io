@@ -20,8 +20,8 @@
   <link rel="preload" href="/assets/fonts/newsreader-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <!-- Cache-bust: bump ?v=YYYYMMDD on every CSS/JS link at release. -->
-  <link rel="stylesheet" href="/assets/css/tokens.css?v=20261004">
-  <link rel="stylesheet" href="/assets/css/site.css?v=20261004">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=20261005">
+  <link rel="stylesheet" href="/assets/css/site.css?v=20261005">
 
   <!-- Social cards -->
   <meta property="og:type" content="website">
@@ -64,9 +64,9 @@
   </script>
 
   <!-- Scripts are modules, so they are deferred automatically. -->
-  <script type="module" src="/assets/js/site.js?v=20261004"></script>
-  <script type="module" src="/assets/js/throughline.js?v=20261004"></script>
-  <script type="module" src="/assets/js/career.js?v=20261004"></script>
+  <script type="module" src="/assets/js/site.js?v=20261005"></script>
+  <script type="module" src="/assets/js/throughline.js?v=20261005"></script>
+  <script type="module" src="/assets/js/career.js?v=20261005"></script>
 </head>
 
 <body>
@@ -232,48 +232,70 @@
 </section>
 
 
-<!-- ===== 03 EXPERIENCE ===== -->
+<!-- ===== 03 EXPERIENCE (education + work) ===== -->
 <section class="section section--compact" id="experience" aria-labelledby="experience-title">
   <div class="wrap">
     <header class="section-head reveal">
       <p class="kicker section-head__kicker">03 — Experience</p>
-      <h2 class="section-head__title" id="experience-title">Experience</h2>
+      <h2 class="section-head__title" id="experience-title">Education and experience</h2>
     </header>
-    <!-- EXPERIENCE: one <li> per role, oldest first. /assets/js/career.js lays the list out as a
-         horizontal line from data-start / data-end (decimal years; data-end="now" for the current
-         role, omit it for a short stint shown as a dot). data-side="above|below" picks the label
-         side, data-align="start|end" pins it to the segment's start or end instead of its centre; data-overlap draws a role that overlaps another as a raised branch.
-         Logos: <span class="career__badge"> holds either a sprite mark (#org-…) or a monogram;
-         to use an official logo file, replace its contents with <img src="/assets/img/logos/…" alt="">.
-         Without JS the list shows as a plain list. -->
+    <!-- EXPERIENCE: two lanes (Education, Work), one <li> per entry, oldest first.
+         /assets/js/career.js lays them out on one horizontal time axis (data-from / data-to on
+         .career; data-to is exclusive). Per <li>:
+           data-start / data-end   decimal years (2024.5 = mid-2024); omit data-end for a short stint
+                                   (a dot); data-end="now" + data-current for the current role.
+           data-side="above|below" which side of its lane the label sits.
+           data-align="start|end|before"  pin the label to the segment's start, its end, or just
+                                   left of its start (default: centred; items near an edge pin to it).
+           data-overlap            a role that overlaps another on the same lane rises as a bracket.
+         Logos live in /assets/img/logos/ (official emblems) or the icon sprite (#org-…).
+         Without JS the two lists show as plain lists. -->
     <div class="career-block">
-      <div class="career" data-career data-from="2017" data-to="2027">
-        <ol class="career__list">
-      <li class="career__item" data-start="2017.3" data-side="below">
-        <span class="career__badge career__badge--baidu" aria-hidden="true"><svg width="16" height="16" focusable="false"><use href="/assets/icons/sprite.svg#org-baidu"/></svg></span>
-        <span class="career__text"><b class="career__org">Baidu</b> <span class="career__sub">Institute of Deep Learning (IDL)</span><span class="career__role">Intern</span><span class="career__years">2017</span></span>
-      </li>
-      <li class="career__item" data-start="2019.25" data-side="above">
-        <span class="career__badge" aria-hidden="true"><img src="/assets/img/logos/sensetime.png" alt="" width="20" height="20" loading="lazy" decoding="async"></span>
-        <span class="career__text"><b class="career__org">SenseTime</b><span class="career__role">Intern</span><span class="career__years">2019</span></span>
-      </li>
-      <li class="career__item" data-start="2019.55" data-end="2022.9" data-side="below">
-        <span class="career__badge" aria-hidden="true"><img src="/assets/img/logos/oosto.png" alt="" width="20" height="20" loading="lazy" decoding="async"></span>
-        <span class="career__text"><b class="career__org">AnyVision</b> <span class="career__sub">now Oosto</span><span class="career__role">Research Intern</span><span class="career__years">2019–2022</span></span>
-      </li>
-      <li class="career__item" data-start="2023" data-end="2025.45" data-side="below" data-align="start">
-        <span class="career__badge career__badge--huawei" aria-hidden="true"><svg width="16" height="16" focusable="false"><use href="/assets/icons/sprite.svg#org-huawei"/></svg></span>
-        <span class="career__text"><b class="career__org">Huawei Noah’s Ark Lab</b> <span class="career__sub">London</span><span class="career__role">Research Scientist</span><span class="career__years">2023–2025</span></span>
-      </li>
-      <li class="career__item" data-start="2024.1" data-end="2024.9" data-side="above" data-overlap>
-        <span class="career__badge" aria-hidden="true"><img src="/assets/img/logos/bristol.svg" alt="" width="20" height="20" loading="lazy" decoding="async"></span>
-        <span class="career__text"><b class="career__org">University of Bristol</b><span class="career__role">Senior Research Associate</span><span class="career__years">2024</span></span>
-      </li>
-      <li class="career__item" data-start="2025.55" data-end="now" data-side="below" data-current>
-        <span class="career__badge" aria-hidden="true"><img src="/assets/img/logos/qub.svg" alt="" width="20" height="20" loading="lazy" decoding="async"></span>
-        <span class="career__text"><b class="career__org">Queen’s University Belfast</b><span class="career__role">Assistant Professor</span><span class="career__years">2025–now</span></span>
-      </li>
-        </ol>
+      <div class="career" data-career data-from="2012" data-to="2027">
+        <div class="career__canvas">
+          <div class="career__lane" data-lane="edu">
+            <h3 class="career__lane-name">Education</h3>
+            <ol class="career__list">
+          <li class="career__item" data-start="2012.67" data-end="2018.5" data-side="above">
+            <span class="career__badge" aria-hidden="true"><img src="/assets/img/logos/hit.png" alt="" width="20" height="20" loading="lazy" decoding="async"></span>
+            <span class="career__text"><b class="career__org">Harbin Institute of Technology</b><span class="career__role">B.Sc. and M.Sc. in Computer Science</span><span class="career__years">2012–2018</span></span>
+          </li>
+          <li class="career__item" data-start="2019.3" data-end="2023.7" data-side="above">
+            <span class="career__badge" aria-hidden="true"><img src="/assets/img/logos/qub.svg" alt="" width="20" height="20" loading="lazy" decoding="async"></span>
+            <span class="career__text"><b class="career__org">Queen’s University Belfast</b><span class="career__role">Ph.D. in Computer Vision</span><span class="career__years">2019–2023</span></span>
+          </li>
+            </ol>
+          </div>
+          <div class="career__lane" data-lane="work">
+            <h3 class="career__lane-name">Work</h3>
+            <ol class="career__list">
+          <li class="career__item" data-start="2017.5" data-side="below">
+            <span class="career__badge career__badge--baidu" aria-hidden="true"><svg width="16" height="16" focusable="false"><use href="/assets/icons/sprite.svg#org-baidu"/></svg></span>
+            <span class="career__text"><b class="career__org">Baidu</b> <span class="career__sub">Institute of Deep Learning (IDL)</span><span class="career__role">Intern</span><span class="career__years">2017</span></span>
+          </li>
+          <li class="career__item" data-start="2019.15" data-side="above">
+            <span class="career__badge" aria-hidden="true"><img src="/assets/img/logos/sensetime.png" alt="" width="20" height="20" loading="lazy" decoding="async"></span>
+            <span class="career__text"><b class="career__org">SenseTime</b><span class="career__role">Intern</span><span class="career__years">2019</span></span>
+          </li>
+          <li class="career__item" data-start="2019.55" data-end="2022.9" data-side="above">
+            <span class="career__badge" aria-hidden="true"><img src="/assets/img/logos/oosto.png" alt="" width="20" height="20" loading="lazy" decoding="async"></span>
+            <span class="career__text"><b class="career__org">AnyVision</b> <span class="career__sub">now Oosto</span><span class="career__role">Research Intern</span><span class="career__years">2019–2022</span></span>
+          </li>
+          <li class="career__item" data-start="2024.1" data-end="2025.97" data-side="below" data-align="before">
+            <span class="career__badge career__badge--huawei" aria-hidden="true"><svg width="16" height="16" focusable="false"><use href="/assets/icons/sprite.svg#org-huawei"/></svg></span>
+            <span class="career__text"><b class="career__org">Huawei Noah’s Ark Lab</b> <span class="career__sub">London</span><span class="career__role">Research Scientist</span><span class="career__years">2024–2026</span></span>
+          </li>
+          <li class="career__item" data-start="2025.1" data-end="2025.9" data-side="above" data-overlap>
+            <span class="career__badge" aria-hidden="true"><img src="/assets/img/logos/bristol.svg" alt="" width="20" height="20" loading="lazy" decoding="async"></span>
+            <span class="career__text"><b class="career__org">University of Bristol</b><span class="career__role">Senior Research Associate</span><span class="career__years">2025</span></span>
+          </li>
+          <li class="career__item" data-start="2026.03" data-end="now" data-side="below" data-current>
+            <span class="career__badge" aria-hidden="true"><img src="/assets/img/logos/qub.svg" alt="" width="20" height="20" loading="lazy" decoding="async"></span>
+            <span class="career__text"><b class="career__org">Queen’s University Belfast</b><span class="career__role">Assistant Professor</span><span class="career__years">2026–now</span></span>
+          </li>
+            </ol>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -992,8 +1014,8 @@
           <div class="about-block">
             <h3 class="about-block__title">Education</h3>
             <ul class="about-list">
-              <li><b>Ph.D., Queen’s University Belfast.</b> Video object detection, segmentation and tracking, advised by Dr.&nbsp;Yang Hua, Prof.&nbsp;Hui Wang and Prof.&nbsp;Neil&nbsp;Robertson.</li>
-              <li><b>M.S.<span data-todo="confirm HIT years"> (2018)</span> and B.S.<span data-todo="confirm HIT years"> (2016)</span>, <a href="https://www.hit.edu.cn/">Harbin Institute of Technology</a>.</b> Medical image processing<span data-todo="confirm HIT supervisor line"> with <a href="https://scholar.google.com/citations?user=FMb0GfYAAAAJ&amp;hl=zh-CN">Prof. Kuanquan Wang</a></span>.</li>
+              <li><b>Ph.D. in Computer Vision, Queen’s University Belfast</b> (2019–2023). Video object detection, segmentation and tracking, advised by Dr.&nbsp;Yang Hua, Prof.&nbsp;Hui Wang and Prof.&nbsp;Neil&nbsp;Robertson.</li>
+              <li><b>B.Sc. and M.Sc. in Computer Science, <a href="https://www.hit.edu.cn/">Harbin Institute of Technology</a></b> (2012–2018). M.Sc. research in medical image processing<span data-todo="confirm HIT supervisor line"> with <a href="https://scholar.google.com/citations?user=FMb0GfYAAAAJ&amp;hl=zh-CN">Prof. Kuanquan Wang</a></span>.</li>
             </ul>
           </div>
         </div>

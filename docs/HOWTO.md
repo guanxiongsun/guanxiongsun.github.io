@@ -40,12 +40,12 @@ Rules that keep the site easy to edit:
 - **No inline styles**, except the custom properties `--x`, `--y`, `--i`.
 - **Behaviour attaches through `data-*` attributes**; you never need to touch the JS to add content.
 - **Every section must read fine with JavaScript off.**
-- **Cache-busting:** CSS and JS links end in `?v=20261004`. When you change a CSS or JS file,
-  bump that date everywhere at once: search and replace `?v=20261004` across **all `.html` and
+- **Cache-busting:** CSS and JS links end in `?v=20261005`. When you change a CSS or JS file,
+  bump that date everywhere at once: search and replace `?v=20261005` across **all `.html` and
   `.js` files** (the demo modules in `assets/js/demos/` and `projects/_template/example-demo.js`
   import `article.js?v=…`, and that string must match the page's own `<script>` tag).
 
-The homepage runs, in this order: hero, **01 News**, **02 Throughline**, **03 Experience**,
+The homepage runs, in this order: hero, **01 News**, **02 Throughline**, **03 Experience** (education and work),
 **04 Selected work**, **05 Publications**, **06 Vision** (teaser), **07 Collaborate** (teaser),
 **08 Service & background**.
 The header nav on every page is News · Work · Publications · Vision · Collaborate (on the homepage
@@ -225,29 +225,34 @@ The full cards on `/vision/` (e.g. `#physical-ai`, with schematics and open ques
 - Open node: `data-open-label`, `data-open-href`, `data-open-note` on `#throughline-figure`.
 - The no-JS list `ol.throughline__fallback` is written by hand: keep it in step with the cards.
 
-### Add a role to the Experience line (§03)
+### Add a role or a degree to the Education and experience figure (§03)
 
-The horizontal line is built by `assets/js/career.js` from the list inside `<div class="career" data-career>`
-in `index.html`. Add one `<li class="career__item">`, oldest first:
+The horizontal figure is built by `assets/js/career.js` from two lists inside `<div class="career" data-career>`
+in `index.html`: the **Education** lane (`<div class="career__lane" data-lane="edu">`) and the **Work** lane
+(`data-lane="work"`). Add one `<li class="career__item">` to the right lane, oldest first:
 
 ```html
 <li class="career__item" data-start="2027.2" data-end="now" data-side="below" data-current>
-  <span class="career__badge career__badge--mono" aria-hidden="true">ABC</span>
+  <span class="career__badge" aria-hidden="true"><img src="/assets/img/logos/abc.svg" alt="" width="20" height="20" loading="lazy" decoding="async"></span>
   <span class="career__text"><b class="career__org">Organisation</b><span class="career__role">Role</span><span class="career__years">2027–now</span></span>
 </li>
 ```
 
-- `data-start` / `data-end` are decimal years (2027.5 = mid-2027). Omit `data-end` for a short stint (a dot);
-  use `data-end="now"` for the current role, and move `data-current` onto it (accent colour).
-- `data-side="above|below"` puts the label above or below the track; `data-align="start|end"` pins it to the
-  segment's start or end when centred labels would collide.
-- `data-overlap` draws a role that overlaps another (e.g. Bristol inside the Huawei years) as a raised
-  dashed bracket.
-- Extend the axis with `data-to` on `.career` (it is exclusive: `data-to="2028"` ends after 2027).
-- **Logos:** the current marks are official emblems taken from each organisation's own website
-  (`assets/img/logos/`: SenseTime, Oosto, Bristol, QUB; Baidu and Huawei are sprite marks). A badge holds a sprite mark (`<svg><use href="/assets/icons/sprite.svg#org-baidu"/></svg>`),
-  a monogram, or an official logo file: put it in `assets/img/logos/` and replace the badge contents with
-  `<img src="/assets/img/logos/qub.svg" alt="">` (square-ish, transparent background works best).
+- `data-start` / `data-end` are decimal years (2027.5 = mid-2027); keep them inside the years printed in
+  `career__years`. Omit `data-end` for a short stint (a dot). For the current role use `data-end="now"` and
+  move `data-current` onto it: it is drawn in accent from its start to today and fades out after that.
+- `data-side="above|below"` puts the label above or below its lane. Education labels go above.
+- `data-align` pins a label when centred labels would collide: `start` (at the segment's start), `end`
+  (at its end), or `before` (hanging just left of its start, as Huawei's does to make room for QUB).
+- `data-overlap` draws a role that overlaps another on the same lane (Bristol inside the Huawei years) as a
+  raised dashed bracket.
+- The axis runs from `data-from` to `data-to` on `.career` (`data-to` is exclusive: `2027` ends after 2026).
+  Bump it each January. The figure is laid out for a 1200px-wide canvas; after adding an entry, check that
+  no labels touch at 1280px wide (below that the figure scrolls sideways and opens on the present).
+- **Logos:** official emblems taken from each organisation's own website live in `assets/img/logos/`
+  (HIT, SenseTime, Oosto, Bristol, QUB); Baidu and Huawei are sprite marks
+  (`<svg><use href="/assets/icons/sprite.svg#org-baidu"/></svg>`). A new logo: square-ish, transparent
+  background, emblem only (no wordmark).
 
 ### A collaboration becomes public ("connected")
 
@@ -425,7 +430,7 @@ Search the HTML for `data-todo` (or open the site on localhost) for the full lis
 
 - CV PDF at `/cv.pdf` (then remove `data-todo` from the CV link in the hero). Until then the
   local link checker reports `/cv.pdf` as missing; visitors never see the link.
-- The month you joined Queen's (the Experience line says 2025).
+- The month you joined Queen's as Assistant Professor (the Experience line says 2026).
 - Recruiting line ("Students & visitors"), office street address, earlier positions.
 - HIT supervisor line (Prof. Kuanquan Wang) and the HIT degree years (2016, 2018).
 - An image for the Physical AI card, if any.
