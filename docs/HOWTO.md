@@ -40,8 +40,8 @@ Rules that keep the site easy to edit:
 - **No inline styles**, except the custom properties `--x`, `--y`, `--i`.
 - **Behaviour attaches through `data-*` attributes**; you never need to touch the JS to add content.
 - **Every section must read fine with JavaScript off.**
-- **Cache-busting:** CSS and JS links end in `?v=20261006`. When you change a CSS or JS file,
-  bump that date everywhere at once: search and replace `?v=20261006` across **all `.html` and
+- **Cache-busting:** CSS and JS links end in `?v=20261007`. When you change a CSS or JS file,
+  bump that date everywhere at once: search and replace `?v=20261007` across **all `.html` and
   `.js` files** (the demo modules in `assets/js/demos/` and `projects/_template/example-demo.js`
   import `article.js?v=…`, and that string must match the page's own `<script>` tag).
 

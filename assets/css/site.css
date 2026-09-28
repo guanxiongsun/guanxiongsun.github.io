@@ -1103,13 +1103,15 @@ html.dev [data-todo]::after {
 .career__years { font: 500 var(--fs-xs)/1.5 var(--font-mono); letter-spacing: var(--track-kicker); color: var(--ink-3); }
 
 .career[data-ready] {
-  --lift: 20px;                           /* how far an overlapping role rises above its lane */
+  --lift: 14px;                           /* how far an overlapping role rises above its lane */
+  --off: 20px;                            /* gap between a track and its labels (leader length + dot) */
+  --h: 318px;                             /* canvas height */
   position: relative; overflow: auto hidden; overscroll-behavior-x: contain; scrollbar-width: thin;
 }
-.career[data-ready] .career__canvas { position: relative; min-width: 1160px; height: 424px; margin: 0 2px; }
+.career[data-ready] .career__canvas { position: relative; min-width: 1160px; height: var(--h); margin: 0 2px; }
 .career[data-ready] .career__lane { position: absolute; inset: 0; margin: 0; }
-.career[data-ready] .career__lane[data-lane="edu"] { --track: 128px; }
-.career[data-ready] .career__lane[data-lane="work"] { --track: 280px; }
+.career[data-ready] .career__lane[data-lane="edu"] { --track: 92px; }
+.career[data-ready] .career__lane[data-lane="work"] { --track: 200px; }
 /* Each lane's hairline track, full width, with the lane name pinned to the visible left edge
    (sticky inside the scroller), so each track stays named while the figure scrolls. */
 .career[data-ready] .career__lane::before {
@@ -1119,18 +1121,21 @@ html.dev [data-todo]::after {
   position: sticky; left: 0; z-index: 4; width: max-content;
   margin: calc(var(--track) + 14px) 0 0; padding-right: 4px; background: var(--paper);
 }
-/* Work labels hang 26px below their track; keep the pinned name clear of them as they scroll under it. */
-.career[data-ready] [data-lane="work"] .career__lane-name { margin-top: calc(var(--track) + 9px); }
+/* Work labels hang just below their track, so the pinned Work name sits just above it instead. */
+.career[data-ready] [data-lane="work"] .career__lane-name { margin-top: calc(var(--track) - 20px); }
 /* A soft left edge once the figure is scrolled away from its start (the names sit above it). */
 .career-block { position: relative; }
 .career-block::before {
-  content: ""; position: absolute; z-index: 3; left: 0; top: 0; width: 32px; height: 424px; pointer-events: none;
+  content: ""; position: absolute; z-index: 3; left: 0; top: 0; width: 32px; height: var(--h, 318px); pointer-events: none;
   background: linear-gradient(90deg, var(--paper), color-mix(in srgb, var(--paper) 0%, transparent));
   opacity: 0; transition: opacity var(--dur-2);
 }
 .career-block:has(.career[data-scrolled])::before { opacity: 1; }
 .career[data-ready] .career__list { display: block; }
-.career[data-ready] .career__text { max-width: 165px; }
+.career[data-ready] .career__text { max-width: 190px; }
+/* In the figure the axis already gives the years, so each label's own year line is visually hidden
+   (still read out by screen readers, and shown in the no-JS list). */
+.career[data-ready] .career__years { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
 /* Year columns behind both lanes. */
 .career__axis { position: absolute; inset: 0; list-style: none; pointer-events: none; }
@@ -1154,8 +1159,8 @@ html.dev [data-todo]::after {
 .career[data-ready] .career__item::after {         /* leader from the track to the label */
   content: ""; position: absolute; left: 50%; width: 1px; background: var(--rule-strong);
 }
-.career[data-ready] .career__item[data-side="below"]::after { top: 9px; height: 16px; }
-.career[data-ready] .career__item[data-side="above"]::after { bottom: 9px; height: 16px; }
+.career[data-ready] .career__item[data-side="below"]::after { top: 9px; height: calc(var(--off) - 12px); }
+.career[data-ready] .career__item[data-side="above"]::after { bottom: 9px; height: calc(var(--off) - 12px); }
 .career[data-ready] .career__item--point { width: 0; }
 /* Education: an outlined capsule with a hollow start dot, so study and work read apart at a glance. */
 .career[data-ready] [data-lane="edu"] .career__item {
@@ -1186,10 +1191,10 @@ html.dev [data-todo]::after {
   position: absolute; left: 50%; transform: translateX(-50%);
   display: flex; align-items: flex-start; gap: 10px; width: max-content;
 }
-.career[data-ready] .career__item[data-side="below"] .career__label { top: 28px; }
-.career[data-ready] .career__item[data-side="above"] .career__label { bottom: 28px; }
-.career[data-ready] [data-lane="edu"] .career__item[data-side="above"] .career__label { bottom: 30px; }
-.career[data-ready] .career__item[data-overlap][data-side="above"] .career__label { bottom: 31px; }
+.career[data-ready] .career__item[data-side="below"] .career__label { top: var(--off); }
+.career[data-ready] .career__item[data-side="above"] .career__label { bottom: var(--off); }
+.career[data-ready] [data-lane="edu"] .career__item[data-side="above"] .career__label { bottom: calc(var(--off) + 2px); }
+.career[data-ready] .career__item[data-overlap][data-side="above"] .career__label { bottom: calc(var(--off) + 3px); }
 .career[data-ready] .career__item--start .career__label { left: -15px; transform: none; }
 .career[data-ready] .career__item--start::after { left: 0; }
 .career[data-ready] .career__item--end .career__label { left: auto; right: 0; transform: none; }
