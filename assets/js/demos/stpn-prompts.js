@@ -5,7 +5,7 @@
    pick a patch to draw illustrative attention lines. Layouts: 960×420 when the stage is ≥820px
    wide (text stays ≥9px), else 360×640 (capped in CSS). Built eagerly so its controls are in the
    tab order. Styles: /assets/css/demos/stpn.css (.st-*) plus .ex-* in article.css. */
-import { createAnnouncer, reducedMotion } from '/assets/js/article.js?v=20261007';
+import { createAnnouncer, reducedMotion } from '/assets/js/article.js?v=20261008';
 
 const IMG = '/assets/img/projects/stpn/stpn-', TASK = ['VOD', 'VIS', 'VOT'], WHAT = ['detection', 'segmentation', 'tracking'];
 const DEF = { mode: 'stpn', task: 0, on: true, pin: 21 }; // row 3, column 6: the fox's head
