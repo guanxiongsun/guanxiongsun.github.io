@@ -30,7 +30,7 @@ stops a second copy, but the exports would come from a different instance).
 | One interactive demo per project page | `assets/js/demos/<name>.js` |
 | Copy-to-start project page | `projects/_template/` (noindex; see "Add a project page") |
 | The full Vision page (essay, pull quote, in-progress cards with schematics) | `vision/index.html` |
-| The full Collaborate page (open problems, "On my desk", ways to work together, contact) | `collaborate/index.html` |
+| The full Collaborate page (open problems, ways to work together, contact) | `collaborate/index.html` |
 | Icons | `assets/icons/sprite.svg`, used as `<svg class="icon"><use href="/assets/icons/sprite.svg#github"/></svg>` |
 | Fonts + licences | `assets/fonts/`, `assets/fonts/LICENSES/` |
 | Images, videos | `assets/img/`, `assets/video/` (originals stay in `images/`) |
